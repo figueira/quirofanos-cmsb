@@ -1,0 +1,38 @@
+/* referencia de variables */
+/* $vinotinto-claro: rgba(182,79,79,0.5); */
+/* $vinotinto-mas-claro: rgba(182,79,79,0.09); */
+
+/* body padding top para evadir la superposicion del navbar de boostrap por encima del contenido */
+body
+{
+	padding-top:70px
+}
+
+/* footer */
+#footer
+{
+	position:absolute;
+	bottom:0;
+	width:100%;
+	height:60px;
+	background-color:rgba(182,79,79,0.2)
+}
+
+/* borde redondeado header */
+.navbar-fixed-top
+{
+	border-radius:10px!important;
+	border-width:0 0 3px!important
+}
+
+/* colores header */
+.navbar-default
+{
+	border-color:rgba(182,79,79,0.5)
+}
+
+/* logo header */
+.navbar-brand {
+	margin-left: 0px !important;
+	padding: 5px;
+}
