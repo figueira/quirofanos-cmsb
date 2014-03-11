@@ -59,9 +59,9 @@ WSGI_APPLICATION = 'quirofanos_cmsb.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'quirofanos-cmsb',
-        'USER': 'postgres',
-        'PASSWORD': '',
+        'NAME': 'quirofanos_cmsb',
+        'USER': 'quirofanos_cmsb',
+        'PASSWORD': 'cmsb',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
