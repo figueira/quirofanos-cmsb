@@ -1,6 +1,7 @@
 /* referencia de variables */
-/* $vinotinto-claro: rgba(182,79,79,0.5); */
-/* $vinotinto-mas-claro: rgba(182,79,79,0.09); */
+/* $vinotinto-transparente: rgba(182,79,79,0.5); */
+/* $vinotinto-mas-transparente: rgba(182,79,79,0.2); /*
+/* $vinotinto-claro: rgba(224, 155, 155, 1); */
 
 /* body padding top para evadir la superposicion del navbar de boostrap por encima del contenido */
 body
@@ -21,18 +22,34 @@ body
 /* borde redondeado header */
 .navbar-fixed-top
 {
-	border-radius:10px!important;
-	border-width:0 0 3px!important
+	border-radius:10px !important;
+	border-width:0 0 3px !important
 }
 
 /* colores header */
 .navbar-default
 {
-	border-color:rgba(182,79,79,0.5)
+	border-color:rgba(182,79,79,0.5) !important
 }
 
 /* logo header */
-.navbar-brand {
-	margin-left: 0px !important;
-	padding: 5px;
+.navbar-brand
+{
+	margin-left:0 !important;
+	padding:5px
+}
+
+/* estilo boton primario */
+.btn-primary
+{
+	background-image:linear-gradient(to bottom,rgba(224, 155, 155, 1) 0,rgba(182,79,79,1) 100%) !important;
+	border-color:rgba(182,79,79,0.5) !important;
+	background-color: rgba(182,79,79,1) !important
+}
+
+/* imágenes circulares */
+.img-circle:hover {
+	border-color: rgba(182,79,79,0.5) !important;
+	border-style: solid !important;
+	border-width: 3px !important
 }
