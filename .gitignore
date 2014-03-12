@@ -1,3 +1,7 @@
-#Ignore compiled python files
+# Ignore compiled python files
 *.pyc
 *.pyo
+
+# Ignore text editors recovery files
+*~
+*.swp
