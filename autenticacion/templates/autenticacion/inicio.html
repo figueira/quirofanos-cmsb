@@ -6,214 +6,227 @@
 
 {% block jquery %}
 <script type="text/javascript">
-  $(document).ready(function() {
-      $("#solicitar-cuenta-medico").click(function() {
-        $("#body-solicitar-cuenta").addClass("hidden");
-        $("#formulario-solicitud-medico").removeClass("hidden");
-        $("#titulo-solicitar-cuenta").html("Solicitar Cuenta - Médico");
-        });
+$(document).ready(function() {
+  $("#solicitar-cuenta-medico").click(function() {
+    $("#body-solicitar-cuenta").addClass("hidden");
+    $("#formulario-solicitud-medico").removeClass("hidden");
+    $("#titulo-solicitar-cuenta").html("Solicitar Cuenta - Médico");
+  });
 
-      $("#solicitar-cuenta-departamento").click(function() {
-        $("#body-solicitar-cuenta").addClass("hidden");
-        $("#formulario-solicitud-departamento").removeClass("hidden");
-        $("#titulo-solicitar-cuenta").html("Solicitar Cuenta - Departamento");
-        });
+  $("#solicitar-cuenta-departamento").click(function() {
+    $("#body-solicitar-cuenta").addClass("hidden");
+    $("#formulario-solicitud-departamento").removeClass("hidden");
+    $("#titulo-solicitar-cuenta").html("Solicitar Cuenta - Departamento");
+  });
 
-      $(".volver-solicitar-cuenta").click(function() {
-        $("#formulario-solicitud-medico").addClass("hidden");
-        $("#formulario-solicitud-departamento").addClass("hidden");
-        $("#body-solicitar-cuenta").removeClass("hidden");
-        $("#titulo-solicitar-cuenta").html("Solicitar Cuenta");	
-        });
-      });
-    </script>
-    {% endblock jquery %}
+  $(".volver-solicitar-cuenta").click(function() {
+    $("#formulario-solicitud-medico").addClass("hidden");
+    $("#formulario-solicitud-departamento").addClass("hidden");
+    $("#body-solicitar-cuenta").removeClass("hidden");
+    $("#titulo-solicitar-cuenta").html("Solicitar Cuenta");	
+  });
 
-    {% block navbar-nav-extra %}
-    <form class="navbar-form navbar-right">
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="Nombre de usuario">
-        <input type="password" class="form-control" placeholder="Contraseña">
-      </div>
+  $('#solicitar-cuenta-medico').popover({
+    placement: "bottom",
+    trigger: "hover",
+    title: "Médico",
+    content: "Cuenta para personal médico y quirúrgico"
+  });
 
-      <button type="submit" class="btn btn-primary btn-lg">Iniciar Sesión</button>
-    </form><!-- Formulario de Inicio de Sesión -->
-    {% endblock navbar-nav-extra %}
+  $('#solicitar-cuenta-departamento').popover({
+    placement: "bottom",
+    trigger: "hover",
+    title: "Departamento Clínico",
+    content: "Cuenta para departamentos que requieren información del plan quirúrgico"
+  })
+});
+</script>
+{% endblock jquery %}
 
-    {% block content %}
-    <div class="page-header">
-      <h2>Usuarios nuevos...</h2>
-    </div>
-    <div class="row">
-      <div class="col-lg-offset-3 col-lg-6">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <div class="row">
-              <h1 class="panel-title" id="titulo-solicitar-cuenta">Solicitar Cuenta</h1>
-            </div>
-          </div>
-          <div class="panel-body" id="body-solicitar-cuenta">
-            <div class="row">
-              <div class="col-lg-offset-3">
-                <div class="pull-left">
-                  <a href="javascript:void(0);" id="solicitar-cuenta-medico">
-                    <img src="{% static 'img/doctor.png' %}" alt="Médico" class="img-responsive img-circle">
-                  </a>
-                </div>
-                <div class="pull-left">
-                  <a href="javascript:void(0);" id="solicitar-cuenta-departamento">
-                    <img src="{% static 'img/departamento.png' %}" alt="Departamento" class="img-responsive img-circle">
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div><!-- Solicitar Cuenta -->
-          <!-- Departamento -->
-          <form class="form-horizontal hidden" role="form" id="formulario-solicitud-departamento">
-            <div class="panel-body">
-              <div class="form-group">
-                <div class="col-lg-12">
-                  <input type="text" class="form-control" placeholder="Nombre Departamento">
-                </div>
-              </div> <!-- Nombre Departamento -->
-              <div class="form-group">
-                <div class="col-lg-3">
-                  <label for="telefono">Teléfono</label>
-                </div>
-                <div class="col-lg-3">
-                  <input type="text" class="form-control" id="telefono" placeholder="Código">
-                </div>
-                <div class="col-lg-6">
-                  <input type="text" class="form-control" placeholder="Número">
-                </div>
-                </div><!-- Teléfono -->
-                <div class="form-group">
-                <div class="col-lg-12">
-                  <input type="email" class="form-control" placeholder="Correo electrónico">
-                </div>
-              </div><!-- Email -->
-              <div class="form-group">
-                <div class="col-lg-12">
-                  <input type="text" class="form-control" placeholder="Nombre de usuario">
-                </div>
-              </div><!-- Username -->
-              <div class="form-group">
-                <div class="col-lg-6">
-                  <input type="password" class="form-control" placeholder="Contraseña">
-                </div>
-                <div class="col-lg-6">
-                  <input type="password" class="form-control" placeholder="Repita contraseña">
-                </div>
-              </div><!-- Contraseña -->
+{% block navbar-nav-extra %}
+<form class="navbar-form navbar-right">
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Nombre de usuario">
+    <input type="password" class="form-control" placeholder="Contraseña">
+  </div>
 
-            </div>
-            <div class="panel-footer">
-              <div class="form-group">
-                <div class="col-lg-6">
-                  <a href="javascript:void(0);" class="btn btn-default btn-lg volver-solicitar-cuenta">Volver</a>
-                </div>
-                <div class="col-lg-offset-8">
-                  <button type="submit" class="btn btn-primary btn-lg">Enviar Solicitud</button>
-                </div>
-              </div><!-- Submit -->
-            </div>
+  <button type="submit" class="btn btn-primary btn-lg">Iniciar Sesión</button>
+</form><!-- Formulario de Inicio de Sesión -->
+{% endblock navbar-nav-extra %}
 
-          </form>
-
-          <!-- Medico -->
-          <form class="form-horizontal hidden" role="form" id="formulario-solicitud-medico">
-            <div class="panel-body">
-              <div class="form-group">
-                <div class="col-lg-6">
-                  <input type="text" class="form-control" placeholder="Nombre">
-                </div>
-                <div class="col-lg-6">
-                  <input type="text" class="form-control" placeholder="Apellido">
-                </div>
-              </div><!-- Nombre y Apellido -->
-              <div class="form-group">
-                <div class="col-lg-12">
-                  <select class="form-control">
-                    <option>Esp1</option>
-                    <option>Esp2</option>
-                    <option>Esp3</option>
-                    <option>Esp4</option>
-                  </select>
-                </div>
-              </div><!-- Especialización -->
-              <div class="form-group">
-                <div class="col-lg-12">
-                  <input type="text" class="form-control" placeholder="Cédula">
-                </div>
-              </div><!-- Cédula -->
-              <div class="form-group">
-                <div class="col-lg-6">
-                  <label for="fecha-nacimiento">Fecha de Nacimiento</label>
-                </div>
-                <div class="col-lg-6">
-                  <input type="date" class="form-control" id="fecha-nacimiento">
-                </div>
-              </div><!-- Fecha de Nacimiento -->
-              <div clas="form-group">
-                <div class="col-lg-6">
-                  <label for="sexo">Sexo</label>
-                </div>
-                <div class="col-lg-6">
-                  <div class="radio-inline">
-                    <label>
-                      <input type="radio" name="sexo" value="M" checked> Masculino
-                    </label>
-                  </div>
-                  <div class="radio-inline">
-                    <label>
-                      <input type="radio" name="sexo" value="F">
-                      Femenino
-                    </label>
-                  </div>
-                </div>
-              </div><!-- Sexo -->
-              <div class="form-group">
-                <div class="col-lg-3">
-                  <label for="telefono">Teléfono</label>
-                </div>
-                <div class="col-lg-3">
-                  <input type="text" class="form-control" id="telefono" placeholder="Código">
-                </div>
-                <div class="col-lg-6">
-                  <input type="text" class="form-control" placeholder="Número">
-                </div>
-                </div><!-- Teléfono -->
-                <div class="form-group">
-                <div class="col-lg-12">
-                  <input type="email" class="form-control" placeholder="Correo electrónico">
-                </div>
-              </div><!-- Email -->
-              <div class="form-group">
-                <div class="col-lg-12">
-                  <input type="text" class="form-control" placeholder="Nombre de usuario">
-                </div>
-              </div><!-- Username -->
-              <div class="form-group">
-                <div class="col-lg-6">
-                  <input type="password" class="form-control" placeholder="Contraseña">
-                </div>
-                <div class="col-lg-6">
-                  <input type="password" class="form-control" placeholder="Repita contraseña">
-                </div>
-              </div><!-- Contraseña -->
-            </div>
-            <div class="panel-footer">
-              <div class="form-group">
-                <div class="col-lg-6">
-                  <a href="javascript:void(0);" class="btn btn-default btn-lg volver-solicitar-cuenta">Volver</a>
-                </div>
-                <div class="col-lg-offset-8">
-                  <button type="submit" class="btn btn-primary btn-lg">Enviar Solicitud</button>
-                </div>
-              </div><!-- Submit -->
-            </div>
-          </form><!-- Formulario Solicitud Acceso Médico -->
+{% block content %}
+<div class="page-header">
+  <h2>Usuarios nuevos...</h2>
+</div>
+<div class="row">
+  <div class="col-lg-offset-3 col-lg-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="row">
+          <h1 class="panel-title" id="titulo-solicitar-cuenta">Solicitar Cuenta</h1>
         </div>
       </div>
+      <div class="panel-body" id="body-solicitar-cuenta">
+        <div class="row">
+          <div class="col-lg-offset-3">
+            <div class="pull-left">
+              <a href="javascript:void(0);" id="solicitar-cuenta-medico">
+                <img src="{% static 'img/doctor.png' %}" alt="Médico" class="img-responsive img-circle">
+              </a>
+            </div>
+            <div class="pull-left">
+              <a href="javascript:void(0);" id="solicitar-cuenta-departamento">
+                <img src="{% static 'img/departamento.png' %}" alt="Departamento" class="img-responsive img-circle">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div><!-- Solicitar Cuenta -->
+
+      <form class="form-horizontal hidden" role="form" id="formulario-solicitud-departamento">
+        <div class="panel-body">
+          <div class="form-group">
+            <div class="col-lg-12">
+              <input type="text" class="form-control" placeholder="Nombre Departamento">
+            </div>
+          </div> <!-- Nombre Departamento -->
+          <div class="form-group">
+            <div class="col-lg-3">
+              <label for="telefono">Teléfono</label>
+            </div>
+            <div class="col-lg-3">
+              <input type="text" class="form-control" id="telefono" placeholder="Código">
+            </div>
+            <div class="col-lg-6">
+              <input type="text" class="form-control" placeholder="Número">
+            </div>
+          </div><!-- Teléfono -->
+          <div class="form-group">
+            <div class="col-lg-12">
+              <input type="email" class="form-control" placeholder="Correo electrónico">
+            </div>
+          </div><!-- Email -->
+          <div class="form-group">
+            <div class="col-lg-12">
+              <input type="text" class="form-control" placeholder="Nombre de usuario">
+            </div>
+          </div><!-- Username -->
+          <div class="form-group">
+            <div class="col-lg-6">
+              <input type="password" class="form-control" placeholder="Contraseña">
+            </div>
+            <div class="col-lg-6">
+              <input type="password" class="form-control" placeholder="Repita contraseña">
+            </div>
+          </div><!-- Contraseña -->
+        </div>
+        <div class="panel-footer">
+          <div class="form-group">
+            <div class="col-lg-6">
+              <a href="javascript:void(0);" class="btn btn-default btn-lg volver-solicitar-cuenta">Volver</a>
+            </div>
+            <div class="col-lg-offset-8">
+              <button type="submit" class="btn btn-primary btn-lg">Enviar Solicitud</button>
+            </div>
+          </div><!-- Submit -->
+        </div>
+      </form><!-- Formulario Solicitud Departamento -->
+
+
+      <!-- Medico -->
+      <form class="form-horizontal hidden" role="form" id="formulario-solicitud-medico">
+        <div class="panel-body">
+          <div class="form-group">
+            <div class="col-lg-6">
+              <input type="text" class="form-control" placeholder="Nombre">
+            </div>
+            <div class="col-lg-6">
+              <input type="text" class="form-control" placeholder="Apellido">
+            </div>
+          </div><!-- Nombre y Apellido -->
+          <div class="form-group">
+            <div class="col-lg-12">
+              <select class="form-control">
+                <option>Esp1</option>
+                <option>Esp2</option>
+                <option>Esp3</option>
+                <option>Esp4</option>
+              </select>
+            </div>
+          </div><!-- Especialización -->
+          <div class="form-group">
+            <div class="col-lg-12">
+              <input type="text" class="form-control" placeholder="Cédula">
+            </div>
+          </div><!-- Cédula -->
+          <div class="form-group">
+            <div class="col-lg-6">
+              <label for="fecha-nacimiento">Fecha de Nacimiento</label>
+            </div>
+            <div class="col-lg-6">
+              <input type="date" class="form-control" id="fecha-nacimiento">
+            </div>
+          </div><!-- Fecha de Nacimiento -->
+          <div clas="form-group">
+            <div class="col-lg-6">
+              <label for="sexo">Sexo</label>
+            </div>
+            <div class="col-lg-6">
+              <div class="radio-inline">
+                <label>
+                  <input type="radio" name="sexo" value="M" checked> Masculino
+                </label>
+              </div>
+              <div class="radio-inline">
+                <label>
+                  <input type="radio" name="sexo" value="F">
+                  Femenino
+                </label>
+              </div>
+            </div>
+          </div><!-- Sexo -->
+          <div class="form-group">
+            <div class="col-lg-3">
+              <label for="telefono">Teléfono</label>
+            </div>
+            <div class="col-lg-3">
+              <input type="text" class="form-control" id="telefono" placeholder="Código">
+            </div>
+            <div class="col-lg-6">
+              <input type="text" class="form-control" placeholder="Número">
+            </div>
+          </div><!-- Teléfono -->
+          <div class="form-group">
+            <div class="col-lg-12">
+              <input type="email" class="form-control" placeholder="Correo electrónico">
+            </div>
+          </div><!-- Email -->
+          <div class="form-group">
+            <div class="col-lg-12">
+              <input type="text" class="form-control" placeholder="Nombre de usuario">
+            </div>
+          </div><!-- Username -->
+          <div class="form-group">
+            <div class="col-lg-6">
+              <input type="password" class="form-control" placeholder="Contraseña">
+            </div>
+            <div class="col-lg-6">
+              <input type="password" class="form-control" placeholder="Repita contraseña">
+            </div>
+          </div><!-- Contraseña -->
+        </div>
+        <div class="panel-footer">
+          <div class="form-group">
+            <div class="col-lg-6">
+              <a href="javascript:void(0);" class="btn btn-default btn-lg volver-solicitar-cuenta">Volver</a>
+            </div>
+            <div class="col-lg-offset-8">
+              <button type="submit" class="btn btn-primary btn-lg">Enviar Solicitud</button>
+            </div>
+          </div><!-- Submit -->
+        </div>
+      </form><!-- Formulario Solicitud Acceso Médico -->
     </div>
-    {% endblock content %}
+  </div>
+</div>
+{% endblock content %}
