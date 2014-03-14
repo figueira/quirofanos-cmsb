@@ -9,6 +9,10 @@ $verde-disponible-oscuro: #58A058
 $gris-no-disponible: rgba(196, 196, 196, 0.3)
 $gris-no-disponible-oscuro: rgba(196, 196, 196, 1)
 $negro-opaco: rgba(0, 0, 0, 0.7) */
+<<<<<<< HEAD
+=======
+
+>>>>>>> 301d7605ac34ad8a967e1a30a8c4c79ca40b2cca
 /* body padding top para evadir la superposicion del navbar de bootstrap por encima del contenido */
 body
 {
@@ -70,9 +74,14 @@ a:hover
 }
 
 /* estilo badges */
+<<<<<<< HEAD
 .badge
 {
 	background-color:rgba(182,79,79,0.5)!important
+=======
+.badge {
+	background-color: rgba(182,79,79,0.5)!important
+>>>>>>> 301d7605ac34ad8a967e1a30a8c4c79ca40b2cca
 }
 
 /* estilo boton primario */
