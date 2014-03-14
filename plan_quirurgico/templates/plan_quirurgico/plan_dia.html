@@ -1,0 +1,540 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}{{ block.super }} | Plan Diario {% endblock title %}
+
+{% block jquery %}
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#aceptar_duracion').click(function(){
+		$('#btn_solicitar_quirofano').remove();
+		$('#duracion_operacion').removeClass("hidden");
+	});
+});
+</script>
+{% endblock jquery %}
+
+{% block content %}
+
+<div class="page-header">
+	<h1>Plan Quirúrgico <small> - Área 1 </small> <small class="pull-right">dd/mm/aaaa</small></h1>
+</div>
+<div class="row">
+	<div class="col-lg-offset-1">
+		<button class="btn btn-primary" id="btn_solicitar_quirofano" data-toggle="modal" data-target="#solicitar-quirofano">
+			Solicitar Quirófano
+		</button>
+	</div>
+	<div class="col-lg-10 col-lg-offset-1 hidden" id="duracion_operacion">
+		<p class="text-muted">Duración de la Intervención: XX:XX</p>
+		<p class="bg-warning">Por Favor seleccione el turno de su preferencia.</p>
+	</div>
+</div><br>
+
+<!-- Modal de la duracion de la operacion-->
+<div class="modal fade" id="solicitar-quirofano" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">Duración de la Intervención Quirúrgica</h4>
+			</div>
+			<div class="modal-body">
+				<div class="col-lg-1"><span class="glyphicon glyphicon-time"></span></div>
+				<form role="form" class="form-horizontal col-lg-offset-1">	
+					<div class="form-group">
+						<div class="col-lg-1"> 
+							<label for="duracion_horas">Hrs:</label>
+						</div>
+						<div class="col-lg-4">	    	
+							<input type="number" class="form-control" id="duracion_horas" placeholder="0">
+						</div>
+						<div class="col-lg-1">
+							<label for="duracion_minutos">Mins:</label>
+						</div>
+						<div class="col-lg-4">  	
+							<input type="number" class="form-control" id="duracion_minutos" placeholder="0">
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				<button type="button" id="aceptar_duracion" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Plan Quirurgico por dia -->
+<div class="row">
+	<div class="col-lg-1 col-lg-offset-1">
+		<table class="table table-bordered table-responsive table-horas">
+			<thead>
+				<tr>
+					<th><span class="glyphicon glyphicon-time"></span></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr><td> 7:00 am </td></tr>
+				<tr><td> 7:30 am </td></tr>
+				<tr><td> 8:00 am </td></tr>
+				<tr><td> 8:30 am </td></tr>
+				<tr><td> 9:00 am </td></tr>
+				<tr><td> 9:30 am </td></tr>
+				<tr><td> 10:00 am </td></tr>
+				<tr><td> 10:30 am </td></tr>
+				<tr><td> 11:00 am </td></tr>
+				<tr><td> 11:30 am </td></tr>
+				<tr><td> 12:00 pm </td></tr>
+				<tr><td> 12:30 pm </td></tr>
+				<tr><td> 1:00 pm </td></tr>
+				<tr><td> 1:30 pm </td></tr>
+				<tr><td> 2:00 pm </td></tr>
+				<tr><td> 2:30 pm </td></tr>
+				<tr><td> 3:00 pm </td></tr>
+				<tr><td> 3:30 pm </td></tr>
+				<tr><td> 4:00 pm </td></tr>
+				<tr><td> 4:30 pm </td></tr>
+				<tr><td> 5:00 pm </td></tr>
+				<tr><td> 5:30 pm </td></tr>
+				<tr><td> 6:00 pm </td></tr>
+				<tr><td> 6:30 pm </td></tr>
+				<tr><td> 7:00 pm </td></tr>
+			</tbody>	
+		</table>
+	</div>
+
+	<div class="col-lg-9 scrollable">
+		<table class="table table-bordered table-hover table-responsive table-plan">
+			<thead>
+				<tr>
+					<th>Quirófano 1</th>
+					<th>Quirófano 2</th>
+					<th>Quirófano 3</th>
+					<th>Quirófano 4</th>
+					<th>Quirófano 5</th>
+					<th>Quirófano 6</th>
+				</tr>
+				<tbody>
+					<tr>
+						<td class="available" data-toogle="tooltip" data-placement="right" title="Quirófano 1">
+						</td>
+						<td class="unavailable" data-toogle="tooltip" data-placement="right" title="Quirófano 2">
+							<p class="label label-primary">	
+								Paciente: Pérez Romero, José 
+							</p><br>
+							<p class="label label-default">
+								<abbr title="Intervención">Int.</abbr> Quirúrgica: Colocación de Cateter
+							</p><br>
+							<p class="label label-default">
+								Cirujano Dr(a): Lairet Hernández, Andrés E
+							</p><br>
+							<p class="label label-default">
+								<abbr title="Anestesiólogo">Anest.</abbr>
+								Dr(a): Machado Fernandez, Antonio Manuel
+							</p><br>
+							<p class="label label-success">
+								En Habitación: 705
+							</p>					
+						</td>
+						<td class="available" data-toogle="tooltip" data-placement="right" title="Quirófano 3">
+						</td>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+					</tr>
+					<tr>
+						<td class="unavailable" rowspan="2" data-toogle="tooltip" data-placement="right" title="Quirófano 1">
+							<p class="label label-primary">		
+								Paciente: Rizzi, Laura
+							</p><br>
+							<p class="label label-default">
+								<abbr title="Intervención">Int.</abbr> Quirúrgica: Reemplazo total de cadera
+							</p><br>
+							<p class="label label-default">
+								Cirujano Dr(a): Benhamu Belilty, Miguel Ángel
+							</p><br>
+							<p class="label label-default">
+								<abbr title="Anestesiólogo">Anest.</abbr>
+								Dr(a): Blanco Calderón, Gabriela A
+							</p><br>
+							<p class="label label-warning">
+								En Curso
+							</p>	
+						</td>
+						<td class="available" data-toogle="tooltip" data-placement="right" title="Quirófano 2">
+						</td>
+						<td class="unavailable" data-toogle="tooltip" data-placement="right" title="Quirófano 3">
+							<p class="label label-primary">		
+								Paciente: Gómez, Eleazar Jesús
+							</p><br>
+							<p class="label label-default">
+								<abbr title="Intervención">Int.</abbr> Quirúrgica: Cura Operatoria de Hernia Inguinal
+							</p><br>
+							<p class="label label-default">
+								Cirujano Dr(a): Koury Chidiac, Pablo
+							</p><br>
+							<p class="label label-default">
+								<abbr title="Anestesiólogo">Anest.</abbr>
+								Dr(a): Guglielmelli Vera, José Nicolás
+							</p><br>
+							<p class="label label-success">
+								En Recuperación
+							</p>	
+						</td>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+					</tr>
+					<tr>
+						<td class="unavailable" data-toogle="tooltip" data-placement="right" title="Quirófano 2">
+							<p class="label label-primary">		
+								Paciente: Angarita, Belsi
+							</p><br>
+							<p class="label label-default">
+								<abbr title="Intervención">Int.</abbr> Quirúrgica: Gastrectomía en Manga por Laparosc.
+							</p><br>
+							<p class="label label-default">
+								Cirujano Dr(a): Doval García, Raúl
+							</p><br>
+							<p class="label label-default">
+								<abbr title="Anestesiólogo">Anest.</abbr>
+								Dr(a): Rosillo Chirinos, Hugo César
+							</p><br>
+							<p class="label label-danger">
+								En Espera
+							</p>	
+						</td>
+						<td class="available" data-toogle="tooltip" data-placement="right" title="Quirófano 3">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+					</tr>
+					<tr>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+					</tr>
+					<tr>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+					</tr>
+					<tr>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+					</tr>
+					<tr>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+					</tr>
+					<tr>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+					</tr>
+					<tr>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+					</tr>
+					<tr>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+					</tr>
+					<tr>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+					</tr>
+					<tr>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+					</tr>
+					<tr>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+					</tr>
+					<tr>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+					</tr>
+					<tr>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+					</tr>
+					<tr>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+					</tr>
+					<tr>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+					</tr>
+					<tr>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+					</tr>
+					<tr>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+					</tr>
+					<tr>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+					</tr>
+					<tr>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+					</tr>
+					<tr>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+					</tr>
+					<tr>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+					</tr>
+					<tr>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+					</tr>
+					<tr>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+						<td class="available">
+						</td>
+						<td class="unavailable">
+						</td>
+					</tr>
+				</tbody>
+			</thead>
+		</table>
+	</div>
+
+
+</div>
+{% endblock content %}

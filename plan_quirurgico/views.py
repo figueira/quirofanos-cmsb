@@ -10,3 +10,11 @@ def calendario(request):
 	request -> Solicitud HTTP '''
 
 	return render_to_response('plan_quirurgico/calendario.html')
+
+def plan_dia(request):
+	''' Controlador correspondiente al detalle del plan quirurgico por dia
+
+	Parametros:
+	request -> Solucitud HTTP '''
+
+	return render_to_response('plan_quirurgico/plan_dia.html')
