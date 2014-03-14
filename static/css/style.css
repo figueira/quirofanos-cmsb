@@ -1,9 +1,16 @@
-/* referencia de variables */
-/* $vinotinto-transparente: rgba(182,79,79,0.5); */
-/* $vinotinto-mas-transparente: rgba(182,79,79,0.2); /*
-/* $vinotinto-claro: rgba(224, 155, 155, 1); */
+/* referencia de variables
+$vinotinto-transparente: rgba(182,79,79,0.5)
+$vinotinto-mas-transparente: rgba(182,79,79,0.2)
+$vinotinto-claro: rgba(224, 155, 155, 1)
+$vinotinto: rgba(172, 66, 66, 1)
+$vinotinto-oscuro: rgba(97, 34, 34, 1)
+$verde-disponible: #8BB68B
+$verde-disponible-oscuro: #58A058
+$gris-no-disponible: rgba(196, 196, 196, 0.3)
+$gris-no-disponible-oscuro: rgba(196, 196, 196, 1)
+$negro-opaco: rgba(0, 0, 0, 0.7) */
 
-/* body padding top para evadir la superposicion del navbar de boostrap por encima del contenido */
+/* body padding top para evadir la superposicion del navbar de bootstrap por encima del contenido */
 body
 {
 	padding-top:70px
@@ -22,41 +29,122 @@ body
 /* borde redondeado header */
 .navbar-fixed-top
 {
-	border-radius:10px !important;
-	border-width:0 0 3px !important
+	border-radius:10px!important;
+	border-width:0 0 3px!important
 }
 
 /* colores header */
 .navbar-default
 {
-	border-color:rgba(182,79,79,0.5) !important
+	border-color:rgba(182,79,79,0.5)!important
 }
 
 /* logo header */
 .navbar-brand
 {
-	margin-left:0 !important;
+	margin-left:0!important;
 	padding:5px
+}
+
+/* estilo headers de paginas */
+.page-header
+{
+	margin:40px 20px 20px!important
+}
+
+/* estilo texto resaltante */
+.lead
+{
+	color:rgba(172,66,66,1)!important;
+	font-weight:700
+}
+
+/* estilo links */
+a
+{
+	color:rgba(172,66,66,1)
+}
+
+a:hover
+{
+	color:rgba(97,34,34,1)
+}
+
+/* estilo badges */
+.badge {
+	background-color: rgba(182,79,79,0.5)!important
 }
 
 /* estilo boton primario */
 .btn-primary
 {
-	background-image:linear-gradient(to bottom,rgba(224, 155, 155, 1) 0,rgba(182,79,79,1) 100%) !important;
-	border-color:rgba(182,79,79,0.5) !important;
-	background-color: rgba(182,79,79,1) !important
+	background-image:linear-gradient(to bottom,rgba(224,155,155,1) 0,rgba(182,79,79,1) 100%)!important;
+	border-color:rgba(182,79,79,0.5)!important;
+	background-color:rgba(182,79,79,1)!important
 }
 
-/* imágenes circulares */
-.img-circle:hover {
-	border-color: rgba(182,79,79,0.5) !important;
-	border-style: solid !important;
-	border-width: 3px !important
+/* imagenes circulares */
+.img-circle:hover
+{
+	border-color:rgba(182,79,79,0.5)!important;
+	border-style:solid!important;
+	border-width:3px!important
 }
 
 /* estilo popovers */
-.popover-title {
-	background-color: rgba(182,79,79,0.2) !important;
-	font-weight: bold;
-	text-align: center
+.popover-title
+{
+	background-color:rgba(182,79,79,0.2)!important;
+	font-weight:700;
+	text-align:center
+}
+
+/* estilo calendario */
+.table>tbody>tr
+{
+	line-height:120px;
+	height:120px;
+	min-height:120px
+}
+
+.table-bordered
+{
+	border:none!important
+}
+
+.table-bordered>thead>tr>th,.table-bordered>tbody>tr>th,.table-bordered>tfoot>tr>th
+{
+	border:none!important
+}
+
+.table>thead>tr>th
+{
+	text-align:center!important
+}
+
+.table>thead>tr>td.available,.table>tbody>tr>td.available,.table>tfoot>tr>td.available,.table>thead>tr>th.available,.table>tbody>tr>th.available,.table>tfoot>tr>th.available,.table>thead>tr.available>td,.table>tbody>tr.available>td,.table>tfoot>tr.available>td,.table>thead>tr.available>th,.table>tbody>tr.available>th,.table>tfoot>tr.available>th
+{
+	background-color:#8BB68B!important
+}
+
+.table>thead>tr>td.unavailable,.table>tbody>tr>td.unavailable,.table>tfoot>tr>td.unavailable,.table>thead>tr>th.unavailable,.table>tbody>tr>th.unavailable,.table>tfoot>tr>th.unavailable,.table>thead>tr.unavailable>td,.table>tbody>tr.unavailable>td,.table>tfoot>tr.unavailable>td,.table>thead>tr.unavailable>th,.table>tbody>tr.unavailable>th,.table>tfoot>tr.unavailable>th
+{
+	background-color:rgba(196,196,196,0.3)!important
+}
+
+.table-hover>tbody>tr>td.available:hover,.table-hover>tbody>tr>th.available:hover,.table-hover>tbody>tr.available:hover>td,.table-hover>tbody>tr.available:hover>th
+{
+	background-color:#58A058!important
+}
+
+.table-hover>tbody>tr>td.unavailable:hover,.table-hover>tbody>tr>th.unavailable:hover,.table-hover>tbody>tr.unavailable:hover>td,.table-hover>tbody>tr.unavailable:hover>th
+{
+	background-color:rgba(196,196,196,1)!important
+}
+
+/* estilo pastillas */
+.nav-pills>li.active>a,.nav-pills>li.active>a:hover,.nav-pills>li.active>a:focus
+{
+	color: #fff;
+	background-color:rgba(182,79,79,0.5)!important
 }

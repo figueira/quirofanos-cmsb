@@ -7,18 +7,22 @@
 {% block jquery %}
 <script type="text/javascript">
 $(document).ready(function() {
+
+  // Desplegar formulario de solicitud de cuenta medico
   $("#solicitar-cuenta-medico").click(function() {
     $("#body-solicitar-cuenta").addClass("hidden");
     $("#formulario-solicitud-medico").removeClass("hidden");
     $("#titulo-solicitar-cuenta").html("Solicitar Cuenta - Médico");
   });
 
+  // Desplegar formulario de solicitud de cuenta departamento
   $("#solicitar-cuenta-departamento").click(function() {
     $("#body-solicitar-cuenta").addClass("hidden");
     $("#formulario-solicitud-departamento").removeClass("hidden");
     $("#titulo-solicitar-cuenta").html("Solicitar Cuenta - Departamento");
   });
 
+  // Volver a seleccion de tipo de solicitud de cuenta
   $(".volver-solicitar-cuenta").click(function() {
     $("#formulario-solicitud-medico").addClass("hidden");
     $("#formulario-solicitud-departamento").addClass("hidden");
@@ -26,6 +30,7 @@ $(document).ready(function() {
     $("#titulo-solicitar-cuenta").html("Solicitar Cuenta");	
   });
 
+  // Popover de solicitar cuenta medico
   $('#solicitar-cuenta-medico').popover({
     placement: "bottom",
     trigger: "hover",
@@ -33,6 +38,7 @@ $(document).ready(function() {
     content: "Cuenta para personal médico y quirúrgico"
   });
 
+  // Popover de solicitar cuenta departamento
   $('#solicitar-cuenta-departamento').popover({
     placement: "bottom",
     trigger: "hover",
@@ -48,15 +54,17 @@ $(document).ready(function() {
   <div class="form-group">
     <input type="text" class="form-control" placeholder="Nombre de usuario">
     <input type="password" class="form-control" placeholder="Contraseña">
+    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+    <span class="help-block">
+      <a href="#"><small>Olvidó su usuario o contraseña?</small></a>
+    </span>
   </div>
-
-  <button type="submit" class="btn btn-primary btn-lg">Iniciar Sesión</button>
-</form><!-- Formulario de Inicio de Sesión -->
+</form><!-- Formulario de Inicio de Sesion -->
 {% endblock navbar-nav-extra %}
 
 {% block content %}
 <div class="page-header">
-  <h2>Usuarios nuevos...</h2>
+  <h1>Usuarios nuevos...</h1>
 </div>
 <div class="row">
   <div class="col-lg-offset-3 col-lg-6">
@@ -68,7 +76,7 @@ $(document).ready(function() {
       </div>
       <div class="panel-body" id="body-solicitar-cuenta">
         <div class="row">
-          <div class="col-lg-offset-3">
+          <div class="col-lg-offset-4">
             <div class="pull-left">
               <a href="javascript:void(0);" id="solicitar-cuenta-medico">
                 <img src="{% static 'img/doctor.png' %}" alt="Médico" class="img-responsive img-circle">
@@ -95,12 +103,12 @@ $(document).ready(function() {
               <label for="telefono">Teléfono</label>
             </div>
             <div class="col-lg-3">
-              <input type="text" class="form-control" id="telefono" placeholder="Código">
+              <input type="text" class="form-control" name="telefono" placeholder="Código">
             </div>
             <div class="col-lg-6">
               <input type="text" class="form-control" placeholder="Número">
             </div>
-          </div><!-- Teléfono -->
+          </div><!-- Telefono -->
           <div class="form-group">
             <div class="col-lg-12">
               <input type="email" class="form-control" placeholder="Correo electrónico">
@@ -118,22 +126,20 @@ $(document).ready(function() {
             <div class="col-lg-6">
               <input type="password" class="form-control" placeholder="Repita contraseña">
             </div>
-          </div><!-- Contraseña -->
+          </div><!-- Contrasena -->
         </div>
         <div class="panel-footer">
           <div class="form-group">
             <div class="col-lg-6">
               <a href="javascript:void(0);" class="btn btn-default btn-lg volver-solicitar-cuenta">Volver</a>
             </div>
-            <div class="col-lg-offset-8">
+            <div class="col-lg-offset-9">
               <button type="submit" class="btn btn-primary btn-lg">Enviar Solicitud</button>
             </div>
           </div><!-- Submit -->
         </div>
       </form><!-- Formulario Solicitud Departamento -->
 
-
-      <!-- Medico -->
       <form class="form-horizontal hidden" role="form" id="formulario-solicitud-medico">
         <div class="panel-body">
           <div class="form-group">
@@ -153,18 +159,18 @@ $(document).ready(function() {
                 <option>Esp4</option>
               </select>
             </div>
-          </div><!-- Especialización -->
+          </div><!-- Especializacion -->
           <div class="form-group">
             <div class="col-lg-12">
               <input type="text" class="form-control" placeholder="Cédula">
             </div>
-          </div><!-- Cédula -->
+          </div><!-- Cedula -->
           <div class="form-group">
             <div class="col-lg-6">
               <label for="fecha-nacimiento">Fecha de Nacimiento</label>
             </div>
             <div class="col-lg-6">
-              <input type="date" class="form-control" id="fecha-nacimiento">
+              <input type="date" class="form-control" name="fecha-nacimiento">
             </div>
           </div><!-- Fecha de Nacimiento -->
           <div clas="form-group">
@@ -190,12 +196,12 @@ $(document).ready(function() {
               <label for="telefono">Teléfono</label>
             </div>
             <div class="col-lg-3">
-              <input type="text" class="form-control" id="telefono" placeholder="Código">
+              <input type="text" class="form-control" name="telefono" placeholder="Código">
             </div>
             <div class="col-lg-6">
               <input type="text" class="form-control" placeholder="Número">
             </div>
-          </div><!-- Teléfono -->
+          </div><!-- Telefono -->
           <div class="form-group">
             <div class="col-lg-12">
               <input type="email" class="form-control" placeholder="Correo electrónico">
@@ -213,19 +219,19 @@ $(document).ready(function() {
             <div class="col-lg-6">
               <input type="password" class="form-control" placeholder="Repita contraseña">
             </div>
-          </div><!-- Contraseña -->
+          </div><!-- Contrasena -->
         </div>
         <div class="panel-footer">
           <div class="form-group">
             <div class="col-lg-6">
               <a href="javascript:void(0);" class="btn btn-default btn-lg volver-solicitar-cuenta">Volver</a>
             </div>
-            <div class="col-lg-offset-8">
+            <div class="col-lg-offset-9">
               <button type="submit" class="btn btn-primary btn-lg">Enviar Solicitud</button>
             </div>
           </div><!-- Submit -->
         </div>
-      </form><!-- Formulario Solicitud Acceso Médico -->
+      </form><!-- Formulario Solicitud Acceso Medico -->
     </div>
   </div>
 </div>
