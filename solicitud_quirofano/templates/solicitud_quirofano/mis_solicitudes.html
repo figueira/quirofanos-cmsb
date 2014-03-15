@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+
+{% load staticfiles  %}
+
+{% block title %}{{ block.super }} | Mis Solicitudes{% endblock title %}
+
+{% block content %}
+<div class="page-header">
+	<h1>Mis Solicitudes</h1>
+</div>
+<div class="row">
+	<div class="col-lg-offset-1 col-lg-9">
+		<ul class="nav nav-tabs">
+			<li>
+				<a href="#">Aprobadas
+					<span class="glyphicon glyphicon-ok"></span>
+				</a>
+			</li>
+			<li class="active">
+				<a href="#">En espera
+					<span class="glyphicon glyphicon-question-sign"></span>
+				</a>
+			</li>
+			<li>
+				<a href="#">Rechazadas
+					<span class="glyphicon glyphicon-ban-circle"></span>
+				</a>
+			</li>
+		</ul>
+	</div>
+	<div class="col-lg-1">
+		<button type="button" class="btn btn-primary dropdown-toggle pull-right" data-toggle="dropdown">
+			Ver <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="#">Última semana</a></li>
+			<li><a href="#">Último mes</a></li>
+			<li><a href="#">Últimos 3 meses</a></li>
+			<li class="divider"></li>
+			<li><a href="#" data-toggle="modal" data-target="#seleccionar-periodo">Seleccionar período</a></li>
+		</ul>
+	</div>
+</div><!-- Pestañas y Filtro -->
+
+<div class="row">
+	<div class="col-lg-offset-1 col-lg-10">
+		<ul class="list-group">
+			<a href="javascript:void(0);" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud">
+				<span class="label label-primary">Paciente: José Castillo</span>
+				<span class="label label-default">
+					<abbr title="Intervención">Int.</abbr>
+					Quirúrgica: Reducción Gástrica
+				</span>
+				<span class="pull-right">
+					<small>
+						<strong>Fecha de Solicitud: XX-XX-XX</strong>
+					</small>
+				</span>
+			</a>
+			<a href="javascript:void(0);" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud">
+				<span class="label label-primary">Paciente: José Castillo</span>
+				<span class="label label-default">
+					<abbr title="Intervención">Int.</abbr>
+					Quirúrgica: Reducción Gástrica
+				</span>
+				<span class="pull-right">
+					<small>
+						<strong>Fecha de Solicitud: XX-XX-XX</strong>
+					</small>
+				</span>
+			</a>
+			<a href="javascript:void(0);" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud">
+				<span class="label label-primary">Paciente: José Castillo</span>
+				<span class="label label-default">
+					<abbr title="Intervención">Int.</abbr>
+					Quirúrgica: Reducción Gástrica
+				</span>
+				<span class="pull-right">
+					<small>
+						<strong>Fecha de Solicitud: XX-XX-XX</strong>
+					</small>
+				</span>
+			</a>
+			<a href="javascript:void(0);" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud">
+				<span class="label label-primary">Paciente: José Castillo</span>
+				<span class="label label-default">
+					<abbr title="Intervención">Int.</abbr>
+					Quirúrgica: Reducción Gástrica
+				</span>
+				<span class="pull-right">
+					<small>
+						<strong>Fecha de Solicitud: XX-XX-XX</strong>
+					</small>
+				</span>
+			</a>
+			<a href="javascript:void(0);" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud">
+				<span class="label label-primary">Paciente: José Castillo</span>
+				<span class="label label-default">
+					<abbr title="Intervención">Int.</abbr>
+					Quirúrgica: Reducción Gástrica
+				</span>
+				<span class="pull-right">
+					<small>
+						<strong>Fecha de Solicitud: XX-XX-XX</strong>
+					</small>
+				</span>
+			</a>
+			<a href="javascript:void(0);" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud">
+				<span class="label label-primary">Paciente: José Castillo</span>
+				<span class="label label-default">
+					<abbr title="Intervención">Int.</abbr>
+					Quirúrgica: Reducción Gástrica
+				</span>
+				<span class="pull-right">
+					<small>
+						<strong>Fecha de Solicitud: XX-XX-XX</strong>
+					</small>
+				</span>
+			</a>
+			<a href="javascript:void(0);" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud">
+				<span class="label label-primary">Paciente: José Castillo</span>
+				<span class="label label-default">
+					<abbr title="Intervención">Int.</abbr>
+					Quirúrgica: Reducción Gástrica
+				</span>
+				<span class="pull-right">
+					<small>
+						<strong>Fecha de Solicitud: XX-XX-XX</strong>
+					</small>
+				</span>
+			</a>
+			<a href="javascript:void(0);" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud">
+				<span class="label label-primary">Paciente: José Castillo</span>
+				<span class="label label-default">
+					<abbr title="Intervención">Int.</abbr>
+					Quirúrgica: Reducción Gástrica
+				</span>
+				<span class="pull-right">
+					<small>
+						<strong>Fecha de Solicitud: XX-XX-XX</strong>
+					</small>
+				</span>
+			</a>
+			<a href="javascript:void(0);" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud">
+				<span class="label label-primary">Paciente: José Castillo</span>
+				<span class="label label-default">
+					<abbr title="Intervención">Int.</abbr>
+					Quirúrgica: Reducción Gástrica
+				</span>
+				<span class="pull-right">
+					<small>
+						<strong>Fecha de Solicitud: XX-XX-XX</strong>
+					</small>
+				</span>
+			</a>
+			<a href="javascript:void(0);" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud">
+				<span class="label label-primary">Paciente: José Castillo</span>
+				<span class="label label-default">
+					<abbr title="Intervención">Int.</abbr>
+					Quirúrgica: Reducción Gástrica
+				</span>
+				<span class="pull-right">
+					<small>
+						<strong>Fecha de Solicitud: XX-XX-XX</strong>
+					</small>
+				</span>
+			</a>
+			<a href="javascript:void(0);" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud">
+				<span class="label label-primary">Paciente: José Castillo</span>
+				<span class="label label-default">
+					<abbr title="Intervención">Int.</abbr>
+					Quirúrgica: Reducción Gástrica
+				</span>
+				<span class="pull-right">
+					<small>
+						<strong>Fecha de Solicitud: XX-XX-XX</strong>
+					</small>
+				</span>
+			</a>
+		</ul>
+	</div>
+</div><!-- Lista de Solicitudes -->
+
+<div class="modal fade" id="detalles-solicitud" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">Detalles de Solicitud</h4>
+			</div>
+			<div class="modal-body">
+				
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				<button type="button" class="btn btn-primary">Guardar Cambios</button>
+			</div>
+		</div>
+	</div>
+</div><!-- Modal de Detalles de Solicitud -->
+
+<div class="modal fade" id="seleccionar-periodo" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">Seleccione Período</h4>
+			</div>
+			<div class="modal-body">
+				<form role="form" class="form-horizontal">
+					<div class="form-group">
+						<div class="col-lg-3">
+							<label for="desde">Desde:</label>
+						</div>
+						<div class="col-lg-9">
+							<input type="date" class="form-control" name="desde">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-3">
+							<label for="hasta">Hasta:</label>
+						</div>
+						<div class="col-lg-9">
+							<input type="date" class="form-control" name="hasta">
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				<button type="button" class="btn btn-primary">Aceptar</button>
+			</div>
+		</div>
+	</div>
+</div><!-- Modal de Seleccion de Periodo a Mostrar -->
+{% endblock content %}
