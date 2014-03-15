@@ -172,3 +172,49 @@ a:hover
 {
 	border:none
 }
+
+/* estilo de primera columna del plan quirurgico */
+.table-horas > thead > tr > th, .table-horas > tbody > tr > td
+{
+	background-color: white;
+	border: none;
+	text-align: center;
+	font-weight: bold;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+/* estilo de las filas del plan quirurgico */
+.table-plan > tbody > tr, .table-horas > tbody > tr
+{
+	line-height:120px;
+	height:120px;
+	min-height:120px;
+	max-height:120px;
+}
+
+/* estilo de las columnas del plan quirurgico */
+.table-plan > tbody > tr> td, .table-plan > thead > tr > th
+{
+	width:310px;
+	min-width:310px;
+	max-width:310px
+}
+
+/* scroll de la tabla de plan quirurgico */
+.scrollable
+{
+	overflow-x: scroll;
+	overflow-y: hidden
+}
+
+.table-plan>tbody>tr>td.unavailable:hover,.table-plan>tbody>tr>th.unavailable:hover,.table-plan>tbody>tr.unavailable:hover>td,.table-plan>tbody>tr.unavailable:hover>th
+{
+	background-color:rgba(196,196,196, 0.3)!important
+}
+
+/* estilo de los contextual backgrounds */
+.bg-warning
+{
+	padding: 15px;
+}
