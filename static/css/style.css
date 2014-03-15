@@ -4,8 +4,8 @@ $vinotinto-mas-transparente: rgba(182,79,79,0.2)
 $vinotinto-claro: rgba(224, 155, 155, 1)
 $vinotinto: rgba(172, 66, 66, 1)
 $vinotinto-oscuro: rgba(97, 34, 34, 1)
-$verde-disponible: #8BB68B
-$verde-disponible-oscuro: #58A058
+$azul-disponible: #BAD3EB
+$azul-disponible-oscuro: #87A1B9
 $gris-no-disponible: rgba(196, 196, 196, 0.3)
 $gris-no-disponible-oscuro: rgba(196, 196, 196, 1)
 $negro-opaco: rgba(0, 0, 0, 0.7)
@@ -126,7 +126,7 @@ a:hover
 
 .table>thead>tr>td.available,.table>tbody>tr>td.available,.table>tfoot>tr>td.available,.table>thead>tr>th.available,.table>tbody>tr>th.available,.table>tfoot>tr>th.available,.table>thead>tr.available>td,.table>tbody>tr.available>td,.table>tfoot>tr.available>td,.table>thead>tr.available>th,.table>tbody>tr.available>th,.table>tfoot>tr.available>th
 {
-	background-color:#8BB68B!important
+	background-color:#BAD3EB!important
 }
 
 .table>thead>tr>td.unavailable,.table>tbody>tr>td.unavailable,.table>tfoot>tr>td.unavailable,.table>thead>tr>th.unavailable,.table>tbody>tr>th.unavailable,.table>tfoot>tr>th.unavailable,.table>thead>tr.unavailable>td,.table>tbody>tr.unavailable>td,.table>tfoot>tr.unavailable>td,.table>thead>tr.unavailable>th,.table>tbody>tr.unavailable>th,.table>tfoot>tr.unavailable>th
@@ -136,7 +136,7 @@ a:hover
 
 .table-hover>tbody>tr>td.available:hover,.table-hover>tbody>tr>th.available:hover,.table-hover>tbody>tr.available:hover>td,.table-hover>tbody>tr.available:hover>th
 {
-	background-color:#58A058!important
+	background-color:#87A1B9!important
 }
 
 .table-hover>tbody>tr>td.unavailable:hover,.table-hover>tbody>tr>th.unavailable:hover,.table-hover>tbody>tr.unavailable:hover>td,.table-hover>tbody>tr.unavailable:hover>th
@@ -159,7 +159,7 @@ a:hover
 /* estilo etiquetas */
 .label-available
 {
-	background-color:#8BB68B
+	background-color:#BAD3EB
 }
 
 .label-unavailable
@@ -223,4 +223,23 @@ a:hover
 /* estilo modals */
 .modal-footer-danger {
 	background-color: rgba(255, 0, 0, 0.1);
+}
+
+/* estilo de la paginacion */
+.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus
+{
+	background-color: rgba(224, 155, 155, 1)!important;
+	border-color: rgba(224, 155, 155, 1)!important;
+	color: #FFF !important;
+}
+
+.pagination>li>a:hover, .pagination>li>span:hover, .pagination>li>a:focus, .pagination>li>span:focus, .pagination>li>a, .pagination>li>span
+{
+	color: rgba(0, 0, 0, 0.7) !important;
+}
+
+/* estilo de las etiquetas de informacion */
+.label-info
+{
+	background-color: rgba(36, 83, 97, 0.77)!important
 }
