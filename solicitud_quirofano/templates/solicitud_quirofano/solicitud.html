@@ -100,6 +100,41 @@ $(document).ready(function() {
 			$("#ci_medico_pariente").val("");
 		}
 	});
+
+	var agregar_equipo = $("#agregar_equipo");
+	agregar_equipo.click(function(){
+		var select_equipo = $("#select_equipo");			
+		var clon = select_equipo.clone().appendTo("#equipos");
+		clon.addClass("col-lg-offset-3");
+	});
+
+	var agregar_anestesiologo = $("#agregar_anestesiologo");
+	agregar_anestesiologo.click(function(){
+		var anestesiologo = $("#input_anestesiologo");			
+		var clon = anestesiologo.clone().appendTo("#anestesiologo");
+		clon.addClass("col-lg-offset-2");
+	});
+
+	var agregar_ayudante1 = $("#agregar_ayudante1");
+	agregar_ayudante1.click(function(){
+		var ayudante1 = $("#input_ayudante1");			
+		var clon = ayudante1.clone().appendTo("#ayudante1");
+		clon.addClass("col-lg-offset-2");
+	});
+
+	var agregar_ayudante2 = $("#agregar_ayudante2");
+	agregar_ayudante2.click(function(){
+		var ayudante2 = $("#input_ayudante2");			
+		var clon = ayudante2.clone().appendTo("#ayudante2");
+		clon.addClass("col-lg-offset-2");
+	});
+
+	var agregar_ayudante3 = $("#agregar_ayudante3");
+	agregar_ayudante3.click(function(){
+		var ayudante3 = $("#input_ayudante3");			
+		var clon = ayudante3.clone().appendTo("#ayudante3");
+		clon.addClass("col-lg-offset-2");
+	});	
 })
 </script>
 {% endblock jquery %}
@@ -126,8 +161,8 @@ $(document).ready(function() {
 				<div class="panel-body">
 					<div class="form-group">
 						<label class="col-lg-1 control-label">Area: </label>
-						<div class="col-lg-1">
-							<p class="form-control-static">Quirurgica</p>
+						<div class="col-lg-2">
+							<p class="form-control-static">Sala de Parto</p>
 						</div>
 						<label class="col-lg-offset-1 col-lg-2 control-label">Quirófano: </label>
 						<div class="col-lg-3">
@@ -231,18 +266,20 @@ $(document).ready(function() {
 							<textarea class="form-control" id="textareaRazon" name="razon" rows="3"></textarea>
 						</div>
 					</div>	
-					<div class="form-group">
+					<div class="form-group" id="equipos">
 						<div class="col-lg-3">
 							<label for="equipos especiales">Equipos Especiales:</label>
 						</div>
-						<div class="col-lg-9">
-							<select multiple class="form-control" name="equipo_especial_requerido">
+						<div class="col-lg-7" id="select_equipo">
+							<select class="form-control" name="equipo_especial_requerido">
+								<option></option>
 								<option>1</option>
 								<option>2</option>
 								<option>3</option>
 								<option>4</option>								
 							</select>
-						</div>
+						</div>						
+						<a href="javascript:void(0);" class="btn btn-success btn-sm" id="agregar_equipo">Agregar</a>					
 					</div>	
 					<div class="form-group">
 						<div class="col-lg-3">
@@ -474,38 +511,48 @@ $(document).ready(function() {
 			</form><!-- Formulario Solicitud Paciente -->
 
 			<form class="form-horizontal hidden" role="form" id="formulario-solicitud-honorarios">
-				<div class="panel-body">					
-					<div class="form-group">						
-						<div class="col-lg-3">
-							<label for="observaciones">Observaciones:</label>
+				<div class="panel-body">
+					<div class="form-group">
+						<div class="col-lg-8">
+							<label for="participantes">Especialistas que Participarán:</label>
 						</div>
-						<div class="col-lg-9">
-							<textarea class="form-control" name="observaciones" rows="3"></textarea>
+					</div>						
+					<div class="form-group" id="anestesiologo">
+						<div class="col-lg-2">
+							<label for="anestesiologos">Anestesiólogo:</label>
 						</div>
+						<div class="col-lg-6" id="input_anestesiologo">
+							<input type="text" class="form-control" name="anestesiologo" placeholder="Nombre y Apellido" />
+						</div>						
+						<a href="javascript:void(0);" class="btn btn-success btn-sm" id="agregar_anestesiologo">Agregar Anestesiólogo</a>
 					</div>
-					<div class="form-group" id="nivelRiesgo">
-						<div class="col-lg-3">
-							<label for="riesgo">Nivel de Riesgo:</label>
+					<div class="form-group" id="ayudante1">
+						<div class="col-lg-2">
+							<label for="ayudante1">Ayudante 1:</label>
 						</div>
-						<div class="col-lg-3 radio">
-							<label>
-								<input type="radio" name="riesgo" id="optionsRadios1" value="bueno" >
-								Bueno
-							</label>
+						<div class="col-lg-6" id="input_ayudante1">
+							<input type="text" class="form-control" name="ayudante1" placeholder="Nombre y Apellido" />
+						</div>						
+						<a href="javascript:void(0);" class="btn btn-success btn-sm" id="agregar_ayudante1">Agregar Ayudante 1</a>
+					</div>	
+					<div class="form-group" id="ayudante2">
+						<div class="col-lg-2">
+							<label for="ayudante2">Ayudante 2:</label>
 						</div>
-						<div class="col-lg-3 radio">
-							<label>
-								<input type="radio" name="riesgo" id="optionsRadios2" value="regular" checked>
-								Regular
-							</label>
-						</div>	
-						<div class="col-lg-3 radio">
-							<label>
-								<input type="radio" name="riesgo" id="optionsRadios3" value="malo">
-								Malo
-							</label>
-						</div>					
-					</div>							
+						<div class="col-lg-6" id="input_ayudante2">
+							<input type="text" class="form-control" name="ayudante2" placeholder="Nombre y Apellido" />
+						</div>						
+						<a href="javascript:void(0);" class="btn btn-success btn-sm" id="agregar_ayudante2">Agregar Ayudante 2</a>
+					</div>
+					<div class="form-group" id="ayudante3">
+						<div class="col-lg-2">
+							<label for="ayudante3">Ayudante 3:</label>
+						</div>
+						<div class="col-lg-6" id="input_ayudante3">
+							<input type="text" class="form-control" name="ayudante3" placeholder="Nombre y Apellido" />
+						</div>						
+						<a href="javascript:void(0);" class="btn btn-success btn-sm" id="agregar_ayudante3">Agregar Ayudante 3</a>
+					</div>								
 				</div>
 				<div class="panel-footer">
 					<div class="form-group">
