@@ -18,3 +18,11 @@ def mis_solicitudes(request):
 	 request -> Solicitud HTTP '''
 
 	 return render_to_response('solicitud_quirofano/mis_solicitudes.html')
+
+def proximas_operaciones(request):
+	 ''' Controlador correspondiente a la pagina del listado de las proximas operaciones del medico
+
+	 Parametros:
+	 request -> Solicitud HTTP '''
+
+	 return render_to_response('solicitud_quirofano/proximas_operaciones.html')

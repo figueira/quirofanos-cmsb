@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+
+{% load staticfiles  %}
+
+{% block title %}{{ block.super }} | Mis Solicitudes{% endblock title %}	
+
+{% block navbar-nav %}
+<li><a href="#">Plan Quirúrgico</a></li>
+<li><a href="#">Mis Solicitudes</a></li>
+<li class="active"><a href="#">Próximas Operaciones</a></li>	
+{% endblock navbar-nav %}
+
+{% block navbar-nav-extra %}
+<ul class="nav navbar-nav navbar-right">
+	<p class="navbar-text">Christians González</p>
+	<li>
+		<a href="#">Mensajes
+			<span class="badge">7</span>
+		</a>
+	</li>
+	<li class="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Opciones
+			<b class="caret"></b>
+		</a>
+		<ul class="dropdown-menu">
+			<li><a href="#">Ajustes</a></li>
+			<li class="divider"></li>
+			<li><a href="#">Cerrar Sesión</a></li>
+		</ul>
+	</li>
+</ul>
+{% endblock navbar-nav-extra %}
+
+{% block content %}
+<div class="page-header">
+	<h1>Próximas Operaciones</h1>
+</div>
+<div class="row">
+	<div class="col-lg-offset-1 col-lg-10">
+		<ul class="nav nav-tabs">
+			<li>
+				<a href="#">Semana Actual
+				</a>
+			</li>
+			<li class="active">
+				<a href="#">Mes Actual
+				</a>
+			</li>
+			<li>
+				<a href="#">Año Actual
+				</a>
+			</li>
+		</ul>
+	</div>
+</div><!-- Pestañas -->
+
+<div class="row">
+	<div class="col-lg-offset-1 col-lg-10">
+		<ul class="list-group">
+			<a href="#" class="list-group-item" data-toggle="modal" data-target="#detalles-operacion">
+				<span class="label label-info">Paciente: José Castillo</span>
+				<span class="label label-default">
+					<abbr title="Intervención">Int.</abbr>
+					Quirúrgica: Reducción Gástrica
+				</span>
+				<span class="pull-right">
+					<small>
+						<strong>Fecha de Operación: XX-XX-XX</strong>
+					</small>
+				</span>
+			</a>
+			<a href="#" class="list-group-item" data-toggle="modal" data-target="#detalles-operacion">
+				<span class="label label-info">Paciente: José Castillo</span>
+				<span class="label label-default">
+					<abbr title="Intervención">Int.</abbr>
+					Quirúrgica: Reducción Gástrica
+				</span>
+				<span class="pull-right">
+					<small>
+						<strong>Fecha de Operación: XX-XX-XX</strong>
+					</small>
+				</span>
+			</a>
+			<a href="#" class="list-group-item" data-toggle="modal" data-target="#detalles-operacion">
+				<span class="label label-info">Paciente: José Castillo</span>
+				<span class="label label-default">
+					<abbr title="Intervención">Int.</abbr>
+					Quirúrgica: Reducción Gástrica
+				</span>
+				<span class="pull-right">
+					<small>
+						<strong>Fecha de Operación: XX-XX-XX</strong>
+					</small>
+				</span>
+			</a>
+			<a href="#" class="list-group-item" data-toggle="modal" data-target="#detalles-operacion">
+				<span class="label label-info">Paciente: José Castillo</span>
+				<span class="label label-default">
+					<abbr title="Intervención">Int.</abbr>
+					Quirúrgica: Reducción Gástrica
+				</span>
+				<span class="pull-right">
+					<small>
+						<strong>Fecha de Operación: XX-XX-XX</strong>
+					</small>
+				</span>
+			</a>
+			<a href="#" class="list-group-item" data-toggle="modal" data-target="#detalles-operacion">
+				<span class="label label-info">Paciente: José Castillo</span>
+				<span class="label label-default">
+					<abbr title="Intervención">Int.</abbr>
+					Quirúrgica: Reducción Gástrica
+				</span>
+				<span class="pull-right">
+					<small>
+						<strong>Fecha de Operación: XX-XX-XX</strong>
+					</small>
+				</span>
+			</a>
+			<a href="#" class="list-group-item" data-toggle="modal" data-target="#detalles-operacion">
+				<span class="label label-info">Paciente: José Castillo</span>
+				<span class="label label-default">
+					<abbr title="Intervención">Int.</abbr>
+					Quirúrgica: Reducción Gástrica
+				</span>
+				<span class="pull-right">
+					<small>
+						<strong>Fecha de Operación: XX-XX-XX</strong>
+					</small>
+				</span>
+			</a>
+			<a href="#" class="list-group-item" data-toggle="modal" data-target="#detalles-operacion">
+				<span class="label label-info">Paciente: José Castillo</span>
+				<span class="label label-default">
+					<abbr title="Intervención">Int.</abbr>
+					Quirúrgica: Reducción Gástrica
+				</span>
+				<span class="pull-right">
+					<small>
+						<strong>Fecha de Operación: XX-XX-XX</strong>
+					</small>
+				</span>
+			</a>
+			<a href="#" class="list-group-item" data-toggle="modal" data-target="#detalles-operacion">
+				<span class="label label-info">Paciente: José Castillo</span>
+				<span class="label label-default">
+					<abbr title="Intervención">Int.</abbr>
+					Quirúrgica: Reducción Gástrica
+				</span>
+				<span class="pull-right">
+					<small>
+						<strong>Fecha de Operación: XX-XX-XX</strong>
+					</small>
+				</span>
+			</a>
+			<a href="#" class="list-group-item" data-toggle="modal" data-target="#detalles-operacion">
+				<span class="label label-info">Paciente: José Castillo</span>
+				<span class="label label-default">
+					<abbr title="Intervención">Int.</abbr>
+					Quirúrgica: Reducción Gástrica
+				</span>
+				<span class="pull-right">
+					<small>
+						<strong>Fecha de Operación: XX-XX-XX</strong>
+					</small>
+				</span>
+			</a>
+			<a href="#" class="list-group-item" data-toggle="modal" data-target="#detalles-operacion">
+				<span class="label label-info">Paciente: José Castillo</span>
+				<span class="label label-default">
+					<abbr title="Intervención">Int.</abbr>
+					Quirúrgica: Reducción Gástrica
+				</span>
+				<span class="pull-right">
+					<small>
+						<strong>Fecha de Operación: XX-XX-XX</strong>
+					</small>
+				</span>
+			</a>
+		</ul>
+	</div>
+</div><!-- Lista de Operaciones -->
+
+<div class="modal fade" id="detalles-operacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">Detalles de Operación</h4>
+			</div>
+			<div class="modal-body">
+				
+			</div>
+			<div class="modal-footer modal-footer-danger">
+				<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">
+					<span class="glyphicon glyphicon-trash"></span>
+					Cancelar Operación
+				</button>
+			</div>
+		</div>
+	</div>
+</div><!-- Modal de Detalles de Solicitud -->
+{% endblock content %}
