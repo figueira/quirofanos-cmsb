@@ -4,6 +4,29 @@
 
 {% block title %}{{ block.super }} | Calendario{% endblock title %}
 
+{% block navbar-nav %}
+	<li class="active"><a href="#">Plan Quirúrgico</a></li>
+	<li><a href="#">Mis Solicitudes</a></li>
+ 	<li><a href="#">Próximas Operaciones</a></li>
+{% endblock navbar-nav %}
+
+{% block navbar-nav-extra %}
+ <ul class="nav navbar-nav navbar-right">
+ 	<p class="navbar-text">Cristians González</p>
+	<li><a href="#">Mensajes
+		<span class="badge">4</span>
+	</a></li>
+	<li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Opciones<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+        	<li><a href="#">Ajustes</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Cerrar Sesión</a></li>
+        </ul>
+    </li>
+</ul>
+{% endblock navbar-nav-extra %}
+
 {% block content %}
 <div class="page-header">
 	<h1>Calendario</h1>

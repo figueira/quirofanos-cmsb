@@ -39,6 +39,8 @@ INSTALLED_APPS = (
     'autenticacion',
     'plan_quirurgico',
     'solicitud_quirofano',
+    'coordinacion',
+    'gestion_usuarios',
 )
 
 MIDDLEWARE_CLASSES = (

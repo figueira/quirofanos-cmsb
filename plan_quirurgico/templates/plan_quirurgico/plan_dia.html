@@ -15,17 +15,42 @@ $(document).ready(function() {
 </script>
 {% endblock jquery %}
 
+{% block navbar-nav %}
+<li class="active"><a href="#">Plan Quirúrgico <span class="glyphicon glyphicon-calendar"></span></a></li>
+<li><a href="#">Mis Solicitudes <span class="glyphicon glyphicon-list"></span></a></li>
+<li><a href="#">Próximas Operaciones <span class="glyphicon glyphicon-heart"></span></a></li>
+{% endblock navbar-nav %}
+
+{% block navbar-nav-extra %}
+<ul class="nav navbar-nav navbar-right">
+	<p class="navbar-text">Cristians González</p>
+	<li><a href="#">Mensajes
+		<span class="badge">4</span>
+	</a></li>
+	<li class="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Opciones<b class="caret"></b></a>
+		<ul class="dropdown-menu">
+			<li><a href="#">Ajustes</a></li>
+			<li class="divider"></li>
+			<li><a href="#">Cerrar Sesión</a></li>
+		</ul>
+	</li>
+</ul>
+{% endblock navbar-nav-extra %}
+
 {% block content %}
 
 <div class="page-header">
-	<h1>Plan Quirúrgico <small> - Área 1 </small> <small class="pull-right">dd/mm/aaaa</small></h1>
+	<h1>Plan Quirúrgico
+		<small> - Área 1 - dd/mm/aaaa</small> 
+		<small class="pull-right">
+			<button class="btn btn-primary" id="btn_solicitar_quirofano" data-toggle="modal" data-target="#solicitar-quirofano">
+				Solicitar Quirófano
+			</button>
+		</small>
+	</h1>
 </div>
 <div class="row">
-	<div class="col-lg-offset-1">
-		<button class="btn btn-primary" id="btn_solicitar_quirofano" data-toggle="modal" data-target="#solicitar-quirofano">
-			Solicitar Quirófano
-		</button>
-	</div>
 	<div class="col-lg-10 col-lg-offset-1 hidden" id="duracion_operacion">
 		<p class="text-muted">Duración de la Intervención: XX:XX</p>
 		<p class="bg-warning">Por Favor seleccione el turno de su preferencia.</p>
@@ -66,6 +91,24 @@ $(document).ready(function() {
 		</div>
 	</div>
 </div>
+
+<!-- Modal del detalle de la operacion-->
+<div class="modal fade" id="detalle_operacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">Detalle de la Intervención Quirúrgica</h4>
+			</div>
+			<div class="modal-body">
+
+			</div>
+			<div class="modal-footer">
+			</div>
+		</div>
+	</div>
+</div>
+
 
 <!-- Plan Quirurgico por dia -->
 <div class="row">
@@ -120,9 +163,12 @@ $(document).ready(function() {
 				<tbody>
 					<tr>
 						<td class="available" data-toogle="tooltip" data-placement="right" title="Quirófano 1">
-						</td>
+						</td>	
 						<td class="unavailable" data-toogle="tooltip" data-placement="right" title="Quirófano 2">
-							<p class="label label-primary">	
+							<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle_operacion">
+								<span class="glyphicon glyphicon-fullscreen"></span>
+							</a>
+							<p class="label label-info">	
 								Paciente: Pérez Romero, José 
 							</p><br>
 							<p class="label label-default">
@@ -139,6 +185,7 @@ $(document).ready(function() {
 								En Habitación: 705
 							</p>					
 						</td>
+						
 						<td class="available" data-toogle="tooltip" data-placement="right" title="Quirófano 3">
 						</td>
 						<td class="available">
@@ -150,7 +197,10 @@ $(document).ready(function() {
 					</tr>
 					<tr>
 						<td class="unavailable" rowspan="2" data-toogle="tooltip" data-placement="right" title="Quirófano 1">
-							<p class="label label-primary">		
+														<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle_operacion">
+								<span class="glyphicon glyphicon-fullscreen"></span>
+							</a>
+							<p class="label label-info">		
 								Paciente: Rizzi, Laura
 							</p><br>
 							<p class="label label-default">
@@ -170,7 +220,10 @@ $(document).ready(function() {
 						<td class="available" data-toogle="tooltip" data-placement="right" title="Quirófano 2">
 						</td>
 						<td class="unavailable" data-toogle="tooltip" data-placement="right" title="Quirófano 3">
-							<p class="label label-primary">		
+														<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle_operacion">
+								<span class="glyphicon glyphicon-fullscreen"></span>
+							</a>
+							<p class="label label-info">		
 								Paciente: Gómez, Eleazar Jesús
 							</p><br>
 							<p class="label label-default">
@@ -196,7 +249,10 @@ $(document).ready(function() {
 					</tr>
 					<tr>
 						<td class="unavailable" data-toogle="tooltip" data-placement="right" title="Quirófano 2">
-							<p class="label label-primary">		
+							<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle_operacion">
+								<span class="glyphicon glyphicon-fullscreen"></span>
+							</a>
+							<p class="label label-info">		
 								Paciente: Angarita, Belsi
 							</p><br>
 							<p class="label label-default">

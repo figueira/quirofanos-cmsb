@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+
+{% load staticfiles  %}
+
+{% block title %}{{ block.super }} | Solicitudes de Usuarios{% endblock title %}
+
+{% block navbar-nav %}
+<li><a href="#">Plan Quirúrgico <span class="glyphicon glyphicon-calendar"></span></a></li>
+<li><a href="#">Solicitudes de Quirófano <span class="glyphicon glyphicon-list"></span></a></li>
+<li class="active"><a href="#">Solicitudes de Usuarios <span class="glyphicon glyphicon-list"></span></a></li>
+{% endblock navbar-nav %}
+
+{% block navbar-nav-extra %}
+<ul class="nav navbar-nav navbar-right">
+	<p class="navbar-text">Carolina Domínguez</p>
+	<li><a href="#">Mensajes
+		<span class="badge">1</span>
+	</a></li>
+	<li class="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Opciones<b class="caret"></b></a>
+		<ul class="dropdown-menu">
+			<li><a href="#">Ajustes</a></li>
+			<li class="divider"></li>
+			<li><a href="#">Cerrar Sesión</a></li>
+		</ul>
+	</li>
+</ul>
+{% endblock navbar-nav-extra %}
+
+{% block content %}
+<div class="page-header">
+	<h1>Solicitudes de Usuarios</h1>
+</div>
+<div class="row">
+	<div class="col-lg-offset-1 col-lg-9">
+		<ul class="nav nav-tabs">
+			<li class="active">
+				<a href="#">Pendientes
+					<span class="badge">3</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">Aprobadas
+					<span class="glyphicon glyphicon-ok"></span>
+				</a>
+			</li>
+			<li>
+				<a href="#">Rechazadas
+					<span class="glyphicon glyphicon-ban-circle"></span>
+				</a>
+			</li>
+		</ul>
+	</div>
+	<div class="col-lg-1">
+		<button type="button" class="btn btn-primary dropdown-toggle pull-right" data-toggle="dropdown">
+			Ver <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="#">Última semana</a></li>
+			<li><a href="#">Último mes</a></li>
+			<li><a href="#">Últimos 3 meses</a></li>
+		</ul>
+	</div>
+</div><!-- Pestañas y Filtro -->
+
+<div class="row">
+	<div class="col-lg-offset-1 col-lg-10">
+		<ul class="list-group">
+			<a href="javascript:void(0);" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud">
+				<span class="label label-info">Tipo de Usuario: Médico</span>
+				<span class="label label-default">
+					Nombre: Dr. Ramirez, Pedro José
+				</span>
+				<span class="pull-right">
+					<small>
+						<strong>Fecha de Solicitud: XX-XX-XX</strong>
+					</small>
+				</span>
+			</a>
+			<a href="javascript:void(0);" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud">
+				<span class="label label-info">Tipo de Usuario: Departamento</span>
+				<span class="label label-default">
+					Nombre: Farmacia
+				</span>
+				<span class="pull-right">
+					<small>
+						<strong>Fecha de Solicitud: XX-XX-XX</strong>
+					</small>
+				</span>
+			</a>
+			<a href="javascript:void(0);" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud">
+				<span class="label label-info">Tipo de Usuario: Médico</span>
+				<span class="label label-default">
+					Nombre: Dr. Ramirez, Pedro José
+				</span>
+				<span class="pull-right">
+					<small>
+						<strong>Fecha de Solicitud: XX-XX-XX</strong>
+					</small>
+				</span>
+			</a>
+		</ul>
+	</div>
+</div><!-- Lista de Solicitudes -->
+
+<!-- Paginacion de Solicitudes -->
+<div class="row">
+	<div class="col-lg-10 col-lg-offset-1">
+		<ul class="pagination">
+			<li class="disabled"><a href="#">&laquo;</a></li>
+			<li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+			<li><a href="#">&raquo;</a></li>
+		</ul>
+	</div>
+</div>
+
+<div class="modal fade" id="detalles-solicitud" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">Detalles de Solicitud</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" role="form" id="formulario-solicitud-medico">
+					<div class="form-group">
+						<label class="col-lg-2 control-label" for="nombre">Nombre</label>
+						<div class="col-lg-10">		
+							<input type="text" class="form-control" disabled="disabled" value="Pedro José">
+						</div>
+					</div><!-- Nombre -->
+					<div class="form-group">
+						<label class="col-lg-2 control-label" for="apellido">Apellido</label>
+						<div class="col-lg-10">		
+							<input type="text" class="form-control" disabled="disabled" value="Ramírez">
+						</div>
+					</div><!-- Apellido -->
+					<div class="form-group">
+						<label class="col-lg-2 control-label" for="especializacion">
+							<abbr title="Especializaciones">Esp.</abbr>
+						</label>
+						<div class="col-lg-10">
+							<span class="label label-info">Esp. 1</span>
+							<span class="label label-info">Esp. 2</span>
+						</div>
+					</div><!-- Especializacion -->
+					<div class="form-group">
+						<label class="col-lg-2 control-label" for="cedula">Cédula</label>
+						<div class="col-lg-10">		
+							<input type="text" class="form-control" disabled="disabled" value="V-XX.XXX.XXX">
+						</div>
+					</div><!-- Cedula -->
+					<div class="form-group">
+						<label class="col-lg-2 control-label" for="fechaNacimiento">
+							Fecha <abbr title="Nacimiento">Nac.</abbr>
+						</label>
+						<div class="col-lg-10">		
+							<input type="text" class="form-control" disabled="disabled" value="dd/mm/aaaa">
+						</div>
+					</div><!-- Fecha de Nacimiento -->
+					<div class="form-group">
+						<label class="col-lg-2 control-label" for="sexo">Sexo</label>
+						<div class="col-lg-10">		
+							<input type="text" class="form-control" disabled="disabled" value="Masculino">
+						</div>
+					</div><!-- Sexo -->
+					<div class="form-group">
+						<label class="col-lg-2 control-label" for="telefono">Teléfono</label>
+						<div class="col-lg-10">		
+							<input type="text" class="form-control" disabled="disabled" value="XXXX-XXX-XX-XX">
+						</div>
+					</div><!-- Telefono -->
+					<div class="form-group">
+						<label class="col-lg-2 control-label" for="email">
+							Correo <abbr title="Electrónico">Elec.</abbr>
+						</label>
+						<div class="col-lg-10">		
+							<input type="text" class="form-control" disabled="disabled" value="XXXX@GMAIL.COM">
+						</div>
+					</div><!-- Email -->
+				</form><!-- Formulario Solicitud Acceso Medico -->
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">
+					<span class="glyphicon glyphicon-remove"></span>
+					Rechazar Solicitud
+				</button>
+				<button type="button" class="btn btn-success" data-dismiss="modal">
+					<span class="glyphicon glyphicon-ok"></span>
+					Aprobar Solicitud
+				</button>
+			</div>
+		</div>
+	</div>
+</div><!-- Modal de Detalles de Solicitud -->
+
+{% endblock content %}
