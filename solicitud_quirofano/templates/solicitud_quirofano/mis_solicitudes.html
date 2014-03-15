@@ -6,17 +6,53 @@
 
 {% block jquery %}
 <script type="text/javascript">
-	$(document).ready(function() {
-		$("#ver-info-paciente").click(function() {
-			$("#formulario-solicitud-quirofano").addClass("hidden");
-			$("#formulario-solicitud-paciente").removeClass("hidden");
-		});
-
-		$("#volver-info-quirofano").click(function() {
-			$("#formulario-solicitud-paciente").addClass("hidden");
-			$("#formulario-solicitud-quirofano").removeClass("hidden");
-		});
+$(document).ready(function() {
+	$("#ver-info-paciente").click(function() {
+		$("#formulario-solicitud-quirofano").addClass("hidden");
+		$("#formulario-solicitud-paciente").removeClass("hidden");
 	});
+
+	$("#volver-info-quirofano").click(function() {
+		$("#formulario-solicitud-paciente").addClass("hidden");
+		$("#formulario-solicitud-quirofano").removeClass("hidden");
+	});
+
+	$("#ver-info-honorarios").click(function() {
+		$("#formulario-solicitud-paciente").addClass("hidden");
+		$("#formulario-solicitud-honorarios").removeClass("hidden");
+	});
+
+	$("#volver-info-paciente").click(function() {
+		$("#formulario-solicitud-honorarios").addClass("hidden");
+		$("#formulario-solicitud-paciente").removeClass("hidden");
+	});
+
+	var nivel = $("input[name=riesgo]");
+	nivel.change(function(){
+		nivel_seleccionado = $("input[name=riesgo]:checked");
+		if (nivel_seleccionado.val() == "malo")
+			$("#razon-riesgo").removeClass("hidden");
+		else {								
+			$("#razon-riesgo-input").val("");
+			$("#razon-riesgo").addClass("hidden");			
+		}
+	});
+
+	var forma_pago = $("input[name=forma-pago]");
+	forma_pago.change(function(){
+		seguro = $("input[name=forma-pago]:checked");
+		if (seguro.val() == "seguro")
+			$("#seguros").removeClass("hidden");
+		else {										
+			$("#seguros").addClass("hidden");			
+		}
+	});
+
+	var hospitalizado = $("input[name=paciente-hospitalizado]");
+	hospitalizado.change(function(){
+		$("#habitacion").toggleClass("hidden");
+	});
+});
 </script>	
 {% endblock jquery %}
 
@@ -293,7 +329,7 @@
 							<textarea class="form-control" name="observaciones" rows="3"></textarea>
 						</div>
 					</div>
-					<div class="form-group" id="nivelRiesgo">
+					<div class="form-group">
 						<label class="col-lg-2 control-label" for="riesgo">Nivel de Riesgo:</label>
 						<div class="col-lg-10">
 							<div class="radio-inline">
@@ -316,10 +352,9 @@
 							</div>
 						</div>					
 					</div>
-					<div class="form-group hidden" id="divRazon">
-						<label class="col-lg-2 control-label" for="razon">Razón de Riesgo:</label>
-						<div class="col-lg-10">
-							<textarea class="form-control" id="textareaRazon" name="razon" rows="3"></textarea>
+					<div class="form-group hidden" id="razon-riesgo">
+						<div class="col-lg-offset-2 col-lg-10">
+							<textarea class="form-control" id="razon-riesgo-input" name="razon" rows="3" placeholder="Indique razón del riesgo"></textarea>
 						</div>
 					</div>
 					<div class="form-group">
@@ -423,16 +458,16 @@
 						</div>
 					</div><!-- Diagnostico -->
 					<div clas="form-group">
-						<label class="col-lg-2 control-label" for="forma_pago">Forma de Pago:</label>
+						<label class="col-lg-2 control-label" for="forma-pago">Forma de Pago:</label>
 						<div class="col-lg-10">
 							<div class="radio-inline">
 								<label>
-									<input type="radio" name="forma_pago" value="particular" checked> Particular
+									<input type="radio" name="forma-pago" value="particular" checked> Particular
 								</label>
 							</div>
 							<div class="radio-inline">
 								<label>
-									<input type="radio" name="forma_pago" value="seguro"> Seguro								
+									<input type="radio" name="forma-pago" value="seguro"> Seguro								
 								</label>
 							</div>
 						</div>
@@ -441,24 +476,32 @@
 						<label class="col-lg-2 control-label" for="compania_aseguradora">Compañia Aseguradora:</label>
 						<div class="col-lg-10">
 							<select class="form-control" name="compania_aseguradora">
-								<option selected> </option>
-								<option>Altamira</option>
-								<option>Mercantil</option>
+								<option>Seguros Altamira</option>
+								<option>Seguros Mercantil</option>
 							</select>
 						</div>
 					</div><!-- Seguros -->
-					<div class="form-group ">
+					<div class="form-group">
 						<div class="col-lg-offset-2 col-lg-4">
 							<label class="checkbox-inline">
-								<input type="checkbox" name="paciente-hospitalizado" checked> Paciente Hospitalizado
+								<input type="checkbox" name="paciente-hospitalizado"> Paciente Hospitalizado
 							</label>
 						</div>
-						<div class="col-lg-4">
-							<label class="checkbox-inline">
-								<input type="checkbox" name="paciente-impres" checked> Paciente Suscrito a Impres
+						<div class="col-lg-6 hidden" id="habitacion">
+							<select class="form-control" name="paciente-hospitalizado-habitacion">
+								<option>hab1</option>
+								<option>hab2</option>
+								<option>hab3</option>
+							</select>
+						</div>
+					</div><!-- Paciente Hospitalizado -->
+					<div class="form-group">
+						<div class="col-lg-offset-2 col-lg-4">
+							<label class="checkbox-inline control-label">
+								<input type="checkbox" name="paciente-impres"> Paciente Suscrito a Impres
 							</label>
 						</div>
-					</div><!-- Paciente Hospitalizado, Impres -->
+					</div><!-- Paciente Impres -->
 					<div class="form-group">
 						<div class="col-lg-offset-2 col-lg-4">
 							<label class="checkbox-inline control-label">
@@ -484,7 +527,49 @@
 					</div>
 				</form><!-- Formulario Solicitud Paciente -->
 
-
+				<form class="form-horizontal hidden" role="form" id="formulario-solicitud-honorarios">				
+						<div class="form-group">
+							<label class="col-lg-2 control-label" for="nombre-anestesiologo">Anestesiólogo:</label>
+							<div class="col-lg-5">
+								<input type="text" class="form-control" name="nombre-anestesiologo" value="Juan" />
+							</div>
+							<div class="col-lg-5">
+								<input type="text" class="form-control" name="apellido-anestesiologo" value="Requesens" />
+							</div>
+						</div><!-- Anestesiologo -->
+						<div class="form-group">
+							<label class="col-lg-2 control-label" for="nombre-ayudante-1">Primer Ayudante:</label>
+							<div class="col-lg-5">
+								<input type="text" class="form-control" name="nombre-ayudante-1" value="Juan" />
+							</div>
+							<div class="col-lg-5">
+								<input type="text" class="form-control" name="apellido-ayudante-1" value="Pirela" />
+							</div>
+						</div><!-- Primer Ayudante -->
+						<div class="form-group">
+							<label class="col-lg-2 control-label" for="nombre-ayudante-2">Segundo Ayudante:</label>
+							<div class="col-lg-5">
+								<input type="text" class="form-control" name="nombre-ayudante-2" value="Juan" />
+							</div>
+							<div class="col-lg-5">
+								<input type="text" class="form-control" name="apellido-ayudante-2" value="Ramos" />
+							</div>
+						</div><!-- Segundo Ayudante -->
+						<div class="form-group">
+							<label class="col-lg-2 control-label" for="nombre-ayudante-3">Tercer Ayudante:</label>
+							<div class="col-lg-5">
+								<input type="text" class="form-control" name="nombre-ayudante-3" value="Armando" />
+							</div>
+							<div class="col-lg-5">
+								<input type="text" class="form-control" name="apellido-ayudante-3" value="Casas" />
+							</div>
+						</div><!-- Tercer Ayudante -->						
+						<div class="form-group">
+							<div class="col-lg-3">
+								<a href="javascript:void(0);" class="btn btn-default" id="volver-info-paciente">Volver</a>			
+							</div>
+						</div><!-- Submit -->
+				</form><!-- Formulario Solicitud Honorarios -->
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
