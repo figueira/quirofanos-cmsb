@@ -1,30 +1,21 @@
-{% extends "base.html" %}
+{% extends "coordinador/contexto.html" %}
 
 {% load staticfiles  %}
 
 {% block title %}{{ block.super }} | Solicitudes de Quirófano{% endblock title %}
 
-{% block navbar-nav %}
-<li><a href="#">Plan Quirúrgico <span class="glyphicon glyphicon-calendar"></span></a></li>
-<li class="active"><a href="#">Solicitudes de Quirófano <span class="glyphicon glyphicon-list"></span></a></li>
-{% endblock navbar-nav %}
+{% block scripts %}
+	<script type="text/javascript" src="{% static 'coordinador/js/solicitudes_quirofano.js' %}">
+	</script>
+{% endblock scripts %}
 
-{% block navbar-nav-extra %}
-<ul class="nav navbar-nav navbar-right">
-	<p class="navbar-text">María González</p>
-	<li><a href="#">Mensajes
-		<span class="badge">4</span>
-	</a></li>
-	<li class="dropdown">
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Opciones<b class="caret"></b></a>
-		<ul class="dropdown-menu">
-			<li><a href="#">Ajustes</a></li>
-			<li class="divider"></li>
-			<li><a href="#">Cerrar Sesión</a></li>
-		</ul>
-	</li>
-</ul>
-{% endblock navbar-nav-extra %}
+{% block nombre-usuario %}
+María González
+{% endblock nombre-usuario %}
+
+{% block numero-mensajes %}
+4
+{% endblock numero-mensajes %}
 
 {% block content %}
 <div class="page-header">
@@ -34,32 +25,58 @@
 	<div class="col-lg-offset-1 col-lg-9">
 		<ul class="nav nav-tabs">
 			<li class="active">
-				<a href="#">Pendientes
-					<span class="badge">12</span>
+				<a href="#">
+					Pendientes
+					<span class="badge">
+						12
+					</span>
 				</a>
 			</li>
 			<li>
-				<a href="#">Aprobadas
-					<span class="glyphicon glyphicon-ok"></span>
+				<a href="#">
+					Aprobadas
+					<span class="glyphicon glyphicon-ok">
+					</span>
 				</a>
 			</li>
 			<li>
-				<a href="#">Rechazadas
-					<span class="glyphicon glyphicon-ban-circle"></span>
+				<a href="#">
+					Rechazadas
+					<span class="glyphicon glyphicon-ban-circle">
+					</span>
 				</a>
 			</li>
 		</ul>
 	</div>
 	<div class="col-lg-1">
 		<button type="button" class="btn btn-primary dropdown-toggle pull-right" data-toggle="dropdown">
-			Ver <span class="caret"></span>
+			Ver
+			<span class="caret">
+			</span>
 		</button>
 		<ul class="dropdown-menu" role="menu">
-			<li><a href="#">Última semana</a></li>
-			<li><a href="#">Último mes</a></li>
-			<li><a href="#">Últimos 3 meses</a></li>
-			<li class="divider"></li>
-			<li><a href="#" data-toggle="modal" data-target="#seleccionar-periodo">Seleccionar período</a></li>
+			<li>
+				<a href="#">
+					Última semana
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					Último mes
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					Últimos 3 meses
+				</a>
+			</li>
+			<li class="divider">
+			</li>
+			<li>
+				<a href="#" data-toggle="modal" data-target="#seleccionar-periodo">
+					Seleccionar período
+				</a>
+			</li>
 		</ul>
 	</div>
 </div><!-- Pestañas y Filtro -->
@@ -68,112 +85,152 @@
 	<div class="col-lg-offset-1 col-lg-10">
 		<ul class="list-group">
 			<a href="javascript:void(0);" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud">
-				<span class="label label-info">Paciente: José Castillo</span>
+				<span class="label label-info">
+					Paciente: José Castillo
+				</span>
 				<span class="label label-default">
 					Dr(a). Ramirez, Pedro José
 				</span>
 				<span class="pull-right">
 					<small>
-						<strong>Fecha de Solicitud: XX-XX-XX</strong>
+						<strong>
+							Fecha de Solicitud: XX-XX-XX
+						</strong>
 					</small>
 				</span>
 			</a>
 			<a href="javascript:void(0);" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud">
-				<span class="label label-info">Paciente: José Castillo</span>
+				<span class="label label-info">
+					Paciente: José Castillo
+				</span>
 				<span class="label label-default">
 					Dr(a). Ramirez, Pedro José
 				</span>
 				<span class="pull-right">
 					<small>
-						<strong>Fecha de Solicitud: XX-XX-XX</strong>
+						<strong>
+							Fecha de Solicitud: XX-XX-XX
+						</strong>
 					</small>
 				</span>
 			</a>
 			<a href="javascript:void(0);" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud">
-				<span class="label label-info">Paciente: José Castillo</span>
+				<span class="label label-info">
+					Paciente: José Castillo
+				</span>
 				<span class="label label-default">
 					Dr(a). Ramirez, Pedro José
 				</span>
 				<span class="pull-right">
 					<small>
-						<strong>Fecha de Solicitud: XX-XX-XX</strong>
+						<strong>
+							Fecha de Solicitud: XX-XX-XX
+						</strong>
 					</small>
 				</span>
 			</a>
 			<a href="javascript:void(0);" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud">
-				<span class="label label-info">Paciente: José Castillo</span>
+				<span class="label label-info">
+					Paciente: José Castillo
+				</span>
 				<span class="label label-default">
 					Dr(a). Ramirez, Pedro José
 				</span>
 				<span class="pull-right">
 					<small>
-						<strong>Fecha de Solicitud: XX-XX-XX</strong>
+						<strong>
+							Fecha de Solicitud: XX-XX-XX
+						</strong>
 					</small>
 				</span>
 			</a>
 			<a href="javascript:void(0);" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud">
-				<span class="label label-info">Paciente: José Castillo</span>
+				<span class="label label-info">
+					Paciente: José Castillo
+				</span>
 				<span class="label label-default">
 					Dr(a). Ramirez, Pedro José
 				</span>
 				<span class="pull-right">
 					<small>
-						<strong>Fecha de Solicitud: XX-XX-XX</strong>
+						<strong>
+							Fecha de Solicitud: XX-XX-XX
+						</strong>
 					</small>
 				</span>
 			</a>
 			<a href="javascript:void(0);" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud">
-				<span class="label label-info">Paciente: José Castillo</span>
+				<span class="label label-info">
+					Paciente: José Castillo
+				</span>
 				<span class="label label-default">
 					Dr(a). Ramirez, Pedro José
 				</span>
 				<span class="pull-right">
 					<small>
-						<strong>Fecha de Solicitud: XX-XX-XX</strong>
+						<strong>
+							Fecha de Solicitud: XX-XX-XX
+						</strong>
 					</small>
 				</span>
 			</a>
 			<a href="javascript:void(0);" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud">
-				<span class="label label-info">Paciente: José Castillo</span>
+				<span class="label label-info">
+					Paciente: José Castillo
+				</span>
 				<span class="label label-default">
 					Dr(a). Ramirez, Pedro José
 				</span>
 				<span class="pull-right">
 					<small>
-						<strong>Fecha de Solicitud: XX-XX-XX</strong>
+						<strong>
+							Fecha de Solicitud: XX-XX-XX
+						</strong>
 					</small>
 				</span>
 			</a>
 			<a href="javascript:void(0);" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud">
-				<span class="label label-info">Paciente: José Castillo</span>
+				<span class="label label-info">
+					Paciente: José Castillo
+				</span>
 				<span class="label label-default">
 					Dr(a). Ramirez, Pedro José
 				</span>
 				<span class="pull-right">
 					<small>
-						<strong>Fecha de Solicitud: XX-XX-XX</strong>
+						<strong>
+							Fecha de Solicitud: XX-XX-XX
+						</strong>
 					</small>
 				</span>
 			</a>
 			<a href="javascript:void(0);" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud">
-				<span class="label label-info">Paciente: José Castillo</span>
+				<span class="label label-info">
+					Paciente: José Castillo
+				</span>
 				<span class="label label-default">
 					Dr(a). Ramirez, Pedro José
 				</span>
 				<span class="pull-right">
 					<small>
-						<strong>Fecha de Solicitud: XX-XX-XX</strong>
+						<strong>
+							Fecha de Solicitud: XX-XX-XX
+						</strong>
 					</small>
 				</span>
 			</a>
 			<a href="javascript:void(0);" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud">
-				<span class="label label-info">Paciente: José Castillo</span>
+				<span class="label label-info">
+					Paciente: José Castillo
+				</span>
 				<span class="label label-default">
 					Dr(a). Ramirez, Pedro José
 				</span>
 				<span class="pull-right">
 					<small>
-						<strong>Fecha de Solicitud: XX-XX-XX</strong>
+						<strong>
+							Fecha de Solicitud: XX-XX-XX
+						</strong>
 					</small>
 				</span>
 			</a>
@@ -185,10 +242,32 @@
 <div class="row">
 	<div class="col-lg-10 col-lg-offset-1">
 		<ul class="pagination">
-			<li class="disabled"><a href="#">&laquo;</a></li>
-			<li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-			<li><a href="#">2 <span class="sr-only">(current)</span></a></li>
-			<li><a href="#">&raquo;</a></li>
+			<li class="disabled">
+				<a href="#">
+					&laquo;
+				</a>
+			</li>
+			<li class="active">
+				<a href="#">
+					1
+					<span class="sr-only">
+						(current)
+					</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					2
+					<span class="sr-only">
+						(current)
+					</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					&raquo;
+				</a>
+			</li>
 		</ul>
 	</div>
 </div>
@@ -197,23 +276,30 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">Detalles de Solicitud</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					Detalles de Solicitud
+				</h4>
 			</div>
 			<div class="modal-body">
 
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">
-					<span class="glyphicon glyphicon-floppy-disk"></span>
+					<span class="glyphicon glyphicon-floppy-disk">
+					</span>
 					Guardar Cambios
 				</button>
 				<button type="button" class="btn btn-danger" data-dismiss="modal">
-					<span class="glyphicon glyphicon-remove"></span>
+					<span class="glyphicon glyphicon-remove">
+					</span>
 					Rechazar Solicitud
 				</button>
 				<button type="button" class="btn btn-success" data-dismiss="modal">
-					<span class="glyphicon glyphicon-ok"></span>
+					<span class="glyphicon glyphicon-ok">
+					</span>
 					Aprobar Solicitud
 				</button>
 			</div>
@@ -225,32 +311,44 @@
 	<div class="modal-dialog modal-sm">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">Seleccione Período</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					Seleccione Período
+				</h4>
 			</div>
 			<div class="modal-body">
 				<form role="form" class="form-horizontal">
 					<div class="form-group">
-						<div class="col-lg-3">
-							<label for="desde">Desde:</label>
+						<div class="col-lg-2">
+							<label for="desde">
+								Desde:
+							</label>
 						</div>
-						<div class="col-lg-9">
+						<div class="col-lg-10">
 							<input type="date" class="form-control" name="desde">
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-lg-3">
-							<label for="hasta">Hasta:</label>
+						<div class="col-lg-2">
+							<label for="hasta">
+								Hasta:
+							</label>
 						</div>
-						<div class="col-lg-9">
+						<div class="col-lg-10">
 							<input type="date" class="form-control" name="hasta">
 						</div>
 					</div>
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-				<button type="button" class="btn btn-primary">Aceptar</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+					Cancelar
+				</button>
+				<button type="button" class="btn btn-primary">
+					Aceptar
+				</button>
 			</div>
 		</div>
 	</div>

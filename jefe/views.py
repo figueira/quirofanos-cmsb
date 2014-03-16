@@ -9,4 +9,4 @@ def solicitudes_usuarios(request):
 	Parametros:
 	request -> Solicitud HTTP '''
 
-	return render_to_response('gestion_usuarios/solicitudes_usuarios.html')
+	return render_to_response('jefe/solicitudes_usuarios.html')

@@ -1,0 +1,27 @@
+{% extends "contexto.html" %}
+
+{% load staticfiles  %}
+
+{% block navbar-nav %}
+<li class="navegacion" id="seccion-plan-quirurgico">
+	<a href="#">
+		Plan Quirúrgico
+		<span class="glyphicon glyphicon-calendar">
+		</span>
+	</a>
+</li>
+<li class="navegacion" id="seccion-solicitudes-quirofano">
+	<a href="#">
+		Solicitudes de Quirófano
+		<span class="glyphicon glyphicon-list">
+		</span>
+	</a>
+</li>
+<li class="navegacion" id="seccion-solicitudes-usuarios">
+	<a href="#">
+		Solicitudes de Usuarios
+		<span class="glyphicon glyphicon-list">
+		</span>
+	</a>
+</li>
+{% endblock navbar-nav %}

@@ -9,4 +9,4 @@ def solicitudes_quirofano(request):
 	Parametros:
 	request -> Solicitud HTTP '''
 
-	return render_to_response('coordinacion/solicitudes_quirofano.html')
+	return render_to_response('coordinador/solicitudes_quirofano.html')

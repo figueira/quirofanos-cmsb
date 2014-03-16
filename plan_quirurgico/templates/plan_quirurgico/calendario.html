@@ -1,31 +1,22 @@
-{% extends "base.html" %}
+<!-- DEPENDIENDO DEL TIPO DE USUARIO SE EXTENDERA UN CONTEXTO DISTINTO -->
+{% extends "medico/contexto.html" %}
 
 {% load staticfiles %}
 
 {% block title %}{{ block.super }} | Calendario{% endblock title %}
 
-{% block navbar-nav %}
-	<li class="active"><a href="#">Plan Quirúrgico</a></li>
-	<li><a href="#">Mis Solicitudes</a></li>
- 	<li><a href="#">Próximas Operaciones</a></li>
-{% endblock navbar-nav %}
+{% block scripts %}
+<script type="text/javascript" src="{% static 'plan_quirurgico/js/calendario.js' %}">
+</script>
+{% endblock scripts %}
 
-{% block navbar-nav-extra %}
- <ul class="nav navbar-nav navbar-right">
- 	<p class="navbar-text">Cristians González</p>
-	<li><a href="#">Mensajes
-		<span class="badge">4</span>
-	</a></li>
-	<li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Opciones<b class="caret"></b></a>
-        <ul class="dropdown-menu">
-        	<li><a href="#">Ajustes</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Cerrar Sesión</a></li>
-        </ul>
-    </li>
-</ul>
-{% endblock navbar-nav-extra %}
+{% block nombre-usuario %}
+Cristians González
+{% endblock nombre-usuario %}
+
+{% block numero-mensajes %}
+3
+{% endblock numero-mensajes %}
 
 {% block content %}
 <div class="page-header">
@@ -34,35 +25,45 @@
 <div class="row">
 	<div class="col-lg-offset-1 col-lg-2">
 		<a href="#">
-			<span class="glyphicon glyphicon-chevron-left"></span>
+			<span class="glyphicon glyphicon-chevron-left">
+			</span>
 		</a>
-		<span class="lead">Marzo 2014</span>
+		<span class="lead">
+			Marzo 2014
+		</span>
 		<a href="#">
-			<span class="glyphicon glyphicon-chevron-right"></span>
+			<span class="glyphicon glyphicon-chevron-right">
+			</span>
 		</a>
 	</div>
 	<div class="pull-left">
 		<ul class="nav nav-pills">
 			<li class="active">
-				<a href="#">Área 1</a>
+				<a href="#">
+					Área 1
+				</a>
 			</li>
 			<li>
-				<a href="#">Área 2</a>
+				<a href="#">
+					Área 2
+				</a>
 			</li>
 			<li>
-				<a href="#">Área 3</a>
+				<a href="#">
+					Área 3
+				</a>
 			</li>
 			<li>
-				<a href="#">Área 4</a>
+				<a href="#">
+					Área 4
+				</a>
 			</li>
 		</ul>
 	</div>
 </div><!-- Mes y Areas -->
 
 <div class="row">
-	<div class="col-lg-1">
-	</div>
-	<div class="col-lg-10">
+	<div class="col-lg-offset-1 col-lg-10">
 		<table class="table table-bordered table-responsive table-hover">
 			<thead>
 				<tr>

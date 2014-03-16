@@ -74,7 +74,7 @@ a:hover
 /* estilo badges */
 .badge
 {
-	background-color:rgba(182,79,79,0.5)!important	
+	background-color:rgba(182,79,79,0.5)!important
 }
 
 /* estilo boton primario */
@@ -151,9 +151,10 @@ a:hover
 	background-color:rgba(182,79,79,0.5)!important
 }
 
-/* estilo pestañas */
-.nav-tabs {
-	border-bottom: none;
+/* estilo pestanas */
+.nav-tabs
+{
+	border-bottom:none
 }
 
 /* estilo etiquetas */
@@ -175,27 +176,27 @@ a:hover
 }
 
 /* estilo de primera columna del plan quirurgico */
-.table-horas > thead > tr > th, .table-horas > tbody > tr > td
+.table-horas > thead > tr > th,.table-horas > tbody > tr > td
 {
-	background-color: white;
-	border: none;
-	text-align: center;
-	font-weight: bold;
-	padding-left: 0;
-	padding-right: 0;
+	background-color:#fff;
+	border:none;
+	text-align:center;
+	font-weight:700;
+	padding-left:0;
+	padding-right:0
 }
 
 /* estilo de las filas del plan quirurgico */
-.table-plan > tbody > tr, .table-horas > tbody > tr
+.table-plan > tbody > tr,.table-horas > tbody > tr
 {
 	line-height:120px;
 	height:120px;
 	min-height:120px;
-	max-height:120px;
+	max-height:120px
 }
 
 /* estilo de las columnas del plan quirurgico */
-.table-plan > tbody > tr> td, .table-plan > thead > tr > th
+.table-plan > tbody > tr> td,.table-plan > thead > tr > th
 {
 	width:310px;
 	min-width:310px;
@@ -205,41 +206,42 @@ a:hover
 /* scroll de la tabla de plan quirurgico */
 .scrollable
 {
-	overflow-x: scroll;
-	overflow-y: hidden
+	overflow-x:scroll;
+	overflow-y:hidden
 }
 
 .table-plan>tbody>tr>td.unavailable:hover,.table-plan>tbody>tr>th.unavailable:hover,.table-plan>tbody>tr.unavailable:hover>td,.table-plan>tbody>tr.unavailable:hover>th
 {
-	background-color:rgba(196,196,196, 0.3)!important
+	background-color:rgba(196,196,196,0.3)!important
 }
 
 /* estilo de los contextual backgrounds */
 .bg-warning
 {
-	padding: 15px;
+	padding:15px
 }
 
 /* estilo modals */
-.modal-footer-danger {
-	background-color: rgba(255, 0, 0, 0.1);
+.modal-footer-danger
+{
+	background-color:rgba(255,0,0,0.1)
 }
 
 /* estilo de la paginacion */
-.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus
+.pagination>.active>a,.pagination>.active>span,.pagination>.active>a:hover,.pagination>.active>span:hover,.pagination>.active>a:focus,.pagination>.active>span:focus
 {
-	background-color: rgba(224, 155, 155, 1)!important;
-	border-color: rgba(224, 155, 155, 1)!important;
-	color: #FFF !important;
+	background-color:rgba(224,155,155,1)!important;
+	border-color:rgba(224,155,155,1)!important;
+	color:#FFF!important
 }
 
-.pagination>li>a:hover, .pagination>li>span:hover, .pagination>li>a:focus, .pagination>li>span:focus, .pagination>li>a, .pagination>li>span
+.pagination>li>a:hover,.pagination>li>span:hover,.pagination>li>a:focus,.pagination>li>span:focus,.pagination>li>a,.pagination>li>span
 {
-	color: rgba(0, 0, 0, 0.7) !important;
+	color:rgba(0,0,0,0.7)!important
 }
 
 /* estilo de las etiquetas de informacion */
 .label-info
 {
-	background-color: rgba(36, 83, 97, 0.77)!important
+	background-color:rgba(36,83,97,0.77)!important
 }

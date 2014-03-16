@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% load staticfiles  %}
+
+{% block navbar-nav-extra %}
+<ul class="nav navbar-nav navbar-right">
+	<p class="navbar-text">
+		{% block nombre-usuario %}
+		{% endblock nombre-usuario %}
+	</p>
+	<li class="navegacion" id="seccion-mensajes">
+		<a href="#">
+			Mensajes
+			<span class="badge">
+				{% block numero-mensajes %}
+				{% endblock numero-mensajes %}
+			</span>
+		</a>
+	</li>
+	<li class="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+			Opciones
+			<b class="caret">
+			</b>
+		</a>
+		<ul class="dropdown-menu">
+			<li>
+				<a href="#">
+					Ajustes
+				</a>
+			</li>
+			<li class="divider">
+			</li>
+			<li>
+				<a href="#">
+					Cerrar Sesión
+				</a>
+			</li>
+		</ul>
+	</li>
+</ul>
+{% endblock navbar-nav-extra %}

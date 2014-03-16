@@ -3,13 +3,13 @@ from django.shortcuts import render_to_response
 
 # Create your views here.
 
-def solicitud(request):
+def solicitud_quirofano(request):
 	 ''' Controlador correspondiente a la pagina del formulario de una nueva solicitud de quirofano
 
 	 Parametros:
 	 request -> Solicitud HTTP '''
 
-	 return render_to_response('solicitud_quirofano/solicitud.html')
+	 return render_to_response('medico/solicitud_quirofano.html')
 
 def mis_solicitudes(request):
 	 ''' Controlador correspondiente a la pagina del listado de solicitudes realizadas por el medico
@@ -17,7 +17,7 @@ def mis_solicitudes(request):
 	 Parametros:
 	 request -> Solicitud HTTP '''
 
-	 return render_to_response('solicitud_quirofano/mis_solicitudes.html')
+	 return render_to_response('medico/mis_solicitudes.html')
 
 def proximas_operaciones(request):
 	 ''' Controlador correspondiente a la pagina del listado de las proximas operaciones del medico
@@ -25,4 +25,4 @@ def proximas_operaciones(request):
 	 Parametros:
 	 request -> Solicitud HTTP '''
 
-	 return render_to_response('solicitud_quirofano/proximas_operaciones.html')
+	 return render_to_response('medico/proximas_operaciones.html')

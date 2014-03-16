@@ -38,9 +38,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'autenticacion',
     'plan_quirurgico',
-    'solicitud_quirofano',
-    'coordinacion',
-    'gestion_usuarios',
+    'medico',
+    'coordinador',
+    'jefe',
 )
 
 MIDDLEWARE_CLASSES = (
