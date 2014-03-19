@@ -204,10 +204,9 @@ a:hover
 }
 
 /* scroll de la tabla de plan quirurgico */
-.scrollable
-{
-	overflow-x:scroll;
-	overflow-y:hidden
+.scrollable-plan
+{	
+	overflow:auto
 }
 
 .table-plan>tbody>tr>td.unavailable:hover,.table-plan>tbody>tr>th.unavailable:hover,.table-plan>tbody>tr.unavailable:hover>td,.table-plan>tbody>tr.unavailable:hover>th
