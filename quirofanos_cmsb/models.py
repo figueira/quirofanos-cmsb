@@ -1,5 +1,6 @@
 from django.db import models
-
+import datetime
+import time
 
 # Tipos de Privilegios
 PRIVILEGIO = (
@@ -131,7 +132,7 @@ class Departamento (models.Model):
 class Quirofano(models.Model):
 	''' Clase que representa un Quirofano '''
 	nombre = models.IntegerField() # Validacion mayor o igual que cero
-	area = models.CharField(max_length=1, choices=NOMBRE_AREA)
+	area = models.CharField(max_length=3, choices=NOMBRE_AREA)
 
 
 class MaterialQuirurgico(models.Model):
@@ -162,13 +163,13 @@ class Paciente(models.Model):
 	fecha_nacimiento = models.DateField(auto_now=False, auto_now_add=False)
 	telefono = models.CharField(max_length=12) # Validar min_length
 	genero = models.CharField(max_length=1,choices=GENERO)
-	numero_expediente = models.IntegerField(max_length=5, blank=True, unique=True) # Ver formato 
-	numero_habitacion = models.CharField(max_length=5, blank=True) # Ver formato
-	numero_inscripcion_medico = models.CharField(max_length=10, blank=True, unique=True) # Ver formato
+	numero_expediente = models.IntegerField(max_length=5, blank=True, unique=True, null=True) # Ver formato 
+	numero_habitacion = models.CharField(max_length=5, blank=True, null=True) # Ver formato
+	numero_inscripcion_medico = models.CharField(max_length=10, blank=True, unique=True, null=True) # Ver formato
 	diagnostico_ingreso = models.TextField()
-	servicios_operatorios_requeridos = models.ManyToManyField(ServicioOperatorio, blank=True)
-	familiar_medico = models.ForeignKey(Medico, blank=True)
-	parentezco_familiar_medico = models.CharField(max_length=1, choices=PARENTEZCO, blank=True)
+	servicios_operatorios_requeridos = models.ManyToManyField(ServicioOperatorio, blank=True, null=True)
+	familiar_medico = models.ForeignKey(Medico, blank=True, null=True)
+	parentezco_familiar_medico = models.CharField(max_length=1, choices=PARENTEZCO, blank=True, null=True)
 
 
 class IntervencionQuirurgica(models.Model):
@@ -176,23 +177,32 @@ class IntervencionQuirurgica(models.Model):
 	fecha_intervencion = models.DateField(auto_now=False, auto_now_add=False)
 	hora_inicio = models.TimeField(auto_now=False, auto_now_add=False)
 	hora_fin = models.TimeField(auto_now=False, auto_now_add=False) # Validacion mayor que hora_inicio
-	duracion = models.DecimalField(max_digits=2, decimal_places=2)
+	duracion = models.DecimalField(max_digits=4, decimal_places=2)
 	estado = models.CharField(max_length=1, choices=ESTADO_INTERVENCION_QUIRURGICA)
 	preferencia_anestesica = models.CharField(max_length=1, choices=TIPO_ANESTESIA)
-	observaciones = models.TextField(blank=True)
+	observaciones = models.TextField(blank=True, null=True)
 	riesgo = models.CharField(max_length=1, choices=TIPO_RIESGO)
-	razon_riesgo = models.TextField(blank=True) #Validacion != null cuando riesgo es malo
+	razon_riesgo = models.TextField(blank=True, null=True) #Validacion != null cuando riesgo es malo
 	paciente = models.OneToOneField(Paciente)
-	materiales_quirurgicos_requeridos = models.ManyToManyField(MaterialQuirurgico, blank=True)
-	equipos_especiales_requeridos = models.ManyToManyField(EquipoEspecial, blank=True)
+	materiales_quirurgicos_requeridos = models.ManyToManyField(MaterialQuirurgico, blank=True, null=True)
+	equipos_especiales_requeridos = models.ManyToManyField(EquipoEspecial, blank=True, null=True)
 	tipo_intervencion = models.ForeignKey(TipoIntervencionQuirurgica)
 	quirofano = models.ForeignKey(Quirofano)
 	medicos_participantes = models.ManyToManyField(Medico, through='Participacion')
+	
 
-	'''def calcular_duracion(self):
-		 Calcula la duracion de una Intervencion Quirurgica
-		self.duracion = self.hora_fin - self.hora_inicio # Calcular'''
+	def save(self):
+		''' Calcula la duracion de una Intervencion Quirurgica '''
+		hora_inicio = time.strptime(self.hora_inicio, "%H:%M")
+		hora_fin = time.strptime(self.hora_fin, "%H:%M")
+		hora_inicio_seg = datetime.timedelta(hours = hora_inicio.tm_hour, minutes = hora_inicio.tm_min).total_seconds()
+		hora_fin_seg = datetime.timedelta(hours = hora_fin.tm_hour, minutes = hora_fin.tm_min).total_seconds()
+		diferencia_horas = float(hora_fin_seg) - float(hora_inicio_seg)
+		self.duracion = diferencia_horas / 3600
 
+		super(IntervencionQuirurgica, self).save()
+
+	
 
 class Participacion(models.Model):
 	''' Clase que representa la Participacion de un Medico en una
