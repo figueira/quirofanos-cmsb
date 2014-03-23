@@ -5,3 +5,6 @@
 # Ignore text editors recovery files
 *~
 *.swp
+
+# Ignore migrations
+*/migrations/
