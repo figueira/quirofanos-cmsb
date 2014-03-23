@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.validators import MinLengthValidator, MaxLengthValidator, MinValueValidator
+from django.core.exceptions import ValidationError
 
 
 # Tipos de Privilegios
@@ -89,13 +91,36 @@ PARENTEZCO = (
 	('9', 'Sobrino(a)'),
 	)
 
+# Validaciones
+
+def validate_razon_riesgo(value,riesgo):
+    '''Validacion de razon de riesgo distinto de null cuando el
+        riesgo es malo
+            
+        Parametros:
+        value: Ya toma la razon de riesgo
+        riesgo: Valor del attr riesgo
+            
+        Levanta un ValidationError si falla la validacion'''
+
+    if riesgo == 'malo':
+        if value == None:
+            raise ValidationError(u'%s La razon no puede ser vacia si el riesgo es malo')
+
+
+# Clases
+
 class Cuenta (models.Model):
 	''' Clase que representa una Cuenta de Usuario '''
 	nombre_usuario = models.CharField(max_length=20, unique=True)
-	contrasena = models.CharField(max_length=64) # Validar min_length
+	contrasena = models.CharField(validators=[MinLengthValidator(64)], max_length=64 ) # Validar min_length
 	estado = models.CharField(max_length=1, choices=ESTADO_CUENTA)
 	privilegio = models.CharField(max_length=1, choices=PRIVILEGIO)
 	fecha_creacion = models.DateField(auto_now=True, auto_now_add=True)
+
+	def save(self):
+		self.full_clean()
+		super(Cuenta,self).save()
 
 
 class Especializacion(models.Model):
@@ -111,7 +136,7 @@ class Medico (models.Model):
 	cedula = models.CharField(max_length=12, unique=True)
 	genero = models.CharField(max_length=1, choices=GENERO)
 	email = models.EmailField(max_length=254, unique=True)	
-	telefono = models.CharField(max_length=12)	# Validar min_length
+	telefono = models.CharField(validators = [MinLengthValidator(12)], max_length=12 )	# Validar min_length
 	especializaciones = models.ManyToManyField(Especializacion)
 
 
@@ -125,12 +150,12 @@ class Departamento (models.Model):
 	cuenta = models.OneToOneField(Cuenta)
 	nombre = models.CharField(max_length=20, unique=True)
 	email = models.EmailField(max_length=254, unique=True)	
-	telefono = models.CharField(max_length=12) # Validar min_length
+	telefono = models.CharField(validators = [MinLengthValidator(12)], max_length=12 )	# Validar min_length
 	
 
 class Quirofano(models.Model):
 	''' Clase que representa un Quirofano '''
-	nombre = models.IntegerField() # Validacion mayor o igual que cero
+	nombre = models.IntegerField(validators = [MinValueValidator(0)] ) # Validacion mayor o igual que cero
 	area = models.CharField(max_length=1, choices=NOMBRE_AREA)
 
 
@@ -160,7 +185,7 @@ class Paciente(models.Model):
 	apellido = models.CharField(max_length=20)
 	cedula = models.CharField(max_length=12, unique=True)
 	fecha_nacimiento = models.DateField(auto_now=False, auto_now_add=False)
-	telefono = models.CharField(max_length=12) # Validar min_length
+	telefono = models.CharField(validators = [MinLengthValidator(12)], max_length=12 )	# Validar min_length
 	genero = models.CharField(max_length=1,choices=GENERO)
 	numero_expediente = models.IntegerField(max_length=5, blank=True, unique=True) # Ver formato 
 	numero_habitacion = models.CharField(max_length=5, blank=True) # Ver formato
@@ -181,13 +206,15 @@ class IntervencionQuirurgica(models.Model):
 	preferencia_anestesica = models.CharField(max_length=1, choices=TIPO_ANESTESIA)
 	observaciones = models.TextField(blank=True)
 	riesgo = models.CharField(max_length=1, choices=TIPO_RIESGO)
-	razon_riesgo = models.TextField(blank=True) #Validacion != null cuando riesgo es malo
+	razon_riesgo = models.TextField(blank=True) #, validators = [validate_razon_riesgo(riesgo)] ) #Validacion != null cuando riesgo es malo
 	paciente = models.OneToOneField(Paciente)
 	materiales_quirurgicos_requeridos = models.ManyToManyField(MaterialQuirurgico, blank=True)
 	equipos_especiales_requeridos = models.ManyToManyField(EquipoEspecial, blank=True)
 	tipo_intervencion = models.ForeignKey(TipoIntervencionQuirurgica)
 	quirofano = models.ForeignKey(Quirofano)
 	medicos_participantes = models.ManyToManyField(Medico, through='Participacion')
+
+
 
 	'''def calcular_duracion(self):
 		 Calcula la duracion de una Intervencion Quirurgica
@@ -208,6 +235,6 @@ class Reservacion (models.Model):
 	codigo = models.CharField(max_length=5, unique=True) # Decidir generacion automatica  # Validar min_length
 	estado = models.CharField(max_length=1, choices=ESTADO_RESERVACION)
 	tipo_solicitud = models.CharField(max_length=1, choices=TIPO_SOLICITUD_QUIROFANO)
-	dias_hospitalizacion = models.IntegerField() # Validacion mayor o igual que cero
+	dias_hospitalizacion = models.IntegerField(validators = [MinValueValidator(0)] ) # Validacion mayor o igual que cero
 	medico = models.ForeignKey(MedicoTratante)
 	intervencion_quirurgica = models.OneToOneField(IntervencionQuirurgica)
