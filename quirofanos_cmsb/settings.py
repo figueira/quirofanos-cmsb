@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'medico',
     'coordinador',
     'jefe',
+    'quirofanos_cmsb',
 )
 
 MIDDLEWARE_CLASSES = (
