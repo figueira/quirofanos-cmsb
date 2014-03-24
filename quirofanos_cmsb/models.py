@@ -94,22 +94,11 @@ PARENTEZCO = (
 	('9', 'Sobrino(a)'),
 	)
 
-# Validaciones
 
-def validate_razon_riesgo(value,riesgo):
-    '''Validacion de razon de riesgo distinto de null cuando el
-        riesgo es malo
-            
-        Parametros:
-        value: Ya toma la razon de riesgo
-        riesgo: Valor del attr riesgo
-            
-        Levanta un ValidationError si falla la validacion'''
 
-    if riesgo == 'malo':
-        if value == None:
-            raise ValidationError(u'%s La razon no puede ser vacia si el riesgo es malo')
-
+def validate_razon_riesgo(value, riesgo):
+	if value != None:		
+		raise ValidationError(u'%s La razon no puede ser vacia si el riesgo es malo')
 
 # Clases
 
@@ -141,7 +130,10 @@ class Medico (models.Model):
 	email = models.EmailField(max_length=254, unique=True)	
 	telefono = models.CharField(validators = [MinLengthValidator(12)], max_length=12 )	# Validar min_length
 	especializaciones = models.ManyToManyField(Especializacion)
-
+	
+	def save(self):
+		self.full_clean()
+		super(Cuenta,self).save()
 
 class MedicoTratante (models.Model):
 	''' Clase que representa un Medico Tratante '''	
@@ -154,13 +146,19 @@ class Departamento (models.Model):
 	nombre = models.CharField(max_length=20, unique=True)
 	email = models.EmailField(max_length=254, unique=True)	
 	telefono = models.CharField(validators = [MinLengthValidator(12)], max_length=12 )	# Validar min_length
-	
+
+	def save(self):
+		self.full_clean()
+		super(Cuenta,self).save()	
 
 class Quirofano(models.Model):
 	''' Clase que representa un Quirofano '''
 	nombre = models.IntegerField(validators = [MinValueValidator(0)] ) # Validacion mayor o igual que cero
 	area = models.CharField(max_length=3, choices=NOMBRE_AREA)
 
+	def save(self):
+		self.full_clean()
+		super(Cuenta,self).save()
 
 class MaterialQuirurgico(models.Model):
 	''' Clase que representa un Material Quirurgico '''
@@ -198,6 +196,9 @@ class Paciente(models.Model):
 	familiar_medico = models.ForeignKey(Medico, blank=True, null=True)
 	parentezco_familiar_medico = models.CharField(max_length=1, choices=PARENTEZCO, blank=True, null=True)
 
+	def save(self):
+		self.full_clean()
+		super(Cuenta,self).save()
 
 class IntervencionQuirurgica(models.Model):
 	''' Clase que representa una Intervencion Quirurgica '''
@@ -209,7 +210,7 @@ class IntervencionQuirurgica(models.Model):
 	preferencia_anestesica = models.CharField(max_length=1, choices=TIPO_ANESTESIA)
 	observaciones = models.TextField(blank=True, null=True)
 	riesgo = models.CharField(max_length=1, choices=TIPO_RIESGO)
-	razon_riesgo = models.TextField(blank=True, null=True) #Validacion != null cuando riesgo es malo
+	razon_riesgo = models.TextField(blank=True, null=True ) #Validacion != null cuando riesgo es malo
 	paciente = models.OneToOneField(Paciente)
 	materiales_quirurgicos_requeridos = models.ManyToManyField(MaterialQuirurgico, blank=True, null=True)
 	equipos_especiales_requeridos = models.ManyToManyField(EquipoEspecial, blank=True, null=True)
@@ -217,12 +218,13 @@ class IntervencionQuirurgica(models.Model):
 	quirofano = models.ForeignKey(Quirofano)
 	medicos_participantes = models.ManyToManyField(Medico, through='Participacion')
 
-
-	'''def calcular_duracion(self):
-		 Calcula la duracion de una Intervencion Quirurgica
-		self.duracion = self.hora_fin - self.hora_inicio # Calcular'''
 	def save(self):
 		''' Calcula la duracion de una Intervencion Quirurgica '''
+		if self.riesgo == 'M':
+			if self.razon_riesgo == None:		
+				raise ValidationError(u'%s La razon no puede ser vacia si el riesgo es malo')
+
+		self.full_clean()		
 		hora_inicio = time.strptime(self.hora_inicio, "%H:%M")
 		hora_fin = time.strptime(self.hora_fin, "%H:%M")
 		hora_inicio_seg = datetime.timedelta(hours = hora_inicio.tm_hour, minutes = hora_inicio.tm_min).total_seconds()
@@ -231,6 +233,7 @@ class IntervencionQuirurgica(models.Model):
 		self.duracion = diferencia_horas / 3600
 
 		super(IntervencionQuirurgica, self).save()
+
 
 	
 
@@ -251,3 +254,7 @@ class Reservacion (models.Model):
 	dias_hospitalizacion = models.IntegerField(validators = [MinValueValidator(0)] ) # Validacion mayor o igual que cero
 	medico = models.ForeignKey(MedicoTratante)
 	intervencion_quirurgica = models.OneToOneField(IntervencionQuirurgica)
+
+	def save(self):
+		self.full_clean()
+		super(Cuenta,self).save()
