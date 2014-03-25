@@ -3,7 +3,7 @@ from django.db import models
 from django.core.validators import MinLengthValidator, MaxLengthValidator, MinValueValidator
 from django.core.exceptions import ValidationError
 
-from hashids import Hashids
+# from hashids import Hashids
 import datetime
 import time
 import uuid
