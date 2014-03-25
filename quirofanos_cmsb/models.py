@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 
 
@@ -40,8 +41,8 @@ TIPO_SOLICITUD_QUIROFANO = (
 ESTADO_INTERVENCION_QUIRURGICA = (
 	('0', 'En Espera'),
 	('1', 'En Curso'),
-	('2', 'En Recuperacion'),
-	('3', 'En Habitacion'),
+	('2', 'En Recuperación'),
+	('3', 'En Habitación'),
 	)
 
 # Tipos de Anestesia
@@ -59,17 +60,17 @@ TIPO_RIESGO = (
 
 # Nombres de Areas
 NOMBRE_AREA = (
-	('QG', 'Quirofano General'),
+	('QG', 'Quirófano General'),
 	('A', 'Ambulatorio'),
 	('SP', 'Sala de Parto'),
-	('SEE', 'Sala de Estudios Endoscopicos'),
+	('SEE', 'Sala de Estudios Endoscópicos'),
 	('SH', 'Sala de Hemodinamia'),
 	('AS', 'Anestesia en Servicio')
 	)
 
 # Roles de medicos dentro de una Intervencion Quirurgica
 ROL_PARTICIPACION = (
-	('0', 'Anestesiologo'),
+	('0', 'Anestesiólogo'),
 	('1', 'Primer Ayudante'),
 	('2', 'Segundo Ayudante'),
 	('3', 'Tercer Ayudante'),
@@ -83,7 +84,7 @@ PARENTEZCO = (
 	('3', 'Hermano(a)'),
 	('4', 'Abuelo(a)'),
 	('5', 'Nieto(a)'),
-	('6', 'Tio(a)'),
+	('6', 'Tío(a)'),
 	('7', 'Primo(a)'),
 	('8', 'Esposo(a)'),
 	('9', 'Sobrino(a)'),
