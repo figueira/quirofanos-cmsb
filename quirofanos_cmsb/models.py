@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.core.validators import MinLengthValidator, MaxLengthValidator, MinValueValidator
+from django.core.validators import MinLengthValidator, MinValueValidator
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 
 # from hashids import Hashids
 import datetime
@@ -99,20 +100,24 @@ PARENTEZCO = (
 
 class Cuenta (models.Model):
 	''' Clase que representa una Cuenta de Usuario '''
-	nombre_usuario = models.CharField(max_length=20, unique=True)
-	contrasena = models.CharField(validators=[MinLengthValidator(64)], max_length=64)
+	usuario = models.OneToOneField(User)
 	estado = models.CharField(max_length=1, choices=ESTADO_CUENTA)
-	privilegio = models.CharField(max_length=1, choices=PRIVILEGIO)
-	fecha_creacion = models.DateField(auto_now=True, auto_now_add=True)
+	privilegio = models.CharField(max_length=1, choices=PRIVILEGIO)	
 
 	def save(self):
 		''' Sobreescribe el save() '''
 		self.full_clean()
 		super(Cuenta, self).save()
 
+	def __unicode__(self):
+		return self.usuario.username + ', ' + self.get_estado_display() + ', ' + self.get_privilegio_display()
+
 class Especializacion(models.Model):
 	''' Clase que representa una Especializacion Medica'''
 	nombre = models.CharField(max_length=30)
+
+	def __unicode__(self):
+		return self.nombre
 
 class Medico (models.Model):
 	''' Clase que representa un Medico '''
@@ -120,8 +125,7 @@ class Medico (models.Model):
 	nombre = models.CharField(max_length=20)
 	apellido = models.CharField(max_length=20)
 	cedula = models.CharField(max_length=12, unique=True)
-	genero = models.CharField(max_length=1, choices=GENERO)
-	email = models.EmailField(max_length=254, unique=True)	
+	genero = models.CharField(max_length=1, choices=GENERO)	
 	telefono = models.CharField(validators=[MinLengthValidator(12)], max_length=12)
 	especializaciones = models.ManyToManyField(Especializacion)
 	
@@ -130,21 +134,29 @@ class Medico (models.Model):
 		self.full_clean()
 		super(Medico, self).save()
 
+	def __unicode__(self):
+		return self.nombre + ' ' + self.apellido
+
 class MedicoTratante (models.Model):
 	''' Clase que representa un Medico Tratante '''	
 	medico = models.OneToOneField(Medico)
 
+	def __unicode__(self):
+		return '' + self.medico.__unicode__()
+
 class Departamento (models.Model):
 	''' Clase que representa un Departamento '''
 	cuenta = models.OneToOneField(Cuenta)
-	nombre = models.CharField(max_length=20, unique=True)
-	email = models.EmailField(max_length=254, unique=True)	
+	nombre = models.CharField(max_length=20, unique=True)	
 	telefono = models.CharField(validators=[MinLengthValidator(12)], max_length=12)
 
 	def save(self):
 		''' Sobreescribe el save() '''
 		self.full_clean()
-		super(Departamento, self).save()	
+		super(Departamento, self).save()
+
+	def __unicode__(self):
+		return self.nombre	
 
 class Quirofano(models.Model):
 	''' Clase que representa un Quirofano '''
@@ -156,21 +168,36 @@ class Quirofano(models.Model):
 		self.full_clean()
 		super(Quirofano, self).save()
 
+	def __unicode__(self):
+		return str(self.numero) + ', ' + self.get_area_display()
+
 class MaterialQuirurgico(models.Model):
 	''' Clase que representa un Material Quirurgico '''
 	nombre = models.CharField(max_length=30)
+
+	def __unicode__(self):
+		return self.nombre
 
 class ServicioOperatorio(models.Model):
 	''' Clase que representa un Servicio Operatorio '''
 	nombre = models.CharField(max_length=30)
 
+	def __unicode__(self):
+		return self.nombre
+
 class EquipoEspecial(models.Model):
 	''' Clase que representa un Equipo Especial '''
 	nombre = models.CharField(max_length=30)
 
+	def __unicode__(self):
+		return self.nombre
+
 class TipoIntervencionQuirurgica(models.Model):
 	''' Clase que representa un Tipo de Intervencion Quirurgica '''
 	nombre = models.CharField(max_length=30)
+
+	def __unicode__(self):
+		return self.nombre
 
 class Paciente(models.Model):
 	''' Clase que representa un Paciente '''
@@ -193,6 +220,9 @@ class Paciente(models.Model):
 		self.full_clean()
 		super(Paciente, self).save()
 
+	def __unicode__(self):
+		return self.nombre + ' ' + self.apellido
+
 class IntervencionQuirurgica(models.Model):
 	''' Clase que representa una Intervencion Quirurgica '''
 	fecha_intervencion = models.DateField(auto_now=False, auto_now_add=False)
@@ -212,7 +242,7 @@ class IntervencionQuirurgica(models.Model):
 	medicos_participantes = models.ManyToManyField(Medico, through='Participacion')
 
 	def save(self):
-		''' Sobreescribe el save(), validando los valores de self.riesgo y self.razon_riesgo, ademas de calcular la duracion de la Intervencion Quirurgica '''
+		''' Sobreescribe el save(), validando los valores del riesgo y la razon del riesgo, ademas de calcular la duracion de la Intervencion Quirurgica '''
 		hora_inicio = time.strptime(self.hora_inicio, "%H:%M")
 		hora_fin = time.strptime(self.hora_fin, "%H:%M")
 		hora_inicio_seg = datetime.timedelta(hours = hora_inicio.tm_hour, minutes = hora_inicio.tm_min).total_seconds()
@@ -223,16 +253,19 @@ class IntervencionQuirurgica(models.Model):
 		self.full_clean()
 
 		if self.riesgo == 'M':
-			if self.razon_riesgo == None:		
+			if not self.razon_riesgo:		
 				raise ValidationError(u'La razón del riesgo no puede ser vacía si el riesgo es malo')
 		else:
-			if self.razon_riesgo != None:
+			if self.razon_riesgo:
 				raise ValidationError(u'La razón del riesgo no debe existir si el riesgo no es malo')
 
 		if self.hora_fin <= self.hora_inicio:
 			raise ValidationError(u'La hora de fin debe ser mayor que la hora de inicio')
 		
 		super(IntervencionQuirurgica, self).save()
+
+	def __unicode__(self):
+		return '' + self.tipo_intervencion.__unicode__() + ', ' + self.paciente.__unicode__() + ', ' + self.reservacion.medico.__unicode__() + ', ' + str(self.fecha_intervencion)
 
 class Participacion(models.Model):
 	''' Clase que representa la Participacion de un Medico en una
@@ -245,6 +278,9 @@ class Participacion(models.Model):
 		''' Sobreescribe el save() '''
 		self.full_clean()
 		super(Participacion, self).save()
+
+	def __unicode__(self):
+		return '' + self.intervencion_quirurgica.__unicode__() + ', ' + self.medico.__unicode__() + ', ' + self.get_rol_display()
 
 class Reservacion (models.Model):
 	''' Clase que representa una Reservacion de Intervencio Quirurgica '''
@@ -265,3 +301,6 @@ class Reservacion (models.Model):
 		hashids = Hashids(min_length=5, salt=uuid.uuid1().hex)
 		self.codigo = hashids.encrypt(self.id)  
 		super(Reservacion, self).save()	
+
+	def __unicode__(self):
+		return '' + self.intervencion_quirurgica.__unicode__() + ', ' + self.get_tipo_solicitud_display() + ', ' + self.get_estado_display() + ', ' + str(self.fecha_reservacion)
