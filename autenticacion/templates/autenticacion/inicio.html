@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load staticfiles %}
+{% load widget_tweaks %}
 
 {% block title %}{{ block.super }} | Inicio{% endblock title %}
 
@@ -9,11 +10,22 @@
 </script>
 {% endblock scripts %}
 
+{% block flash-messages %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} fade in">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+  <strong>{{ message }}</strong>
+</div>
+{% endfor %}
+{% endif %}
+{% endblock flash-messages %}
+
 {% block navbar-nav-extra %}
-<form class="navbar-form navbar-right">
+<form class="navbar-form navbar-right" action="{% url 'iniciar_sesion' %}" method="post">{% csrf_token %}
   <div class="form-group">
-    <input type="text" class="form-control" name="nombre-usuario" placeholder="Nombre de usuario">
-    <input type="password" class="form-control" name="contrasena" placeholder="Contraseña">
+    {% render_field formulario_inicio_sesion.nombre_usuario class="form-control" placeholder="Nombre de usuario" %}
+    {% render_field formulario_inicio_sesion.contrasena class="form-control" placeholder="Contraseña" %}
     <button type="submit" class="btn btn-primary">
       Iniciar Sesión
     </button>

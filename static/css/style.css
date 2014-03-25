@@ -14,7 +14,7 @@ $rojo-transparente: rgba(255, 0, 0, 0.1) */
 /* body padding top para evadir la superposicion del navbar de bootstrap por encima del contenido */
 body
 {
-	padding-top:70px
+	padding-top:100px
 }
 
 /* footer */
@@ -243,4 +243,9 @@ a:hover
 .label-info
 {
 	background-color:rgba(36,83,97,0.77)!important
+}
+
+/* estilo alerts */
+.alert {
+	text-align: center
 }

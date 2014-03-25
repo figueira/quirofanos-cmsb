@@ -42,7 +42,8 @@ INSTALLED_APPS = (
     'jefe',
     'quirofanos_cmsb',
     'south',
-)
+    'widget_tweaks',
+    )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -51,7 +52,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
+    )
 
 ROOT_URLCONF = 'quirofanos_cmsb.urls'
 
@@ -62,14 +63,14 @@ WSGI_APPLICATION = 'quirofanos_cmsb.wsgi.application'
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'quirofanos_cmsb',
-        'USER': 'quirofanos_cmsb',
-        'PASSWORD': 'cmsb',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
+'default': {
+'ENGINE': 'django.db.backends.postgresql_psycopg2',
+'NAME': 'quirofanos_cmsb',
+'USER': 'quirofanos_cmsb',
+'PASSWORD': 'cmsb',
+'HOST': '127.0.0.1',
+'PORT': '5432',
+}
 }
 
 # Internationalization
@@ -93,8 +94,39 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
-)
+    )
 
 # Templates
 
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
+
+# Flash Message Tags - Compatibilidad con Bootstrap
+
+from django.contrib.messages import constants as message_constants
+MESSAGE_TAGS = {message_constants.DEBUG: 'debug',
+message_constants.INFO: 'info',
+message_constants.SUCCESS: 'success',
+message_constants.WARNING: 'warning',
+message_constants.ERROR: 'danger',
+}
+
+# Procesadores de Contexto en Templates
+
+TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages",
+    )
+
+# Authentication Backends
+
+AUTHENTICATION_BACKENDS = (
+        'django.contrib.auth.backends.ModelBackend',
+    )
+
+# Authentication Profile Module
+
+AUTH_PROFILE_MODULE = 'quirofanos_cmsb.Cuenta'
