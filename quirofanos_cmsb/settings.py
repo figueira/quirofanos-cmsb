@@ -98,15 +98,3 @@ STATICFILES_DIRS = (
 # Templates
 
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
-
-# Settings Module
-
-#os.environ['DJANGO_SETTINGS_MODULE'] = quirofanos_cmsb.settings
-
-# Formato de entrada de Fechas
-DATE_INPUT_FORMATS = (
-        '%m/%d/%Y', # '10/25/2006'
-    )
-
-# Formato de entrada de Tiempos
-TIME_INPUT_FORMATS = ('%H:%M',)
