@@ -61,7 +61,8 @@
         </div>
       </div><!-- Solicitar Cuenta -->
 
-      <form class="form-horizontal hidden" role="form" id="formulario-solicitud-departamento">
+      <form class="form-horizontal hidden" role="form" id="formulario-solicitud-departamento" action="{% url 'registro_departamento' %}" method='POST'>  <!--Resolver Cross site request forgery con POST y {% csrf_token %} -->
+        {% csrf_token %}
         <div class="panel-body">
           <div class="form-group">
             <label class="col-lg-2 control-label" for="nombre-departamento">
@@ -79,7 +80,7 @@
               Teléfono:
             </label>
             <div class="col-lg-2">
-              <input type="text" class="form-control" placeholder="Código">
+              <input type="text" class="form-control" name="codigo-telefono" placeholder="Código">
             </div>
             <div class="col-lg-3">
               <input type="text" class="form-control" name="telefono-departamento" placeholder="Número">
@@ -129,7 +130,7 @@
         </div>
       </form><!-- Formulario Solicitud Departamento -->
 
-      <form class="form-horizontal hidden" role="form" id="formulario-solicitud-medico">
+      <form class="form-horizontal hidden" role="form" id="formulario-solicitud-medico">    
         <div class="panel-body">
           <div class="form-group">
             <label class="col-lg-2 control-label" for="nombre-medico">
