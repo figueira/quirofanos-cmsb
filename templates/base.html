@@ -45,6 +45,9 @@
 		</div>
 	</nav><!-- Header -->
 
+	<div class="container">
+		{% block flash-messages %}{% endblock flash-messages %}
+	</div>
 	<div class="container-fluid">
 		{% block content %}{% endblock content %}
 		<hr>
