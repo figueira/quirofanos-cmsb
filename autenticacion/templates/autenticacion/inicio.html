@@ -149,20 +149,21 @@
         </div>
       </form><!-- Formulario Solicitud Departamento -->
 
-      <form class="form-horizontal hidden" role="form" id="formulario-solicitud-medico">    
+      <form class="form-horizontal hidden" role="form" id="formulario-solicitud-medico" action="{% url 'registro_medico' %}" method="POST">    
+        {% csrf_token %}
         <div class="panel-body">
           <div class="form-group">
             <label class="col-lg-2 control-label" for="nombre-medico">
               Nombre:
             </label>
             <div class="col-lg-4">
-              <input type="text" class="form-control" name="nombre-medico">
+              {% render_field formulario_registro_medico.nombre_medico class="form-control" %}
             </div>
             <label class="col-lg-2 control-label" for="apellido-medico">
               Apellido:
             </label>
             <div class="col-lg-4">
-              <input type="text" class="form-control" name="apellido-medico">
+              {% render_field formulario_registro_medico.apellido_medico class="form-control" %}
             </div>
           </div><!-- Nombre y Apellido -->
           <div class="form-group">
@@ -170,18 +171,9 @@
               Cédula:
             </label>
             <div class="col-lg-4">
-              <input type="text" class="form-control" name="cedula-medico">
-            </div>
-            <label class="col-lg-2 control-label" for="fecha-nacimiento-medico">
-              Fecha
-              <abbr title="Nacimiento">
-                Nac.
-              </abbr>:
-            </label>
-            <div class="col-lg-4">
-              <input type="date" class="form-control" name="fecha-nacimiento-medico">
-            </div>
-          </div><!-- Cedula y Fecha de Nacimiento -->
+              {% render_field formulario_registro_medico.cedula_medico class="form-control" %}
+            </div>            
+          </div><!-- Cedula -->
           <div class="form-group">
             <label class="col-lg-2 control-label" for="especializacion-medico">
               <abbr title="Especialización">
@@ -189,20 +181,7 @@
               </abbr>:
             </label>
             <div class="col-lg-10">
-              <select multiple class="form-control" name="especializacion-medico">
-                <option>
-                  Esp1
-                </option>
-                <option>
-                  Esp2
-                </option>
-                <option>
-                  Esp3
-                </option>
-                <option>
-                  Esp4
-                </option>
-              </select>
+            {% render_field formulario_registro_medico.especialidad_medico class="form-control" %}
             </div>
           </div><!-- Especializacion -->
           <div clas="form-group">
@@ -212,27 +191,22 @@
             <div class="col-lg-10">
               <div class="radio-inline">
                 <label>
-                  <input type="radio" name="sexo-medico" value="M">
+                  {% render_field formulario_registro_medico.genero_medico class="form-control" %}
                   Masculino
                 </label>
               </div>
-              <div class="radio-inline">
-                <label>
-                  <input type="radio" name="sexo-medico" value="F">
-                  Femenino
-                </label>
-              </div>
+
             </div>
-          </div><!-- Sexo -->
+          </div><!-- Genero -->
           <div class="form-group">
             <label class="col-lg-2 control-label" for="telefono-medico">
               Teléfono:
             </label>
             <div class="col-lg-2">
-              <input type="text" class="form-control" placeholder="Código">
+              {% render_field formulario_registro_medico.codigo_telefono class="form-control" placeholder="Código" %}
             </div>
             <div class="col-lg-3">
-              <input type="text" class="form-control" name="telefono-medico" placeholder="Número">
+              {% render_field formulario_registro_medico.telefono_medico class="form-control" placeholder="Número" %}
             </div>
           </div><!-- Telefono -->
           <div class="form-group">
@@ -240,7 +214,7 @@
               Email:
             </label>
             <div class="col-lg-10">
-              <input type="email" class="form-control" name="email-medico">
+              {% render_field formulario_registro_medico.email_medico class="form-control" %}
             </div>
           </div><!-- Email -->
           <div class="form-group">
@@ -248,7 +222,7 @@
               Nombre de Usuario:
             </label>
             <div class="col-lg-10">
-              <input type="text" class="form-control" name="usuario-medico">
+              {% render_field formulario_registro_medico.nombre_usuario_medico class="form-control" %}
             </div>
           </div><!-- Username -->
           <div class="form-group">
@@ -256,10 +230,10 @@
               Contraseña:
             </label>
             <div class="col-lg-4">
-              <input type="password" class="form-control" name="contrasena-medico">
+              {% render_field formulario_registro_medico.contrasena_medico class="form-control"  %}
             </div>
             <div class="col-lg-4">
-              <input type="password" class="form-control" placeholder="Repita contraseña">
+              {% render_field formulario_registro_medico.contrasena_confirmacion class="form-control"  %}
             </div>
           </div><!-- Contrasena -->
         </div>
