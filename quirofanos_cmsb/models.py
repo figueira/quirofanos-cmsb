@@ -192,12 +192,39 @@ class EquipoEspecial(models.Model):
 	def __unicode__(self):
 		return self.nombre
 
-class TipoIntervencionQuirurgica(models.Model):
-	''' Clase que representa un Tipo de Intervencion Quirurgica '''
-	nombre = models.CharField(max_length=30)
+class SistemaCorporal(models.Model):
+	''' Clase que representa un Sistema Corporal segun el estandar ICD-10-PCS '''
+	codigo_icd_10_pcs = models.CharField(max_length=2, unique=True validators=[MinLengthValidator(2)])
+	nombre = models.CharField(max_length=30, unique=True)
+
+	def __unicode__(self):
+		return self.codigo_icd_10_pcs + ', ' + self.nombre
+
+class ProcedimientoQuirurgico(models.Model):
+	''' Clase que representa un Procedimiento Quirurgico segun el estandar ICD-10-PCS '''
+	codigo_icd_10_pcs = models.CharField(max_length=1, unique=True)
+	nombre = models.CharField(max_length=30, unique=True)
+
+	def __unicode__(self):
+		return self.codigo_icd_10_pcs + ', ' + self.Nombres
+
+class OrganoCorporal(models.Model):
+	''' Clase que representa un Organo Corporal segun el estandar ICD-10-PCS '''
+	codigo_icd_10_pcs = models.CharField(max_length=1)
+	nombre = models.CharField(max_length=30, unique=True)
+	sistema_corporal = models.ForeignKey(SistemaCorporal)
+	procedimientos_permitidos = models.ManyToManyField(ProcedimientoQuirurgico)
 
 	def __unicode__(self):
 		return self.nombre
+
+class TipoIntervencionQuirurgica(models.Model):
+	''' Clase que representa un Tipo de Intervencion Quirurgica '''
+	procedimiento_quirurgico = models.ForeignKey(ProcedimientoQuirurgico)
+	organo_corporal = models.ForeignKey(OrganoCorporal)
+
+	def __unicode__(self):
+		return self.organo_corporal.sistema_corporal.__unicode__() + ', ' + self.procedimiento_quirurgico.__unicode__() + ', ' + self.organo_corporal.__unicode__()
 
 class Paciente(models.Model):
 	''' Clase que representa un Paciente '''
