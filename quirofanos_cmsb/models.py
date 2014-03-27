@@ -4,7 +4,7 @@ from django.core.validators import MinLengthValidator, MinValueValidator
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 
-from hashids import Hashids
+# from hashids import Hashids
 import datetime
 import time
 import uuid
@@ -194,7 +194,7 @@ class EquipoEspecial(models.Model):
 
 class SistemaCorporal(models.Model):
 	''' Clase que representa un Sistema Corporal segun el estandar ICD-10-PCS '''
-	codigo_icd_10_pcs = models.CharField(max_length=2, unique=True validators=[MinLengthValidator(2)])
+	codigo_icd_10_pcs = models.CharField(max_length=2, unique=True, validators=[MinLengthValidator(2)])
 	nombre = models.CharField(max_length=30, unique=True)
 
 	def __unicode__(self):

@@ -73,7 +73,15 @@
         </div>
       </div><!-- Solicitar Cuenta -->
 
-      <form class="form-horizontal hidden" role="form" id="formulario-solicitud-departamento">
+      <form class="form-horizontal hidden" role="form" id="formulario-solicitud-departamento" action="{% url 'registro_departamento' %}" method='POST'>
+        {% csrf_token %}
+        {% if formulario_registro_departamento.errors %}
+        <script type="text/javascript">
+        $(function(){
+          $('#solicitar-cuenta-departamento').trigger('click');
+        });
+        </script>
+        {% endif %}
         <div class="panel-body">
           <div class="form-group">
             <label class="col-lg-2 control-label" for="nombre-departamento">
@@ -83,7 +91,7 @@
               </abbr>:
             </label>
             <div class="col-lg-10">
-              <input type="text" class="form-control" name="nombre-departamento">
+              {% render_field formulario_registro_departamento.nombre_departamento class="form-control" %}
             </div>
           </div><!-- Nombre Departamento -->
           <div class="form-group">
@@ -91,10 +99,10 @@
               Teléfono:
             </label>
             <div class="col-lg-2">
-              <input type="text" class="form-control" placeholder="Código">
+              {% render_field formulario_registro_departamento.codigo_telefono class="form-control" placeholder="Código" %}
             </div>
             <div class="col-lg-3">
-              <input type="text" class="form-control" name="telefono-departamento" placeholder="Número">
+              {% render_field formulario_registro_departamento.telefono_departamento class="form-control" placeholder="Número" %}
             </div>
           </div><!-- Telefono -->
           <div class="form-group">
@@ -102,7 +110,7 @@
               Email:
             </label>
             <div class="col-lg-10">
-              <input type="email" class="form-control" name="email-departamento">
+              {% render_field formulario_registro_departamento.email_departamento class="form-control" %}
             </div>
           </div><!-- Email -->
           <div class="form-group">
@@ -110,7 +118,7 @@
               Nombre de Usuario:
             </label>
             <div class="col-lg-10">
-              <input type="text" class="form-control" name="usuario-departamento">
+              {% render_field formulario_registro_departamento.nombre_usuario_departamento class="form-control" %}
             </div>
           </div><!-- Username -->
           <div class="form-group">
@@ -118,10 +126,10 @@
               Contraseña:
             </label>
             <div class="col-lg-4">
-              <input type="password" class="form-control" name="contrasena-departamento">
+              {% render_field formulario_registro_departamento.contrasena_departamento class="form-control" %}
             </div>
             <div class="col-lg-4">
-              <input type="password" class="form-control" placeholder="Repita contraseña">
+              {% render_field formulario_registro_departamento.contrasena_confirmacion class="form-control" placeholder="Repita contraseña" %}
             </div>
           </div><!-- Contrasena -->
         </div>
@@ -141,7 +149,7 @@
         </div>
       </form><!-- Formulario Solicitud Departamento -->
 
-      <form class="form-horizontal hidden" role="form" id="formulario-solicitud-medico">
+      <form class="form-horizontal hidden" role="form" id="formulario-solicitud-medico">    
         <div class="panel-body">
           <div class="form-group">
             <label class="col-lg-2 control-label" for="nombre-medico">
