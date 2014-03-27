@@ -44,23 +44,23 @@ def registro_departamento(request):
 		nombre_usuario_departamento = formulario_registro_departamento.cleaned_data['nombre_usuario_departamento']
 		contrasena_departamento = formulario_registro_departamento.cleaned_data['contrasena_departamento']
 		contrasena_confirmacion = formulario_registro_departamento.cleaned_data['contrasena_confirmacion']
-		if contrasena_departamento == contrasena_confirmacion:
-			usuario = User.objects.create_user(nombre_usuario_departamento,email_departamento,contrasena_departamento)	
-			usuario.is_active = False
-			usuario.save()	
 
-			cuenta_departamento = Cuenta()
-			cuenta_departamento.usuario = usuario
-			cuenta_departamento.estado = 'P'
-			cuenta_departamento.privilegio = '4'
-			cuenta_departamento.save()
+		usuario = User.objects.create_user(nombre_usuario_departamento,email_departamento,contrasena_departamento)	
+		usuario.is_active = False
+		usuario.save()	
 
-			departamento = Departamento()
-			departamento.cuenta = cuenta_departamento
-			departamento.nombre = nombre_departamento
-			departamento.telefono = codigo_telefono +'-'+ telefono_departamento
-			departamento.save()
-			return render_to_response('autenticacion/registro.html') # decidir a donde redireccionar
+		cuenta_departamento = Cuenta()
+		cuenta_departamento.usuario = usuario
+		cuenta_departamento.estado = 'P'
+		cuenta_departamento.privilegio = '4'
+		cuenta_departamento.save()
+
+		departamento = Departamento()
+		departamento.cuenta = cuenta_departamento
+		departamento.nombre = nombre_departamento
+		departamento.telefono = codigo_telefono + '-' + telefono_departamento
+		departamento.save()
+		return render_to_response('autenticacion/registro.html') # decidir a donde redireccionar
 		else:
 			formulario_registro_departamento.errors['contrasena_invalida'] = u'Las contraseñas ingresadas no coinciden.'			
 
