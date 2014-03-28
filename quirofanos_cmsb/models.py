@@ -136,8 +136,8 @@ class Medico (models.Model):
     cedula = models.CharField(max_length=12, unique=True, validators=[
                               RegexValidator(ExpresionRegular.CEDULA_BD, MensajeError.CEDULA_BD_INVALIDA, CodigoError.CEDULA_BD_INVALIDA)])
     genero = models.CharField(max_length=1, choices=GENERO)
-    telefono = models.CharField(
-        validators=[RegexValidator(ExpresionRegular.TELEFONO_BD, MensajeError.TELEFONO_BD_INVALIDO, CodigoError.TELEFONO_BD_INVALIDO)])
+    telefono = models.CharField(max_length=12, validators=[
+                                RegexValidator(ExpresionRegular.TELEFONO_BD, MensajeError.TELEFONO_BD_INVALIDO, CodigoError.TELEFONO_BD_INVALIDO)])
     especializaciones = models.ManyToManyField(Especializacion)
 
     def save(self):
@@ -164,8 +164,8 @@ class Departamento (models.Model):
     cuenta = models.OneToOneField(Cuenta)
     nombre = models.CharField(max_length=20, unique=True, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
-    telefono = models.CharField(
-        validators=[RegexValidator(ExpresionRegular.TELEFONO_BD, MensajeError.TELEFONO_BD_INVALIDO, CodigoError.TELEFONO_BD_INVALIDO)])
+    telefono = models.CharField(max_length=12, validators=[
+                                RegexValidator(ExpresionRegular.TELEFONO_BD, MensajeError.TELEFONO_BD_INVALIDO, CodigoError.TELEFONO_BD_INVALIDO)])
 
     def save(self):
         ''' Sobreescribe el save() '''
@@ -277,8 +277,8 @@ class Paciente(models.Model):
     cedula = models.CharField(max_length=12, unique=True, validators=[
                               RegexValidator(ExpresionRegular.CEDULA_BD, MensajeError.CEDULA_BD_INVALIDA, CodigoError.CEDULA_BD_INVALIDA)])
     fecha_nacimiento = models.DateField(auto_now=False, auto_now_add=False)
-    telefono = models.CharField(
-        validators=[RegexValidator(ExpresionRegular.TELEFONO_BD, MensajeError.TELEFONO_BD_INVALIDO, CodigoError.TELEFONO_BD_INVALIDO)])
+    telefono = models.CharField(max_length=12, validators=[
+                                RegexValidator(ExpresionRegular.TELEFONO_BD, MensajeError.TELEFONO_BD_INVALIDO, CodigoError.TELEFONO_BD_INVALIDO)])
     genero = models.CharField(max_length=1, choices=GENERO)
     numero_expediente = models.CharField(
         max_length=5, unique=True, blank=True, null=True)  # Ver formato

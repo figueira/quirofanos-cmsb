@@ -15,23 +15,15 @@ class ExpresionRegular():
 class MensajeError():
 
     ''' Constantes que contienen mensajes de error a ser utilizados en validaciones de modelos y formularios '''
-    CODIGO_TELEFONO_INVALIDO = _(
-        u'Código de teléfono inválido, debe contener exactamente 4 dígitos.')
-    NUMERO_TELEFONO_INVALIDO = _(
-        u'Número de teléfono inválido, debe contener exactamente 7 dígitos.')
-    NOMBRE_GENERAL_INVALIDO = _(
-        u'Nombre inválido, puede contener sólo letras y espacios.')
-    CONTRASENAS_NO_COINCIDEN = _(u'Las contraseñas ingresadas no coinciden.')
-    CEDULA_BD_INVALIDA = _(
-        u'Cédula inválida, debe ser de la forma: V-XXX... ó E-XXX...')
-    TELEFONO_BD_INVALIDO = _(
-        u'Teléfono inválido, debe ser de la forma: XXXX-XXXXXXX.')
-    RIESGO_BD_MALO_SIN_RAZON = _(
-        u'La razón del riesgo no puede ser nula si el riesgo es malo.')
-    RIESGO_BD_NO_MALO_CON_RAZON = _(
-        u'La razón del riesgo debe ser nula si el riesgo es distinto de malo.')
-    HORA_FIN_MENOR_HORA_INICIO = _(
-        u'La hora de fin debe ser mayor que la hora de inicio.')
+    CODIGO_TELEFONO_INVALIDO = u'Código de teléfono inválido, debe contener exactamente 4 dígitos.'
+    NUMERO_TELEFONO_INVALIDO = u'Número de teléfono inválido, debe contener exactamente 7 dígitos.'
+    NOMBRE_GENERAL_INVALIDO = u'Nombre inválido, puede contener sólo letras y espacios.'
+    CONTRASENAS_NO_COINCIDEN = u'Las contraseñas ingresadas no coinciden.'
+    CEDULA_BD_INVALIDA = u'Cédula inválida, debe ser de la forma: V-XXX... ó E-XXX...'
+    TELEFONO_BD_INVALIDO = u'Teléfono inválido, debe ser de la forma: XXXX-XXXXXXX.'
+    RIESGO_BD_MALO_SIN_RAZON = u'La razón del riesgo no puede ser nula si el riesgo es malo.'
+    RIESGO_BD_NO_MALO_CON_RAZON = u'La razón del riesgo debe ser nula si el riesgo es distinto de malo.'
+    HORA_FIN_MENOR_HORA_INICIO = u'La hora de fin debe ser mayor que la hora de inicio.'
 
 
 class CodigoError():

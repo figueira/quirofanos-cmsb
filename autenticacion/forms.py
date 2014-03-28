@@ -3,16 +3,20 @@ from django import forms
 from django.core.validators import RegexValidator, validate_slug
 
 from quirofanos_cmsb.helpers.custom_validators import ExpresionRegular, MensajeError, CodigoError
+from quirofanos_cmsb.models import Especializacion
 
+# Generos
+GENERO = (
+	('F', u'Femenino'),
+	('M', u'Masculino'),
+	)
 
 class InicioSesionForm(forms.Form):
-
 	''' Formulario de inicio de sesion '''
-    nombre_usuario = forms.CharField(max_length=30, validators=[validate_slug])
-    contrasena = forms.CharField(widget=forms.PasswordInput)
+	nombre_usuario = forms.CharField(max_length=30, validators=[validate_slug])
+	contrasena = forms.CharField(widget=forms.PasswordInput)
 
 class RegistroDepartamentoForm(forms.Form):
-	
 	''' Formulario de registro de Departamento '''
 	nombre_departamento = forms.CharField(max_length=20, validators=[RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
 	codigo_telefono = forms.CharField(validators=[RegexValidator(ExpresionRegular.CODIGO_TELEFONO, MensajeError.CODIGO_TELEFONO_INVALIDO, CodigoError.CODIGO_TELEFONO_INVALIDO)])
@@ -24,9 +28,23 @@ class RegistroDepartamentoForm(forms.Form):
 
 	def clean(self):
 		''' Sobreescribe el clean(), validando que las contrasenas ingresadas coincidan '''
-		cleaned_data = super(ContactForm, self).clean()
-        contrasena_departamento = cleaned_data.get("contrasena_departamento")
-        contrasena_confirmacion = cleaned_data.get("contrasena_confirmacion")
-        if contrasena_departamento and contrasena_confirmacion:
-        	if contrasena_departamento != contrasena_confirmacion:
-        		raise forms.ValidationError(MensajeError.CONTRASENAS_NO_COINCIDEN, code=CodigoError.CONTRASENAS_NO_COINCIDEN)
+		cleaned_data = super(RegistroDepartamentoForm, self).clean()
+		contrasena_departamento = cleaned_data.get("contrasena_departamento")
+		contrasena_confirmacion = cleaned_data.get("contrasena_confirmacion")
+		if contrasena_departamento and contrasena_confirmacion:
+			if contrasena_departamento != contrasena_confirmacion:
+				raise forms.ValidationError(MensajeError.CONTRASENAS_NO_COINCIDEN, code=CodigoError.CONTRASENAS_NO_COINCIDEN)
+		return cleaned_data
+
+class RegistroMedicoForm(forms.Form):
+	nombre_medico = forms.CharField(max_length=20)
+	apellido_medico = forms.CharField(max_length=20)
+	cedula_medico = forms.CharField(max_length=12)
+	especialidad_medico = forms.ModelMultipleChoiceField(queryset=Especializacion.objects.all())
+	genero_medico = forms.ChoiceField(widget=forms.RadioSelect, choices=GENERO)
+	codigo_telefono = forms.CharField(max_length=4, min_length=4)
+	telefono_medico = forms.CharField(max_length=7, min_length=7)
+	email_medico = forms.EmailField(max_length=75)
+	nombre_usuario_medico = forms.CharField(max_length=30)
+	contrasena_medico = forms.CharField(widget=forms.PasswordInput)
+	contrasena_confirmacion = forms.CharField(widget=forms.PasswordInput)
