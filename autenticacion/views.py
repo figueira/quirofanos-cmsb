@@ -16,7 +16,7 @@ from autenticacion.forms import RegistroDepartamentoForm
 from autenticacion.forms import RegistroMedicoForm
 
 def inicio(request):
-	''' Controlador correspondiente a la pagina de inicio de la aplicacion 
+	''' Controlador correspondiente a la pagina de inicio de la aplicacion
 
 	Parametros:
 	request -> Solicitud HTTP '''
@@ -49,9 +49,9 @@ def registro_departamento(request):
 		contrasena_departamento = formulario_registro_departamento.cleaned_data['contrasena_departamento']
 		contrasena_confirmacion = formulario_registro_departamento.cleaned_data['contrasena_confirmacion']
 
-		usuario = User.objects.create_user(nombre_usuario_departamento,email_departamento,contrasena_departamento)	
+		usuario = User.objects.create_user(nombre_usuario_departamento,email_departamento,contrasena_departamento)
 		usuario.is_active = False
-		usuario.save()	
+		usuario.save()
 
 		cuenta_departamento = Cuenta()
 		cuenta_departamento.usuario = usuario
@@ -64,17 +64,24 @@ def registro_departamento(request):
 		departamento.nombre = nombre_departamento
 		departamento.telefono = codigo_telefono + '-' + telefono_departamento
 		departamento.save()
-		return render_to_response('autenticacion/registro.html') # decidir a donde redireccionar		
+
+		messages.add_message(request, messages.SUCCESS, u'Su solicitud de registro ha sido enviada. En los próximos días recibirá un correo y/o una llamada telefónica indicándole si su cuenta ha sido aprobada.')
+		return redirect('inicio')
 
 	formulario_inicio_sesion = InicioSesionForm()
+	formulario_registro_medico = RegistroMedicoForm()
 	datos = {}
-	datos['formulario_registro_departamento'] = formulario_registro_departamento	
+	datos['formulario_registro_departamento'] = formulario_registro_departamento
 	datos['formulario_inicio_sesion'] = formulario_inicio_sesion
+	datos['formulario_registro_medico'] = formulario_registro_medico
 	return render_to_response('autenticacion/inicio.html', datos,context_instance=RequestContext(request))
 
 @require_http_methods(["POST"])
 def registro_medico(request):
+	''' Controlador correspondiente al registro de un medico
 
+	Parametros:
+	request -> Solicitud HTTP '''
 	formulario_registro_medico = RegistroMedicoForm(request.POST)
 	if formulario_registro_medico.is_valid():
 		nombre_medico = formulario_registro_medico.cleaned_data['nombre_medico']
@@ -88,40 +95,41 @@ def registro_medico(request):
 		nombre_usuario_medico = formulario_registro_medico.cleaned_data['nombre_usuario_medico']
 		contrasena_medico = formulario_registro_medico.cleaned_data['contrasena_medico']
 		contrasena_confirmacion = formulario_registro_medico.cleaned_data['contrasena_confirmacion']
-		if contrasena_medico == contrasena_confirmacion:
-			usuario = User.objects.create_user(nombre_usuario_medico,email_medico,contrasena_medico)	
-			usuario.is_active = False
-			usuario.save()
 
-			cuenta_medico = Cuenta()
-			cuenta_medico.usuario = usuario
-			cuenta_medico.estado = 'P'
-			cuenta_medico.privilegio = '3'
-			cuenta_medico.save()
+		usuario = User.objects.create_user(nombre_usuario_medico,email_medico,contrasena_medico)
+		usuario.is_active = False
+		usuario.save()
 
-			medico = Medico()
-			medico.cuenta = cuenta_medico
-			medico.nombre = nombre_usuario_medico
-			medico.apellido = apellido_medico
-			medico.cedula = cedula_medico
-			medico.genero = genero_medico
-			medico.telefono = codigo_telefono +'-'+ telefono_medico
-			#medico.especializaciones = especialidad_medico
-			medico.save()	
+		cuenta_medico = Cuenta()
+		cuenta_medico.usuario = usuario
+		cuenta_medico.estado = 'P'
+		cuenta_medico.privilegio = '3'
+		cuenta_medico.save()
 
-			return render_to_response('autenticacion/registro.html')		
-		else:
-			formulario_registro_medico.errors['contrasena_invalida'] = u'Las contraseñas ingresadas no coinciden.'
+		medico = Medico()
+		medico.cuenta = cuenta_medico
+		medico.nombre = nombre_medico
+		medico.apellido = apellido_medico
+		medico.cedula = cedula_medico
+		medico.genero = genero_medico
+		medico.telefono = codigo_telefono + '-' + telefono_medico
+		medico.especializaciones = especialidad_medico
+		medico.save()
+
+		messages.add_message(request, messages.SUCCESS, u'Su solicitud de registro ha sido enviada. En los próximos días recibirá un correo y/o una llamada telefónica indicándole si su cuenta ha sido aprobada.')
+		return redirect('inicio')
 
 	formulario_inicio_sesion = InicioSesionForm()
+	formulario_registro_departamento = RegistroDepartamentoForm()
 	datos = {}
-	datos['formulario_registro_medico'] = formulario_registro_medico	
+	datos['formulario_registro_medico'] = formulario_registro_medico
 	datos['formulario_inicio_sesion'] = formulario_inicio_sesion
+	datos['formulario_registro_departamento'] = formulario_registro_departamento
 	return render_to_response('autenticacion/inicio.html', datos,context_instance=RequestContext(request))
 
 @require_http_methods(["POST"])
 def iniciar_sesion(request):
-	''' Controlador correspondiente al inicio de sesion 
+	''' Controlador correspondiente al inicio de sesion
 
 	Parametros:
 	request -> Solicitud HTTP '''
