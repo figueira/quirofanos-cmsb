@@ -14,9 +14,9 @@ class InicioSesionForm(forms.Form):
 class RegistroDepartamentoForm(forms.Form):
 	
 	''' Formulario de registro de Departamento '''
-	nombre_departamento = forms.CharField(max_length=20)
-	codigo_telefono = forms.CharField(max_length=4, min_length=4, validators=[RegexValidator(ExpresionRegular.CODIGO_TELEFONO, MensajeError.CODIGO_TELEFONO_INVALIDO, CodigoError.CODIGO_TELEFONO_INVALIDO)])
-	telefono_departamento = forms.CharField(max_length=7, min_length=7, validators=[RegexValidator(ExpresionRegular.NUMERO_TELEFONO, MensajeError.NUMERO_TELEFONO_INVALIDO, CodigoError.NUMERO_TELEFONO_INVALIDO)])
+	nombre_departamento = forms.CharField(max_length=20, validators=[RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
+	codigo_telefono = forms.CharField(validators=[RegexValidator(ExpresionRegular.CODIGO_TELEFONO, MensajeError.CODIGO_TELEFONO_INVALIDO, CodigoError.CODIGO_TELEFONO_INVALIDO)])
+	telefono_departamento = forms.CharField(validators=[RegexValidator(ExpresionRegular.NUMERO_TELEFONO, MensajeError.NUMERO_TELEFONO_INVALIDO, CodigoError.NUMERO_TELEFONO_INVALIDO)])
 	email_departamento = forms.EmailField(max_length=75)
 	nombre_usuario_departamento = forms.CharField(max_length=30, validators=[validate_slug])
 	contrasena_departamento = forms.CharField(widget=forms.PasswordInput)
@@ -29,4 +29,4 @@ class RegistroDepartamentoForm(forms.Form):
         contrasena_confirmacion = cleaned_data.get("contrasena_confirmacion")
         if contrasena_departamento and contrasena_confirmacion:
         	if contrasena_departamento != contrasena_confirmacion:
-        		raise forms.ValidationError(u'Las contraseñas ingresadas no coinciden.')
+        		raise forms.ValidationError(MensajeError.CONTRASENAS_NO_COINCIDEN, code=CodigoError.CONTRASENAS_NO_COINCIDEN)

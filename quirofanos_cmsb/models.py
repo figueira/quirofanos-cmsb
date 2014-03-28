@@ -118,7 +118,8 @@ class Cuenta (models.Model):
 class Especializacion(models.Model):
 
     ''' Clase que representa una Especializacion Medica'''
-    nombre = models.CharField(max_length=30)
+    nombre = models.CharField(max_length=30, validators=[
+                              RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
 
     def __unicode__(self):
         return self.nombre
@@ -128,12 +129,15 @@ class Medico (models.Model):
 
     ''' Clase que representa un Medico '''
     cuenta = models.OneToOneField(Cuenta)
-    nombre = models.CharField(max_length=20)
-    apellido = models.CharField(max_length=20)
-    cedula = models.CharField(max_length=12, unique=True)
+    nombre = models.CharField(max_length=20, validators=[
+                              RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
+    apellido = models.CharField(max_length=20, validators=[
+                                RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
+    cedula = models.CharField(max_length=12, unique=True, validators=[
+                              RegexValidator(ExpresionRegular.CEDULA_BD, MensajeError.CEDULA_BD_INVALIDA, CodigoError.CEDULA_BD_INVALIDA)])
     genero = models.CharField(max_length=1, choices=GENERO)
     telefono = models.CharField(
-        validators=[MinLengthValidator(12)], max_length=12)
+        validators=[RegexValidator(ExpresionRegular.TELEFONO_BD, MensajeError.TELEFONO_BD_INVALIDO, CodigoError.TELEFONO_BD_INVALIDO)])
     especializaciones = models.ManyToManyField(Especializacion)
 
     def save(self):
@@ -158,9 +162,10 @@ class Departamento (models.Model):
 
     ''' Clase que representa un Departamento '''
     cuenta = models.OneToOneField(Cuenta)
-    nombre = models.CharField(max_length=20, unique=True)
+    nombre = models.CharField(max_length=20, unique=True, validators=[
+                              RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
     telefono = models.CharField(
-        validators=[MinLengthValidator(12)], max_length=12)
+        validators=[RegexValidator(ExpresionRegular.TELEFONO_BD, MensajeError.TELEFONO_BD_INVALIDO, CodigoError.TELEFONO_BD_INVALIDO)])
 
     def save(self):
         ''' Sobreescribe el save() '''
@@ -189,7 +194,8 @@ class Quirofano(models.Model):
 class MaterialQuirurgico(models.Model):
 
     ''' Clase que representa un Material Quirurgico '''
-    nombre = models.CharField(max_length=30)
+    nombre = models.CharField(max_length=30, validators=[
+                              RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
 
     def __unicode__(self):
         return self.nombre
@@ -198,7 +204,8 @@ class MaterialQuirurgico(models.Model):
 class ServicioOperatorio(models.Model):
 
     ''' Clase que representa un Servicio Operatorio '''
-    nombre = models.CharField(max_length=30)
+    nombre = models.CharField(max_length=30, validators=[
+                              RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
 
     def __unicode__(self):
         return self.nombre
@@ -207,7 +214,8 @@ class ServicioOperatorio(models.Model):
 class EquipoEspecial(models.Model):
 
     ''' Clase que representa un Equipo Especial '''
-    nombre = models.CharField(max_length=30)
+    nombre = models.CharField(max_length=30, validators=[
+                              RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
 
     def __unicode__(self):
         return self.nombre
@@ -218,7 +226,8 @@ class SistemaCorporal(models.Model):
     ''' Clase que representa un Sistema Corporal segun el estandar ICD-10-PCS '''
     codigo_icd_10_pcs = models.CharField(
         max_length=2, unique=True, validators=[MinLengthValidator(2)])
-    nombre = models.CharField(max_length=30, unique=True)
+    nombre = models.CharField(max_length=30, unique=True, validators=[
+                              RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
 
     def __unicode__(self):
         return self.codigo_icd_10_pcs + ', ' + self.nombre
@@ -228,7 +237,8 @@ class ProcedimientoQuirurgico(models.Model):
 
     ''' Clase que representa un Procedimiento Quirurgico segun el estandar ICD-10-PCS '''
     codigo_icd_10_pcs = models.CharField(max_length=1, unique=True)
-    nombre = models.CharField(max_length=30, unique=True)
+    nombre = models.CharField(max_length=30, unique=True, validators=[
+                              RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
 
     def __unicode__(self):
         return self.codigo_icd_10_pcs + ', ' + self.Nombres
@@ -238,7 +248,8 @@ class OrganoCorporal(models.Model):
 
     ''' Clase que representa un Organo Corporal segun el estandar ICD-10-PCS '''
     codigo_icd_10_pcs = models.CharField(max_length=1)
-    nombre = models.CharField(max_length=30, unique=True)
+    nombre = models.CharField(max_length=30, unique=True, validators=[
+                              RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
     sistema_corporal = models.ForeignKey(SistemaCorporal)
     procedimientos_permitidos = models.ManyToManyField(ProcedimientoQuirurgico)
 
@@ -259,12 +270,15 @@ class TipoIntervencionQuirurgica(models.Model):
 class Paciente(models.Model):
 
     ''' Clase que representa un Paciente '''
-    nombre = models.CharField(max_length=20)
-    apellido = models.CharField(max_length=20)
-    cedula = models.CharField(max_length=12, unique=True)
+    nombre = models.CharField(max_length=20, validators=[
+                              RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
+    apellido = models.CharField(max_length=20, validators=[
+                                RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
+    cedula = models.CharField(max_length=12, unique=True, validators=[
+                              RegexValidator(ExpresionRegular.CEDULA_BD, MensajeError.CEDULA_BD_INVALIDA, CodigoError.CEDULA_BD_INVALIDA)])
     fecha_nacimiento = models.DateField(auto_now=False, auto_now_add=False)
     telefono = models.CharField(
-        validators=[MinLengthValidator(12)], max_length=12)
+        validators=[RegexValidator(ExpresionRegular.TELEFONO_BD, MensajeError.TELEFONO_BD_INVALIDO, CodigoError.TELEFONO_BD_INVALIDO)])
     genero = models.CharField(max_length=1, choices=GENERO)
     numero_expediente = models.CharField(
         max_length=5, unique=True, blank=True, null=True)  # Ver formato
@@ -312,8 +326,19 @@ class IntervencionQuirurgica(models.Model):
     medicos_participantes = models.ManyToManyField(
         Medico, through='Participacion')
 
-    def save(self):
-        ''' Sobreescribe el save(), validando los valores del riesgo y la razon del riesgo, ademas de calcular la duracion de la Intervencion Quirurgica '''
+    def clean(self):
+        ''' Sobreescribe el clean(), validando los valores del riesgo y la razon del riesgo, ademas de calcular la duracion de la Intervencion Quirurgica '''
+        if self.riesgo == 'M' and self.razon_riesgo is None:
+            raise ValidationError(
+                MensajeError.RIESGO_BD_MALO_SIN_RAZON, code=CodigoError.RIESGO_BD_MALO_SIN_RAZON)
+        elif self.riesgo != 'M' and self.razon_riesgo is not None:
+            raise ValidationError(
+                MensajeError.RIESGO_BD_NO_MALO_CON_RAZON, code=CodigoError.RIESGO_BD_NO_MALO_CON_RAZON)
+
+        if self.hora_fin <= self.hora_inicio:
+            raise ValidationError(
+                MensajeError.HORA_FIN_MENOR_HORA_INICIO, code=CodigoError.HORA_FIN_MENOR_HORA_INICIO)
+
         hora_inicio = time.strptime(self.hora_inicio, "%H:%M")
         hora_fin = time.strptime(self.hora_fin, "%H:%M")
         hora_inicio_seg = datetime.timedelta(
@@ -323,21 +348,11 @@ class IntervencionQuirurgica(models.Model):
         diferencia_horas = float(hora_fin_seg) - float(hora_inicio_seg)
         self.duracion = diferencia_horas / 3600
 
+        super(IntervencionQuirurgica, self).clean()
+
+    def save(self):
+        ''' Sobreescribe el save() '''
         self.full_clean()
-
-        if self.riesgo == 'M':
-            if not self.razon_riesgo:
-                raise ValidationError(
-                    u'La razón del riesgo no puede ser vacía si el riesgo es malo')
-        else:
-            if self.razon_riesgo:
-                raise ValidationError(
-                    u'La razón del riesgo no debe existir si el riesgo no es malo')
-
-        if self.hora_fin <= self.hora_inicio:
-            raise ValidationError(
-                u'La hora de fin debe ser mayor que la hora de inicio')
-
         super(IntervencionQuirurgica, self).save()
 
     def __unicode__(self):
