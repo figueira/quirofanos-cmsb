@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
@@ -9,11 +8,11 @@ from django.views.decorators.http import require_http_methods
 from django.template import RequestContext
 from django.contrib import messages
 
-from quirofanos_cmsb.models import Cuenta
-from quirofanos_cmsb.models import Departamento, Medico, Especializacion
+from quirofanos_cmsb.models import Cuenta, Departamento, Medico, MedicoTratante
 from autenticacion.forms import InicioSesionForm
 from autenticacion.forms import RegistroDepartamentoForm
 from autenticacion.forms import RegistroMedicoForm
+from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito
 
 def inicio(request):
 	''' Controlador correspondiente a la pagina de inicio de la aplicacion
@@ -65,7 +64,7 @@ def registro_departamento(request):
 		departamento.telefono = codigo_telefono + '-' + telefono_departamento
 		departamento.save()
 
-		messages.add_message(request, messages.SUCCESS, u'Su solicitud de registro ha sido enviada. En los próximos días recibirá un correo y/o una llamada telefónica indicándole si su cuenta ha sido aprobada.')
+		messages.add_message(request, messages.SUCCESS, MensajeTemporalExito.SOLICITUD_REGISTRO_EXITOSO)
 		return redirect('inicio')
 
 	formulario_inicio_sesion = InicioSesionForm()
@@ -86,6 +85,7 @@ def registro_medico(request):
 	if formulario_registro_medico.is_valid():
 		nombre_medico = formulario_registro_medico.cleaned_data['nombre_medico']
 		apellido_medico = formulario_registro_medico.cleaned_data['apellido_medico']
+		nacionalidad_medico = formulario_registro_medico.cleaned_data['nacionalidad_medico']
 		cedula_medico = formulario_registro_medico.cleaned_data['cedula_medico']
 		especialidad_medico = formulario_registro_medico.cleaned_data['especialidad_medico']
 		genero_medico = formulario_registro_medico.cleaned_data['genero_medico']
@@ -110,13 +110,20 @@ def registro_medico(request):
 		medico.cuenta = cuenta_medico
 		medico.nombre = nombre_medico
 		medico.apellido = apellido_medico
-		medico.cedula = cedula_medico
+		medico.cedula = nacionalidad_medico + cedula_medico
 		medico.genero = genero_medico
 		medico.telefono = codigo_telefono + '-' + telefono_medico
-		medico.especializaciones = especialidad_medico
 		medico.save()
+		medico.especializaciones = especialidad_medico
 
-		messages.add_message(request, messages.SUCCESS, u'Su solicitud de registro ha sido enviada. En los próximos días recibirá un correo y/o una llamada telefónica indicándole si su cuenta ha sido aprobada.')
+		for especializacion in especialidad_medico:
+			if especializacion.es_quirurgica:
+				medico_tratante = MedicoTratante()
+				medico_tratante.medico = medico
+				medico_tratante.save()
+				break
+
+		messages.add_message(request, messages.SUCCESS, MensajeTemporalExito.SOLICITUD_REGISTRO_EXITOSO)
 		return redirect('inicio')
 
 	formulario_inicio_sesion = InicioSesionForm()
@@ -143,13 +150,13 @@ def iniciar_sesion(request):
 				login(request, user)
 				return redirect('calendario')
 			else:
-				messages.add_message(request, messages.ERROR, u'Su cuenta todavía no ha sido aprobada.')
+				messages.add_message(request, messages.ERROR, MensajeTemporalError.AUTENTICACION_USUARIO_INACTIVO)
 				return redirect('inicio')
 		else:
-			messages.add_message(request, messages.ERROR, u'Usuario y/o contraseña incorrecta.')
+			messages.add_message(request, messages.ERROR, MensajeTemporalError.AUTENTICACION_FALLIDA)
 			return redirect('inicio')
 	else:
-		messages.add_message(request, messages.ERROR, u'Asegúrese de ingresar su nombre de usuario y contraseña.')
+		messages.add_message(request, messages.ERROR, MensajeTemporalError.AUTENTICACION_CAMPO_VACIO)
 		return redirect('inicio')
 
 def cerrar_sesion(request):

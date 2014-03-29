@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.core.validators import RegexValidator, validate_slug
+from django.contrib.auth.models import User
 
 from quirofanos_cmsb.helpers.custom_validators import ExpresionRegular, MensajeError, CodigoError
-from quirofanos_cmsb.models import Especializacion
+from quirofanos_cmsb.models import Especializacion, Medico
 
 # Generos
 GENERO = (
@@ -11,9 +12,15 @@ GENERO = (
 	('M', u'Masculino'),
 	)
 
+# Nacionalidades
+NACIONALIDAD = (
+	('V-', u'Venezolano'),
+	('E-', u'Extranjero'),
+	)
+
 class InicioSesionForm(forms.Form):
 	''' Formulario de inicio de sesion '''
-	nombre_usuario = forms.CharField(max_length=30, validators=[validate_slug])
+	nombre_usuario = forms.CharField(max_length=30)
 	contrasena = forms.CharField(widget=forms.PasswordInput)
 
 class RegistroDepartamentoForm(forms.Form):
@@ -25,6 +32,14 @@ class RegistroDepartamentoForm(forms.Form):
 	nombre_usuario_departamento = forms.CharField(max_length=30, validators=[validate_slug])
 	contrasena_departamento = forms.CharField(widget=forms.PasswordInput)
 	contrasena_confirmacion = forms.CharField(widget=forms.PasswordInput)
+
+	def clean_nombre_usuario_departamento(self):
+		''' Sobreescribe el clean_nombre_usuario_departamento(), validando que el nombre de usuario ingresado sea unico '''
+		nombre_usuario_departamento = self.cleaned_data['nombre_usuario_departamento']
+		for usuario in User.objects.all():
+			if usuario.username == nombre_usuario_departamento:
+				raise forms.ValidationError(MensajeError.EXISTE_USUARIO, code=CodigoError.EXISTE_USUARIO)
+		return nombre_usuario_departamento
 
 	def clean(self):
 		''' Sobreescribe el clean(), validando que las contrasenas ingresadas coincidan '''
@@ -40,6 +55,7 @@ class RegistroMedicoForm(forms.Form):
 	''' Formulario de registro de Medico '''
 	nombre_medico = forms.CharField(max_length=20, validators=[RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
 	apellido_medico = forms.CharField(max_length=20, validators=[RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.APELLIDO_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
+	nacionalidad_medico = forms.ChoiceField(widget=forms.HiddenInput, choices=NACIONALIDAD, initial='V-')
 	cedula_medico = forms.CharField(max_length=12, validators=[RegexValidator(ExpresionRegular.CEDULA, MensajeError.CEDULA_INVALIDA, CodigoError.CEDULA_INVALIDA)])
 	especialidad_medico = forms.ModelMultipleChoiceField(queryset=Especializacion.objects.all())
 	genero_medico = forms.ChoiceField(widget=forms.RadioSelect, choices=GENERO)
@@ -50,9 +66,19 @@ class RegistroMedicoForm(forms.Form):
 	contrasena_medico = forms.CharField(widget=forms.PasswordInput)
 	contrasena_confirmacion = forms.CharField(widget=forms.PasswordInput)
 
+	def clean_nombre_usuario_medico(self):
+		''' Sobreescribe el clean_nombre_usuario_medico(), validando que el nombre de usuario ingresado sea unico '''
+		nombre_usuario_medico = self.cleaned_data['nombre_usuario_medico']
+		for usuario in User.objects.all():
+			if usuario.username == nombre_usuario_medico:
+				raise forms.ValidationError(MensajeError.EXISTE_USUARIO, code=CodigoError.EXISTE_USUARIO)
+		return nombre_usuario_medico
+
 	def clean(self):
 		''' Sobreescribe el clean(), validando que las contrasenas ingresadas coincidan '''
 		cleaned_data = super(RegistroMedicoForm, self).clean()
+
+		# Validar que las contrasenas ingresadas coincidan
 		contrasena_medico = cleaned_data.get("contrasena_medico")
 		contrasena_confirmacion = cleaned_data.get("contrasena_confirmacion")
 		if contrasena_medico and contrasena_confirmacion:

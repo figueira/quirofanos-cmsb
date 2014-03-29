@@ -2,7 +2,6 @@
 import re
 from django.utils.translation import ugettext as _
 
-
 class ExpresionRegular():
 
     ''' Constantes que contienen expresiones regulares a ser utilizadas en validaciones de modelos y formularios '''
@@ -12,7 +11,6 @@ class ExpresionRegular():
     CEDULA_BD = re.compile(r'^(V-|E-)\d+$', re.UNICODE)
     TELEFONO_BD = re.compile(r'^\d{4}-\d{7}$', re.UNICODE)
     CEDULA = re.compile(r'^\d+$', re.UNICODE)
-
 
 class MensajeError():
 
@@ -28,7 +26,7 @@ class MensajeError():
     HORA_FIN_MENOR_HORA_INICIO = _(u'La hora de fin debe ser mayor que la hora de inicio.')
     CEDULA_INVALIDA = _(u'Cédula inválida, debe contener sólo números.')
     APELLIDO_INVALIDO = _(u'Apellido inválido, puede contener sólo letras y espacios.')
-
+    EXISTE_USUARIO = _(u'El nombre de usuario ingresado ya existe.')
 
 class CodigoError():
 
@@ -43,3 +41,4 @@ class CodigoError():
     RIESGO_BD_NO_MALO_CON_RAZON = "riesgo_bd_no_malo_con_razon"
     HORA_FIN_MENOR_HORA_INICIO = "hora_fin_menor_hora_inicio"
     CEDULA_INVALIDA = "cedula_invalida"
+    EXISTE_USUARIO = "existe_usuario"

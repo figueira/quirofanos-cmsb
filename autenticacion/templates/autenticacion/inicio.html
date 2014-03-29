@@ -27,6 +27,7 @@
   <div class="form-group">
     {% render_field formulario_inicio_sesion.nombre_usuario class="form-control" placeholder="Nombre de usuario" %}
     {% render_field formulario_inicio_sesion.contrasena class="form-control" placeholder="Contraseña" %}
+    {{ formulario_inicio_sesion.nombre_usuario.errors }}
     <button type="submit" class="btn btn-primary">
       Iniciar Sesión
     </button>
@@ -193,7 +194,7 @@
               {% render_field formulario_registro_departamento.contrasena_departamento class="form-control" id="contrasena-departamento" %}
               <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="contrasena-departamento-error-feedback-icon"></span>
               <span class="help-block hidden" id="contrasena-departamento-error-help">{{ formulario_registro_departamento.contrasena_departamento.errors }}</span>
-              <span class="help-block hidden" id="contrasenas-no-coinciden-error-help">{{ formulario_registro_departamento.non_field_errors }}</span>
+              <span class="help-block hidden" id="contrasenas-departamento-no-coinciden-error-help">{{ formulario_registro_departamento.non_field_errors }}</span>
             </div>
             <label class="col-lg-2 control-label" for="contrasena-departamento-confirmacion">
               Repita Contraseña:
@@ -229,7 +230,7 @@
               $("#contrasena-departamento-form-group").addClass("has-error has-feedback");
               $("#contrasena-departamento-error-feedback-icon").removeClass("hidden");
               $("#contrasena-departamento-confirmacion-error-feedback-icon").removeClass("hidden");
-              $("#contrasenas-no-coinciden-error-help").removeClass("hidden");
+              $("#contrasenas-departamento-no-coinciden-error-help").removeClass("hidden");
             });
             </script>
             {% endif %}
@@ -311,9 +312,22 @@
               Cédula:
             </label>
             <div class="col-lg-4">
-              {% render_field formulario_registro_medico.cedula_medico class="form-control" id="cedula-medico" %}
+              <div class="input-group">
+                <div class="input-group-btn">
+                  <button class="btn btn-default dropdown-toggle" id="cedula-medico-nacionalidad" type="button"  data-toggle="dropdown">
+                    <span id="cedula-medico-nacionalidad-texto">V-</span>
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a id="cedula-medico-nacionalidad-cambiar" href="javascript:void(0);">E-</a></li>
+                  </ul>
+                </div>
+                {% render_field formulario_registro_medico.nacionalidad_medico id="cedula-medico-nacionalidad-input" %}
+                {% render_field formulario_registro_medico.cedula_medico class="form-control" id="cedula-medico" %}
+              </div>
               <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="cedula-medico-error-feedback-icon"></span>
               <span class="help-block hidden" id="cedula-medico-error-help">{{ formulario_registro_medico.cedula_medico.errors }}</span>
+              <span class="help-block hidden" id="cedula-medico-nacionalidad-error-help">{{ formulario_registro_medico.nacionalidad_medico.errors }}</span>
             </div>
             <label class="col-lg-2 control-label">
               Género:
@@ -326,12 +340,22 @@
               {% endfor %}
               <span class="help-block hidden" id="genero-medico-error-help">{{ formulario_registro_medico.genero_medico.errors }}</span>
             </div>
+            {% if formulario_registro_medico.nacionalidad_medico.errors %}
+            <script type="text/javascript">
+            $(function(){
+              $("#cedula-medico").parent("div").parent("div").addClass("has-error");
+              $("#cedula-genero-medico-form-group").addClass("has-feedback");
+              $("#cedula-medico-error-feedback-icon").removeClass("hidden").css("z-index", "2");
+              $("#cedula-medico-nacionalidad-error-help").removeClass("hidden");
+            });
+            </script>
+            {% endif %}
             {% if formulario_registro_medico.cedula_medico.errors %}
             <script type="text/javascript">
             $(function(){
-              $("#cedula-medico").parent("div").addClass("has-error");
+              $("#cedula-medico").parent("div").parent("div").addClass("has-error");
               $("#cedula-genero-medico-form-group").addClass("has-feedback");
-              $("#cedula-medico-error-feedback-icon").removeClass("hidden");
+              $("#cedula-medico-error-feedback-icon").removeClass("hidden").css("z-index", "2");
               $("#cedula-medico-error-help").removeClass("hidden");
             });
             </script>
@@ -452,6 +476,7 @@
               {% render_field formulario_registro_medico.contrasena_medico class="form-control" id="contrasena-medico" %}
               <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="contrasena-medico-error-feedback-icon"></span>
               <span class="help-block hidden" id="contrasena-medico-error-help">{{ formulario_registro_medico.contrasena_medico.errors }}</span>
+              <span class="help-block hidden" id="contrasenas-medico-no-coinciden-error-help">{{ formulario_registro_medico.non_field_errors }}</span>
             </div>
             <label class="col-lg-2 control-label" for="contrasena-medico-confirmacion">
               Repita Contraseña:
@@ -478,6 +503,16 @@
               $("#contrasena-medico-form-group").addClass("has-feedback");
               $("#contrasena-medico-confirmacion-error-feedback-icon").removeClass("hidden");
               $("#contrasena-medico-confirmacion-error-help").removeClass("hidden");
+            });
+            </script>
+            {% endif %}
+            {% if formulario_registro_medico.non_field_errors  %}
+            <script type="text/javascript">
+            $(function(){
+              $("#contrasena-medico-form-group").addClass("has-error has-feedback");
+              $("#contrasena-medico-error-feedback-icon").removeClass("hidden");
+              $("#contrasena-medico-confirmacion-error-feedback-icon").removeClass("hidden");
+              $("#contrasenas-medico-no-coinciden-error-help").removeClass("hidden");
             });
             </script>
             {% endif %}
