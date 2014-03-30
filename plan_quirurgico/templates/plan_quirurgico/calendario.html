@@ -1,5 +1,4 @@
-<!-- DEPENDIENDO DEL TIPO DE USUARIO SE EXTENDERA UN CONTEXTO DISTINTO -->
-{% extends "medico/contexto.html" %}
+{% extends request.session.template_base %}
 
 {% load staticfiles %}
 
@@ -11,7 +10,7 @@
 {% endblock scripts %}
 
 {% block nombre-usuario %}
-Cristians González
+	{{ request.session.nombre_usuario }}
 {% endblock nombre-usuario %}
 
 {% block numero-mensajes %}
@@ -340,8 +339,8 @@ Cristians González
 					<td class="unavailable"></td>
 				</tr>
 			</tbody>
-		</table> Calendario -->
-	<!--</div>
+		</table>
+	</div>
 	<div class="col-lg-1">
 		<table class="table table-help">
 			<thead>

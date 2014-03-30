@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import user_passes_test
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_http_methods, require_GET, require_POST
 from django.template import RequestContext
 from django.contrib import messages
 
@@ -14,6 +14,7 @@ from autenticacion.forms import RegistroDepartamentoForm
 from autenticacion.forms import RegistroMedicoForm
 from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito
 
+@require_GET
 def inicio(request):
 	''' Controlador correspondiente a la pagina de inicio de la aplicacion
 
@@ -32,7 +33,7 @@ def inicio(request):
 	return render_to_response('autenticacion/inicio.html', datos, context_instance=RequestContext(request))
 
 
-@require_http_methods(["POST"])
+@require_POST
 def registro_departamento(request):
 	''' Controlador correspondiente al registro de un departamento
 
@@ -75,7 +76,7 @@ def registro_departamento(request):
 	datos['formulario_registro_medico'] = formulario_registro_medico
 	return render_to_response('autenticacion/inicio.html', datos,context_instance=RequestContext(request))
 
-@require_http_methods(["POST"])
+@require_POST
 def registro_medico(request):
 	''' Controlador correspondiente al registro de un medico
 
@@ -134,7 +135,7 @@ def registro_medico(request):
 	datos['formulario_registro_departamento'] = formulario_registro_departamento
 	return render_to_response('autenticacion/inicio.html', datos,context_instance=RequestContext(request))
 
-@require_http_methods(["POST"])
+@require_POST
 def iniciar_sesion(request):
 	''' Controlador correspondiente al inicio de sesion
 
@@ -148,6 +149,24 @@ def iniciar_sesion(request):
 		if user:
 			if user.is_active:
 				login(request, user)
+				request.session["nombre_usuario"] = request.user.username
+				privilegio = request.user.cuenta.privilegio
+				if privilegio == "0":
+					request.session["privilegio"] = "JEFE_PQ"
+					request.session["template_base"] = "jefe/contexto.html"
+				elif privilegio == "1":
+					request.session["privilegio"] = "COORDINADOR_PQ"
+					request.session["template_base"] = "coordinador/contexto.html"
+				elif privilegio == "2":
+					request.session["privilegio"] = "ASISTENTE_PQ"
+					request.session["template_base"] = "contexto.html"
+				elif privilegio == "3":
+					request.session["privilegio"] = "MEDICO"
+					request.session["template_base"] = "medico/contexto.html"
+				elif privilegio == "4":
+					request.session["privilegio"] = "OBSERVADOR"
+					request.session["template_base"] = "contexto.html"
+
 				return redirect('calendario')
 			else:
 				messages.add_message(request, messages.ERROR, MensajeTemporalError.AUTENTICACION_USUARIO_INACTIVO)
@@ -159,6 +178,7 @@ def iniciar_sesion(request):
 		messages.add_message(request, messages.ERROR, MensajeTemporalError.AUTENTICACION_CAMPO_VACIO)
 		return redirect('inicio')
 
+@require_GET
 def cerrar_sesion(request):
 	''' Controlador correspondiente al cierre de sesion
 
@@ -166,3 +186,29 @@ def cerrar_sesion(request):
 	request -> Solicitud HTTP '''
 	logout(request)
 	return redirect('inicio')
+
+@require_http_methods(["GET", "POST"])
+def cambiar_contrasena(request):
+	''' Controlador correspondiente al cambio de contrasena
+
+	Parametros:
+	request -> Solicitud HTTP '''
+	datos = {}
+	if request.method == 'GET':
+		formulario_cambio_contrasena = CambiarContrasenaForm()
+		datos["formulario_cambio_contrasena"] = formulario_cambio_contrasena
+	elif request.method == 'POST':
+		formulario_cambio_contrasena = CambiarContrasenaForm(request.POST)
+		if formulario_cambio_contrasena.is_valid():
+			contrasena_actual = formulario_cambio_contrasena.cleaned_data['contrasena_actual']
+			contrasena_nueva = formulario_cambio_contrasena.cleaned_data['contrasena_nueva']
+			if request.user.check_password(contrasena_actual):
+				request.user.set_password(contrasena_nueva)
+				messages.add_message(request, messages.SUCCESS, MensajeTemporalExito.CAMBIO_CONTRASENA_EXITOSO)
+				return redirect('calendario')
+			else:
+				messages.add_message(request, messages.ERROR,
+					MensajeTemporalError.CAMBIO_CONTRASENA_FALLIDO)
+				return redirect('cambiar_contrasena')
+
+	return render_to_response('cambiar_contrasena.html', datos, context_instance=RequestContext(request))
