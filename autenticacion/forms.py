@@ -85,3 +85,23 @@ class RegistroMedicoForm(forms.Form):
 			if contrasena_medico != contrasena_confirmacion:
 				raise forms.ValidationError(MensajeError.CONTRASENAS_NO_COINCIDEN, code=CodigoError.CONTRASENAS_NO_COINCIDEN)
 		return cleaned_data
+
+class CambiarContrasenaForm(forms.Form):
+	''' Formulario de cambio de contrasena '''
+	contrasena_actual = forms.CharField(widget=forms.PasswordInput)
+	contrasena_nueva = forms.CharField(widget=forms.PasswordInput)
+	contrasena_confirmacion = forms.CharField(widget=forms.PasswordInput)
+
+
+	def clean(self):
+		''' Sobreescribe el clean(), validando que las contrasenas ingresadas coincidan '''
+		cleaned_data = super(CambiarContrasenaForm, self).clean()
+
+		# Validar que las contrasenas ingresadas coincidan
+		contrasena_nueva = cleaned_data.get("contrasena_nueva")
+		contrasena_confirmacion = cleaned_data.get("contrasena_confirmacion")
+		if contrasena_nueva and contrasena_confirmacion:
+			if contrasena_nueva != contrasena_confirmacion:
+				raise forms.ValidationError(MensajeError.CONTRASENAS_NO_COINCIDEN, code=CodigoError.CONTRASENAS_NO_COINCIDEN)
+		return cleaned_data
+

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import render_to_response
+frm django.template import RequestContext
 
 def calendario(request):
 	''' Controlador correspondiente al calendario de disponibilidad de quirofanos por mes
@@ -7,7 +8,7 @@ def calendario(request):
 	Parametros:
 	request -> Solicitud HTTP '''
 
-	return render_to_response('plan_quirurgico/calendario.html')
+	return render_to_response('plan_quirurgico/calendario.html', context_instance=RequestContext(request))
 
 def plan_dia(request):
 	''' Controlador correspondiente al detalle del plan quirurgico por dia
