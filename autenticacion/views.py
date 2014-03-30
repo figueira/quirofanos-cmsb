@@ -105,9 +105,9 @@ def registro_medico(request):
 			medico.apellido = apellido_medico
 			medico.cedula = cedula_medico
 			medico.genero = genero_medico
-			medico.telefono = codigo_telefono +'-'+ telefono_medico
-			#medico.especializaciones = especialidad_medico
+			medico.telefono = codigo_telefono +'-'+ telefono_medico			
 			medico.save()	
+			#medico.especializaciones.add(especialidad_medico)
 
 			return render_to_response('autenticacion/registro.html')		
 		else:

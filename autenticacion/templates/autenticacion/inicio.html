@@ -151,6 +151,13 @@
 
       <form class="form-horizontal hidden" role="form" id="formulario-solicitud-medico" action="{% url 'registro_medico' %}" method="POST">    
         {% csrf_token %}
+        {% if formulario_registro_medico.errors %}
+        <script type="text/javascript">
+        $(function(){
+          $('#solicitar-cuenta-medico').trigger('click');
+        });
+        </script>
+        {% endif %}        
         <div class="panel-body">
           <div class="form-group">
             <label class="col-lg-2 control-label" for="nombre-medico">

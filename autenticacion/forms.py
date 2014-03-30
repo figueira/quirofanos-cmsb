@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.core.validators import RegexValidator, validate_slug
+from django.contrib.admin.widgets import FilteredSelectMultiple
 
 from quirofanos_cmsb.helpers.custom_validators import ExpresionRegular, MensajeError, CodigoError
 from quirofanos_cmsb.models import Especializacion
@@ -40,7 +41,7 @@ class RegistroMedicoForm(forms.Form):
 	nombre_medico = forms.CharField(max_length=20)
 	apellido_medico = forms.CharField(max_length=20)
 	cedula_medico = forms.CharField(max_length=12)
-	especialidad_medico = forms.ModelMultipleChoiceField(queryset=Especializacion.objects.all())
+	especialidad_medico = forms.ModelMultipleChoiceField(Especializacion.objects.all(), widget=FilteredSelectMultiple('Especialidades',False, attrs={'rows':'50'}))
 	genero_medico = forms.ChoiceField(widget=forms.RadioSelect, choices=GENERO)
 	codigo_telefono = forms.CharField(max_length=4, min_length=4)
 	telefono_medico = forms.CharField(max_length=7, min_length=7)
