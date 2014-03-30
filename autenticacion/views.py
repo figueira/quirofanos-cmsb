@@ -9,9 +9,7 @@ from django.template import RequestContext
 from django.contrib import messages
 
 from quirofanos_cmsb.models import Cuenta, Departamento, Medico, MedicoTratante
-from autenticacion.forms import InicioSesionForm
-from autenticacion.forms import RegistroDepartamentoForm
-from autenticacion.forms import RegistroMedicoForm
+from autenticacion.forms import InicioSesionForm, CambiarContrasenaForm, RegistroMedicoForm, RegistroDepartamentoForm
 from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito
 
 @require_GET
@@ -196,7 +194,6 @@ def cambiar_contrasena(request):
 	datos = {}
 	if request.method == 'GET':
 		formulario_cambio_contrasena = CambiarContrasenaForm()
-		datos["formulario_cambio_contrasena"] = formulario_cambio_contrasena
 	elif request.method == 'POST':
 		formulario_cambio_contrasena = CambiarContrasenaForm(request.POST)
 		if formulario_cambio_contrasena.is_valid():
@@ -204,6 +201,7 @@ def cambiar_contrasena(request):
 			contrasena_nueva = formulario_cambio_contrasena.cleaned_data['contrasena_nueva']
 			if request.user.check_password(contrasena_actual):
 				request.user.set_password(contrasena_nueva)
+				request.user.save()
 				messages.add_message(request, messages.SUCCESS, MensajeTemporalExito.CAMBIO_CONTRASENA_EXITOSO)
 				return redirect('calendario')
 			else:
@@ -211,4 +209,5 @@ def cambiar_contrasena(request):
 					MensajeTemporalError.CAMBIO_CONTRASENA_FALLIDO)
 				return redirect('cambiar_contrasena')
 
-	return render_to_response('cambiar_contrasena.html', datos, context_instance=RequestContext(request))
+	datos["formulario_cambio_contrasena"] = formulario_cambio_contrasena
+	return render_to_response('autenticacion/cambiar_contrasena.html', datos, context_instance=RequestContext(request))
