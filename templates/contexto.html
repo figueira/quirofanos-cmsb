@@ -2,6 +2,17 @@
 
 {% load staticfiles  %}
 
+{% block navbar-nav %}
+<li class="navegacion" id="seccion-plan-quirurgico">
+	<a href="#">
+		Plan Quirúrgico
+		<span class="glyphicon glyphicon-calendar">
+		</span>
+	</a>
+</li>
+{% endblock navbar-nav %}
+
+
 {% block navbar-nav-extra %}
 <ul class="nav navbar-nav navbar-right">
 	<p class="navbar-text">
@@ -25,8 +36,8 @@
 		</a>
 		<ul class="dropdown-menu">
 			<li>
-				<a href="#">
-					Ajustes
+				<a href="{% url 'cambiar_contrasena' %}">
+					Cambiar Contraseña
 				</a>
 			</li>
 			<li class="divider">

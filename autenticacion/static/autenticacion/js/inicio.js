@@ -18,7 +18,7 @@ $(document).ready(function() {
     $("#formulario-solicitud-medico").addClass("hidden");
     $("#formulario-solicitud-departamento").addClass("hidden");
     $("#body-solicitar-cuenta").removeClass("hidden");
-    $("#titulo-solicitar-cuenta").html("Solicitar Cuenta");	
+    $("#titulo-solicitar-cuenta").html("Solicitar Cuenta");
   });
 
   // Popover de solicitar cuenta medico
@@ -26,7 +26,7 @@ $(document).ready(function() {
     placement: "bottom",
     trigger: "hover",
     title: "Médico",
-    content: "Cuenta para personal médico y quirúrgico"
+    content: "Cuenta para personal médico y quirúrgico."
   });
 
   // Popover de solicitar cuenta departamento
@@ -34,6 +34,19 @@ $(document).ready(function() {
     placement: "bottom",
     trigger: "hover",
     title: "Departamento Clínico",
-    content: "Cuenta para departamentos que requieren información del plan quirúrgico"
+    content: "Cuenta para departamentos que requieren información del plan quirúrgico."
   })
+
+  // Cambiar nacionalidad de cedula medico
+  $("#cedula-medico-nacionalidad-cambiar").click(function() {
+    if ($(this).html() == "E-") {
+      $(this).html("V-");
+      $("#cedula-medico-nacionalidad-texto").html("E-");
+      $("#cedula-medico-nacionalidad-input").val("E-");
+    }else {
+      $(this).html("E-");
+      $("#cedula-medico-nacionalidad-texto").html("V-");
+      $("#cedula-medico-nacionalidad-input").val("V-");
+    }
+  });
 });

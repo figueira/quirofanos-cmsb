@@ -1,5 +1,4 @@
-<!-- DEPENDIENDO DEL TIPO DE USUARIO SE EXTENDERA UN CONTEXTO DISTINTO -->
-{% extends "medico/contexto.html" %}
+{% extends request.session.template_base %}
 
 {% load staticfiles %}
 
@@ -10,8 +9,19 @@
 </script>
 {% endblock scripts %}
 
+{% block flash-messages %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} fade in">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+  <strong>{{ message }}</strong>
+</div>
+{% endfor %}
+{% endif %}
+{% endblock flash-messages %}
+
 {% block nombre-usuario %}
-Cristians González
+	{{ request.session.nombre_usuario }}
 {% endblock nombre-usuario %}
 
 {% block numero-mensajes %}
@@ -22,7 +32,7 @@ Cristians González
 <div class="page-header">
 	<h1>Calendario</h1>
 </div>
-<div class="row">
+<!--<div class="row">
 	<div class="col-lg-offset-1 col-lg-2">
 		<a href="#">
 			<span class="glyphicon glyphicon-chevron-left">
@@ -60,9 +70,9 @@ Cristians González
 			</li>
 		</ul>
 	</div>
-</div><!-- Mes y Areas -->
+</div> Mes y Areas -->
 
-<div class="row">
+<!--<div class="row">
 	<div class="col-lg-offset-1 col-lg-10">
 		<table class="table table-bordered table-responsive table-hover">
 			<thead>
@@ -340,7 +350,7 @@ Cristians González
 					<td class="unavailable"></td>
 				</tr>
 			</tbody>
-		</table><!-- Calendario -->
+		</table>
 	</div>
 	<div class="col-lg-1">
 		<table class="table table-help">
@@ -358,5 +368,5 @@ Cristians González
 			</tbody>
 		</table>
 	</div>
-</div>
+</div>-->
 {% endblock content %}

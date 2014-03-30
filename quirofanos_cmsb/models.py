@@ -120,6 +120,7 @@ class Especializacion(models.Model):
     ''' Clase que representa una Especializacion Medica'''
     nombre = models.CharField(max_length=30, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
+    es_quirurgica = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.nombre
@@ -133,7 +134,7 @@ class Medico (models.Model):
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
     apellido = models.CharField(max_length=20, validators=[
                                 RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
-    cedula = models.CharField(max_length=12, unique=True, validators=[
+    cedula = models.CharField(max_length=12, validators=[
                               RegexValidator(ExpresionRegular.CEDULA_BD, MensajeError.CEDULA_BD_INVALIDA, CodigoError.CEDULA_BD_INVALIDA)])
     genero = models.CharField(max_length=1, choices=GENERO)
     telefono = models.CharField(max_length=12, validators=[

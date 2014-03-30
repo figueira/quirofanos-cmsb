@@ -3,13 +3,7 @@
 {% load staticfiles  %}
 
 {% block navbar-nav %}
-<li class="navegacion" id="seccion-plan-quirurgico">
-	<a href="#">
-		Plan Quirúrgico
-		<span class="glyphicon glyphicon-calendar">
-		</span>
-	</a>
-</li>
+{{ block.super }}
 <li class="navegacion" id="seccion-mis-solicitudes">
 	<a href="#">
 		Mis Solicitudes

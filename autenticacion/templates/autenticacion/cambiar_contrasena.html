@@ -1,0 +1,120 @@
+{% extends request.session.template_base %}
+
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+{% block title %}{{ block.super }} | Cambiar Contraseña {% endblock title %}
+
+{% block flash-messages %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} fade in">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+  <strong>{{ message }}</strong>
+</div>
+{% endfor %}
+{% endif %}
+{% endblock flash-messages %}
+
+{% block nombre-usuario %}
+{{ request.session.nombre_usuario }}
+{% endblock nombre-usuario %}
+
+{% block numero-mensajes %}
+3
+{% endblock numero-mensajes %}
+
+{% block content %}
+<div class="page-header">
+    <h1>
+        Cambiar Contraseña
+    </h1>
+</div>
+<div class="row">
+    <div class="col-lg-offset-3 col-lg-6">
+        <div class="panel panel-default">
+            <form class="form-horizontal" role="form" action="{% url 'cambiar_contrasena' %}" method='POST'>
+                {% csrf_token %}
+                <div class="panel-body">
+                    <div class="form-group" id="contrasena-actual-form-group">
+                        <label class="col-lg-4 control-label" for="contrasena-actual">Contraseña Actual:</label>
+                        <div class="col-lg-8">
+                            {% render_field formulario_cambio_contrasena.contrasena_actual class="form-control" id="contrasena-actual"%}
+                            <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="contrasena-actual-error-feedback-icon"></span>
+                            <span class="help-block hidden" id="contrasena-actual-error-help">{{ formulario_cambio_contrasena.contrasena_actual.errors }}</span>
+                        </div>
+                        {% if formulario_cambio_contrasena.contrasena_actual.errors %}
+                        <script type="text/javascript">
+                        $(function() {
+                            $("#contrasena-actual").parent("div").addClass("has-error")
+                            $("#contrasena-actual-form-group").addClass("has-feedback");
+                            $("#contrasena-actual-error-feedback-icon").removeClass("hidden");
+                            $("#contrasena-actual-error-help").removeClass("hidden");
+                        });
+                        </script>
+                        {% endif %}
+                    </div>
+                    <div class="form-group" id="contrasena-nueva-form-group">
+                        <label class="col-lg-4 control-label" for="contrasena-nueva">Nueva Contraseña:</label>
+                        <div class="col-lg-8">
+                            {% render_field formulario_cambio_contrasena.contrasena_nueva class="form-control" id="contrasena-nueva"%}
+                            <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="contrasena-nueva-error-feedback-icon"></span>
+                            <span class="help-block hidden" id="contrasena-nueva-error-help">{{ formulario_cambio_contrasena.contrasena_nueva.errors }}{{ formulario_cambio_contrasena.non_field_errors }}</span>
+                        </div>
+                        {% if formulario_cambio_contrasena.contrasena_nueva.errors %}
+                        <script type="text/javascript">
+                        $(function() {
+                            $("#contrasena-nueva").parent("div").addClass("has-error")
+                            $("#contrasena-nueva-form-group").addClass("has-feedback");
+                            $("#contrasena-nueva-error-feedback-icon").removeClass("hidden");
+                            $("#contrasena-nueva-error-help").removeClass("hidden");
+                        });
+                        </script>
+                        {% endif %}
+                    </div>
+                    <div class="form-group" id="contrasena-nueva-confirmacion-form-group">
+                        <label class="col-lg-4 control-label" for="contrasena-confirmacion">Repita Nueva Contraseña:</label>
+                        <div class="col-lg-8">
+                            {% render_field formulario_cambio_contrasena.contrasena_confirmacion class="form-control" id="contrasena-nueva-confirmacion"%}
+                            <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="contrasena-nueva-confirmacion-error-feedback-icon"></span>
+                            <span class="help-block hidden" id="contrasena-nueva-confirmacion-error-help">{{ formulario_cambio_contrasena.contrasena_confirmacion.errors }}{{ formulario_cambio_contrasena.non_field_errors }}</span>
+                        </div>
+                        {% if formulario_cambio_contrasena.contrasena_confirmacion.errors %}
+                        <script type="text/javascript">
+                        $(function() {
+                            $("#contrasena-nueva-confirmacion").parent("div").addClass("has-error")
+                            $("#contrasena-nueva-confirmacion-form-group").addClass("has-feedback");
+                            $("#contrasena-nueva-confirmacion-error-feedback-icon").removeClass("hidden");
+                            $("#contrasena-nueva-confirmacion-error-help").removeClass("hidden");
+                        });
+                        </script>
+                        {% endif %}
+                        {% if formulario_cambio_contrasena.non_field_errors %}
+                        <script type="text/javascript">
+                        $(function() {
+                            $("#contrasena-nueva-confirmacion").parent("div").addClass("has-error")
+                            $("#contrasena-nueva-confirmacion-form-group").addClass("has-feedback");
+                            $("#contrasena-nueva-confirmacion-error-feedback-icon").removeClass("hidden");
+                            $("#contrasena-nueva-confirmacion-error-help").removeClass("hidden");
+                            $("#contrasena-nueva").parent("div").addClass("has-error")
+                            $("#contrasena-nueva-form-group").addClass("has-feedback");
+                            $("#contrasena-nueva-error-feedback-icon").removeClass("hidden");
+                            $("#contrasena-nueva-error-help").removeClass("hidden");
+                        });
+                        </script>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <!-- Submit -->
+                    <div class="col-lg-offset-10">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            Actualizar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
