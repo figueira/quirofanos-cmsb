@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods, require_GET, require_POST
 from django.template import RequestContext
 from django.contrib import messages
@@ -177,6 +177,7 @@ def iniciar_sesion(request):
 		return redirect('inicio')
 
 @require_GET
+@login_required
 def cerrar_sesion(request):
 	''' Controlador correspondiente al cierre de sesion
 
@@ -186,6 +187,7 @@ def cerrar_sesion(request):
 	return redirect('inicio')
 
 @require_http_methods(["GET", "POST"])
+@login_required
 def cambiar_contrasena(request):
 	''' Controlador correspondiente al cambio de contrasena
 

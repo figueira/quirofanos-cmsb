@@ -1,6 +1,10 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_http_methods, require_GET, require_POST
 
+@require_GET()
+@login_required
 def calendario(request):
 	''' Controlador correspondiente al calendario de disponibilidad de quirofanos por mes
 
