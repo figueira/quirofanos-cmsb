@@ -149,30 +149,20 @@ def iniciar_sesion(request):
 			if user.is_active:
 				login(request, user)
 				request.session["nombre_usuario"] = request.user.username
-				cuenta = Cuenta.objects.filter(usuario=user)
-				# Checkear si es medico o departamento
+				cuenta = request.user.cuenta				
 				privilegio = request.user.cuenta.privilegio
 				if privilegio == "0":
 					request.session["privilegio"] = "JEFE_PQ"
-					request.session["template_base"] = "jefe/contexto.html"
-					medico = Medico.objects.select_related().get(cuenta=cuenta)
-					nombre_medico = medico.nombre
-					apellido_medico = medico.apellido
-					request.session["nombre"] = nombre_medico +' '+ apellido_medico					
+					request.session["template_base"] = "jefe/contexto.html"	
+					request.session["nombre"] = u'jefe Plan Quirúrgico'
 				elif privilegio == "1":
 					request.session["privilegio"] = "COORDINADOR_PQ"
-					request.session["template_base"] = "coordinador/contexto.html"
-					medico = Medico.objects.select_related().get(cuenta=cuenta)
-					nombre_medico = medico.nombre
-					apellido_medico = medico.apellido
-					request.session["nombre"] = nombre_medico +' '+ apellido_medico					
+					request.session["template_base"] = "coordinador/contexto.html"				
+					request.session["nombre"] = u'Coordinador Plan Quirúrgico'
 				elif privilegio == "2":
 					request.session["privilegio"] = "ASISTENTE_PQ"
-					request.session["template_base"] = "contexto.html"
-					medico = Medico.objects.select_related().get(cuenta=cuenta)
-					nombre_medico = medico.nombre
-					apellido_medico = medico.apellido
-					request.session["nombre"] = nombre_medico +' '+ apellido_medico					
+					request.session["template_base"] = "contexto.html"		
+					request.session["nombre"] = u'Asistente Plan Quirúrgico'
 				elif privilegio == "3":
 					request.session["privilegio"] = "MEDICO"
 					request.session["template_base"] = "medico/contexto.html"
