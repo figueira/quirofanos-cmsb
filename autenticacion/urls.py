@@ -7,4 +7,5 @@ urlpatterns = patterns('autenticacion.views',
 	url(r'^iniciar_sesion$', 'iniciar_sesion', name='iniciar_sesion'),
 	url(r'^cerrar_sesion$', 'cerrar_sesion', name='cerrar_sesion'),
 	url(r'^cambiar_contrasena$', 'cambiar_contrasena', name='cambiar_contrasena'),
+    url(r'^recuperar_contrasena$', 'recuperar_contrasena', name ='recuperar_contrasena'),
     )

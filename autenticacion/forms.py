@@ -105,3 +105,7 @@ class CambiarContrasenaForm(forms.Form):
 				raise forms.ValidationError(MensajeError.CONTRASENAS_NO_COINCIDEN, code=CodigoError.CONTRASENAS_NO_COINCIDEN)
 		return cleaned_data
 
+
+class RecuperarContrasenaForm(forms.Form):
+	''' Formulario de recuperar contrasena '''
+	correo_electronico = forms.EmailField(max_length=75)
