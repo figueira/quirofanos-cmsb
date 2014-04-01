@@ -7,7 +7,6 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods, require_GET, require_POST
 from django.template import RequestContext
 from django.contrib import messages
-from django.core.mail import send_mail
 
 from quirofanos_cmsb.models import Cuenta, Departamento, Medico, MedicoTratante
 from autenticacion.forms import InicioSesionForm, CambiarContrasenaForm, RegistroMedicoForm, RegistroDepartamentoForm, RecuperarContrasenaForm
@@ -230,8 +229,7 @@ def recuperar_contrasena(request):
 			correo_electronico = formulario_recuperar_contrasena.cleaned_data['correo_electronico']
 			usuario = User.objects.filter(email=correo_electronico, is_active=True)
 			if usuario:
-				''' Enviar email '''
-				'''send_mail('Recuperación de credenciales', 'Hola', 'cmsb@noreply.com', [usuario[0].email], fail_silently=False)'''
+				# Enviar email
 				messages.add_message(request, messages.SUCCESS, MensajeTemporalExito.RECUPERAR_CONTRASENA_EXITOSO)
 				return redirect('inicio')
 			else:
