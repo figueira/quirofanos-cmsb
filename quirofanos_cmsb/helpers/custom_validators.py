@@ -11,6 +11,9 @@ class ExpresionRegular():
     CEDULA_BD = re.compile(r'^(V-|E-)\d+$', re.UNICODE)
     TELEFONO_BD = re.compile(r'^\d{4}-\d{7}$', re.UNICODE)
     CEDULA = re.compile(r'^\d+$', re.UNICODE)
+    CODIGO_ESPECIALIZACION = re.compile(r'^\d{3}$', re.UNICODE)
+    NUMERO_EXPEDIENTE = re.compile(r'^[A-Z]{2}\d{6}$', re.UNICODE)
+    NUMERO_HABITACION = re.compile(r'^\d{3}$', re.UNICODE)
 
 class MensajeError():
 
@@ -27,6 +30,9 @@ class MensajeError():
     CEDULA_INVALIDA = _(u'Cédula inválida, debe contener sólo números.')
     APELLIDO_INVALIDO = _(u'Apellido inválido, puede contener sólo letras y espacios.')
     EXISTE_USUARIO = _(u'El nombre de usuario ingresado ya existe.')
+    CODIGO_ESPECIALIZACION_INVALIDO = _(u'Código de especialización inválido, debe contener exactamente tres dígitos.')
+    NUMERO_EXPEDIENTE_INVALIDO = _(u'Número de expediente inválido, debe comenzar con dos letras mayúsculas seguido de 6 dígitos.')
+    NUMERO_HABITACION_INVALIDO = _(u'Número de habitación inválido, debe contener exactamente tres dígitos.')
 
 class CodigoError():
 
@@ -42,3 +48,6 @@ class CodigoError():
     HORA_FIN_MENOR_HORA_INICIO = "hora_fin_menor_hora_inicio"
     CEDULA_INVALIDA = "cedula_invalida"
     EXISTE_USUARIO = "existe_usuario"
+    CODIGO_ESPECIALIZACION_INVALIDO = "codigo_especializacion_invalido"
+    NUMERO_EXPEDIENTE_INVALIDO = "numero_expediente_invalido"
+    NUMERO_HABITACION_INVALIDO = "numero_habitacion_invalido"

@@ -115,7 +115,8 @@ class Cuenta (models.Model):
 
 
 class Especializacion(models.Model):
-    ''' Clase que representa una Especializacion Medica'''
+    ''' Clase que representa una Especializacion Medica '''
+    codigo = models.CharField(max_length=3, unique=True, validators=[RegexValidator(ExpresionRegular.CODIGO_ESPECIALIZACION, MensajeError.CODIGO_ESPECIALIZACION_INVALIDO, CodigoError.CODIGO_ESPECIALIZACION_INVALIDO)])
     nombre = models.CharField(max_length=30, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
     es_quirurgica = models.BooleanField(default=False)
@@ -131,12 +132,12 @@ class Especializacion(models.Model):
         super(Especializacion, self).save()
 
     def __unicode__(self):
-        return self.nombre
+        return self.codigo + ' ' + self.nombre
 
 
 class Medico (models.Model):
     ''' Clase que representa un Medico '''
-    cuenta = models.OneToOneField(Cuenta)
+    cuenta = models.OneToOneField(Cuenta, blank=True, null=True)
     nombre = models.CharField(max_length=20, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
     apellido = models.CharField(max_length=20, validators=[
@@ -173,7 +174,7 @@ class MedicoTratante (models.Model):
 
 class Departamento (models.Model):
     ''' Clase que representa un Departamento '''
-    cuenta = models.OneToOneField(Cuenta)
+    cuenta = models.OneToOneField(Cuenta, blank=True, null=True)
     nombre = models.CharField(max_length=20, unique=True, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
     telefono = models.CharField(max_length=12, validators=[
@@ -286,8 +287,8 @@ class SistemaCorporal(models.Model):
         return self.codigo_icd_10_pcs + ', ' + self.nombre
 
 
-class ProcedimientoQuirurgico(models.Model):
-    ''' Clase que representa un Procedimiento Quirurgico segun el estandar ICD-10-PCS '''
+class TipoProcedimientoQuirurgico(models.Model):
+    ''' Clase que representa un Tipo Procedimiento Quirurgico segun el estandar ICD-10-PCS '''
     codigo_icd_10_pcs = models.CharField(max_length=1, unique=True)
     nombre = models.CharField(max_length=30, unique=True, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
@@ -296,15 +297,15 @@ class ProcedimientoQuirurgico(models.Model):
         ''' Sobreescribe el clean(), colocando el codigo en mayuscula y el nombre capitalizado '''
         self.codigo_icd_10_pcs = self.codigo_icd_10_pcs.upper()
         self.nombre = self.nombre.title()
-        super(ProcedimientoQuirurgico, self).clean()
+        super(TipoProcedimientoQuirurgico, self).clean()
 
     def save(self):
         ''' Sobreescribe el save() '''
         self.full_clean()
-        super(ProcedimientoQuirurgico, self).save()
+        super(TipoProcedimientoQuirurgico, self).save()
 
     def __unicode__(self):
-        return self.codigo_icd_10_pcs + ', ' + self.Nombres
+        return self.codigo_icd_10_pcs + ', ' + self.nombre
 
 
 class OrganoCorporal(models.Model):
@@ -313,7 +314,7 @@ class OrganoCorporal(models.Model):
     nombre = models.CharField(max_length=30, unique=True, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
     sistema_corporal = models.ForeignKey(SistemaCorporal)
-    procedimientos_permitidos = models.ManyToManyField(ProcedimientoQuirurgico)
+    procedimientos_permitidos = models.ManyToManyField(TipoProcedimientoQuirurgico)
 
     def clean(self):
         ''' Sobreescribe el clean(), colocando el codigo en mayuscula y el nombre capitalizado '''
@@ -329,15 +330,11 @@ class OrganoCorporal(models.Model):
     def __unicode__(self):
         return self.nombre
 
-
-class TipoIntervencionQuirurgica(models.Model):
-    ''' Clase que representa un Tipo de Intervencion Quirurgica '''
-    procedimiento_quirurgico = models.ForeignKey(ProcedimientoQuirurgico)
-    organo_corporal = models.ForeignKey(OrganoCorporal)
+class CompaniaAseguradora(models.Model):
+    nombre = models.CharField(max_length=50, validators=[RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
 
     def __unicode__(self):
-        return self.organo_corporal.sistema_corporal.__unicode__() + ', ' + self.procedimiento_quirurgico.__unicode__() + ', ' + self.organo_corporal.__unicode__()
-
+        return self.nombre
 
 class Paciente(models.Model):
     ''' Clase que representa un Paciente '''
@@ -351,18 +348,14 @@ class Paciente(models.Model):
     telefono = models.CharField(max_length=12, validators=[
                                 RegexValidator(ExpresionRegular.TELEFONO_BD, MensajeError.TELEFONO_BD_INVALIDO, CodigoError.TELEFONO_BD_INVALIDO)])
     genero = models.CharField(max_length=1, choices=GENERO)
+    compania_aseguradora = models.ForeignKey(CompaniaAseguradora, blank=True, null=True)
     numero_expediente = models.CharField(
-        max_length=5, unique=True, blank=True, null=True)  # Ver formato
+        max_length=8, unique=True, blank=True, null=True, validators=[RegexValidator(ExpresionRegular.NUMERO_EXPEDIENTE, MensajeError.NUMERO_EXPEDIENTE_INVALIDO, CodigoError.NUMERO_EXPEDIENTE_INVALIDO)])
     numero_habitacion = models.CharField(
-        max_length=5, blank=True, null=True)  # Ver formato
-    numero_inscripcion_medico = models.CharField(
-        max_length=5, unique=True, blank=True, null=True)  # Ver formato
+        max_length=3, blank=True, null=True, validators=[RegexValidator(ExpresionRegular.NUMERO_HABITACION, MensajeError.NUMERO_HABITACION_INVALIDO, CodigoError.NUMERO_HABITACION_INVALIDO)])
     diagnostico_ingreso = models.TextField()
     servicios_operatorios_requeridos = models.ManyToManyField(
         ServicioOperatorio, blank=True, null=True)
-    familiar_medico = models.ForeignKey(Medico, blank=True, null=True)
-    parentezco_familiar_medico = models.CharField(
-        max_length=1, choices=PARENTEZCO, blank=True, null=True)
 
     def clean(self):
         ''' Sobreescribe el clean(), colocando nombre y apellido capitalizados '''
@@ -397,10 +390,8 @@ class IntervencionQuirurgica(models.Model):
         MaterialQuirurgico, blank=True, null=True)
     equipos_especiales_requeridos = models.ManyToManyField(
         EquipoEspecial, blank=True, null=True)
-    tipo_intervencion = models.ForeignKey(TipoIntervencionQuirurgica)
     quirofano = models.ForeignKey(Quirofano)
-    medicos_participantes = models.ManyToManyField(
-        Medico, through='Participacion')
+    monto_honorarios_total = models.DecimalField(max_digits=15, decimal_places=2) # hacer funcion para calcular este monto derivado
 
     def clean(self):
         ''' Sobreescribe el clean(), validando los valores del riesgo y la razon del riesgo, ademas de calcular la duracion de la Intervencion Quirurgica '''
@@ -432,15 +423,26 @@ class IntervencionQuirurgica(models.Model):
         super(IntervencionQuirurgica, self).save()
 
     def __unicode__(self):
-        return '' + self.tipo_intervencion.__unicode__() + ', ' + self.paciente.__unicode__() + ', ' + self.reservacion.medico.__unicode__() + ', ' + str(self.fecha_intervencion)
+        return self.paciente.__unicode__() + ', ' + self.reservacion.medico.__unicode__() + ', ' + str(self.fecha_intervencion)
+
+class ProcedimientoQuirurgico(models.Model):
+    ''' Clase que representa un Procedimiento Quirurgico '''
+    intervencion_quirurgica = models.ForeignKey(IntervencionQuirurgica)
+    tipo_procedimiento_quirurgico = models.ForeignKey(TipoProcedimientoQuirurgico)
+    organo_corporal = models.ForeignKey(OrganoCorporal)
+    monto_honorarios_cirujano_principal = models.DecimalField(max_digits=15, decimal_places=2)
+    medicos_participantes = models.ManyToManyField(Medico, through='Participacion')
+
+    def __unicode__(self):
+        return self.intervencion_quirurgica.__unicode__() + ', ' + self.organo_corporal.sistema_corporal.__unicode__() + ', ' + self.tipo_procedimiento_quirurgico.__unicode__() + ', ' + self.organo_corporal.__unicode__()
 
 
 class Participacion(models.Model):
-    ''' Clase que representa la Participacion de un Medico en una
-    Intervencion Quirurgica '''
-    intervencion_quirurgica = models.ForeignKey(IntervencionQuirurgica)
+    ''' Clase que representa la Participacion de un Medico en un Procedimiento Quirurgico '''
+    procedimiento_quirurgico = models.ForeignKey(ProcedimientoQuirurgico)
     medico = models.ForeignKey(Medico)
     rol = models.CharField(max_length=1, choices=ROL_PARTICIPACION)
+    monto_honorarios = models.DecimalField(max_digits=15, decimal_places=2)
 
     def save(self):
         ''' Sobreescribe el save() '''
@@ -448,7 +450,7 @@ class Participacion(models.Model):
         super(Participacion, self).save()
 
     def __unicode__(self):
-        return '' + self.intervencion_quirurgica.__unicode__() + ', ' + self.medico.__unicode__() + ', ' + self.get_rol_display()
+        return self.intervencion_quirurgica.__unicode__() + ', ' + self.medico.__unicode__() + ', ' + self.get_rol_display()
 
 
 class Reservacion (models.Model):
@@ -475,4 +477,4 @@ class Reservacion (models.Model):
         super(Reservacion, self).save()
 
     def __unicode__(self):
-        return '' + self.intervencion_quirurgica.__unicode__() + ', ' + self.get_tipo_solicitud_display() + ', ' + self.get_estado_display() + ', ' + str(self.fecha_reservacion)
+        return self.intervencion_quirurgica.__unicode__() + ', ' + self.get_tipo_solicitud_display() + ', ' + self.get_estado_display() + ', ' + str(self.fecha_reservacion)
