@@ -1,8 +1,20 @@
+// Mostrar busqueda de medico por cedula
+var mostrarBusquedaCedulaMedico = function() {
+  $('#solicitar-cuenta-medico').trigger('click');
+};
+
+// Mostrar formulario de solicitud de registro medico
+var mostrarFormularioSolicitudMedico = function () {
+  $("#body-solicitar-cuenta").addClass("hidden");
+  $("#formulario-solicitud-medico").removeClass("hidden");
+  $("#titulo-solicitar-cuenta").html("Solicitar Cuenta - Médico");
+};
+
 $(document).ready(function() {
   // Desplegar formulario de solicitud de cuenta medico
   $("#solicitar-cuenta-medico").click(function() {
     $("#body-solicitar-cuenta").addClass("hidden");
-    $("#formulario-solicitud-medico").removeClass("hidden");
+    $("#formulario-busqueda-medico").removeClass("hidden");
     $("#titulo-solicitar-cuenta").html("Solicitar Cuenta - Médico");
   });
 
@@ -15,6 +27,7 @@ $(document).ready(function() {
 
   // Volver a seleccion de tipo de solicitud de cuenta
   $(".volver-solicitar-cuenta").click(function() {
+    $("#formulario-busqueda-medico").addClass("hidden");
     $("#formulario-solicitud-medico").addClass("hidden");
     $("#formulario-solicitud-departamento").addClass("hidden");
     $("#body-solicitar-cuenta").removeClass("hidden");
@@ -38,15 +51,15 @@ $(document).ready(function() {
   })
 
   // Cambiar nacionalidad de cedula medico
-  $("#cedula-medico-nacionalidad-cambiar").click(function() {
+  $("#busqueda-cedula-medico-nacionalidad-cambiar").click(function() {
     if ($(this).html() == "E-") {
       $(this).html("V-");
-      $("#cedula-medico-nacionalidad-texto").html("E-");
-      $("#cedula-medico-nacionalidad-input").val("E-");
+      $("#busqueda-cedula-medico-nacionalidad-texto").html("E-");
+      $("#busqueda-cedula-medico-nacionalidad-input").val("E-");
     }else {
       $(this).html("E-");
-      $("#cedula-medico-nacionalidad-texto").html("V-");
-      $("#cedula-medico-nacionalidad-input").val("V-");
+      $("#busqueda-cedula-medico-nacionalidad-texto").html("V-");
+      $("#busqueda-cedula-medico-nacionalidad-input").val("V-");
     }
   });
 });

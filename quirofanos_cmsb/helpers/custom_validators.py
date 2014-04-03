@@ -3,7 +3,6 @@ import re
 from django.utils.translation import ugettext as _
 
 class ExpresionRegular():
-
     ''' Constantes que contienen expresiones regulares a ser utilizadas en validaciones de modelos y formularios '''
     CODIGO_TELEFONO = re.compile(r'^\d{4}$', re.UNICODE)
     NUMERO_TELEFONO = re.compile(r'^\d{7}$', re.UNICODE)
@@ -15,13 +14,13 @@ class ExpresionRegular():
     NUMERO_HABITACION = re.compile(r'^\d{3}$', re.UNICODE)
 
 class MensajeError():
-
     ''' Constantes que contienen mensajes de error a ser utilizados en validaciones de modelos y formularios '''
     CODIGO_TELEFONO_INVALIDO = _(u'Código de teléfono inválido, debe contener exactamente 4 dígitos.')
     NUMERO_TELEFONO_INVALIDO = _(u'Número de teléfono inválido, debe contener exactamente 7 dígitos.')
     NOMBRE_GENERAL_INVALIDO = _(u'Nombre inválido, puede contener sólo letras y espacios.')
     CONTRASENAS_NO_COINCIDEN = _(u'Las contraseñas ingresadas no coinciden.')
     CEDULA_BD_INVALIDA = _(u'Cédula inválida, debe ser de la forma: V-XXX... ó E-XXX...')
+    CEDULA_BD_NO_EXISTE = _(u'El número de cédula ingresado no corresponde a ningún médico.')
     TELEFONO_BD_INVALIDO = _(u'Teléfono inválido, debe ser de la forma: XXXX-XXXXXXX.')
     RIESGO_MALO_SIN_RAZON = _(u'La razón del riesgo no puede ser nula si el riesgo es malo.')
     RIESGO_NO_MALO_CON_RAZON = _(u'La razón del riesgo debe ser nula si el riesgo es distinto de malo.')
@@ -35,13 +34,13 @@ class MensajeError():
     NUMERO_EXPEDIENTE_SIN_AREA_INGRESO = _(u'El número de expediente de un paciente no puede existir sin un área de ingreso asociada.')
 
 class CodigoError():
-
     ''' Constantes que contienen codigos de error a ser utilizados en validaciones de modelos y formularios '''
     CODIGO_TELEFONO_INVALIDO = "codigo_telefono_invalido"
     NUMERO_TELEFONO_INVALIDO = "numero_telefono_invalido"
     NOMBRE_GENERAL_INVALIDO = "nombre_general_invalido"
     CONTRASENAS_NO_COINCIDEN = "contrasenas_no_coinciden"
     CEDULA_BD_INVALIDA = "cedula_bd_invalida"
+    CEDULA_BD_NO_EXISTE = "cedula_bd_no_existe"
     TELEFONO_BD_INVALIDO = "telefono_bd_invalido"
     RIESGO_MALO_SIN_RAZON = "riesgo_bd_malo_sin_razon"
     RIESGO_NO_MALO_CON_RAZON = "riesgo_bd_no_malo_con_razon"
