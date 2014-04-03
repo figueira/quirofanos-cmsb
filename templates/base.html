@@ -21,6 +21,8 @@
 </head>
 
 <body>
+
+	<!-- Header -->
 	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -45,7 +47,8 @@
 		</div>
 	</nav><!-- Header -->
 
-	<div class="container" id="container-mensajes-temporales">
+	<!-- Mensajes Temporales (Flash Messages) -->
+ 	<div class="container" id="container-mensajes-temporales">
 		{% block flash-messages %}{% endblock flash-messages %}
 		<script type="text/javascript">
 		var remover_mensaje_temporal = function() {
@@ -57,7 +60,9 @@
 			}
 		});
 		</script>
-	</div>
+	</div><!-- Mensajes Temporales (Flash Messages) -->
+
+	<!-- Contenido -->
 	<div class="container-fluid">
 		{% block content %}{% endblock content %}
 		<hr>

@@ -1,0 +1,482 @@
+[
+    {
+        "fields": {
+            "codigo": "005",
+            "nombre": "Cardiologia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "codigo": "046",
+            "nombre": "Nefrologia Pediatrica"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "codigo": "059",
+            "nombre": "Otorrinolaringologia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "codigo": "004",
+            "nombre": "Anestesiologia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "codigo": "013",
+            "nombre": "Cirugia Del Torax"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "codigo": "057",
+            "nombre": "Oncologia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "codigo": "008",
+            "nombre": "Cirugia Buco Maxilo Facial"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 7
+    },
+    {
+        "fields": {
+            "codigo": "071",
+            "nombre": "Traumatologia Y Ortopedia Pediatrica"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 8
+    },
+    {
+        "fields": {
+            "codigo": "047",
+            "nombre": "Pediatria Y Neonatologia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 9
+    },
+    {
+        "fields": {
+            "codigo": "022",
+            "nombre": "Endocrinologia Pediatrica"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 10
+    },
+    {
+        "fields": {
+            "codigo": "065",
+            "nombre": "Radioterapia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 11
+    },
+    {
+        "fields": {
+            "codigo": "075",
+            "nombre": "Medicina Interna - Endocrinologia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 12
+    },
+    {
+        "fields": {
+            "codigo": "060",
+            "nombre": "Pediatria"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 13
+    },
+    {
+        "fields": {
+            "codigo": "042",
+            "nombre": "Medicina Interna Geriatrica"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 14
+    },
+    {
+        "fields": {
+            "codigo": "030",
+            "nombre": "Hematologia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 15
+    },
+    {
+        "fields": {
+            "codigo": "023",
+            "nombre": "Endocrinologia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 16
+    },
+    {
+        "fields": {
+            "codigo": "054",
+            "nombre": "Obstetricia Y Ginecologia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 17
+    },
+    {
+        "fields": {
+            "codigo": "070",
+            "nombre": "Traumatologia Y Ortopedia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 18
+    },
+    {
+        "fields": {
+            "codigo": "033",
+            "nombre": "Infectologia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 19
+    },
+    {
+        "fields": {
+            "codigo": "016",
+            "nombre": "Cirugia Laparoscopia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 20
+    },
+    {
+        "fields": {
+            "codigo": "014",
+            "nombre": "Cirugia General"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 21
+    },
+    {
+        "fields": {
+            "codigo": "077",
+            "nombre": "Cirugia Coloproctologica"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 22
+    },
+    {
+        "fields": {
+            "codigo": "036",
+            "nombre": "Medicina Critica"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 23
+    },
+    {
+        "fields": {
+            "codigo": "069",
+            "nombre": "Traumatologia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 24
+    },
+    {
+        "fields": {
+            "codigo": "011",
+            "nombre": "Cirugia De Columna Vertebral"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 25
+    },
+    {
+        "fields": {
+            "codigo": "002",
+            "nombre": "Anatomia Patologica"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 26
+    },
+    {
+        "fields": {
+            "codigo": "018",
+            "nombre": "Cirugia Pediatrica"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 27
+    },
+    {
+        "fields": {
+            "codigo": "025",
+            "nombre": "Gastroenterologia Pediatrica"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 28
+    },
+    {
+        "fields": {
+            "codigo": "049",
+            "nombre": "Neurocirugia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 29
+    },
+    {
+        "fields": {
+            "codigo": "015",
+            "nombre": "Cirugia Ginecologica"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 30
+    },
+    {
+        "fields": {
+            "codigo": "006",
+            "nombre": "Cardiologia Pediatrica"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 31
+    },
+    {
+        "fields": {
+            "codigo": "029",
+            "nombre": "Hemato-Oncologia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 32
+    },
+    {
+        "fields": {
+            "codigo": "009",
+            "nombre": "Cirugia Cardiovascular"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 33
+    },
+    {
+        "fields": {
+            "codigo": "082",
+            "nombre": "Medicina Interna-Infectologia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 34
+    },
+    {
+        "fields": {
+            "codigo": "080",
+            "nombre": "Radioterapia Y Medicina Nuclear"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 35
+    },
+    {
+        "fields": {
+            "codigo": "027",
+            "nombre": "Ginecologia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 36
+    },
+    {
+        "fields": {
+            "codigo": "064",
+            "nombre": "Radiologia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 37
+    },
+    {
+        "fields": {
+            "codigo": "001",
+            "nombre": "Alergologia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 38
+    },
+    {
+        "fields": {
+            "codigo": "079",
+            "nombre": "Cirugia General Y Oncologica"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 39
+    },
+    {
+        "fields": {
+            "codigo": "072",
+            "nombre": "Urologia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 40
+    },
+    {
+        "fields": {
+            "codigo": "017",
+            "nombre": "Cirugia Oncologica"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 41
+    },
+    {
+        "fields": {
+            "codigo": "063",
+            "nombre": "Psiquiatria"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 42
+    },
+    {
+        "fields": {
+            "codigo": "061",
+            "nombre": "Pediatria Y Puericultura"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 43
+    },
+    {
+        "fields": {
+            "codigo": "056",
+            "nombre": "Oftalmologia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 44
+    },
+    {
+        "fields": {
+            "codigo": "045",
+            "nombre": "Nefrologia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 45
+    },
+    {
+        "fields": {
+            "codigo": "055",
+            "nombre": "Odontologia Y Ortodoncia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 46
+    },
+    {
+        "fields": {
+            "codigo": "066",
+            "nombre": "Reumatologia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 47
+    },
+    {
+        "fields": {
+            "codigo": "012",
+            "nombre": "Cirugia De La Mano"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 48
+    },
+    {
+        "fields": {
+            "codigo": "051",
+            "nombre": "Neurologia Pediatrica"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 49
+    },
+    {
+        "fields": {
+            "codigo": "050",
+            "nombre": "Neurologia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 50
+    },
+    {
+        "fields": {
+            "codigo": "024",
+            "nombre": "Gastroenterologia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 51
+    },
+    {
+        "fields": {
+            "codigo": "032",
+            "nombre": "Imagenologia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 52
+    },
+    {
+        "fields": {
+            "codigo": "041",
+            "nombre": "Medicina Interna"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 53
+    },
+    {
+        "fields": {
+            "codigo": "031",
+            "nombre": "Hemodinamia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 54
+    },
+    {
+        "fields": {
+            "codigo": "039",
+            "nombre": "Medicina Fisica Y Rehabilitacion"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 55
+    },
+    {
+        "fields": {
+            "codigo": "019",
+            "nombre": "Cirugia Plastica Y Reconstructiva"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 56
+    },
+    {
+        "fields": {
+            "codigo": "048",
+            "nombre": "Neumologia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 57
+    },
+    {
+        "fields": {
+            "codigo": "058",
+            "nombre": "Oncologia Pediatrica"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 58
+    },
+    {
+        "fields": {
+            "codigo": "021",
+            "nombre": "Dermatologia"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 59
+    },
+    {
+        "fields": {
+            "codigo": "037",
+            "nombre": "Medicina Critica Pediatrica"
+        },
+        "model": "quirofanos_cmsb.especializacion",
+        "pk": 60
+    }
+]
