@@ -18,7 +18,7 @@ class InicioSesionForm(forms.Form):
 	contrasena = forms.CharField(widget=forms.PasswordInput)
 
 class RegistroDepartamentoForm(forms.Form):
-	''' Formulario de registro de Departamento '''
+	''' Formulario de solicitud de registro de Departamento '''
 	nombre_departamento = forms.CharField(max_length=20, validators=[RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
 	codigo_telefono = forms.CharField(validators=[RegexValidator(ExpresionRegular.CODIGO_TELEFONO, MensajeError.CODIGO_TELEFONO_INVALIDO, CodigoError.CODIGO_TELEFONO_INVALIDO)])
 	telefono_departamento = forms.CharField(validators=[RegexValidator(ExpresionRegular.NUMERO_TELEFONO, MensajeError.NUMERO_TELEFONO_INVALIDO, CodigoError.NUMERO_TELEFONO_INVALIDO)])
@@ -46,7 +46,7 @@ class RegistroDepartamentoForm(forms.Form):
 		return cleaned_data
 
 class BusquedaMedicoForm(forms.Form):
-	''' Formulario de registro de Medico '''
+	''' Formulario de busqueda de medico por su numero de cedula '''
 	nacionalidad_medico = forms.ChoiceField(widget=forms.HiddenInput, choices=NACIONALIDAD, initial='V-')
 	cedula_medico = forms.CharField(max_length=12, validators=[RegexValidator(ExpresionRegular.CEDULA, MensajeError.CEDULA_INVALIDA, CodigoError.CEDULA_INVALIDA)])
 
@@ -57,10 +57,15 @@ class BusquedaMedicoForm(forms.Form):
 		medico = Medico.objects.filter(cedula=cedula_medico_bd)
 		if not medico:
 			raise forms.ValidationError(MensajeError.CEDULA_BD_NO_EXISTE, CodigoError.CEDULA_BD_NO_EXISTE)
+
+		medico = medico[0]
+		if medico.cuenta:
+			raise forms.ValidationError(MensajeError.EXISTE_CUENTA, CodigoError.EXISTE_CUENTA)
 		return cedula_medico
 
 
 class RegistroMedicoForm(forms.Form):
+	''' Formulario de solicitud registro de medico '''
 	cedula_medico = forms.CharField(widget=forms.HiddenInput, required=False)
 	nombre_usuario_medico = forms.CharField(max_length=30, validators=[validate_slug])
 

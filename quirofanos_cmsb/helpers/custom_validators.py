@@ -32,6 +32,7 @@ class MensajeError():
     NUMERO_HABITACION_INVALIDO = _(u'Número de habitación inválido, debe contener exactamente tres dígitos.')
     AREA_INGRESO_SIN_NUMERO_EXPEDIENTE = _(u'El área de ingreso de un paciente no puede existir sin un número de expediente asociado.')
     NUMERO_EXPEDIENTE_SIN_AREA_INGRESO = _(u'El número de expediente de un paciente no puede existir sin un área de ingreso asociada.')
+    EXISTE_CUENTA = _(u'El médico asociado a la cédula ingresada ya ha solicitado su cuenta.')
 
 class CodigoError():
     ''' Constantes que contienen codigos de error a ser utilizados en validaciones de modelos y formularios '''
@@ -51,3 +52,4 @@ class CodigoError():
     NUMERO_HABITACION_INVALIDO = "numero_habitacion_invalido"
     AREA_INGRESO_SIN_NUMERO_EXPEDIENTE = "area_ingreso_sin_numero_expediente"
     NUMERO_EXPEDIENTE_SIN_AREA_INGRESO = "numero_expediente_sin_area_ingreso"
+    EXISTE_CUENTA = "existe_cuenta"

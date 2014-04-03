@@ -4,10 +4,47 @@ var mostrarBusquedaCedulaMedico = function() {
 };
 
 // Mostrar formulario de solicitud de registro medico
-var mostrarFormularioSolicitudMedico = function () {
+var mostrarFormularioSolicitudMedico = function() {
   $("#body-solicitar-cuenta").addClass("hidden");
   $("#formulario-solicitud-medico").removeClass("hidden");
   $("#titulo-solicitar-cuenta").html("Solicitar Cuenta - Médico");
+};
+
+// Mostrar formulario de solicitud de registro departamento
+var mostrarFormularioSolicitudDepartamento = function() {
+  $('#solicitar-cuenta-departamento').trigger('click');
+};
+
+// Inicializar nacionalidad de busqueda cedula medico
+var inicializarNacionalidadCedulaMedico = function() {
+  $("#busqueda-cedula-medico-nacionalidad-texto").html($("#busqueda-cedula-medico-nacionalidad-input").val());
+  if ($("#busqueda-cedula-medico-nacionalidad-input").val() == "E-") {
+    $("#busqueda-cedula-medico-nacionalidad-cambiar").html("V-");
+  }
+};
+
+// Mostrar errores asociados a la nacionalidad de busqueda cedula medico
+var mostrarErroresNacionalidadCedulaMedico = function() {
+  $("#busqueda-cedula-medico").parent("div").parent("div").addClass("has-error");
+  $("#busqueda-cedula-medico-form-group").addClass("has-feedback");
+  $("#busqueda-cedula-medico-error-feedback-icon").removeClass("hidden").css("z-index", "2");
+  $("#busqueda-cedula-medico-nacionalidad-error-help").removeClass("hidden");
+};
+
+// Mostrar errores asociados a la cedula de busqueda medico
+var mostrarErroresCedulaMedico = function() {
+  $("#busqueda-cedula-medico").parent("div").parent("div").addClass("has-error");
+  $("#busqueda-cedula-medico-form-group").addClass("has-feedback");
+  $("#busqueda-cedula-medico-error-feedback-icon").removeClass("hidden").css("z-index", "2");
+  $("#busqueda-cedula-medico-error-help").removeClass("hidden");
+};
+
+// Mostrar errores asociados al nombre de usuario de solicitud de registro medico
+var mostrarErroresUsuarioMedico = function() {
+  $("#nombre-usuario-medico").parent("div").addClass("has-error");
+  $("#email-nombre-usuario-medico-form-group").addClass("has-feedback");
+  $("#nombre-usuario-medico-error-feedback-icon").removeClass("hidden");
+  $("#nombre-usuario-medico-error-help").removeClass("hidden");
 };
 
 $(document).ready(function() {

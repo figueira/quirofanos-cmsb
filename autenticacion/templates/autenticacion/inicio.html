@@ -81,7 +81,7 @@
         {% if formulario_registro_departamento.errors %}
         <script type="text/javascript">
         $(function(){
-          $('#solicitar-cuenta-departamento').trigger('click');
+          mostrarFormularioSolicitudDepartamento();
         });
         </script>
         {% endif %}
@@ -284,10 +284,7 @@
                 {% render_field formulario_busqueda_medico.cedula_medico class="form-control" id="busqueda-cedula-medico" %}
                 <script type="text/javascript">
                 $(function() {
-                  $("#busqueda-cedula-medico-nacionalidad-texto").html($("#busqueda-cedula-medico-nacionalidad-input").val());
-                  if ($("#busqueda-cedula-medico-nacionalidad-input").val() == "E-") {
-                    $("#busqueda-cedula-medico-nacionalidad-cambiar").html("V-");
-                  }
+                  inicializarNacionalidadCedulaMedico();
                 });
                 </script>
               </div>
@@ -298,20 +295,14 @@
             {% if formulario_busqueda_medico.nacionalidad_medico.errors %}
             <script type="text/javascript">
             $(function(){
-              $("#busqueda-cedula-medico").parent("div").parent("div").addClass("has-error");
-              $("#busqueda-cedula-medico-form-group").addClass("has-feedback");
-              $("#busqueda-cedula-medico-error-feedback-icon").removeClass("hidden").css("z-index", "2");
-              $("#busqueda-cedula-medico-nacionalidad-error-help").removeClass("hidden");
+              mostrarErroresNacionalidadCedulaMedico();
             });
             </script>
             {% endif %}
             {% if formulario_busqueda_medico.cedula_medico.errors %}
             <script type="text/javascript">
             $(function(){
-              $("#busqueda-cedula-medico").parent("div").parent("div").addClass("has-error");
-              $("#busqueda-cedula-medico-form-group").addClass("has-feedback");
-              $("#busqueda-cedula-medico-error-feedback-icon").removeClass("hidden").css("z-index", "2");
-              $("#busqueda-cedula-medico-error-help").removeClass("hidden");
+              mostrarErroresCedulaMedico();
             });
             </script>
             {% endif %}
@@ -371,8 +362,6 @@
             <div class="col-lg-4">
               <input class="form-control" id="cedula-medico" type="text" value="{{ medico.cedula }}" disabled>
               {% render_field formulario_registro_medico.cedula_medico id="cedula-medico-input" %}
-              <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="cedula-medico-error-feedback-icon"></span>
-              <span class="help-block hidden" id="cedula-medico-error-help">{{ formulario_registro_medico.cedula_medico.errors }}</span>
             </div>
             <label class="col-lg-2 control-label" for="genero-medico">
               Género:
@@ -380,16 +369,6 @@
             <div class="col-lg-4">
               <input class="form-control" id="genero-medico" type="text" value="{{ medico.genero }}" disabled>
             </div>
-            {% if formulario_registro_medico.cedula_medico.errors %}
-            <script type="text/javascript">
-            $(function(){
-              $("#cedula-medico").parent("div").addClass("has-error");
-              $("#cedula-genero-medico-form-group").addClass("has-feedback");
-              $("#cedula-medico-error-feedback-icon").removeClass("hidden").css("z-index", "2");
-              $("#cedula-medico-error-help").removeClass("hidden");
-            });
-            </script>
-            {% endif %}
           </div><!-- Cedula y Genero -->
 
           <!-- Especializacion y Telefono -->
@@ -429,10 +408,7 @@
             {% if formulario_registro_medico.nombre_usuario_medico.errors %}
             <script type="text/javascript">
             $(function(){
-              $("#nombre-usuario-medico").parent("div").addClass("has-error");
-              $("#email-nombre-usuario-medico-form-group").addClass("has-feedback");
-              $("#nombre-usuario-medico-error-feedback-icon").removeClass("hidden");
-              $("#nombre-usuario-medico-error-help").removeClass("hidden");
+              mostrarErroresUsuarioMedico();
             });
             </script>
             {% endif %}

@@ -44,10 +44,6 @@ def busqueda_medico(request):
 		cedula_medico_bd = nacionalidad_medico + cedula_medico
 		formulario_registro_medico = RegistroMedicoForm(initial={'cedula_medico': cedula_medico_bd})
 		medico = Medico.objects.get(cedula=cedula_medico_bd)
-		if not medico.email:
-			medico.email = u'No posee'
-		if not medico.telefono:
-			medico.telefono = u'No posee'
 		datos['medico'] = medico
 		datos['formulario_registro_medico'] = formulario_registro_medico
 
@@ -73,6 +69,10 @@ def registro_medico(request):
 		return redirect('inicio')
 
 	medico = medico[0]
+	if medico.cuenta:
+		messages.add_message(request, messages.ERROR, MensajeTemporalError.REGISTRO_MEDICO_CUENTA_EXISTE)
+		return redirect('inicio')
+
 	if formulario_valido:
 		nombre_usuario_medico = formulario_registro_medico.cleaned_data['nombre_usuario_medico']
 
