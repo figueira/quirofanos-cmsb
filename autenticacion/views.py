@@ -3,11 +3,10 @@ from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods, require_GET, require_POST
 from django.template import RequestContext
 from django.contrib import messages
-from django.core.mail import send_mail
 
 from quirofanos_cmsb.models import Cuenta, Departamento, Medico, MedicoTratante
 from autenticacion.forms import InicioSesionForm, CambiarContrasenaForm, RegistroMedicoForm, RegistroDepartamentoForm, RecuperarContrasenaForm
@@ -149,22 +148,32 @@ def iniciar_sesion(request):
 			if user.is_active:
 				login(request, user)
 				request.session["nombre_usuario"] = request.user.username
+				cuenta = request.user.cuenta
 				privilegio = request.user.cuenta.privilegio
 				if privilegio == "0":
 					request.session["privilegio"] = "JEFE_PQ"
 					request.session["template_base"] = "jefe/contexto.html"
+					request.session["nombre"] = u'jefe Plan Quirúrgico'
 				elif privilegio == "1":
 					request.session["privilegio"] = "COORDINADOR_PQ"
 					request.session["template_base"] = "coordinador/contexto.html"
+					request.session["nombre"] = u'Coordinador Plan Quirúrgico'
 				elif privilegio == "2":
 					request.session["privilegio"] = "ASISTENTE_PQ"
 					request.session["template_base"] = "contexto.html"
+					request.session["nombre"] = u'Asistente Plan Quirúrgico'
 				elif privilegio == "3":
 					request.session["privilegio"] = "MEDICO"
 					request.session["template_base"] = "medico/contexto.html"
+					medico = Medico.objects.select_related().get(cuenta=cuenta)
+					nombre_medico = medico.nombre
+					apellido_medico = medico.apellido
+					request.session["nombre"] = nombre_medico +' '+ apellido_medico
 				elif privilegio == "4":
 					request.session["privilegio"] = "OBSERVADOR"
 					request.session["template_base"] = "contexto.html"
+					departamento = Departamento.objects.select_related().get(cuenta=cuenta)
+					request.session["nombre"] = departamento.nombre
 
 				return redirect('calendario')
 			else:
@@ -178,6 +187,7 @@ def iniciar_sesion(request):
 		return redirect('inicio')
 
 @require_GET
+@login_required
 def cerrar_sesion(request):
 	''' Controlador correspondiente al cierre de sesion
 
@@ -187,6 +197,7 @@ def cerrar_sesion(request):
 	return redirect('inicio')
 
 @require_http_methods(["GET", "POST"])
+@login_required
 def cambiar_contrasena(request):
 	''' Controlador correspondiente al cambio de contrasena
 
@@ -228,8 +239,7 @@ def recuperar_contrasena(request):
 			correo_electronico = formulario_recuperar_contrasena.cleaned_data['correo_electronico']
 			usuario = User.objects.filter(email=correo_electronico, is_active=True)
 			if usuario:
-				''' Enviar email '''
-				'''send_mail('Recuperación de credenciales', 'Hola', 'cmsb@noreply.com', [usuario[0].email], fail_silently=False)'''
+				# Enviar email
 				messages.add_message(request, messages.SUCCESS, MensajeTemporalExito.RECUPERAR_CONTRASENA_EXITOSO)
 				return redirect('inicio')
 			else:

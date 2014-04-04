@@ -16,7 +16,6 @@
 {% endif %}
 {% endblock flash-messages %}
 
-
 {% block content %}
 <div class="page-header">
     <h1>
@@ -34,9 +33,9 @@
                         <div class="col-lg-8">
                             {% render_field formulario_recuperar_contrasena.correo_electronico class="form-control" id="correo-electronico"%}
                             <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="correo-electronico-error-feedback-icon"></span>
-                            <span class="help-block hidden" id="correo-electronico-error-help">{{ formulario_recuperar_contrasena.correo_electronico.errors }}{{ formulario_recuperar_contrasena.non_field_errors }}</span>
+                            <span class="help-block hidden" id="correo-electronico-error-help">{{ formulario_recuperar_contrasena.correo_electronico.errors }}</span>
                         </div>
-                        {% if formulario_recuperar_contrasena.correo_electronico.errors or formulario_recuperar_contrasena.non_field_errors %}
+                        {% if formulario_recuperar_contrasena.correo_electronico.errors %}
                         <script type="text/javascript">
                         $(function() {
                             $("#correo-electronico").parent("div").addClass("has-error")

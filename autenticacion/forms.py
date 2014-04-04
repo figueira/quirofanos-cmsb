@@ -36,9 +36,9 @@ class RegistroDepartamentoForm(forms.Form):
 	def clean_nombre_usuario_departamento(self):
 		''' Sobreescribe el clean_nombre_usuario_departamento(), validando que el nombre de usuario ingresado sea unico '''
 		nombre_usuario_departamento = self.cleaned_data['nombre_usuario_departamento']
-		for usuario in User.objects.all():
-			if usuario.username == nombre_usuario_departamento:
-				raise forms.ValidationError(MensajeError.EXISTE_USUARIO, code=CodigoError.EXISTE_USUARIO)
+		usuario = User.objects.filter(username=nombre_usuario_departamento)
+		if usuario:
+			raise forms.ValidationError(MensajeError.EXISTE_USUARIO, code=CodigoError.EXISTE_USUARIO)
 		return nombre_usuario_departamento
 
 	def clean(self):
@@ -69,9 +69,9 @@ class RegistroMedicoForm(forms.Form):
 	def clean_nombre_usuario_medico(self):
 		''' Sobreescribe el clean_nombre_usuario_medico(), validando que el nombre de usuario ingresado sea unico '''
 		nombre_usuario_medico = self.cleaned_data['nombre_usuario_medico']
-		for usuario in User.objects.all():
-			if usuario.username == nombre_usuario_medico:
-				raise forms.ValidationError(MensajeError.EXISTE_USUARIO, code=CodigoError.EXISTE_USUARIO)
+		usuario = User.objects.filter(username=nombre_usuario_medico)
+		if usuario:
+			raise forms.ValidationError(MensajeError.EXISTE_USUARIO, code=CodigoError.EXISTE_USUARIO)
 		return nombre_usuario_medico
 
 	def clean(self):

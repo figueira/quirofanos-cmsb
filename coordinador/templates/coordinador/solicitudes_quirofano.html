@@ -12,7 +12,7 @@
 {% endblock scripts %}
 
 {% block nombre-usuario %}
-María González
+{% request.session.nombre %}
 {% endblock nombre-usuario %}
 
 {% block numero-mensajes %}
