@@ -8,8 +8,8 @@ from django.views.decorators.http import require_http_methods, require_GET, requ
 from django.template import RequestContext
 from django.contrib import messages
 
-from quirofanos_cmsb.models import Cuenta, Departamento, Medico, MedicoTratante
-from autenticacion.forms import InicioSesionForm, CambiarContrasenaForm, RegistroMedicoForm, RegistroDepartamentoForm, RecuperarContrasenaForm
+from quirofanos_cmsb.models import Cuenta, Departamento, Medico
+from autenticacion.forms import InicioSesionForm, CambiarContrasenaForm, BusquedaMedicoForm, RegistroMedicoForm, RegistroDepartamentoForm, RecuperarContrasenaForm
 from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito
 
 @require_GET
@@ -23,13 +23,85 @@ def inicio(request):
 
 	formulario_inicio_sesion = InicioSesionForm()
 	formulario_registro_departamento = RegistroDepartamentoForm()
-	formulario_registro_medico = RegistroMedicoForm()
+	formulario_busqueda_medico = BusquedaMedicoForm()
 	datos = {}
 	datos['formulario_inicio_sesion'] = formulario_inicio_sesion
 	datos['formulario_registro_departamento'] = formulario_registro_departamento
-	datos['formulario_registro_medico'] = formulario_registro_medico
+	datos['formulario_busqueda_medico'] = formulario_busqueda_medico
 	return render_to_response('autenticacion/inicio.html', datos, context_instance=RequestContext(request))
 
+@require_POST
+def busqueda_medico(request):
+	''' Controlodar correspondiente a la busqueda de medico por numero de cedula
+
+	Parametros:
+	request -> Solicitud HTTP '''
+	formulario_busqueda_medico = BusquedaMedicoForm(request.POST)
+	datos = {}
+	if formulario_busqueda_medico.is_valid():
+		cedula_medico = formulario_busqueda_medico.cleaned_data['cedula_medico']
+		nacionalidad_medico = formulario_busqueda_medico.cleaned_data['nacionalidad_medico']
+		cedula_medico_bd = nacionalidad_medico + cedula_medico
+		formulario_registro_medico = RegistroMedicoForm(initial={'cedula_medico': cedula_medico_bd})
+		medico = Medico.objects.get(cedula=cedula_medico_bd)
+		datos['medico'] = medico
+		datos['formulario_registro_medico'] = formulario_registro_medico
+
+	formulario_inicio_sesion = InicioSesionForm()
+	formulario_registro_departamento = RegistroDepartamentoForm()
+	datos['formulario_inicio_sesion'] = formulario_inicio_sesion
+	datos['formulario_registro_departamento'] = formulario_registro_departamento
+	datos['formulario_busqueda_medico'] = formulario_busqueda_medico
+	return render_to_response('autenticacion/inicio.html', datos,context_instance=RequestContext(request))
+
+@require_POST
+def registro_medico(request):
+	''' Controlador correspondiente al registro de un medico
+
+	Parametros:
+	request -> Solicitud HTTP '''
+	formulario_registro_medico = RegistroMedicoForm(request.POST)
+	formulario_valido = formulario_registro_medico.is_valid()
+	cedula_medico = formulario_registro_medico.cleaned_data['cedula_medico']
+	medico = Medico.objects.filter(cedula=cedula_medico)
+	if not medico:
+		messages.add_message(request, messages.ERROR, MensajeTemporalError.REGISTRO_MEDICO_CEDULA_MODIFICADA)
+		return redirect('inicio')
+
+	medico = medico[0]
+	if medico.cuenta:
+		messages.add_message(request, messages.ERROR, MensajeTemporalError.REGISTRO_MEDICO_CUENTA_EXISTE)
+		return redirect('inicio')
+
+	if formulario_valido:
+		nombre_usuario_medico = formulario_registro_medico.cleaned_data['nombre_usuario_medico']
+
+		usuario = User.objects.create_user(username=nombre_usuario_medico, email=medico.email)
+		usuario.is_active = False
+		usuario.save()
+
+		cuenta_medico = Cuenta()
+		cuenta_medico.usuario = usuario
+		cuenta_medico.estado = 'P'
+		cuenta_medico.privilegio = '3'
+		cuenta_medico.save()
+
+		medico.cuenta = cuenta_medico
+		medico.save()
+
+		messages.add_message(request, messages.SUCCESS, MensajeTemporalExito.SOLICITUD_REGISTRO_EXITOSO)
+		return redirect('inicio')
+
+	formulario_inicio_sesion = InicioSesionForm()
+	formulario_registro_departamento = RegistroDepartamentoForm()
+	formulario_busqueda_medico = BusquedaMedicoForm()
+	datos = {}
+	datos['formulario_registro_medico'] = formulario_registro_medico
+	datos['formulario_inicio_sesion'] = formulario_inicio_sesion
+	datos['formulario_registro_departamento'] = formulario_registro_departamento
+	datos['formulario_busqueda_medico'] = formulario_busqueda_medico
+	datos['medico'] = medico
+	return render_to_response('autenticacion/inicio.html', datos,context_instance=RequestContext(request))
 
 @require_POST
 def registro_departamento(request):
@@ -75,65 +147,6 @@ def registro_departamento(request):
 	return render_to_response('autenticacion/inicio.html', datos,context_instance=RequestContext(request))
 
 @require_POST
-def registro_medico(request):
-	''' Controlador correspondiente al registro de un medico
-
-	Parametros:
-	request -> Solicitud HTTP '''
-	formulario_registro_medico = RegistroMedicoForm(request.POST)
-	if formulario_registro_medico.is_valid():
-		nombre_medico = formulario_registro_medico.cleaned_data['nombre_medico']
-		apellido_medico = formulario_registro_medico.cleaned_data['apellido_medico']
-		nacionalidad_medico = formulario_registro_medico.cleaned_data['nacionalidad_medico']
-		cedula_medico = formulario_registro_medico.cleaned_data['cedula_medico']
-		especialidad_medico = formulario_registro_medico.cleaned_data['especialidad_medico']
-		genero_medico = formulario_registro_medico.cleaned_data['genero_medico']
-		codigo_telefono = formulario_registro_medico.cleaned_data['codigo_telefono']
-		telefono_medico = formulario_registro_medico.cleaned_data['telefono_medico']
-		email_medico = formulario_registro_medico.cleaned_data['email_medico']
-		nombre_usuario_medico = formulario_registro_medico.cleaned_data['nombre_usuario_medico']
-		contrasena_medico = formulario_registro_medico.cleaned_data['contrasena_medico']
-		contrasena_confirmacion = formulario_registro_medico.cleaned_data['contrasena_confirmacion']
-
-		usuario = User.objects.create_user(nombre_usuario_medico,email_medico,contrasena_medico)
-		usuario.is_active = False
-		usuario.save()
-
-		cuenta_medico = Cuenta()
-		cuenta_medico.usuario = usuario
-		cuenta_medico.estado = 'P'
-		cuenta_medico.privilegio = '3'
-		cuenta_medico.save()
-
-		medico = Medico()
-		medico.cuenta = cuenta_medico
-		medico.nombre = nombre_medico
-		medico.apellido = apellido_medico
-		medico.cedula = nacionalidad_medico + cedula_medico
-		medico.genero = genero_medico
-		medico.telefono = codigo_telefono + '-' + telefono_medico
-		medico.save()
-		medico.especializaciones = especialidad_medico
-
-		for especializacion in especialidad_medico:
-			if especializacion.es_quirurgica:
-				medico_tratante = MedicoTratante()
-				medico_tratante.medico = medico
-				medico_tratante.save()
-				break
-
-		messages.add_message(request, messages.SUCCESS, MensajeTemporalExito.SOLICITUD_REGISTRO_EXITOSO)
-		return redirect('inicio')
-
-	formulario_inicio_sesion = InicioSesionForm()
-	formulario_registro_departamento = RegistroDepartamentoForm()
-	datos = {}
-	datos['formulario_registro_medico'] = formulario_registro_medico
-	datos['formulario_inicio_sesion'] = formulario_inicio_sesion
-	datos['formulario_registro_departamento'] = formulario_registro_departamento
-	return render_to_response('autenticacion/inicio.html', datos,context_instance=RequestContext(request))
-
-@require_POST
 def iniciar_sesion(request):
 	''' Controlador correspondiente al inicio de sesion
 
@@ -149,7 +162,7 @@ def iniciar_sesion(request):
 				login(request, user)
 				request.session["nombre_usuario"] = request.user.username
 				cuenta = request.user.cuenta
-				privilegio = request.user.cuenta.privilegio
+				privilegio = cuenta.privilegio
 				if privilegio == "0":
 					request.session["privilegio"] = "JEFE_PQ"
 					request.session["template_base"] = "jefe/contexto.html"
