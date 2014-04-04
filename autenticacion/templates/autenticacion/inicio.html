@@ -81,7 +81,7 @@
         {% if formulario_registro_departamento.errors %}
         <script type="text/javascript">
         $(function(){
-          $('#solicitar-cuenta-departamento').trigger('click');
+          mostrarFormularioSolicitudDepartamento();
         });
         </script>
         {% endif %}
@@ -254,13 +254,85 @@
         </div>
       </form><!-- Formulario Solicitud de Registro Departamento -->
 
+      <!-- Busqueda de Medico por Cedula -->
+      <form class="form-horizontal hidden" role="form" id="formulario-busqueda-medico" action="{% url 'busqueda_medico' %}" method="POST">
+        {% csrf_token %}
+        {% if formulario_busqueda_medico.errors %}
+        <script type="text/javascript">
+        $(function() {
+          mostrarBusquedaCedulaMedico();
+        });
+        </script>
+        {% endif %}
+        <div class="panel-body">
+          <div class="form-group" id="busqueda-cedula-medico-form-group">
+            <label class="col-lg-offset-3 col-lg-3 control-label" for="busqueda-cedula-medico">
+              Ingrese su número de cédula:
+            </label>
+            <div class="col-lg-3">
+              <div class="input-group">
+                <div class="input-group-btn">
+                  <button class="btn btn-default dropdown-toggle" id="busqueda-cedula-medico-nacionalidad" type="button" data-toggle="dropdown">
+                    <span id="busqueda-cedula-medico-nacionalidad-texto"></span>
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a id="busqueda-cedula-medico-nacionalidad-cambiar" href="javascript:void(0);">E-</a></li>
+                  </ul>
+                </div>
+                {% render_field formulario_busqueda_medico.nacionalidad_medico id="busqueda-cedula-medico-nacionalidad-input" %}
+                {% render_field formulario_busqueda_medico.cedula_medico class="form-control" id="busqueda-cedula-medico" %}
+                <script type="text/javascript">
+                $(function() {
+                  inicializarNacionalidadCedulaMedico();
+                });
+                </script>
+              </div>
+              <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="busqueda-cedula-medico-error-feedback-icon"></span>
+              <span class="help-block hidden" id="busqueda-cedula-medico-error-help">{{ formulario_busqueda_medico.cedula_medico.errors }}</span>
+              <span class="help-block hidden" id="busqueda-cedula-medico-nacionalidad-error-help">{{ formulario_busqueda_medico.nacionalidad_medico.errors }}</span>
+            </div>
+            {% if formulario_busqueda_medico.nacionalidad_medico.errors %}
+            <script type="text/javascript">
+            $(function(){
+              mostrarErroresNacionalidadCedulaMedico();
+            });
+            </script>
+            {% endif %}
+            {% if formulario_busqueda_medico.cedula_medico.errors %}
+            <script type="text/javascript">
+            $(function(){
+              mostrarErroresCedulaMedico();
+            });
+            </script>
+            {% endif %}
+          </div>
+        </div>
+        <div class="panel-footer">
+          <div class="form-group">
+            <div class="col-lg-6">
+              <a href="javascript:void(0);" class="btn btn-default btn-lg volver-solicitar-cuenta">
+                Volver
+              </a>
+            </div>
+
+            <!-- Submit -->
+            <div class="col-lg-offset-10">
+              <button type="submit" class="btn btn-primary btn-lg">
+                Buscar
+              </button>
+            </div>
+          </div><!-- Submit -->
+        </div>
+      </form><!-- Busqueda de Medico por Cedula -->
+
       <!-- Formulario de Solicitud de Registro Medico -->
       <form class="form-horizontal hidden" role="form" id="formulario-solicitud-medico" action="{% url 'registro_medico' %}" method="POST">
         {% csrf_token %}
-        {% if formulario_registro_medico.errors %}
+        {% if formulario_registro_medico %}
         <script type="text/javascript">
-        $(function(){
-          $('#solicitar-cuenta-medico').trigger('click');
+        $(function() {
+          mostrarFormularioSolicitudMedico();
         });
         </script>
         {% endif %}
@@ -272,38 +344,14 @@
               Nombre:
             </label>
             <div class="col-lg-4">
-              {% render_field formulario_registro_medico.nombre_medico class="form-control" id="nombre-medico" %}
-              <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="nombre-medico-error-feedback-icon"></span>
-              <span class="help-block hidden" id="nombre-medico-error-help">{{ formulario_registro_medico.nombre_medico.errors }}</span>
+              <input class="form-control" id="nombre-medico" type="text" value="{{ medico.nombre }}" disabled>
             </div>
             <label class="col-lg-2 control-label" for="apellido-medico">
               Apellido:
             </label>
             <div class="col-lg-4">
-              {% render_field formulario_registro_medico.apellido_medico class="form-control" id="apellido-medico" %}
-              <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="apellido-medico-error-feedback-icon"></span>
-              <span class="help-block hidden" id="apellido-medico-error-help">{{ formulario_registro_medico.apellido_medico.errors }}</span>
+              <input class="form-control" id="apellido-medico" type="text" value="{{ medico.apellido }}" disabled>
             </div>
-            {% if formulario_registro_medico.nombre_medico.errors %}
-            <script type="text/javascript">
-            $(function(){
-              $("#nombre-medico").parent("div").addClass("has-error");
-              $("#nombre-apellido-medico-form-group").addClass("has-feedback");
-              $("#nombre-medico-error-feedback-icon").removeClass("hidden");
-              $("#nombre-medico-error-help").removeClass("hidden");
-            });
-            </script>
-            {% endif %}
-            {% if formulario_registro_medico.apellido_medico.errors %}
-            <script type="text/javascript">
-            $(function(){
-              $("#apellido-medico").parent("div").addClass("has-error");
-              $("#nombre-apellido-medico-form-group").addClass("has-feedback");
-              $("#apellido-medico-error-feedback-icon").removeClass("hidden");
-              $("#apellido-medico-error-help").removeClass("hidden");
-            });
-            </script>
-            {% endif %}
           </div><!-- Nombre y Apellido -->
 
           <!-- Cedula y Genero -->
@@ -312,64 +360,16 @@
               Cédula:
             </label>
             <div class="col-lg-4">
-              <div class="input-group">
-                <div class="input-group-btn">
-                  <button class="btn btn-default dropdown-toggle" id="cedula-medico-nacionalidad" type="button"  data-toggle="dropdown">
-                    <span id="cedula-medico-nacionalidad-texto">V-</span>
-                    <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li><a id="cedula-medico-nacionalidad-cambiar" href="javascript:void(0);">E-</a></li>
-                  </ul>
-                </div>
-                {% render_field formulario_registro_medico.nacionalidad_medico id="cedula-medico-nacionalidad-input" %}
-                {% render_field formulario_registro_medico.cedula_medico class="form-control" id="cedula-medico" %}
-              </div>
-              <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="cedula-medico-error-feedback-icon"></span>
-              <span class="help-block hidden" id="cedula-medico-error-help">{{ formulario_registro_medico.cedula_medico.errors }}</span>
-              <span class="help-block hidden" id="cedula-medico-nacionalidad-error-help">{{ formulario_registro_medico.nacionalidad_medico.errors }}</span>
+              <input class="form-control" id="cedula-medico" type="text" value="{{ medico.cedula }}" disabled>
+              {% render_field formulario_registro_medico.cedula_medico id="cedula-medico-input" %}
             </div>
-            <label class="col-lg-2 control-label">
+            <label class="col-lg-2 control-label" for="genero-medico">
               Género:
             </label>
-            <div class="col-lg-4" id="genero-medico">
-              {% for radio in formulario_registro_medico.genero_medico %}
-              <div class="radio-inline">
-                {{ radio }}
-              </div>
-              {% endfor %}
-              <span class="help-block hidden" id="genero-medico-error-help">{{ formulario_registro_medico.genero_medico.errors }}</span>
+            <div class="col-lg-4">
+              <input class="form-control" id="genero-medico" type="text" value="{{ medico.genero }}" disabled>
             </div>
-            {% if formulario_registro_medico.nacionalidad_medico.errors %}
-            <script type="text/javascript">
-            $(function(){
-              $("#cedula-medico").parent("div").parent("div").addClass("has-error");
-              $("#cedula-genero-medico-form-group").addClass("has-feedback");
-              $("#cedula-medico-error-feedback-icon").removeClass("hidden").css("z-index", "2");
-              $("#cedula-medico-nacionalidad-error-help").removeClass("hidden");
-            });
-            </script>
-            {% endif %}
-            {% if formulario_registro_medico.cedula_medico.errors %}
-            <script type="text/javascript">
-            $(function(){
-              $("#cedula-medico").parent("div").parent("div").addClass("has-error");
-              $("#cedula-genero-medico-form-group").addClass("has-feedback");
-              $("#cedula-medico-error-feedback-icon").removeClass("hidden").css("z-index", "2");
-              $("#cedula-medico-error-help").removeClass("hidden");
-            });
-            </script>
-            {% endif %}
-            {% if formulario_registro_medico.genero_medico.errors %}
-            <script type="text/javascript">
-            $(function(){
-              $("#genero-medico").addClass("has-error");
-              $("#cedula-genero-medico-form-group").addClass("has-feedback");
-              $("#genero-medico-error-help").removeClass("hidden");
-            });
-            </script>
-            {% endif %}
-          </div><!-- Cedula y Sexo -->
+          </div><!-- Cedula y Genero -->
 
           <!-- Especializacion y Telefono -->
           <div class="form-group" id="especializacion-telefono-medico-form-group">
@@ -379,52 +379,14 @@
               </abbr>:
             </label>
             <div class="col-lg-4">
-              {% render_field formulario_registro_medico.especialidad_medico class="form-control" id="especializacion-medico" %}
-              <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="especializacion-medico-error-feedback-icon"></span>
-              <span class="help-block hidden" id="especializacion-medico-error-help">{{ formulario_registro_medico.especialidad_medico.errors }}</span>
+              <input class="form-control" id="especializacion-medico" type="text" value="{{ medico.especializacion }}" disabled>
             </div>
             <label class="col-lg-2 control-label" for="telefono-medico">
               Teléfono:
             </label>
-            <div class="col-lg-2">
-              {% render_field formulario_registro_medico.codigo_telefono class="form-control" id="codigo-telefono-medico" placeholder="Código" %}
-              <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="codigo-telefono-medico-error-feedback-icon"></span>
-              <span class="help-block hidden" id="codigo-telefono-medico-error-help">{{ formulario_registro_medico.codigo_telefono.errors }}</span>
+            <div class="col-lg-4">
+              <input class="form-control" id="telefono-medico" type="text" value="{{ medico.telefono }}" disabled>
             </div>
-            <div class="col-lg-2">
-              {% render_field formulario_registro_medico.telefono_medico class="form-control" id="telefono-medico" placeholder="Número" %}
-              <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="telefono-medico-error-feedback-icon"></span>
-              <span class="help-block hidden" id="telefono-medico-error-help">{{ formulario_registro_medico.telefono_medico.errors }}</span>
-            </div>
-            {% if formulario_registro_medico.especialidad_medico.errors %}
-            <script type="text/javascript">
-            $(function(){
-              $("#especializacion-medico").parent("div").addClass("has-error");
-              $("#especializacion-telefono-medico-form-group").addClass("has-feedback");
-              $("#especializacion-medico-error-help").removeClass("hidden");
-            });
-            </script>
-            {% endif %}
-            {% if formulario_registro_medico.codigo_telefono.errors %}
-            <script type="text/javascript">
-            $(function(){
-              $("#codigo-telefono-medico").parent("div").addClass("has-error");
-              $("#especializacion-telefono-medico-form-group").addClass("has-feedback");
-              $("#codigo-telefono-medico-error-feedback-icon").removeClass("hidden");
-              $("#codigo-telefono-medico-error-help").removeClass("hidden");
-            });
-            </script>
-            {% endif %}
-            {% if formulario_registro_medico.telefono_medico.errors %}
-            <script type="text/javascript">
-            $(function(){
-              $("#telefono-medico").parent("div").addClass("has-error");
-              $("#especializacion-telefono-medico-form-group").addClass("has-feedback");
-              $("#telefono-medico-error-feedback-icon").removeClass("hidden");
-              $("#telefono-medico-error-help").removeClass("hidden");
-            });
-            </script>
-            {% endif %}
           </div><!-- Especializacion y Telefono -->
 
           <!-- Email y Nombre de Usuario -->
@@ -433,9 +395,7 @@
               Email:
             </label>
             <div class="col-lg-4">
-              {% render_field formulario_registro_medico.email_medico class="form-control" id="email-medico" %}
-              <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="email-medico-error-feedback-icon"></span>
-              <span class="help-block hidden" id="email-medico-error-help">{{ formulario_registro_medico.email_medico.errors }}</span>
+              <input class="form-control" id="email-medico" type="text" value="{{ medico.email }}" disabled>
             </div>
             <label class="col-lg-2 control-label" for="nombre-usuario-medico">
               Nombre de Usuario:
@@ -445,78 +405,14 @@
               <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="nombre-usuario-medico-error-feedback-icon"></span>
               <span class="help-block hidden" id="nombre-usuario-medico-error-help">{{ formulario_registro_medico.nombre_usuario_medico.errors }}</span>
             </div>
-            {% if formulario_registro_medico.email_medico.errors %}
-            <script type="text/javascript">
-            $(function(){
-              $("#email-medico").parent("div").addClass("has-error");
-              $("#email-nombre-usuario-medico-form-group").addClass("has-feedback");
-              $("#email-medico-error-feedback-icon").removeClass("hidden");
-              $("#email-medico-error-help").removeClass("hidden");
-            });
-            </script>
-            {% endif %}
             {% if formulario_registro_medico.nombre_usuario_medico.errors %}
             <script type="text/javascript">
             $(function(){
-              $("#nombre-usuario-medico").parent("div").addClass("has-error");
-              $("#email-nombre-usuario-medico-form-group").addClass("has-feedback");
-              $("#nombre-usuario-medico-error-feedback-icon").removeClass("hidden");
-              $("#nombre-usuario-medico-error-help").removeClass("hidden");
+              mostrarErroresUsuarioMedico();
             });
             </script>
             {% endif %}
           </div><!-- Email y Nombre de Usuario -->
-
-          <!-- Contrasena -->
-          <div class="form-group" id="contrasena-medico-form-group">
-            <label class="col-lg-2 control-label" for="contrasena-medico">
-              Contraseña:
-            </label>
-            <div class="col-lg-4">
-              {% render_field formulario_registro_medico.contrasena_medico class="form-control" id="contrasena-medico" %}
-              <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="contrasena-medico-error-feedback-icon"></span>
-              <span class="help-block hidden" id="contrasena-medico-error-help">{{ formulario_registro_medico.contrasena_medico.errors }}</span>
-              <span class="help-block hidden" id="contrasenas-medico-no-coinciden-error-help">{{ formulario_registro_medico.non_field_errors }}</span>
-            </div>
-            <label class="col-lg-2 control-label" for="contrasena-medico-confirmacion">
-              Repita Contraseña:
-            </label>
-            <div class="col-lg-4">
-              {% render_field formulario_registro_medico.contrasena_confirmacion class="form-control" id="contrasena-medico-confirmacion" %}
-              <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="contrasena-medico-confirmacion-error-feedback-icon"></span>
-              <span class="help-block hidden" id="contrasena-medico-confirmacion-error-help">{{ formulario_registro_medico.contrasena_confirmacion.errors }}</span>
-            </div>
-            {% if formulario_registro_medico.contrasena_medico.errors %}
-            <script type="text/javascript">
-            $(function(){
-              $("#contrasena-medico").parent("div").addClass("has-error");
-              $("#contrasena-medico-form-group").addClass("has-feedback");
-              $("#contrasena-medico-error-feedback-icon").removeClass("hidden");
-              $("#contrasena-medico-error-help").removeClass("hidden");
-            });
-            </script>
-            {% endif %}
-            {% if formulario_registro_medico.contrasena_confirmacion.errors %}
-            <script type="text/javascript">
-            $(function(){
-              $("#contrasena-medico-confirmacion").parent("div").addClass("has-error");
-              $("#contrasena-medico-form-group").addClass("has-feedback");
-              $("#contrasena-medico-confirmacion-error-feedback-icon").removeClass("hidden");
-              $("#contrasena-medico-confirmacion-error-help").removeClass("hidden");
-            });
-            </script>
-            {% endif %}
-            {% if formulario_registro_medico.non_field_errors  %}
-            <script type="text/javascript">
-            $(function(){
-              $("#contrasena-medico-form-group").addClass("has-error has-feedback");
-              $("#contrasena-medico-error-feedback-icon").removeClass("hidden");
-              $("#contrasena-medico-confirmacion-error-feedback-icon").removeClass("hidden");
-              $("#contrasenas-medico-no-coinciden-error-help").removeClass("hidden");
-            });
-            </script>
-            {% endif %}
-          </div><!-- Contrasena -->
         </div>
         <div class="panel-footer">
           <div class="form-group">

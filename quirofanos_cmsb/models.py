@@ -3,7 +3,7 @@ from django.db import models
 from django.core.validators import MinLengthValidator, MinValueValidator, RegexValidator
 from django.contrib.auth.models import User
 
-#from hashids import Hashids
+from hashids import Hashids
 import datetime
 import time
 import uuid
@@ -98,6 +98,15 @@ PARENTEZCO = (
     ('9', u'Sobrino(a)'),
 )
 
+# Areas de ingreso asociadas al numero de expediente de un paciente
+AREA_INGRESO = (
+    ('AA', u'Admisión por Ambulatorio'),
+    ('AE', u'Admisión por Emergencia'),
+    ('AH', u'Admisión por Hospitalización'),
+    ('AG', u'Admisión por Hemodinámica'),
+    ('AL', u'Admisión por Laboratorio'),
+    ('AX', u'Registro de Red Modificado'),
+    )
 
 class Cuenta (models.Model):
     ''' Clase que representa una Cuenta de Usuario '''
@@ -113,40 +122,20 @@ class Cuenta (models.Model):
     def __unicode__(self):
         return self.usuario.username + ', ' + self.get_estado_display() + ', ' + self.get_privilegio_display()
 
-
-class Especializacion(models.Model):
-    ''' Clase que representa una Especializacion Medica'''
-    nombre = models.CharField(max_length=30, validators=[
-                              RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
-    es_quirurgica = models.BooleanField(default=False)
-
-    def clean(self):
-        ''' Sobreescribe el clean(), colocando el nombre capitalizado '''
-        self.nombre = self.nombre.title()
-        super(Especializacion, self).clean()
-
-    def save(self):
-        ''' Sobreescribe el save() '''
-        self.full_clean()
-        super(Especializacion, self).save()
-
-    def __unicode__(self):
-        return self.nombre
-
-
 class Medico (models.Model):
     ''' Clase que representa un Medico '''
-    cuenta = models.OneToOneField(Cuenta)
-    nombre = models.CharField(max_length=20, validators=[
+    cuenta = models.OneToOneField(Cuenta, blank=True, null=True)
+    nombre = models.CharField(max_length=50, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
-    apellido = models.CharField(max_length=20, validators=[
+    apellido = models.CharField(max_length=50, validators=[
                                 RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
-    cedula = models.CharField(max_length=12, validators=[
+    cedula = models.CharField(max_length=12, unique=True, validators=[
                               RegexValidator(ExpresionRegular.CEDULA_BD, MensajeError.CEDULA_BD_INVALIDA, CodigoError.CEDULA_BD_INVALIDA)])
     genero = models.CharField(max_length=1, choices=GENERO)
     telefono = models.CharField(max_length=12, validators=[
-                                RegexValidator(ExpresionRegular.TELEFONO_BD, MensajeError.TELEFONO_BD_INVALIDO, CodigoError.TELEFONO_BD_INVALIDO)])
-    especializaciones = models.ManyToManyField(Especializacion)
+                                RegexValidator(ExpresionRegular.TELEFONO_BD, MensajeError.TELEFONO_BD_INVALIDO, CodigoError.TELEFONO_BD_INVALIDO)], blank=True, null=True)
+    email = models.EmailField(max_length=75, blank=True, null=True)
+    especializacion = models.CharField(max_length=50, validators=[RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
 
     def clean(self):
         ''' Sobreescribe el clean(), colocando nombre y apellido capitalizados '''
@@ -162,22 +151,14 @@ class Medico (models.Model):
     def __unicode__(self):
         return self.nombre + ' ' + self.apellido
 
-
-class MedicoTratante (models.Model):
-    ''' Clase que representa un Medico Tratante '''
-    medico = models.OneToOneField(Medico)
-
-    def __unicode__(self):
-        return '' + self.medico.__unicode__()
-
-
 class Departamento (models.Model):
     ''' Clase que representa un Departamento '''
-    cuenta = models.OneToOneField(Cuenta)
-    nombre = models.CharField(max_length=20, unique=True, validators=[
+    cuenta = models.OneToOneField(Cuenta, blank=True, null=True)
+    nombre = models.CharField(max_length=50, unique=True, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
     telefono = models.CharField(max_length=12, validators=[
-                                RegexValidator(ExpresionRegular.TELEFONO_BD, MensajeError.TELEFONO_BD_INVALIDO, CodigoError.TELEFONO_BD_INVALIDO)])
+                                RegexValidator(ExpresionRegular.TELEFONO_BD, MensajeError.TELEFONO_BD_INVALIDO, CodigoError.TELEFONO_BD_INVALIDO)], blank=True, null=True)
+    email = models.EmailField(max_length=75, blank=True, null=True)
 
     def clean(self):
         ''' Sobreescribe el clean(), colocando el nombre capitalizado '''
@@ -209,7 +190,7 @@ class Quirofano(models.Model):
 
 class MaterialQuirurgico(models.Model):
     ''' Clase que representa un Material Quirurgico '''
-    nombre = models.CharField(max_length=30, validators=[
+    nombre = models.CharField(max_length=50, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
 
     def clean(self):
@@ -228,7 +209,7 @@ class MaterialQuirurgico(models.Model):
 
 class ServicioOperatorio(models.Model):
     ''' Clase que representa un Servicio Operatorio '''
-    nombre = models.CharField(max_length=30, validators=[
+    nombre = models.CharField(max_length=50, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
 
     def clean(self):
@@ -247,7 +228,7 @@ class ServicioOperatorio(models.Model):
 
 class EquipoEspecial(models.Model):
     ''' Clase que representa un Equipo Especial '''
-    nombre = models.CharField(max_length=30, validators=[
+    nombre = models.CharField(max_length=50, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
 
     def clean(self):
@@ -268,7 +249,7 @@ class SistemaCorporal(models.Model):
     ''' Clase que representa un Sistema Corporal segun el estandar ICD-10-PCS '''
     codigo_icd_10_pcs = models.CharField(
         max_length=2, unique=True, validators=[MinLengthValidator(2)])
-    nombre = models.CharField(max_length=30, unique=True, validators=[
+    nombre = models.CharField(max_length=50, unique=True, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
 
     def clean(self):
@@ -286,34 +267,34 @@ class SistemaCorporal(models.Model):
         return self.codigo_icd_10_pcs + ', ' + self.nombre
 
 
-class ProcedimientoQuirurgico(models.Model):
-    ''' Clase que representa un Procedimiento Quirurgico segun el estandar ICD-10-PCS '''
+class TipoProcedimientoQuirurgico(models.Model):
+    ''' Clase que representa un Tipo Procedimiento Quirurgico segun el estandar ICD-10-PCS '''
     codigo_icd_10_pcs = models.CharField(max_length=1, unique=True)
-    nombre = models.CharField(max_length=30, unique=True, validators=[
+    nombre = models.CharField(max_length=50, unique=True, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
 
     def clean(self):
         ''' Sobreescribe el clean(), colocando el codigo en mayuscula y el nombre capitalizado '''
         self.codigo_icd_10_pcs = self.codigo_icd_10_pcs.upper()
         self.nombre = self.nombre.title()
-        super(ProcedimientoQuirurgico, self).clean()
+        super(TipoProcedimientoQuirurgico, self).clean()
 
     def save(self):
         ''' Sobreescribe el save() '''
         self.full_clean()
-        super(ProcedimientoQuirurgico, self).save()
+        super(TipoProcedimientoQuirurgico, self).save()
 
     def __unicode__(self):
-        return self.codigo_icd_10_pcs + ', ' + self.Nombres
+        return self.codigo_icd_10_pcs + ', ' + self.nombre
 
 
 class OrganoCorporal(models.Model):
     ''' Clase que representa un Organo Corporal segun el estandar ICD-10-PCS '''
     codigo_icd_10_pcs = models.CharField(max_length=1)
-    nombre = models.CharField(max_length=30, unique=True, validators=[
+    nombre = models.CharField(max_length=50, unique=True, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
     sistema_corporal = models.ForeignKey(SistemaCorporal)
-    procedimientos_permitidos = models.ManyToManyField(ProcedimientoQuirurgico)
+    procedimientos_permitidos = models.ManyToManyField(TipoProcedimientoQuirurgico)
 
     def clean(self):
         ''' Sobreescribe el clean(), colocando el codigo en mayuscula y el nombre capitalizado '''
@@ -329,21 +310,17 @@ class OrganoCorporal(models.Model):
     def __unicode__(self):
         return self.nombre
 
-
-class TipoIntervencionQuirurgica(models.Model):
-    ''' Clase que representa un Tipo de Intervencion Quirurgica '''
-    procedimiento_quirurgico = models.ForeignKey(ProcedimientoQuirurgico)
-    organo_corporal = models.ForeignKey(OrganoCorporal)
+class CompaniaAseguradora(models.Model):
+    nombre = models.CharField(max_length=50, validators=[RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
 
     def __unicode__(self):
-        return self.organo_corporal.sistema_corporal.__unicode__() + ', ' + self.procedimiento_quirurgico.__unicode__() + ', ' + self.organo_corporal.__unicode__()
-
+        return self.nombre
 
 class Paciente(models.Model):
     ''' Clase que representa un Paciente '''
-    nombre = models.CharField(max_length=20, validators=[
+    nombre = models.CharField(max_length=50, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
-    apellido = models.CharField(max_length=20, validators=[
+    apellido = models.CharField(max_length=50, validators=[
                                 RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
     cedula = models.CharField(max_length=12, unique=True, validators=[
                               RegexValidator(ExpresionRegular.CEDULA_BD, MensajeError.CEDULA_BD_INVALIDA, CodigoError.CEDULA_BD_INVALIDA)])
@@ -351,23 +328,27 @@ class Paciente(models.Model):
     telefono = models.CharField(max_length=12, validators=[
                                 RegexValidator(ExpresionRegular.TELEFONO_BD, MensajeError.TELEFONO_BD_INVALIDO, CodigoError.TELEFONO_BD_INVALIDO)])
     genero = models.CharField(max_length=1, choices=GENERO)
+    compania_aseguradora = models.ForeignKey(CompaniaAseguradora, blank=True, null=True)
+    area_ingreso = models.CharField(max_length=2, choices=AREA_INGRESO, blank=True, null=True)
     numero_expediente = models.CharField(
-        max_length=5, unique=True, blank=True, null=True)  # Ver formato
+        max_length=6, blank=True, null=True, validators=[RegexValidator(ExpresionRegular.NUMERO_EXPEDIENTE, MensajeError.NUMERO_EXPEDIENTE_INVALIDO, CodigoError.NUMERO_EXPEDIENTE_INVALIDO)])
     numero_habitacion = models.CharField(
-        max_length=5, blank=True, null=True)  # Ver formato
-    numero_inscripcion_medico = models.CharField(
-        max_length=5, unique=True, blank=True, null=True)  # Ver formato
+        max_length=3, blank=True, null=True, validators=[RegexValidator(ExpresionRegular.NUMERO_HABITACION, MensajeError.NUMERO_HABITACION_INVALIDO, CodigoError.NUMERO_HABITACION_INVALIDO)])
     diagnostico_ingreso = models.TextField()
     servicios_operatorios_requeridos = models.ManyToManyField(
         ServicioOperatorio, blank=True, null=True)
-    familiar_medico = models.ForeignKey(Medico, blank=True, null=True)
-    parentezco_familiar_medico = models.CharField(
-        max_length=1, choices=PARENTEZCO, blank=True, null=True)
 
     def clean(self):
         ''' Sobreescribe el clean(), colocando nombre y apellido capitalizados '''
         self.nombre = self.nombre.title()
         self.apellido = self.apellido.title()
+
+        if area_ingreso and not numero_expediente:
+            raise ValidationError(MensajeError.AREA_INGRESO_SIN_NUMERO_EXPEDIENTE, code=CodigoError.AREA_INGRESO_SIN_NUMERO_EXPEDIENTE)
+
+        if numero_expediente and not area_ingreso:
+            raise ValidationError(MensajeError.NUMERO_EXPEDIENTE_SIN_AREA_INGRESO, code=CodigoError.NUMERO_EXPEDIENTE_SIN_AREA_INGRESO)
+
         super(Paciente, self).clean()
 
     def save(self):
@@ -397,19 +378,17 @@ class IntervencionQuirurgica(models.Model):
         MaterialQuirurgico, blank=True, null=True)
     equipos_especiales_requeridos = models.ManyToManyField(
         EquipoEspecial, blank=True, null=True)
-    tipo_intervencion = models.ForeignKey(TipoIntervencionQuirurgica)
     quirofano = models.ForeignKey(Quirofano)
-    medicos_participantes = models.ManyToManyField(
-        Medico, through='Participacion')
+    monto_honorarios_total = models.DecimalField(max_digits=15, decimal_places=2) # hacer funcion para calcular este monto derivado
 
     def clean(self):
         ''' Sobreescribe el clean(), validando los valores del riesgo y la razon del riesgo, ademas de calcular la duracion de la Intervencion Quirurgica '''
         if self.riesgo == 'M' and self.razon_riesgo is None:
             raise ValidationError(
-                MensajeError.RIESGO_BD_MALO_SIN_RAZON, code=CodigoError.RIESGO_BD_MALO_SIN_RAZON)
+                MensajeError.RIESGO_MALO_SIN_RAZON, code=CodigoError.RIESGO_MALO_SIN_RAZON)
         elif self.riesgo != 'M' and self.razon_riesgo is not None:
             raise ValidationError(
-                MensajeError.RIESGO_BD_NO_MALO_CON_RAZON, code=CodigoError.RIESGO_BD_NO_MALO_CON_RAZON)
+                MensajeError.RIESGO_NO_MALO_CON_RAZON, code=CodigoError.RIESGO_NO_MALO_CON_RAZON)
 
         if self.hora_fin <= self.hora_inicio:
             raise ValidationError(
@@ -432,15 +411,26 @@ class IntervencionQuirurgica(models.Model):
         super(IntervencionQuirurgica, self).save()
 
     def __unicode__(self):
-        return '' + self.tipo_intervencion.__unicode__() + ', ' + self.paciente.__unicode__() + ', ' + self.reservacion.medico.__unicode__() + ', ' + str(self.fecha_intervencion)
+        return self.paciente.__unicode__() + ', ' + self.reservacion.medico.__unicode__() + ', ' + str(self.fecha_intervencion)
+
+class ProcedimientoQuirurgico(models.Model):
+    ''' Clase que representa un Procedimiento Quirurgico '''
+    intervencion_quirurgica = models.ForeignKey(IntervencionQuirurgica)
+    tipo_procedimiento_quirurgico = models.ForeignKey(TipoProcedimientoQuirurgico)
+    organo_corporal = models.ForeignKey(OrganoCorporal)
+    monto_honorarios_cirujano_principal = models.DecimalField(max_digits=15, decimal_places=2)
+    medicos_participantes = models.ManyToManyField(Medico, through='Participacion')
+
+    def __unicode__(self):
+        return self.intervencion_quirurgica.__unicode__() + ', ' + self.organo_corporal.sistema_corporal.__unicode__() + ', ' + self.tipo_procedimiento_quirurgico.__unicode__() + ', ' + self.organo_corporal.__unicode__()
 
 
 class Participacion(models.Model):
-    ''' Clase que representa la Participacion de un Medico en una
-    Intervencion Quirurgica '''
-    intervencion_quirurgica = models.ForeignKey(IntervencionQuirurgica)
+    ''' Clase que representa la Participacion de un Medico en un Procedimiento Quirurgico '''
+    procedimiento_quirurgico = models.ForeignKey(ProcedimientoQuirurgico)
     medico = models.ForeignKey(Medico)
     rol = models.CharField(max_length=1, choices=ROL_PARTICIPACION)
+    monto_honorarios = models.DecimalField(max_digits=15, decimal_places=2)
 
     def save(self):
         ''' Sobreescribe el save() '''
@@ -448,7 +438,7 @@ class Participacion(models.Model):
         super(Participacion, self).save()
 
     def __unicode__(self):
-        return '' + self.intervencion_quirurgica.__unicode__() + ', ' + self.medico.__unicode__() + ', ' + self.get_rol_display()
+        return self.intervencion_quirurgica.__unicode__() + ', ' + self.medico.__unicode__() + ', ' + self.get_rol_display()
 
 
 class Reservacion (models.Model):
@@ -461,7 +451,7 @@ class Reservacion (models.Model):
         max_length=1, choices=TIPO_SOLICITUD_QUIROFANO)
     dias_hospitalizacion = models.IntegerField(
         validators=[MinValueValidator(0)])
-    medico = models.ForeignKey(MedicoTratante)
+    medico = models.ForeignKey(Medico)
     intervencion_quirurgica = models.OneToOneField(IntervencionQuirurgica)
 
     def save(self):
@@ -475,4 +465,4 @@ class Reservacion (models.Model):
         super(Reservacion, self).save()
 
     def __unicode__(self):
-        return '' + self.intervencion_quirurgica.__unicode__() + ', ' + self.get_tipo_solicitud_display() + ', ' + self.get_estado_display() + ', ' + str(self.fecha_reservacion)
+        return self.intervencion_quirurgica.__unicode__() + ', ' + self.get_tipo_solicitud_display() + ', ' + self.get_estado_display() + ', ' + str(self.fecha_reservacion)

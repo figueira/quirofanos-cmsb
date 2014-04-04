@@ -1,0 +1,4479 @@
+[
+    {
+        "fields": {
+            "apellido": "Stolk Mendoza",
+            "cedula": "V-61824",
+            "especializacion": "Gastroenterologia",
+            "genero": "M",
+            "nombre": "Gustavo"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "apellido": "Wydh Garrido",
+            "cedula": "V-11739625",
+            "email": "ewydh@hotmail.com",
+            "especializacion": "Neurocirugia",
+            "genero": "M",
+            "nombre": "Ernesto Jose",
+            "telefono": "0412-2534343"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "apellido": "Miklos Egyel",
+            "cedula": "V-4350127",
+            "email": "mmiklos24@gmail.com",
+            "especializacion": "Otorrinolaringologia",
+            "genero": "F",
+            "nombre": "Magda",
+            "telefono": "0424-2409098"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "apellido": "Barreto Brandt",
+            "cedula": "V-4351690",
+            "email": "romanpediatra@gmail.com",
+            "especializacion": "Pediatria Y Puericultura",
+            "genero": "M",
+            "nombre": "Roman Antonio",
+            "telefono": "0424-9216109"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "apellido": "Troconis Saavedra",
+            "cedula": "V-6967547",
+            "email": "jctroco@cantv.net",
+            "especializacion": "Urologia",
+            "genero": "M",
+            "nombre": "Juan Carlos",
+            "telefono": "0414-3282126"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "apellido": "Correa Bastidas",
+            "cedula": "V-9812847",
+            "email": "rcorrea93@gmail.com",
+            "especializacion": "Cardiologia",
+            "genero": "M",
+            "nombre": "Roberto Carlo",
+            "telefono": "0414-3052651"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "apellido": "Chaustre Belandria",
+            "cedula": "V-5969923",
+            "email": "ichaustre@cantv.net",
+            "especializacion": "Pediatria Y Puericultura",
+            "genero": "F",
+            "nombre": "Ismenia Josefina",
+            "telefono": "0416-6102002"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 7
+    },
+    {
+        "fields": {
+            "apellido": "Restrepo Mora",
+            "cedula": "V-6554277",
+            "email": "crestrepo@artroscopia.com.ve",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Cesar Enrique",
+            "telefono": "0414-3320014"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 8
+    },
+    {
+        "fields": {
+            "apellido": "Loyo",
+            "cedula": "V-7179175",
+            "email": "jgloyo@telcel.net.ve",
+            "especializacion": "Cardiologia",
+            "genero": "M",
+            "nombre": "Jose Gregorio"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 9
+    },
+    {
+        "fields": {
+            "apellido": "Ghetea Gamuz",
+            "cedula": "V-7683814",
+            "email": "mghetea@gmail.com",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Moises",
+            "telefono": "0412-2378410"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 10
+    },
+    {
+        "fields": {
+            "apellido": "Marquez Yanes",
+            "cedula": "V-2939420",
+            "email": "frajamarquez@gmail.com",
+            "especializacion": "Anestesiologia",
+            "genero": "M",
+            "nombre": "Francisco Javier",
+            "telefono": "0414-3203164"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 11
+    },
+    {
+        "fields": {
+            "apellido": "Beker Kohn",
+            "cedula": "V-6557870",
+            "email": "bebeker@gmail.com",
+            "especializacion": "Gastroenterologia",
+            "genero": "M",
+            "nombre": "Bernardo",
+            "telefono": "0424-2699881"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 12
+    },
+    {
+        "fields": {
+            "apellido": "Patete Ayala",
+            "cedula": "V-8344283",
+            "email": "manuelpatete@yahoo.es",
+            "especializacion": "Cardiologia",
+            "genero": "M",
+            "nombre": "Manuel",
+            "telefono": "0414-3083948"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 13
+    },
+    {
+        "fields": {
+            "apellido": "Marcano Mendez",
+            "cedula": "V-10337031",
+            "email": "carloseduardomarcano@gmail.com",
+            "especializacion": "Pediatria Y Neonatologia",
+            "genero": "M",
+            "nombre": "Carlos Eduardo",
+            "telefono": "0412-3180120"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 14
+    },
+    {
+        "fields": {
+            "apellido": "Montes De Oca Dager",
+            "cedula": "V-816768",
+            "email": "israelmontes33@gmail.com",
+            "especializacion": "Medicina Interna",
+            "genero": "M",
+            "nombre": "Israel",
+            "telefono": "0414-3031005"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 15
+    },
+    {
+        "fields": {
+            "apellido": "Padron Corao",
+            "cedula": "V-5313053",
+            "email": "padroncorao@hotmail.com",
+            "especializacion": "Ginecologia",
+            "genero": "F",
+            "nombre": "Carolina",
+            "telefono": "0416-6157607"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 16
+    },
+    {
+        "fields": {
+            "apellido": "Gomez Rojas",
+            "cedula": "V-1759031",
+            "email": "mgomezrojas@hotmail.com",
+            "especializacion": "Psiquiatria",
+            "genero": "M",
+            "nombre": "Manuel Antonio",
+            "telefono": "0412-3282488"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 17
+    },
+    {
+        "fields": {
+            "apellido": "Garcia Garcia",
+            "cedula": "V-6563652",
+            "email": "leopogg@gmail.com",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Leopoldo Ibrahim",
+            "telefono": "0412-6273179"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 18
+    },
+    {
+        "fields": {
+            "apellido": "Lairet Perez",
+            "cedula": "V-1745590",
+            "especializacion": "Cirugia Oncologica",
+            "genero": "M",
+            "nombre": "Felix Miguel",
+            "telefono": "0414-1267011"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 19
+    },
+    {
+        "fields": {
+            "apellido": "Guzman Suarez",
+            "cedula": "V-11307253",
+            "email": "mgrijm@cantv.net",
+            "especializacion": "Medicina Interna-Infectologia",
+            "genero": "M",
+            "nombre": "Alfonso Jose",
+            "telefono": "0424-2272579"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 20
+    },
+    {
+        "fields": {
+            "apellido": "Viloria Uzcategui",
+            "cedula": "V-11463998",
+            "email": "joseluisviloria73@yahoo.com",
+            "especializacion": "Cardiologia",
+            "genero": "M",
+            "nombre": "Jose Luis",
+            "telefono": "0414-1791131"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 21
+    },
+    {
+        "fields": {
+            "apellido": "Plaz Abreu",
+            "cedula": "V-3712542",
+            "email": "jfpatmpc@gmail.com",
+            "especializacion": "Gastroenterologia",
+            "genero": "M",
+            "nombre": "Jose Francisco",
+            "telefono": "0414-3202032"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 22
+    },
+    {
+        "fields": {
+            "apellido": "Velez Gimon",
+            "cedula": "V-11306862",
+            "email": "hvelezmaxilofacial@gmail.com",
+            "especializacion": "Cirugia Buco Maxilo Facial",
+            "genero": "M",
+            "nombre": "Henrique Jorge",
+            "telefono": "0414-2379399"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 23
+    },
+    {
+        "fields": {
+            "apellido": "Cuervo Sosa",
+            "cedula": "V-4766177",
+            "email": "cuer4152@bellsouth.net",
+            "especializacion": "Nefrologia Pediatrica",
+            "genero": "M",
+            "nombre": "Carlos",
+            "telefono": "0212-5512563"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 24
+    },
+    {
+        "fields": {
+            "apellido": "Martinez De Guglielmelli",
+            "cedula": "V-3607568",
+            "especializacion": "Radiologia",
+            "genero": "F",
+            "nombre": "Ana Cristina",
+            "telefono": "0414-3265240"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 25
+    },
+    {
+        "fields": {
+            "apellido": "Hopkins Misle",
+            "cedula": "V-3142614",
+            "email": "cardio5b@hotmail.com",
+            "especializacion": "Cirugia Cardiovascular",
+            "genero": "M",
+            "nombre": "Henrique Rafael",
+            "telefono": "0212-5559195"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 26
+    },
+    {
+        "fields": {
+            "apellido": "Troconiz Luzardo De Quintero",
+            "cedula": "V-4350856",
+            "email": "mariatroconizl@gmail.com",
+            "especializacion": "Pediatria Y Puericultura",
+            "genero": "F",
+            "nombre": "Maria Concepci\u00f3n",
+            "telefono": "0414-3204682"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 27
+    },
+    {
+        "fields": {
+            "apellido": "Ayala Corao",
+            "cedula": "V-5533805",
+            "email": "ayala40@me.com",
+            "especializacion": "Cirugia Coloproctologica",
+            "genero": "M",
+            "nombre": "Bernardo",
+            "telefono": "0414-3315178"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 28
+    },
+    {
+        "fields": {
+            "apellido": "Lara Garcia",
+            "cedula": "V-1340595",
+            "email": "laragarcia@cantv.net",
+            "especializacion": "Cirugia De Columna Vertebral",
+            "genero": "M",
+            "nombre": "Rafael Armando",
+            "telefono": "0414-2390199"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 29
+    },
+    {
+        "fields": {
+            "apellido": "Burmicky Pirtosek",
+            "cedula": "V-3243232",
+            "email": "mburmicky@yahoo.com",
+            "especializacion": "Gastroenterologia",
+            "genero": "M",
+            "nombre": "Matias",
+            "telefono": "0412-3243232"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 30
+    },
+    {
+        "fields": {
+            "apellido": "Marquez Berti",
+            "cedula": "V-5217066",
+            "email": "emberti@movistar.net.ve",
+            "especializacion": "Cirugia General Y Oncologica",
+            "genero": "M",
+            "nombre": "Enrique Arturo",
+            "telefono": "0414-3227809"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 31
+    },
+    {
+        "fields": {
+            "apellido": "Valeri Mata",
+            "cedula": "V-10487733",
+            "email": "jorge.valeri@gmail.com",
+            "especializacion": "Cardiologia",
+            "genero": "M",
+            "nombre": "Jorge",
+            "telefono": "0414-2644691"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 32
+    },
+    {
+        "fields": {
+            "apellido": "Bermudez Diana",
+            "cedula": "V-6224758",
+            "email": "amaber@gmail.com",
+            "especializacion": "Imagenologia",
+            "genero": "F",
+            "nombre": "Ana Maria",
+            "telefono": "0414-3270393"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 33
+    },
+    {
+        "fields": {
+            "apellido": "Gurdiel Casa\u00f1as",
+            "cedula": "V-3719037",
+            "email": "ogurdielh@gmail.com",
+            "especializacion": "Cardiologia",
+            "genero": "M",
+            "nombre": "Orlando",
+            "telefono": "0424-1936203"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 34
+    },
+    {
+        "fields": {
+            "apellido": "Troconis Rodr\u00edguez",
+            "cedula": "V-938925",
+            "especializacion": "Urologia",
+            "genero": "M",
+            "nombre": "Orangel Armando",
+            "telefono": "0414-1861801"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 35
+    },
+    {
+        "fields": {
+            "apellido": "Izquierdo De Chwoschtschinsky",
+            "cedula": "V-4351159",
+            "email": "izquieli@gmail.com",
+            "especializacion": "Medicina Fisica Y Rehabilitacion",
+            "genero": "F",
+            "nombre": "Elisa",
+            "telefono": "0412-2117633"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 36
+    },
+    {
+        "fields": {
+            "apellido": "Troconis Berti",
+            "cedula": "V-2954970",
+            "email": "ylayalytroconis@hotmail.com",
+            "especializacion": "Ginecologia",
+            "genero": "F",
+            "nombre": "Maria Ylayaly",
+            "telefono": "0212-2833532"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 37
+    },
+    {
+        "fields": {
+            "apellido": "Szilard De Mejia",
+            "cedula": "V-2768386",
+            "email": "doszimej@hotmail.com",
+            "especializacion": "Ginecologia",
+            "genero": "F",
+            "nombre": "Doris Andrea",
+            "telefono": "0414-1001038"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 38
+    },
+    {
+        "fields": {
+            "apellido": "Zapata Sirvent",
+            "cedula": "V-4353975",
+            "email": "zapatasirvent@gmail.com",
+            "especializacion": "Cirugia Plastica Y Reconstructiva",
+            "genero": "M",
+            "nombre": "Ramon Luis",
+            "telefono": "0416-6247997"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 39
+    },
+    {
+        "fields": {
+            "apellido": "Vallenilla Fernandez",
+            "cedula": "V-10330121",
+            "email": "ramonvallenilla@gmail.com",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Ramon",
+            "telefono": "0414-3152764"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 40
+    },
+    {
+        "fields": {
+            "apellido": "Mijares",
+            "cedula": "V-581254",
+            "email": "carlosmixares@gmail.com",
+            "especializacion": "Alergologia",
+            "genero": "M",
+            "nombre": "Carlos",
+            "telefono": "0416-4084342"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 41
+    },
+    {
+        "fields": {
+            "apellido": "Millan",
+            "cedula": "V-3226574",
+            "email": "jrey2@cantv.net",
+            "especializacion": "Reumatologia",
+            "genero": "M",
+            "nombre": "Alberto Jose",
+            "telefono": "0212-5559369"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 42
+    },
+    {
+        "fields": {
+            "apellido": "Urosa Paez",
+            "cedula": "V-3177121",
+            "email": "claudiourosa@hotmail.com",
+            "especializacion": "Medicina Interna - Endocrinologia",
+            "genero": "M",
+            "nombre": "Claudio Luis",
+            "telefono": "0414-3285893"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 43
+    },
+    {
+        "fields": {
+            "apellido": "Perez Ginnari",
+            "cedula": "V-12421930",
+            "email": "apginnari@hotmail.com",
+            "especializacion": "Cirugia General",
+            "genero": "M",
+            "nombre": "Armando Enrique",
+            "telefono": "0416-6189605"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 44
+    },
+    {
+        "fields": {
+            "apellido": "Borregales Contreras",
+            "cedula": "V-5967668",
+            "email": "lborregales596@hotmail.com",
+            "especializacion": "Urologia",
+            "genero": "M",
+            "nombre": "Leonardo Gregorio",
+            "telefono": "0424-1500915"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 45
+    },
+    {
+        "fields": {
+            "apellido": "Bacalao Romer",
+            "cedula": "V-4768397",
+            "email": "gastrocmc@hotmail.com",
+            "especializacion": "Gastroenterologia",
+            "genero": "M",
+            "nombre": "Roman",
+            "telefono": "0412-9286706"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 46
+    },
+    {
+        "fields": {
+            "apellido": "Arreaza Ni\u00f1o",
+            "cedula": "V-6364801",
+            "email": "cearreaza62@gmail.com",
+            "especializacion": "Otorrinolaringologia",
+            "genero": "M",
+            "nombre": "Carlos Eduardo",
+            "telefono": "0414-3169535"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 47
+    },
+    {
+        "fields": {
+            "apellido": "Mendoza Blanco",
+            "cedula": "V-2963480",
+            "email": "mimendozab@hotmail.com",
+            "especializacion": "Cirugia General",
+            "genero": "M",
+            "nombre": "Milton Ivan",
+            "telefono": "0414-3312929"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 48
+    },
+    {
+        "fields": {
+            "apellido": "Rodriguez Gonzalez",
+            "cedula": "V-4115363",
+            "especializacion": "Radioterapia",
+            "genero": "M",
+            "nombre": "Antonio Ivo",
+            "telefono": "0414-2359539"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 49
+    },
+    {
+        "fields": {
+            "apellido": "Cudemus Marquez",
+            "cedula": "V-3663365",
+            "email": "cudemar@cantv.net",
+            "especializacion": "Cirugia Oncologica",
+            "genero": "M",
+            "nombre": "Gaston A.",
+            "telefono": "0416-6220503"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 50
+    },
+    {
+        "fields": {
+            "apellido": "Pru Gonzalez",
+            "cedula": "V-4082303",
+            "especializacion": "Nefrologia",
+            "genero": "M",
+            "nombre": "Cesar Eduardo",
+            "telefono": "0212-5768357"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 51
+    },
+    {
+        "fields": {
+            "apellido": "Godayol Disario",
+            "cedula": "V-6973804",
+            "email": "fernandogodayol@gmail.com",
+            "especializacion": "Cirugia General",
+            "genero": "M",
+            "nombre": "Fernando Gabriel",
+            "telefono": "0412-6219773"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 52
+    },
+    {
+        "fields": {
+            "apellido": "Parthe Mandry",
+            "cedula": "V-7110319",
+            "email": "g.arthe@hotmail.com",
+            "especializacion": "Anatomia Patologica",
+            "genero": "M",
+            "nombre": "Gustavo Ernesto Jose",
+            "telefono": "0212-6353705"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 53
+    },
+    {
+        "fields": {
+            "apellido": "Hernandez Padron",
+            "cedula": "V-6224223",
+            "email": "noraorl@hotmail.com",
+            "especializacion": "Otorrinolaringologia",
+            "genero": "F",
+            "nombre": "Nora Elena",
+            "telefono": "0414-3310993"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 54
+    },
+    {
+        "fields": {
+            "apellido": "Baltar Iglesias",
+            "cedula": "V-11664811",
+            "email": "jbaltar@cantv.net",
+            "especializacion": "Medicina Interna",
+            "genero": "M",
+            "nombre": "Juan Antonio",
+            "telefono": "0414-3249571"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 55
+    },
+    {
+        "fields": {
+            "apellido": "Marcano Casa\u00f1as",
+            "cedula": "V-12781849",
+            "email": "marcano_henry@hotmail.com",
+            "especializacion": "Endocrinologia Pediatrica",
+            "genero": "M",
+            "nombre": "Henry Jose",
+            "telefono": "0414-2619240"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 56
+    },
+    {
+        "fields": {
+            "apellido": "Padula Falci",
+            "cedula": "V-2115905",
+            "email": "vpadulaf@cantv.net",
+            "especializacion": "Pediatria Y Neonatologia",
+            "genero": "M",
+            "nombre": "Victor M.",
+            "telefono": "0416-6210910"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 57
+    },
+    {
+        "fields": {
+            "apellido": "Yrausquin De Postalian",
+            "cedula": "V-4107377",
+            "especializacion": "Cirugia Plastica Y Reconstructiva",
+            "genero": "F",
+            "nombre": "Elizabeth",
+            "telefono": "0212-7825349"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 58
+    },
+    {
+        "fields": {
+            "apellido": "Guzman De Fleury",
+            "cedula": "V-3695535",
+            "email": "maryfleuryg@yahoo.com",
+            "especializacion": "Dermatologia",
+            "genero": "F",
+            "nombre": "Mary Josefina",
+            "telefono": "0414-3238952"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 59
+    },
+    {
+        "fields": {
+            "apellido": "Ponce Senior",
+            "cedula": "V-2937026",
+            "email": "francisco.ponces@yahoo.es",
+            "especializacion": "Psiquiatria",
+            "genero": "M",
+            "nombre": "Francisco",
+            "telefono": "0414-3235764"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 60
+    },
+    {
+        "fields": {
+            "apellido": "Sanchez Aguilar",
+            "cedula": "V-4883029",
+            "email": "elisasancheza@gmail.com",
+            "especializacion": "Gastroenterologia",
+            "genero": "F",
+            "nombre": "Elisa",
+            "telefono": "0414-2342506"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 61
+    },
+    {
+        "fields": {
+            "apellido": "Ramos Ortega",
+            "cedula": "V-14395051",
+            "email": "drelixramos@gmail.com",
+            "especializacion": "Medicina Interna",
+            "genero": "M",
+            "nombre": "Elix Teodoro",
+            "telefono": "0424-1564548"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 62
+    },
+    {
+        "fields": {
+            "apellido": "Sigala Frommeyer",
+            "cedula": "V-8582556",
+            "email": "honoriosigala@gmail.com",
+            "especializacion": "Cirugia Oncologica",
+            "genero": "M",
+            "nombre": "Honorio",
+            "telefono": "0414-2635633"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 63
+    },
+    {
+        "fields": {
+            "apellido": "Urdaneta",
+            "cedula": "V-5532739",
+            "especializacion": "Pediatria",
+            "genero": "M",
+            "nombre": "Ruben",
+            "telefono": "0416-6374587"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 64
+    },
+    {
+        "fields": {
+            "apellido": "Alvarez Serrano",
+            "cedula": "V-4721576",
+            "email": "dremilioalvarez@cantv.net",
+            "especializacion": "Radioterapia",
+            "genero": "M",
+            "nombre": "Emilio",
+            "telefono": "0414-0176694"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 65
+    },
+    {
+        "fields": {
+            "apellido": "Trejo Scorza",
+            "cedula": "V-4355652",
+            "email": "etrejoscorza@gmail.com",
+            "especializacion": "Cirugia Pediatrica",
+            "genero": "M",
+            "nombre": "Ezequiel",
+            "telefono": "0416-6119202"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 66
+    },
+    {
+        "fields": {
+            "apellido": "Santucci Lo Presti",
+            "cedula": "V-13343559",
+            "email": "dr.santucci@hotmail.com",
+            "especializacion": "Medicina Interna",
+            "genero": "M",
+            "nombre": "Saverio",
+            "telefono": "0414-3011916"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 67
+    },
+    {
+        "fields": {
+            "apellido": "Roth Cohen",
+            "cedula": "V-6110854",
+            "email": "ramiroth@gmail.com",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Raymond",
+            "telefono": "0414-2410101"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 68
+    },
+    {
+        "fields": {
+            "apellido": "Rodriguez Morales",
+            "cedula": "V-1751318",
+            "email": "angelinarod@gmail.com",
+            "especializacion": "Hemato-Oncologia",
+            "genero": "F",
+            "nombre": "Angela",
+            "telefono": "0414-3273383"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 69
+    },
+    {
+        "fields": {
+            "apellido": "E. De Sekler",
+            "cedula": "V-1728645",
+            "email": "e.sekler@gmail.com",
+            "especializacion": "Medicina Interna",
+            "genero": "F",
+            "nombre": "Eva",
+            "telefono": "0414-3270847"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 70
+    },
+    {
+        "fields": {
+            "apellido": "Morgado Schmilinsky",
+            "cedula": "V-5304719",
+            "email": "morgadojr@gmail.com",
+            "especializacion": "Cirugia General",
+            "genero": "M",
+            "nombre": "Pedro Jose",
+            "telefono": "0414-2369513"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 71
+    },
+    {
+        "fields": {
+            "apellido": "Morales Stopello",
+            "cedula": "V-3476878",
+            "email": "Jmoralesstopello@gmail.com",
+            "especializacion": "Oftalmologia",
+            "genero": "M",
+            "nombre": "Jorge",
+            "telefono": "0414-3270981"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 72
+    },
+    {
+        "fields": {
+            "apellido": "Rosales Febres",
+            "cedula": "V-10336841",
+            "email": "finaclaret@yahoo.com",
+            "especializacion": "Radiologia",
+            "genero": "F",
+            "nombre": "Josefina Claret",
+            "telefono": "0414-3331991"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 73
+    },
+    {
+        "fields": {
+            "apellido": "Soto Sanchez",
+            "cedula": "V-965750",
+            "email": "canta2claro@yahoo.com",
+            "especializacion": "Medicina Interna",
+            "genero": "M",
+            "nombre": "Ramon Francisco",
+            "telefono": "0414-3895293"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 74
+    },
+    {
+        "fields": {
+            "apellido": "Weffer Abbati",
+            "cedula": "V-3182411",
+            "email": "rene.weffer@gmail.com",
+            "especializacion": "Otorrinolaringologia",
+            "genero": "M",
+            "nombre": "Rene",
+            "telefono": "0412-6062448"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 75
+    },
+    {
+        "fields": {
+            "apellido": "Postalian",
+            "cedula": "V-3461483",
+            "email": "postaliank@gmail.com",
+            "especializacion": "Neurologia",
+            "genero": "M",
+            "nombre": "Krikor",
+            "telefono": "0416-6127109"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 76
+    },
+    {
+        "fields": {
+            "apellido": "Fuenmayor Vargas",
+            "cedula": "V-4358044",
+            "email": "jefv56@gmail.com",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "M",
+            "nombre": "Jairo Ernesto",
+            "telefono": "0416-6235993"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 77
+    },
+    {
+        "fields": {
+            "apellido": "Morera Pestana",
+            "cedula": "V-6848149",
+            "email": "cmorera@cantv.net",
+            "especializacion": "Gastroenterologia Pediatrica",
+            "genero": "M",
+            "nombre": "Claudio Jos\u00c9",
+            "telefono": "0414-3291425"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 78
+    },
+    {
+        "fields": {
+            "apellido": "Levy Bercowsky",
+            "cedula": "V-5825447",
+            "email": "alfredolevy@cantv.net",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "M",
+            "nombre": "Mesod Alfredo",
+            "telefono": "0416-6222358"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 79
+    },
+    {
+        "fields": {
+            "apellido": "Barriola Damborenea",
+            "cedula": "V-3612948",
+            "email": "jonbarr948@cantv.net",
+            "especializacion": "Cirugia Oncologica",
+            "genero": "M",
+            "nombre": "Jon Ander",
+            "telefono": "0414-3307040"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 80
+    },
+    {
+        "fields": {
+            "apellido": "Barroso Gil",
+            "cedula": "V-4516592",
+            "email": "eddybarroso@hotmail.com",
+            "especializacion": "Gastroenterologia",
+            "genero": "F",
+            "nombre": "Eddy Josefina",
+            "telefono": "0414-3381052"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 81
+    },
+    {
+        "fields": {
+            "apellido": "Cuomo Auvert",
+            "cedula": "V-7770355",
+            "email": "bernardocuomo@gmail.com",
+            "especializacion": "Urologia",
+            "genero": "M",
+            "nombre": "Bernardo Enrique",
+            "telefono": "0416-6094475"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 82
+    },
+    {
+        "fields": {
+            "apellido": "Brito Arreaza",
+            "cedula": "V-1712209",
+            "especializacion": "Cirugia Oncologica",
+            "genero": "M",
+            "nombre": "Victor",
+            "telefono": "0416-7265786"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 83
+    },
+    {
+        "fields": {
+            "apellido": "Rengel",
+            "cedula": "V-9271983",
+            "email": "jjrengel@hotmail.com",
+            "especializacion": "Medicina Critica Pediatrica",
+            "genero": "M",
+            "nombre": "Jose Jesus",
+            "telefono": "0416-3833097"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 84
+    },
+    {
+        "fields": {
+            "apellido": "Baralt Van Beelen",
+            "cedula": "V-4351749",
+            "email": "tbaralt@hotmail.com",
+            "especializacion": "Medicina Interna",
+            "genero": "M",
+            "nombre": "Tulio Jose",
+            "telefono": "0412-3375375"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 85
+    },
+    {
+        "fields": {
+            "apellido": "Villani Giorgio",
+            "cedula": "V-5300338",
+            "email": "antoniettavillani@gmail.com",
+            "especializacion": "Imagenologia",
+            "genero": "F",
+            "nombre": "Antonietta",
+            "telefono": "0414-1835120"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 86
+    },
+    {
+        "fields": {
+            "apellido": "Sanchez Quijano",
+            "cedula": "V-10513004",
+            "email": "gastro36cmc@gmail.com",
+            "especializacion": "Gastroenterologia",
+            "genero": "M",
+            "nombre": "Alvaro",
+            "telefono": "0414-1250561"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 87
+    },
+    {
+        "fields": {
+            "apellido": "Condado Rodriguez",
+            "cedula": "V-3751168",
+            "email": "condadoj@movistar.net.ve",
+            "especializacion": "Cardiologia",
+            "genero": "M",
+            "nombre": "Jose Antonio",
+            "telefono": "0414-3229575"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 88
+    },
+    {
+        "fields": {
+            "apellido": "Nouel Perera",
+            "cedula": "V-2933058",
+            "email": "nouelalfredo@hotmail.com",
+            "especializacion": "Pediatria Y Puericultura",
+            "genero": "M",
+            "nombre": "Alfredo Augusto",
+            "telefono": "0412-6236337"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 89
+    },
+    {
+        "fields": {
+            "apellido": "Daoud De Da Silva",
+            "cedula": "V-4246550",
+            "email": "naimehdaoud@yahoo.com",
+            "especializacion": "Gastroenterologia Pediatrica",
+            "genero": "F",
+            "nombre": "Naimeh",
+            "telefono": "0414-3309049"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 90
+    },
+    {
+        "fields": {
+            "apellido": "Suarez Perez",
+            "cedula": "V-13920342",
+            "email": "luisaxiomara@gmail.com",
+            "especializacion": "Radioterapia",
+            "genero": "F",
+            "nombre": "Luisa Xiomara",
+            "telefono": "0414-1068044"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 91
+    },
+    {
+        "fields": {
+            "apellido": "Rodriguez Arauz",
+            "cedula": "V-5601125",
+            "email": "drrodriguezarauz@gmail.com",
+            "especializacion": "Cirugia Ginecologica",
+            "genero": "M",
+            "nombre": "Jose Maria",
+            "telefono": "0412-6219129"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 92
+    },
+    {
+        "fields": {
+            "apellido": "Gonzalez Villanueva",
+            "cedula": "V-3976287",
+            "email": "jggonzalezj@gmail.com",
+            "especializacion": "Cirugia Pediatrica",
+            "genero": "M",
+            "nombre": "Jose Luis",
+            "telefono": "0426-5124771"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 93
+    },
+    {
+        "fields": {
+            "apellido": "Capriles Hulett",
+            "cedula": "V-3241492",
+            "email": "arnaldocapriles@gmail.com",
+            "especializacion": "Pediatria",
+            "genero": "M",
+            "nombre": "Arnaldo Luis",
+            "telefono": "0414-3070759"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 94
+    },
+    {
+        "fields": {
+            "apellido": "Abreu Barreto De Diaz",
+            "cedula": "V-3152381",
+            "email": "alicedediaz@yahoo.es",
+            "especializacion": "Oftalmologia",
+            "genero": "F",
+            "nombre": "Alice Esmeralda",
+            "telefono": "0414-3260934"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 95
+    },
+    {
+        "fields": {
+            "apellido": "Acquatella Monserrate",
+            "cedula": "V-984448",
+            "email": "acquatellaharry@hotmail.com",
+            "especializacion": "Cardiologia",
+            "genero": "M",
+            "nombre": "Harry",
+            "telefono": "0414-2240796"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 96
+    },
+    {
+        "fields": {
+            "apellido": "Villalobos Mendez",
+            "cedula": "V-4529804",
+            "email": "villalobosor@hotmail.com",
+            "especializacion": "Pediatria Y Puericultura",
+            "genero": "M",
+            "nombre": "Orlando Enrique",
+            "telefono": "0416-6231723"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 97
+    },
+    {
+        "fields": {
+            "apellido": "Blondet Serfaty",
+            "cedula": "V-2766090",
+            "email": "blonbeto@gmail.com",
+            "especializacion": "Cirugia General",
+            "genero": "M",
+            "nombre": "Jose Alberto",
+            "telefono": "0416-9223333"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 98
+    },
+    {
+        "fields": {
+            "apellido": "Cortes Kocc",
+            "cedula": "V-12625363",
+            "email": "hernandocortesk@hotmail.com",
+            "especializacion": "Anestesiologia",
+            "genero": "M",
+            "nombre": "Hernando",
+            "telefono": "0416-6062675"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 99
+    },
+    {
+        "fields": {
+            "apellido": "Bibbo Totarella",
+            "cedula": "V-11993582",
+            "email": "salvatorebibbo@gmail.com",
+            "especializacion": "Cirugia Cardiovascular",
+            "genero": "M",
+            "nombre": "Salvatore",
+            "telefono": "0414-3008181"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 100
+    },
+    {
+        "fields": {
+            "apellido": "Fraga Rodriguez",
+            "cedula": "V-6560269",
+            "email": "olgafraga9@gmail.com",
+            "especializacion": "Oftalmologia",
+            "genero": "F",
+            "nombre": "Olga",
+            "telefono": "0416-9279615"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 101
+    },
+    {
+        "fields": {
+            "apellido": "Arellano Herrera",
+            "cedula": "V-1530197",
+            "email": "samuelarellano.dr@gmail.com",
+            "especializacion": "Cirugia Del Torax",
+            "genero": "M",
+            "nombre": "Samuel",
+            "telefono": "0416-6323223"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 102
+    },
+    {
+        "fields": {
+            "apellido": "Doval Garcia",
+            "cedula": "V-6502417",
+            "email": "dovalraul@gmail.com",
+            "especializacion": "Cirugia General",
+            "genero": "M",
+            "nombre": "Raul",
+            "telefono": "0414-1309414"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 103
+    },
+    {
+        "fields": {
+            "apellido": "Lopez Dopico",
+            "cedula": "V-5224252",
+            "email": "jlopez.cmc@gmail.com",
+            "especializacion": "Hemato-Oncologia",
+            "genero": "M",
+            "nombre": "Jose Luis",
+            "telefono": "0416-6237612"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 104
+    },
+    {
+        "fields": {
+            "apellido": "Lairet Hernandez",
+            "cedula": "V-2970280",
+            "email": "andres.lairet@gmail.com",
+            "especializacion": "Cardiologia",
+            "genero": "M",
+            "nombre": "Andres E.",
+            "telefono": "0416-6219077"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 105
+    },
+    {
+        "fields": {
+            "apellido": "Bruzual Yepez",
+            "cedula": "V-6823720",
+            "email": "luisbruzual@maxilofacial.net",
+            "especializacion": "Cirugia Buco Maxilo Facial",
+            "genero": "M",
+            "nombre": "Luis Miguel"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 106
+    },
+    {
+        "fields": {
+            "apellido": "Iturriza Sorondo",
+            "cedula": "V-2944505",
+            "email": "jeiturriza@gmail.com",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "M",
+            "nombre": "Jesus Eduardo",
+            "telefono": "0416-6332095"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 107
+    },
+    {
+        "fields": {
+            "apellido": "Gutierrez Cordero",
+            "cedula": "V-9505626",
+            "email": "doctor.rafael@gmail.com",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Rafael Luis",
+            "telefono": "0416-6379740"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 108
+    },
+    {
+        "fields": {
+            "apellido": "Quintero Alonzo",
+            "cedula": "V-8726509",
+            "email": "quinteroman1@gmail.com",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Manuel Guillermo",
+            "telefono": "0414-3229508"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 109
+    },
+    {
+        "fields": {
+            "apellido": "Vegas Rodriguez",
+            "cedula": "V-3175482",
+            "email": "avegasrodriguez@yahoo.es",
+            "especializacion": "Cirugia General",
+            "genero": "M",
+            "nombre": "Armando Mart\u00edn",
+            "telefono": "0414-3232494"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 110
+    },
+    {
+        "fields": {
+            "apellido": "Pe\u00f1aloza Angarita",
+            "cedula": "V-4348898",
+            "email": "alipa_212@hotmail.com",
+            "especializacion": "Cirugia General",
+            "genero": "M",
+            "nombre": "Ali",
+            "telefono": "0412-3272815"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 111
+    },
+    {
+        "fields": {
+            "apellido": "Arevalo Lizarraga",
+            "cedula": "V-968732",
+            "email": "gstn36@gmail.com",
+            "especializacion": "Endocrinologia",
+            "genero": "M",
+            "nombre": "Gaston Rafael",
+            "telefono": "0212-9927970"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 112
+    },
+    {
+        "fields": {
+            "apellido": "Rosillo Chirinos",
+            "cedula": "V-4017447",
+            "email": "hugorosillo@hotmail.com",
+            "especializacion": "Anestesiologia",
+            "genero": "M",
+            "nombre": "Hugo Cesar",
+            "telefono": "0414-4633330"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 113
+    },
+    {
+        "fields": {
+            "apellido": "Ca\u00f1izales Duran",
+            "cedula": "V-4581621",
+            "email": "lopezcanizales@yahoo.es",
+            "especializacion": "Neurologia Pediatrica",
+            "genero": "F",
+            "nombre": "Elizabeth",
+            "telefono": "0416-6257806"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 114
+    },
+    {
+        "fields": {
+            "apellido": "Perez- Monteverde Sosa",
+            "cedula": "V-2930812",
+            "especializacion": "Medicina Interna",
+            "genero": "M",
+            "nombre": "Armando Jose",
+            "telefono": "0414-3279130"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 115
+    },
+    {
+        "fields": {
+            "apellido": "Ochoa Solis",
+            "cedula": "V-6818711",
+            "email": "ochoasolis@gmail.com",
+            "especializacion": "Cirugia Plastica Y Reconstructiva",
+            "genero": "M",
+            "nombre": "Jose Francisco",
+            "telefono": "0412-6246253"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 116
+    },
+    {
+        "fields": {
+            "apellido": "Montes De Oca",
+            "cedula": "V-5320826",
+            "email": "montesdeoca.maria@gmail.com",
+            "especializacion": "Neumologia",
+            "genero": "F",
+            "nombre": "Maria Del Carmen Josefina",
+            "telefono": "0414-3314148"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 117
+    },
+    {
+        "fields": {
+            "apellido": "Arends De Perez",
+            "cedula": "V-3481149",
+            "email": "aarends@cantv.net",
+            "especializacion": "Hemato-Oncologia",
+            "genero": "F",
+            "nombre": "Anabel",
+            "telefono": "0424-3287417"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 118
+    },
+    {
+        "fields": {
+            "apellido": "Morales Lebenhart",
+            "cedula": "V-13693590",
+            "email": "marianamorales@inversionesml.com",
+            "especializacion": "Oftalmologia",
+            "genero": "F",
+            "nombre": "Mariana",
+            "telefono": "0414-2556197"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 119
+    },
+    {
+        "fields": {
+            "apellido": "Sierraalta De Madureri",
+            "cedula": "V-6398389",
+            "email": "mesierraalta@gmail.com",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "F",
+            "nombre": "Maria Eugenia",
+            "telefono": "0414-2416064"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 120
+    },
+    {
+        "fields": {
+            "apellido": "Utrera",
+            "cedula": "V-13943154",
+            "email": "andresutrera@yahoo.es",
+            "especializacion": "Cirugia General",
+            "genero": "M",
+            "nombre": "Andres Samuel",
+            "telefono": "0416-6230877"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 121
+    },
+    {
+        "fields": {
+            "apellido": "Acquatella Monserrate",
+            "cedula": "V-3245916",
+            "email": "macquatella@gmail.com",
+            "especializacion": "Cirugia Plastica Y Reconstructiva",
+            "genero": "M",
+            "nombre": "Maxime Rene",
+            "telefono": "0424-1514247"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 122
+    },
+    {
+        "fields": {
+            "apellido": "Linares Gori",
+            "cedula": "V-1004364",
+            "email": "jesuslinares3000@HOTMAIL.COM",
+            "especializacion": "Hematologia",
+            "genero": "M",
+            "nombre": "Jesus"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 123
+    },
+    {
+        "fields": {
+            "apellido": "Machado Borregales",
+            "cedula": "V-5537386",
+            "email": "anamachadob@gmail.com",
+            "especializacion": "Pediatria Y Puericultura",
+            "genero": "F",
+            "nombre": "Ana Cecilia",
+            "telefono": "0414-3206107"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 124
+    },
+    {
+        "fields": {
+            "apellido": "Puigbo Qui\u00f1ones",
+            "cedula": "V-4085301",
+            "email": "arnaldopuigbo12@hotmail.com",
+            "especializacion": "Anestesiologia",
+            "genero": "M",
+            "nombre": "Arnaldo Jose",
+            "telefono": "0424-2208242"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 125
+    },
+    {
+        "fields": {
+            "apellido": "Pradella De Pontenziani",
+            "cedula": "V-4136676",
+            "email": "rossellapradella@hotmail.com",
+            "especializacion": "Ginecologia",
+            "genero": "F",
+            "nombre": "Rosella Corinna",
+            "telefono": "0416-6232163"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 126
+    },
+    {
+        "fields": {
+            "apellido": "Isturiz Arreaza",
+            "cedula": "V-3300190",
+            "email": "mgrijm@cantv.net",
+            "especializacion": "Infectologia",
+            "genero": "M",
+            "nombre": "Raul Enrique",
+            "telefono": "0416-6244674"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 127
+    },
+    {
+        "fields": {
+            "apellido": "Suarez Blandenier",
+            "cedula": "V-8571381",
+            "email": "josebland@yahoo.com",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Jose Angel",
+            "telefono": "0414-3359289"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 128
+    },
+    {
+        "fields": {
+            "apellido": "Zighelboim",
+            "cedula": "V-984914",
+            "email": "izighelboim@gmail.com",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "M",
+            "nombre": "Itic",
+            "telefono": "0414-3270839"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 129
+    },
+    {
+        "fields": {
+            "apellido": "Andrade Paez",
+            "cedula": "V-4882897",
+            "email": "pedroandradep@gmail.com",
+            "especializacion": "Medicina Interna",
+            "genero": "M",
+            "nombre": "Pedro Enrique",
+            "telefono": "0414-3323744"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 130
+    },
+    {
+        "fields": {
+            "apellido": "Sanchez Rodriguez",
+            "cedula": "V-2080398",
+            "email": "luismiguelsr@hotmail.com",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "M",
+            "nombre": "Luis Miguel",
+            "telefono": "0416-6392847"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 131
+    },
+    {
+        "fields": {
+            "apellido": "Telo Velosa",
+            "cedula": "V-12401594",
+            "email": "carlatelo_velosa@hotmail.com",
+            "especializacion": "Medicina Interna-Infectologia",
+            "genero": "F",
+            "nombre": "Carla Sofia",
+            "telefono": "0414-3468992"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 132
+    },
+    {
+        "fields": {
+            "apellido": "Cede\u00f1o Hernandez",
+            "cedula": "V-4709221",
+            "email": "adccm05@gmail.com",
+            "especializacion": "Anestesiologia",
+            "genero": "M",
+            "nombre": "Douglas Alexis",
+            "telefono": "0414-3382028"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 133
+    },
+    {
+        "fields": {
+            "apellido": "Mata Ruiz",
+            "cedula": "V-3850311",
+            "email": "eduardomatar@gmail.com",
+            "especializacion": "Pediatria",
+            "genero": "M",
+            "nombre": "Eduardo Enrique",
+            "telefono": "0412-2716666"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 134
+    },
+    {
+        "fields": {
+            "apellido": "Caballero Fonseca",
+            "cedula": "V-3469662",
+            "email": "fercab@cantv.net",
+            "especializacion": "Alergologia",
+            "genero": "M",
+            "nombre": "Fernan Miguel",
+            "telefono": "0416-6399046"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 135
+    },
+    {
+        "fields": {
+            "apellido": "Stulin Rodriguez",
+            "cedula": "V-7086408",
+            "email": "irejose@cantv.net",
+            "especializacion": "Medicina Interna - Endocrinologia",
+            "genero": "F",
+            "nombre": "Irene",
+            "telefono": "0414-2787948"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 136
+    },
+    {
+        "fields": {
+            "apellido": "Castro De Hidalgo",
+            "cedula": "V-3814239",
+            "email": "hidalgomilagros@hotmail.com",
+            "especializacion": "Medicina Fisica Y Rehabilitacion",
+            "genero": "F",
+            "nombre": "Maria Milagros",
+            "telefono": "0414-3386148"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 137
+    },
+    {
+        "fields": {
+            "apellido": "Dona Lares",
+            "cedula": "V-3973526",
+            "email": "franciscodonalares@gmail.com",
+            "especializacion": "Cirugia Oncologica",
+            "genero": "M",
+            "nombre": "Francisco Jose",
+            "telefono": "0412-6220928"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 138
+    },
+    {
+        "fields": {
+            "apellido": "Lamura Anselmi",
+            "cedula": "V-5887398",
+            "especializacion": "Cirugia Cardiovascular",
+            "genero": "F",
+            "nombre": "Graciela"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 139
+    },
+    {
+        "fields": {
+            "apellido": "Ventura Ag\u00fcero",
+            "cedula": "V-5303837",
+            "email": "mairaventuraa@yahoo.com",
+            "especializacion": "Cirugia Plastica Y Reconstructiva",
+            "genero": "F",
+            "nombre": "Maira Ofelia",
+            "telefono": "0414-3121501"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 140
+    },
+    {
+        "fields": {
+            "apellido": "Monserat Rodriguez",
+            "cedula": "V-2943170",
+            "email": "raulmonserat@yahoo.com",
+            "especializacion": "Gastroenterologia",
+            "genero": "M",
+            "nombre": "Luis Raul",
+            "telefono": "0414-1120041"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 141
+    },
+    {
+        "fields": {
+            "apellido": "Bellorin Marcano",
+            "cedula": "V-4297093",
+            "email": "luisb.bellorin@hotmail.com",
+            "especializacion": "Neurocirugia",
+            "genero": "M",
+            "nombre": "Luis B.",
+            "telefono": "0416-6217722"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 142
+    },
+    {
+        "fields": {
+            "apellido": "Potenziani Bigelli",
+            "cedula": "V-3664206",
+            "email": "jcpotenziani@gmail.com",
+            "especializacion": "Urologia",
+            "genero": "M",
+            "nombre": "Julio Cesar",
+            "telefono": "0416-6063276"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 143
+    },
+    {
+        "fields": {
+            "apellido": "Risquez",
+            "cedula": "V-4768159",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "M",
+            "nombre": "Francisco"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 144
+    },
+    {
+        "fields": {
+            "apellido": "Daantje Oma\u00f1a",
+            "cedula": "V-3225202",
+            "email": "ashleydaantje@hotmail.com",
+            "especializacion": "Anestesiologia",
+            "genero": "M",
+            "nombre": "Ashley",
+            "telefono": "0414-3299142"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 145
+    },
+    {
+        "fields": {
+            "apellido": "Morales Lebenhart",
+            "cedula": "V-13693564",
+            "email": "sabinamorales@inversionesml.com",
+            "especializacion": "Oftalmologia",
+            "genero": "F",
+            "nombre": "Sabina",
+            "telefono": "0414-3233276"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 146
+    },
+    {
+        "fields": {
+            "apellido": "Morales Salazar",
+            "cedula": "V-6562712",
+            "email": "mgabrielamorales@hotmail.com",
+            "especializacion": "Pediatria",
+            "genero": "F",
+            "nombre": "Maria Gabriela",
+            "telefono": "0416-6299556"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 147
+    },
+    {
+        "fields": {
+            "apellido": "Figurelli Cavallo",
+            "cedula": "V-5532116",
+            "email": "interfigurelli@hotmail.com",
+            "especializacion": "Radioterapia",
+            "genero": "M",
+            "nombre": "Giuseppe",
+            "telefono": "0414-2408098"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 148
+    },
+    {
+        "fields": {
+            "apellido": "Aure Tulene",
+            "cedula": "V-383068",
+            "especializacion": "Cirugia General",
+            "genero": "M",
+            "nombre": "Cesar Rafael",
+            "telefono": "0416-6272725"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 149
+    },
+    {
+        "fields": {
+            "apellido": "Hoffman Mijares",
+            "cedula": "V-5532650",
+            "email": "fhconsulta@gmail.com",
+            "especializacion": "Medicina Interna",
+            "genero": "M",
+            "nombre": "Federico Jose",
+            "telefono": "0414-1293949"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 150
+    },
+    {
+        "fields": {
+            "apellido": "Pizarro Pimentel",
+            "cedula": "V-6135350",
+            "email": "adrianapizarrop@gmail.com",
+            "especializacion": "Radiologia",
+            "genero": "F",
+            "nombre": "Adriana",
+            "telefono": "0424-6203517"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 151
+    },
+    {
+        "fields": {
+            "apellido": "Solis De Ochoa",
+            "cedula": "V-278336",
+            "especializacion": "Ginecologia",
+            "genero": "F",
+            "nombre": "Cristina",
+            "telefono": "0212-2641612"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 152
+    },
+    {
+        "fields": {
+            "apellido": "Toledo Toledo",
+            "cedula": "V-6853500",
+            "email": "irejose@msm.com",
+            "especializacion": "Oftalmologia",
+            "genero": "M",
+            "nombre": "Jose Rafael",
+            "telefono": "0414-2823687"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 153
+    },
+    {
+        "fields": {
+            "apellido": "Oraa De Cova",
+            "cedula": "V-3145038",
+            "email": "oraaem@yahoo.com",
+            "especializacion": "Radioterapia",
+            "genero": "F",
+            "nombre": "Maritza",
+            "telefono": "0414-2495041"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 154
+    },
+    {
+        "fields": {
+            "apellido": "Herrera Bullen",
+            "cedula": "V-9882942",
+            "email": "carolh@cantv.net",
+            "especializacion": "Cirugia Oncologica",
+            "genero": "F",
+            "nombre": "Francis Carolina",
+            "telefono": "0412-2586779"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 155
+    },
+    {
+        "fields": {
+            "apellido": "Pardo Figueiras",
+            "cedula": "V-10338717",
+            "email": "pepar2@hotmail.com",
+            "especializacion": "Urologia",
+            "genero": "M",
+            "nombre": "Jose Manuel",
+            "telefono": "0414-3277089"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 156
+    },
+    {
+        "fields": {
+            "apellido": "Rivero L\u00f3pez",
+            "cedula": "V-3950889",
+            "email": "pedrorivero2010@gmail.com",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Pedro Ramon",
+            "telefono": "0414-3153719"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 157
+    },
+    {
+        "fields": {
+            "apellido": "Del Reguero",
+            "cedula": "V-4377213",
+            "email": "delreguero@gmail.com",
+            "especializacion": "Cirugia Plastica Y Reconstructiva",
+            "genero": "M",
+            "nombre": "Antonio",
+            "telefono": "0414-3271247"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 158
+    },
+    {
+        "fields": {
+            "apellido": "Garcia Fleury",
+            "cedula": "V-10009797",
+            "email": "igarciafleury@hotmail.com",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "F",
+            "nombre": "Isabel",
+            "telefono": "0414-3377238"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 159
+    },
+    {
+        "fields": {
+            "apellido": "Perez Olivares",
+            "cedula": "V-2932680",
+            "email": "franpero@gmail.com",
+            "especializacion": "Otorrinolaringologia",
+            "genero": "M",
+            "nombre": "Francisco Jos\u00e9",
+            "telefono": "0412-3200526"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 160
+    },
+    {
+        "fields": {
+            "apellido": "Lugli Rivero",
+            "cedula": "V-6284024",
+            "email": "luglim@hotmail.com",
+            "especializacion": "Neumologia",
+            "genero": "F",
+            "nombre": "Maria Soledad",
+            "telefono": "0416-6097968"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 161
+    },
+    {
+        "fields": {
+            "apellido": "Sogbe Guzman",
+            "cedula": "V-13511039",
+            "email": "emirsogbe@hotmail.com",
+            "especializacion": "Anestesiologia",
+            "genero": "F",
+            "nombre": "Emir Judith",
+            "telefono": "0414-1264687"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 162
+    },
+    {
+        "fields": {
+            "apellido": "Sanchez Ojeda",
+            "cedula": "V-14667017",
+            "email": "williamsanchez03@yahoo.com",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "M",
+            "nombre": "William Jose",
+            "telefono": "0414-2596227"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 163
+    },
+    {
+        "fields": {
+            "apellido": "Ortega Sanchez",
+            "cedula": "V-3175329",
+            "email": "manuelortega13@gmail.com",
+            "especializacion": "Psiquiatria",
+            "genero": "M",
+            "nombre": "Manuel",
+            "telefono": "0414-3270826"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 164
+    },
+    {
+        "fields": {
+            "apellido": "Torres De Requena",
+            "cedula": "V-7661903",
+            "email": "anarosatorres05@gmail.com",
+            "especializacion": "Traumatologia",
+            "genero": "F",
+            "nombre": "Ana Rosa",
+            "telefono": "0414-3217658"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 165
+    },
+    {
+        "fields": {
+            "apellido": "Soto Aguirre",
+            "cedula": "V-4567192",
+            "email": "wilmersotoa@gmail.com",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "M",
+            "nombre": "Wilmer Enrique",
+            "telefono": "0416-6210794"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 166
+    },
+    {
+        "fields": {
+            "apellido": "Gil Salazar",
+            "cedula": "V-4771183",
+            "email": "eduardogils57@gmail.com",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "M",
+            "nombre": "Eduardo Enrique",
+            "telefono": "0416-6234933"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 167
+    },
+    {
+        "fields": {
+            "apellido": "Padron Amare",
+            "cedula": "V-1863273",
+            "email": "padronamare@yahoo.com",
+            "especializacion": "Cirugia General Y Oncologica",
+            "genero": "M",
+            "nombre": "Jose Alberto",
+            "telefono": "0416-6157606"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 168
+    },
+    {
+        "fields": {
+            "apellido": "Lion Castellaz",
+            "cedula": "V-6910656",
+            "email": "oncomed_lionl@hotmail.com",
+            "especializacion": "Oncologia",
+            "genero": "F",
+            "nombre": "Lorena",
+            "telefono": "0414-3312630"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 169
+    },
+    {
+        "fields": {
+            "apellido": "Diaz Pietri",
+            "cedula": "V-3399671",
+            "email": "pin-nacle@hotmail.com",
+            "especializacion": "Cirugia Oncologica",
+            "genero": "M",
+            "nombre": "Gustavo",
+            "telefono": "0414-1294594"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 170
+    },
+    {
+        "fields": {
+            "apellido": "Sosa Valencia",
+            "cedula": "V-6817455",
+            "email": "lsosavalencia@gmail.com",
+            "especializacion": "Gastroenterologia",
+            "genero": "M",
+            "nombre": "Leonardo",
+            "telefono": "0412-6210607"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 171
+    },
+    {
+        "fields": {
+            "apellido": "Guinand Hernandez",
+            "cedula": "V-5531228",
+            "email": "cguinand@gmail.com",
+            "especializacion": "Imagenologia",
+            "genero": "M",
+            "nombre": "Carlos Henrique",
+            "telefono": "0414-3332804"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 172
+    },
+    {
+        "fields": {
+            "apellido": "Brandt Graterol",
+            "cedula": "V-5533597",
+            "email": "sjbrandt@cantv.net",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "M",
+            "nombre": "Francisco",
+            "telefono": "0414-3320132"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 173
+    },
+    {
+        "fields": {
+            "apellido": "Mari\u00f1o Sanchez",
+            "cedula": "V-13339711",
+            "email": "doctoracatherinemarino@hotmail.com",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "F",
+            "nombre": "Catherine Josefina",
+            "telefono": "0414-1361552"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 174
+    },
+    {
+        "fields": {
+            "apellido": "Hurtado Garcia",
+            "cedula": "V-9587664",
+            "email": "medicoprenatal@gmail.com",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "M",
+            "nombre": "Ernesto Antonio",
+            "telefono": "0416-6276732"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 175
+    },
+    {
+        "fields": {
+            "apellido": "Salas Jimenez",
+            "cedula": "V-3719218",
+            "email": "aquiles@cantv.net",
+            "especializacion": "Medicina Interna Geriatrica",
+            "genero": "M",
+            "nombre": "Aquiles Rafael",
+            "telefono": "0416-6276450"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 176
+    },
+    {
+        "fields": {
+            "apellido": "Lander Gonzalez",
+            "cedula": "V-4170928",
+            "email": "bernardo_lander@yahoo.com",
+            "especializacion": "Radiologia",
+            "genero": "M",
+            "nombre": "Bernardo Jose",
+            "telefono": "0414-3043738"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 177
+    },
+    {
+        "fields": {
+            "apellido": "Mendoza Hernandez",
+            "cedula": "V-9485929",
+            "email": "mmendoza1969@yahoo.com",
+            "especializacion": "Cirugia General",
+            "genero": "M",
+            "nombre": "Milton Antonio",
+            "telefono": "0416-6209417"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 178
+    },
+    {
+        "fields": {
+            "apellido": "Calatrava Pajares",
+            "cedula": "V-2935756",
+            "email": "tercalatravap@cantv.net",
+            "especializacion": "Anestesiologia",
+            "genero": "M",
+            "nombre": "Fernando",
+            "telefono": "0414-2640127"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 179
+    },
+    {
+        "fields": {
+            "apellido": "Marquez Gonzalez",
+            "cedula": "V-5304777",
+            "email": "carmar693@gmail.com",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Carlos Eduardo",
+            "telefono": "0416-6242997"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 180
+    },
+    {
+        "fields": {
+            "apellido": "Sierraalta Osorio",
+            "cedula": "V-89665",
+            "email": "asdrubalsierraaltao@hotmail.com",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "M",
+            "nombre": "Asdrubal",
+            "telefono": "0414-2599277"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 181
+    },
+    {
+        "fields": {
+            "apellido": "Petit Pifano",
+            "cedula": "V-2934708",
+            "email": "guidopetit26@gmail.com",
+            "especializacion": "Cirugia Plastica Y Reconstructiva",
+            "genero": "M",
+            "nombre": "Guido",
+            "telefono": "0416-6220055"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 182
+    },
+    {
+        "fields": {
+            "apellido": "Marcano Marcano",
+            "cedula": "V-4560315",
+            "email": "damasomarcano@hotmail.com",
+            "especializacion": "Radiologia",
+            "genero": "M",
+            "nombre": "Damaso Manuel",
+            "telefono": "0414-3064249"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 183
+    },
+    {
+        "fields": {
+            "apellido": "Sanchez Traslavi\u00f1a",
+            "cedula": "V-14048578",
+            "email": "lvsanchezt@gmail.com",
+            "especializacion": "Medicina Interna",
+            "genero": "F",
+            "nombre": "Laura Victoria",
+            "telefono": "0424-2172703"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 184
+    },
+    {
+        "fields": {
+            "apellido": "Ibarra Zu\u00f1iga",
+            "cedula": "V-17275732",
+            "email": "omairaibarraz@hotmail.com",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "F",
+            "nombre": "Omaira Elvira",
+            "telefono": "0414-5878202"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 185
+    },
+    {
+        "fields": {
+            "apellido": "Del Vecchio Tume",
+            "cedula": "V-6559675",
+            "email": "rjdelvecchio@hotmail.com",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Roberto Jose",
+            "telefono": "0416-6262208"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 186
+    },
+    {
+        "fields": {
+            "apellido": "Salazar Perdomo",
+            "cedula": "V-3983081",
+            "email": "SALAZARJOSEANTONIO@YAHOO.ES",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Jose Antonio",
+            "telefono": "0414-3214748"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 187
+    },
+    {
+        "fields": {
+            "apellido": "Diaz Portocarrero",
+            "cedula": "V-3174625",
+            "email": "chuchudiaz@gmal.com",
+            "especializacion": "Cirugia Plastica Y Reconstructiva",
+            "genero": "M",
+            "nombre": "Jesus Rafael",
+            "telefono": "0414-2416067"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 188
+    },
+    {
+        "fields": {
+            "apellido": "Sekler De Krivoy",
+            "cedula": "V-9964190",
+            "email": "dra.seklerginecologia@gmail.com",
+            "especializacion": "Ginecologia",
+            "genero": "F",
+            "nombre": "Eugenia",
+            "telefono": "0414-3254805"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 189
+    },
+    {
+        "fields": {
+            "apellido": "Krulig Schatten",
+            "cedula": "V-2143874",
+            "email": "leokrulig48@gmail.com",
+            "especializacion": "Dermatologia",
+            "genero": "M",
+            "nombre": "Leopoldo",
+            "telefono": "0412-3219002"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 190
+    },
+    {
+        "fields": {
+            "apellido": "Fernandez De Doval",
+            "cedula": "V-6129782",
+            "email": "ivonne.fernandez.s@gmail.com",
+            "especializacion": "Pediatria Y Puericultura",
+            "genero": "F",
+            "nombre": "Ivonne",
+            "telefono": "0414-3009323"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 191
+    },
+    {
+        "fields": {
+            "apellido": "Casta\u00f1on Rodriguez",
+            "cedula": "V-6140640",
+            "email": "acastan.castanon@gmail.com",
+            "especializacion": "Psiquiatria",
+            "genero": "M",
+            "nombre": "Andres",
+            "telefono": "0212-9793691"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 192
+    },
+    {
+        "fields": {
+            "apellido": "De Paz Gonzalez",
+            "cedula": "V-6167422",
+            "email": "ledepaz@gmail.com",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "M",
+            "nombre": "Luis Enrique",
+            "telefono": "0414-3217595"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 193
+    },
+    {
+        "fields": {
+            "apellido": "Guevara Gonzalez",
+            "cedula": "V-3809391",
+            "email": "lh.luis@gmail.com",
+            "especializacion": "Cirugia General",
+            "genero": "M",
+            "nombre": "Luis Humberto",
+            "telefono": "0414-2910372"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 194
+    },
+    {
+        "fields": {
+            "apellido": "Gomez Diaz",
+            "cedula": "V-13349604",
+            "email": "jerrygd@msn.com",
+            "especializacion": "Medicina Critica",
+            "genero": "M",
+            "nombre": "Jerry Jose",
+            "telefono": "0414-7124725"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 195
+    },
+    {
+        "fields": {
+            "apellido": "Stamile Del Vecchio",
+            "cedula": "V-6814799",
+            "email": "aldost@gmail.com",
+            "especializacion": "Cirugia Del Torax",
+            "genero": "M",
+            "nombre": "Aldo Jose",
+            "telefono": "0412-6275698"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 196
+    },
+    {
+        "fields": {
+            "apellido": "Manrique Behrens",
+            "cedula": "V-9878569",
+            "email": "jrmanriqueb@gmail.com",
+            "especializacion": "Cirugia Laparoscopia",
+            "genero": "M",
+            "nombre": "Javier Ricardo",
+            "telefono": "0414-2462832"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 197
+    },
+    {
+        "fields": {
+            "apellido": "Guedez Hernandez",
+            "cedula": "V-4163644",
+            "email": "miguedezh@gmail.com",
+            "especializacion": "Cirugia De La Mano",
+            "genero": "M",
+            "nombre": "Miguel Angel",
+            "telefono": "0412-6219135"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 198
+    },
+    {
+        "fields": {
+            "apellido": "Baquero Aristeguieta",
+            "cedula": "V-2942040",
+            "email": "gustavobaqueroa@gmail.com",
+            "especializacion": "Cirugia Laparoscopia",
+            "genero": "M",
+            "nombre": "Gustavo",
+            "telefono": "0424-1545555"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 199
+    },
+    {
+        "fields": {
+            "apellido": "Gomez Betancourt",
+            "cedula": "V-6970277",
+            "email": "ginecoweb@gmail.com",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "M",
+            "nombre": "Ricardo Alberto",
+            "telefono": "0414-2708338"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 200
+    },
+    {
+        "fields": {
+            "apellido": "Gonzalez Berti",
+            "cedula": "V-2131533",
+            "email": "mgberti@cantv.net",
+            "especializacion": "Neurocirugia",
+            "genero": "M",
+            "nombre": "Marco Antonio"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 201
+    },
+    {
+        "fields": {
+            "apellido": "Gil Mendoza",
+            "cedula": "V-4356171",
+            "email": "agilpaso@gmail.com",
+            "especializacion": "Cirugia Oncologica",
+            "genero": "M",
+            "nombre": "Armando Jose",
+            "telefono": "0416-6224382"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 202
+    },
+    {
+        "fields": {
+            "apellido": "Urdaneta De Diaz",
+            "cedula": "V-3811299",
+            "email": "lanenaurdanetapuchi@gmail.com",
+            "especializacion": "Anatomia Patologica",
+            "genero": "F",
+            "nombre": "Maria",
+            "telefono": "0414-2391553"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 203
+    },
+    {
+        "fields": {
+            "apellido": "Plaza Salas",
+            "cedula": "V-3657433",
+            "email": "serviciosmedicospip@gmail.com",
+            "especializacion": "Anestesiologia",
+            "genero": "M",
+            "nombre": "Rodrigo",
+            "telefono": "0412-2412365"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 204
+    },
+    {
+        "fields": {
+            "apellido": "Benotto Pirela",
+            "cedula": "V-10803261",
+            "email": "jbenotto@hotmail.com",
+            "especializacion": "Cirugia General",
+            "genero": "F",
+            "nombre": "Jenny-Ann",
+            "telefono": "0412-3357006"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 205
+    },
+    {
+        "fields": {
+            "apellido": "Machado Fernandez",
+            "cedula": "V-10088519",
+            "email": "amachado01@gmail.com",
+            "especializacion": "Anestesiologia",
+            "genero": "M",
+            "nombre": "Antonio Manuel",
+            "telefono": "0414-2839727"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 206
+    },
+    {
+        "fields": {
+            "apellido": "Kizer Jormtchi",
+            "cedula": "V-347215",
+            "email": "saulkizer@hotmail.com",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "M",
+            "nombre": "Saul",
+            "telefono": "0416-6245069"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 207
+    },
+    {
+        "fields": {
+            "apellido": "Cornejo Aguilera",
+            "cedula": "V-6125684",
+            "especializacion": "Neurologia Pediatrica",
+            "genero": "F",
+            "nombre": "Silvia Monica",
+            "telefono": "5522282"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 208
+    },
+    {
+        "fields": {
+            "apellido": "Koury Chidiac",
+            "cedula": "V-6141452",
+            "email": "pablokoury@gmail.com",
+            "especializacion": "Cirugia Laparoscopia",
+            "genero": "M",
+            "nombre": "Pablo",
+            "telefono": "0414-3271058"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 209
+    },
+    {
+        "fields": {
+            "apellido": "Barba Flores",
+            "cedula": "V-3719911",
+            "email": "jorge.barba12@gmail.com",
+            "especializacion": "Cirugia Pediatrica",
+            "genero": "M",
+            "nombre": "Jorge Gilberto",
+            "telefono": "0416-9167728"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 210
+    },
+    {
+        "fields": {
+            "apellido": "Manrique",
+            "cedula": "V-2637578",
+            "email": "jesusfmanriqu@yahoo.com",
+            "especializacion": "Medicina Critica Pediatrica",
+            "genero": "M",
+            "nombre": "Jesus Felipe",
+            "telefono": "0414-3120009"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 211
+    },
+    {
+        "fields": {
+            "apellido": "Rodriguez Armas",
+            "cedula": "V-962912",
+            "email": "ora1935@gmail.com",
+            "especializacion": "Cirugia Ginecologica",
+            "genero": "M",
+            "nombre": "Otto",
+            "telefono": "0416-6281733"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 212
+    },
+    {
+        "fields": {
+            "apellido": "Guglielmelli Vera",
+            "cedula": "V-3141491",
+            "email": "nicolag25@hotmail.com",
+            "especializacion": "Anestesiologia",
+            "genero": "M",
+            "nombre": "Jose Nicolas",
+            "telefono": "0414-3211821"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 213
+    },
+    {
+        "fields": {
+            "apellido": "Seijas Sanchez",
+            "cedula": "V-9595098",
+            "email": "maruseijas65@gmail.com",
+            "especializacion": "Anestesiologia",
+            "genero": "F",
+            "nombre": "Maria De La Luz",
+            "telefono": "0424-2631455"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 214
+    },
+    {
+        "fields": {
+            "apellido": "Avila Vivas",
+            "cedula": "V-4652691",
+            "email": "juanavila@cantv.net",
+            "especializacion": "Neumologia",
+            "genero": "M",
+            "nombre": "Juan Jose",
+            "telefono": "0416-6202586"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 215
+    },
+    {
+        "fields": {
+            "apellido": "Guerrero Gil",
+            "cedula": "V-4077582",
+            "email": "guerrero1998@gmail.com",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Jose",
+            "telefono": "0412-2143412"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 216
+    },
+    {
+        "fields": {
+            "apellido": "Jaen Urrutia",
+            "cedula": "V-3186298",
+            "email": "rubenjaenu@gmail.com",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Ruben Enrique",
+            "telefono": "0212-9414829"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 217
+    },
+    {
+        "fields": {
+            "apellido": "Franco Anzola",
+            "cedula": "V-7440139",
+            "email": "jfrancoanzola@gmail.com",
+            "especializacion": "Otorrinolaringologia",
+            "genero": "M",
+            "nombre": "Jesus Francisco",
+            "telefono": "0412-6279984"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 218
+    },
+    {
+        "fields": {
+            "apellido": "Velez Gimon",
+            "cedula": "V-9971042",
+            "email": "hemodinamia@yahoo.com",
+            "especializacion": "Hemodinamia",
+            "genero": "M",
+            "nombre": "Manuel David",
+            "telefono": "0416-6385344"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 219
+    },
+    {
+        "fields": {
+            "apellido": "Chakal Bajars",
+            "cedula": "V-9473417",
+            "email": "freddchak@yahoo.es",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Freddy",
+            "telefono": "0414-3994005"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 220
+    },
+    {
+        "fields": {
+            "apellido": "Russo Libas",
+            "cedula": "V-2961632",
+            "email": "russoflorik@gmail.com",
+            "especializacion": "Cirugia Plastica Y Reconstructiva",
+            "genero": "M",
+            "nombre": "Salomon",
+            "telefono": "0414-3204828"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 221
+    },
+    {
+        "fields": {
+            "apellido": "Valongo Primoschitz",
+            "cedula": "V-5304175",
+            "email": "urologo.valongo@gmail.com",
+            "especializacion": "Urologia",
+            "genero": "M",
+            "nombre": "Gastone Pietro",
+            "telefono": "0416-6237003"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 222
+    },
+    {
+        "fields": {
+            "apellido": "Pereiro Negro",
+            "cedula": "V-5223864",
+            "email": "mrpereiro@gmail.com",
+            "especializacion": "Cirugia General",
+            "genero": "M",
+            "nombre": "Manuel Ricardo",
+            "telefono": "0414-3219562"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 223
+    },
+    {
+        "fields": {
+            "apellido": "Romero Marciales",
+            "cedula": "V-3175806",
+            "email": "geromero@hotmail.com",
+            "especializacion": "Cirugia Oncologica",
+            "genero": "M",
+            "nombre": "Gabriel Eduardo",
+            "telefono": "0414-1966644"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 224
+    },
+    {
+        "fields": {
+            "apellido": "Garcia De Blanco",
+            "cedula": "V-2942406",
+            "email": "matildegblanco@gmail.com",
+            "especializacion": "Endocrinologia Pediatrica",
+            "genero": "F",
+            "nombre": "Matilde",
+            "telefono": "0414-3223981"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 225
+    },
+    {
+        "fields": {
+            "apellido": "Quintero Hernandez",
+            "cedula": "V-3181869",
+            "email": "hquinteroh@gmail.com",
+            "especializacion": "Cirugia Pediatrica",
+            "genero": "M",
+            "nombre": "Hernan Antonio",
+            "telefono": "0414-3271475"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 226
+    },
+    {
+        "fields": {
+            "apellido": "Farfan",
+            "cedula": "V-8196086",
+            "email": "nelsonfa@cantv.net",
+            "especializacion": "Otorrinolaringologia",
+            "genero": "M",
+            "nombre": "Nelson Joel",
+            "telefono": "0414-2931107"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 227
+    },
+    {
+        "fields": {
+            "apellido": "Gamboa Gonzalez",
+            "cedula": "V-5377861",
+            "email": "gameca1@hotmail.com",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Jose Rafael",
+            "telefono": "0414-2877603"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 228
+    },
+    {
+        "fields": {
+            "apellido": "Urdaneta Rivero",
+            "cedula": "V-13550527",
+            "email": "consultaurologica@gmail.com",
+            "especializacion": "Urologia",
+            "genero": "M",
+            "nombre": "Diego Jose",
+            "telefono": "0414-1719007"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 229
+    },
+    {
+        "fields": {
+            "apellido": "Petrucci Petrucci",
+            "cedula": "V-6979159",
+            "especializacion": "Gastroenterologia",
+            "genero": "F",
+            "nombre": "Claudia",
+            "telefono": "0414-3289007"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 230
+    },
+    {
+        "fields": {
+            "apellido": "Erminy Rivas",
+            "cedula": "V-3189246",
+            "email": "erminyaquiles@yahoo.com",
+            "especializacion": "Neumologia",
+            "genero": "M",
+            "nombre": "Aquiles",
+            "telefono": "0414-2458894"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 231
+    },
+    {
+        "fields": {
+            "apellido": "Aranaga Garcia",
+            "cedula": "V-4085340",
+            "email": "nayeskara@hotmail.com",
+            "especializacion": "Neurologia",
+            "genero": "F",
+            "nombre": "Nayeska B.",
+            "telefono": "0416-7220573"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 232
+    },
+    {
+        "fields": {
+            "apellido": "Ball De Picon",
+            "cedula": "V-6815974",
+            "email": "elizabethball2@gmail.com",
+            "especializacion": "Dermatologia",
+            "genero": "F",
+            "nombre": "Elizabeth",
+            "telefono": "0414-3276125"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 233
+    },
+    {
+        "fields": {
+            "apellido": "Parra Gomez",
+            "cedula": "V-7349542",
+            "email": "bogparr@gmail.com",
+            "especializacion": "Cardiologia",
+            "genero": "M",
+            "nombre": "Bogart Alfredo",
+            "telefono": "0414-4660076"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 234
+    },
+    {
+        "fields": {
+            "apellido": "Rios De Isaac",
+            "cedula": "V-4229991",
+            "email": "anamaria.isaac@gmail.com",
+            "especializacion": "Psiquiatria",
+            "genero": "F",
+            "nombre": "Ana Maria",
+            "telefono": "0414-3210008"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 235
+    },
+    {
+        "fields": {
+            "apellido": "Ollarves Carrero",
+            "cedula": "V-13992942",
+            "email": "mfollarves@gmail.com",
+            "especializacion": "Gastroenterologia",
+            "genero": "F",
+            "nombre": "Maria Fernanda",
+            "telefono": "0424-2115944"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 236
+    },
+    {
+        "fields": {
+            "apellido": "Sanchez Ramirez",
+            "cedula": "V-4172865",
+            "email": "wilsancmc@yahoo.com",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "M",
+            "nombre": "Williams Jose",
+            "telefono": "0414-3117624"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 237
+    },
+    {
+        "fields": {
+            "apellido": "Sanchez Quijano",
+            "cedula": "V-9972198",
+            "email": "jes1402@yahoo.com",
+            "especializacion": "Anestesiologia",
+            "genero": "M",
+            "nombre": "Jorge Eduardo",
+            "telefono": "0414-2460737"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 238
+    },
+    {
+        "fields": {
+            "apellido": "Cirac Contreras",
+            "cedula": "V-4767219",
+            "email": "albertocirac@cantv.net",
+            "especializacion": "Anatomia Patologica",
+            "genero": "M",
+            "nombre": "Alberto Pedro",
+            "telefono": "0414-3253446"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 239
+    },
+    {
+        "fields": {
+            "apellido": "Monasterios",
+            "cedula": "V-11561872",
+            "email": "mauricio121292@hotmail.com",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Andres Mauricio",
+            "telefono": "0416-6074607"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 240
+    },
+    {
+        "fields": {
+            "apellido": "Burger Begus",
+            "cedula": "V-2931936",
+            "email": "bmburger@gmail.com",
+            "especializacion": "Cardiologia",
+            "genero": "M",
+            "nombre": "Bruno Martin",
+            "telefono": "0414-3158902"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 241
+    },
+    {
+        "fields": {
+            "apellido": "Arriaga De Marquez",
+            "cedula": "V-5969748",
+            "email": "mariai.arriaga@hotmail.com",
+            "especializacion": "Medicina Interna",
+            "genero": "F",
+            "nombre": "Maria Ignacia",
+            "telefono": "0412-3228171"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 242
+    },
+    {
+        "fields": {
+            "apellido": "Aure Tulene",
+            "cedula": "V-965094",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "F",
+            "nombre": "Mercedes",
+            "telefono": "0414-0158853"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 243
+    },
+    {
+        "fields": {
+            "apellido": "Sanchez Valenciano",
+            "cedula": "V-13422255",
+            "email": "dr.sanchez.trauma@gmail.com",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Carlos Guillermo",
+            "telefono": "0414-2017479"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 244
+    },
+    {
+        "fields": {
+            "apellido": "Benchetrit Kaddoch",
+            "cedula": "V-14277516",
+            "email": "consultabenchetrit@gmail.com",
+            "especializacion": "Cardiologia",
+            "genero": "M",
+            "nombre": "Chamia",
+            "telefono": "0416-6107135"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 245
+    },
+    {
+        "fields": {
+            "apellido": "Mora Graterol",
+            "cedula": "V-5974915",
+            "email": "moraemilia2@gmail.com",
+            "especializacion": "Oncologia Pediatrica",
+            "genero": "F",
+            "nombre": "Emilia Josefina",
+            "telefono": "0414-3345391"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 246
+    },
+    {
+        "fields": {
+            "apellido": "Moran Dohnert",
+            "cedula": "V-11520491",
+            "email": "brigittemoranb@hotmail.com",
+            "especializacion": "Gastroenterologia",
+            "genero": "F",
+            "nombre": "Brigitte",
+            "telefono": "0412-2748428"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 247
+    },
+    {
+        "fields": {
+            "apellido": "Sanchez Gonzalez",
+            "cedula": "V-2944446",
+            "email": "cosanch@yahoo.com",
+            "especializacion": "Psiquiatria",
+            "genero": "F",
+            "nombre": "Maria De La Concepcion",
+            "telefono": "0414-3202549"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 248
+    },
+    {
+        "fields": {
+            "apellido": "Mejia Doria",
+            "cedula": "V-14369851",
+            "email": "franciscomejia@cantv.net",
+            "especializacion": "Cardiologia",
+            "genero": "M",
+            "nombre": "Francisco Jose",
+            "telefono": "0414-3379778"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 249
+    },
+    {
+        "fields": {
+            "apellido": "Francisco",
+            "cedula": "V-935355",
+            "email": "chenofra@gmail.com",
+            "especializacion": "Pediatria Y Puericultura",
+            "genero": "M",
+            "nombre": "Jose Manuel",
+            "telefono": "0414-2773085"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 250
+    },
+    {
+        "fields": {
+            "apellido": "Zamacona Urcelay",
+            "cedula": "V-2999057",
+            "especializacion": "Anestesiologia",
+            "genero": "M",
+            "nombre": "Mikel",
+            "telefono": "0412-2302108"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 251
+    },
+    {
+        "fields": {
+            "apellido": "Garcia De Machado",
+            "cedula": "V-6750430",
+            "email": "eleonoragh@gmail.com",
+            "especializacion": "Radiologia",
+            "genero": "F",
+            "nombre": "Eleonora Belen",
+            "telefono": "0414-3286336"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 252
+    },
+    {
+        "fields": {
+            "apellido": "Rodriguez Garcia",
+            "cedula": "V-11858543",
+            "email": "janethca171@hotmail.com",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "F",
+            "nombre": "Janeth Carolina",
+            "telefono": "0414-6232384"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 253
+    },
+    {
+        "fields": {
+            "apellido": "Maldonado Santos",
+            "cedula": "V-1380212-4",
+            "email": "davidricardoms@hotmail.com",
+            "especializacion": "Traumatologia",
+            "genero": "M",
+            "nombre": "David Ricardo",
+            "telefono": "0414-3330986"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 254
+    },
+    {
+        "fields": {
+            "apellido": "Madriz Valery",
+            "cedula": "V-5533610",
+            "email": "smadrizv@gmail.com",
+            "especializacion": "Cardiologia",
+            "genero": "M",
+            "nombre": "Simon",
+            "telefono": "0414-3229328"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 255
+    },
+    {
+        "fields": {
+            "apellido": "Ricciardelli Cibello",
+            "cedula": "V-6508853",
+            "email": "michelangeloricciardelli@gmail.com",
+            "especializacion": "Medicina Critica Pediatrica",
+            "genero": "M",
+            "nombre": "Michelangelo",
+            "telefono": "0416-6254543"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 256
+    },
+    {
+        "fields": {
+            "apellido": "Gonzalez Cabrera",
+            "cedula": "V-10485421",
+            "email": "cristians.gonzalez@centromedicodecaracas.com.ve",
+            "especializacion": "Cirugia Oncologica",
+            "genero": "M",
+            "nombre": "Cristians Alejandro",
+            "telefono": "0416-6061934"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 257
+    },
+    {
+        "fields": {
+            "apellido": "Carvallo Alvarez",
+            "cedula": "V-3251941",
+            "email": "picarvallo@hotmail.com",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Pedro Ignacio",
+            "telefono": "0416-6217025"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 258
+    },
+    {
+        "fields": {
+            "apellido": "Haiek Wulff",
+            "cedula": "V-2940016",
+            "email": "haiekdiez@gmail.com",
+            "especializacion": "Medicina Interna - Endocrinologia",
+            "genero": "M",
+            "nombre": "Paul Henry",
+            "telefono": "0412-3252615"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 259
+    },
+    {
+        "fields": {
+            "apellido": "Lecuna Torres",
+            "cedula": "V-1746735",
+            "email": "vicentelecunat@gmail.com",
+            "especializacion": "Gastroenterologia",
+            "genero": "M",
+            "nombre": "Vicente",
+            "telefono": "0414-2570643"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 260
+    },
+    {
+        "fields": {
+            "apellido": "Vivas De Morao",
+            "cedula": "V-2135822",
+            "email": "morao5822@gmail.com",
+            "especializacion": "Radioterapia",
+            "genero": "F",
+            "nombre": "Judith",
+            "telefono": "0412-6003054"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 261
+    },
+    {
+        "fields": {
+            "apellido": "Krivoy Asseo",
+            "cedula": "V-6816150",
+            "email": "mkrivoy@cantv.net",
+            "especializacion": "Neurocirugia",
+            "genero": "M",
+            "nombre": "Mauricio",
+            "telefono": "0414-3289528"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 262
+    },
+    {
+        "fields": {
+            "apellido": "Brito Arreaza",
+            "cedula": "V-2973610",
+            "email": "edgarbrito208@gmail.com",
+            "especializacion": "Cirugia Oncologica",
+            "genero": "M",
+            "nombre": "Edgar Jose",
+            "telefono": "0414-1564763"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 263
+    },
+    {
+        "fields": {
+            "apellido": "Fulco Rojas",
+            "cedula": "V-8242832",
+            "email": "eduardofulco@yahoo.com",
+            "especializacion": "Pediatria",
+            "genero": "M",
+            "nombre": "Eduardo Enrique",
+            "telefono": "0414-2169923"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 264
+    },
+    {
+        "fields": {
+            "apellido": "Senior Sucre De Pimentel",
+            "cedula": "V-6913911",
+            "email": "merisenior@yahoo.com",
+            "especializacion": "Gastroenterologia",
+            "genero": "F",
+            "nombre": "Merita Mercedes",
+            "telefono": "0414-3281030"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 265
+    },
+    {
+        "fields": {
+            "apellido": "Medrano Rojas",
+            "cedula": "V-6507812",
+            "email": "gmedrano@cantv.net",
+            "especializacion": "Neumologia",
+            "genero": "M",
+            "nombre": "Gustavo Alberto",
+            "telefono": "0416-6296726"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 266
+    },
+    {
+        "fields": {
+            "apellido": "Ferro Machado",
+            "cedula": "V-634691",
+            "especializacion": "Cirugia General",
+            "genero": "M",
+            "nombre": "Raul"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 267
+    },
+    {
+        "fields": {
+            "apellido": "Benitez Gomez",
+            "cedula": "V-8520917",
+            "email": "drjosebenitez@gmail.com",
+            "especializacion": "Cardiologia",
+            "genero": "M",
+            "nombre": "Jose Gregorio",
+            "telefono": "0414-3234437"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 268
+    },
+    {
+        "fields": {
+            "apellido": "Lizarraga Leon",
+            "cedula": "V-2151429",
+            "email": "drpedro.lizarraga@gmail.com",
+            "especializacion": "Cirugia Cardiovascular",
+            "genero": "M",
+            "nombre": "Pedro Rafael",
+            "telefono": "0416-6235338"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 269
+    },
+    {
+        "fields": {
+            "apellido": "Gonzalez Serva",
+            "cedula": "V-2572674",
+            "email": "lgs8@bellsouth.net",
+            "especializacion": "Urologia",
+            "genero": "M",
+            "nombre": "Luis Carmelo",
+            "telefono": "0414-3203526"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 270
+    },
+    {
+        "fields": {
+            "apellido": "O\u00b4daly Baquero",
+            "cedula": "V-11734925",
+            "email": "andresodaly@yahoo.com",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Andres Eduardo"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 271
+    },
+    {
+        "fields": {
+            "apellido": "Jaen Doreste",
+            "cedula": "V-5602071",
+            "email": "domingo.jaen@gmail.com",
+            "especializacion": "Gastroenterologia Pediatrica",
+            "genero": "M",
+            "nombre": "Domingo",
+            "telefono": "0414-3202041"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 272
+    },
+    {
+        "fields": {
+            "apellido": "Trevisan Petit",
+            "cedula": "V-6559223",
+            "email": "ricardotrevisan@cantv.net",
+            "especializacion": "Traumatologia Y Ortopedia Pediatrica",
+            "genero": "M",
+            "nombre": "Ricardo Luis",
+            "telefono": "0416-6252018"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 273
+    },
+    {
+        "fields": {
+            "apellido": "Jaen Centeno",
+            "cedula": "V-277646",
+            "especializacion": "Cirugia Cardiovascular",
+            "genero": "M",
+            "nombre": "Ruben",
+            "telefono": "0212-5520795"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 274
+    },
+    {
+        "fields": {
+            "apellido": "Torrealba Di Prisco",
+            "cedula": "V-5538832",
+            "email": "crtorrealba@gmail.com",
+            "especializacion": "Cirugia Cardiovascular",
+            "genero": "M",
+            "nombre": "Carlos Rafael",
+            "telefono": "0414-3273607"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 275
+    },
+    {
+        "fields": {
+            "apellido": "Tobio Martell",
+            "cedula": "V-5752729",
+            "email": "ricardotobio@gmail.com",
+            "especializacion": "Cirugia De La Mano",
+            "genero": "M",
+            "nombre": "Ricardo",
+            "telefono": "0414-3321131"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 276
+    },
+    {
+        "fields": {
+            "apellido": "Baiz Stolk",
+            "cedula": "V-4769751",
+            "email": "serviciosmedicospip@gmail.com",
+            "especializacion": "Anestesiologia",
+            "genero": "M",
+            "nombre": "Carlos",
+            "telefono": "0414-2704000"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 277
+    },
+    {
+        "fields": {
+            "apellido": "Krivoy Asseo",
+            "cedula": "V-5966636",
+            "email": "jkrivoy@gmail.com",
+            "especializacion": "Neurocirugia",
+            "genero": "M",
+            "nombre": "Jaime",
+            "telefono": "0414-3278481"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 278
+    },
+    {
+        "fields": {
+            "apellido": "Herize Vasquez",
+            "cedula": "V-2689967",
+            "email": "mherize@hotmail.com",
+            "especializacion": "Neurocirugia",
+            "genero": "M",
+            "nombre": "Miguel",
+            "telefono": "0414-3057801"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 279
+    },
+    {
+        "fields": {
+            "apellido": "Bacci Isaza",
+            "cedula": "V-5532773",
+            "email": "sbacci@gmail.com",
+            "especializacion": "Medicina Interna-Infectologia",
+            "genero": "M",
+            "nombre": "Santiago Jose",
+            "telefono": "0414-2503029"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 280
+    },
+    {
+        "fields": {
+            "apellido": "Marciani Florez",
+            "cedula": "V-9218799",
+            "email": "carolina.marciani@gmail.com",
+            "especializacion": "Anestesiologia",
+            "genero": "F",
+            "nombre": "Mary Carolina",
+            "telefono": "0414-7075458"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 281
+    },
+    {
+        "fields": {
+            "apellido": "Padula Suarez",
+            "cedula": "V-5531250",
+            "email": "hpadula@cantv.net",
+            "especializacion": "Anestesiologia",
+            "genero": "M",
+            "nombre": "Hector Antonio",
+            "telefono": "0414-2418491"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 282
+    },
+    {
+        "fields": {
+            "apellido": "Chacin Giffuni",
+            "cedula": "V-6135776",
+            "email": "brj2008@gmail.com",
+            "especializacion": "Cirugia General",
+            "genero": "M",
+            "nombre": "Blas Ramon Jose",
+            "telefono": "0414-3269276"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 283
+    },
+    {
+        "fields": {
+            "apellido": "Morales Stopello",
+            "cedula": "V-3476877",
+            "email": "julmors@gmail.com",
+            "especializacion": "Oftalmologia",
+            "genero": "M",
+            "nombre": "Julian",
+            "telefono": "0412-2197811"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 284
+    },
+    {
+        "fields": {
+            "apellido": "Bonilla Zamora",
+            "cedula": "V-4814986",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Rodrigo",
+            "telefono": "0414-7919980"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 285
+    },
+    {
+        "fields": {
+            "apellido": "Quenza Moreno",
+            "cedula": "V-3952348",
+            "email": "quenzatania@yahoo.com",
+            "especializacion": "Pediatria Y Puericultura",
+            "genero": "F",
+            "nombre": "Tania Mercedes",
+            "telefono": "0412-2221352"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 286
+    },
+    {
+        "fields": {
+            "apellido": "Hernandez De Pe\u00f1a",
+            "cedula": "V-274732",
+            "email": "mariateresahp@gmail.com",
+            "especializacion": "Ginecologia",
+            "genero": "F",
+            "nombre": "Maria Teresa",
+            "telefono": "0416-6189969"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 287
+    },
+    {
+        "fields": {
+            "apellido": "Gonzalez",
+            "cedula": "V-11739540",
+            "email": "maritajg@gmail.com",
+            "especializacion": "Cardiologia",
+            "genero": "F",
+            "nombre": "Mara Josefina",
+            "telefono": "0416-9220951"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 288
+    },
+    {
+        "fields": {
+            "apellido": "Cibeira Lopez",
+            "cedula": "V-6404129",
+            "email": "drjoseluiscibeira@gmail.com",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Jose Luis",
+            "telefono": "0414-3312728"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 289
+    },
+    {
+        "fields": {
+            "apellido": "Beltran Recio",
+            "cedula": "V-7837898",
+            "email": "jorgealbeltran@gmail.com",
+            "especializacion": "Urologia",
+            "genero": "M",
+            "nombre": "Jorge Alberto",
+            "telefono": "0416-6344824"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 290
+    },
+    {
+        "fields": {
+            "apellido": "Escalona De Arreaza",
+            "cedula": "V-230616",
+            "especializacion": "Ginecologia",
+            "genero": "F",
+            "nombre": "Livia"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 291
+    },
+    {
+        "fields": {
+            "apellido": "Marquez Delgado",
+            "cedula": "V-2988001",
+            "email": "gastro.davidmarquez@gmail.com",
+            "especializacion": "Gastroenterologia",
+            "genero": "M",
+            "nombre": "David Jose",
+            "telefono": "0424-1460215"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 292
+    },
+    {
+        "fields": {
+            "apellido": "Morales Brice\u00f1o",
+            "cedula": "V-2954795",
+            "especializacion": "Cardiologia",
+            "genero": "M",
+            "nombre": "Eduardo",
+            "telefono": "0414-3234422"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 293
+    },
+    {
+        "fields": {
+            "apellido": "De Abreu Nunes",
+            "cedula": "V-7235672",
+            "email": "mafade@gmail.com",
+            "especializacion": "Medicina Interna-Infectologia",
+            "genero": "F",
+            "nombre": "Maria Fatima",
+            "telefono": "0414-2436405"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 294
+    },
+    {
+        "fields": {
+            "apellido": "Cebrian Pozo",
+            "cedula": "V-4858914",
+            "email": "cebrian.javier@gmail.com",
+            "especializacion": "Cirugia General",
+            "genero": "M",
+            "nombre": "Javier",
+            "telefono": "0416-6218525"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 295
+    },
+    {
+        "fields": {
+            "apellido": "Rivas Gonzalez",
+            "cedula": "V-12138282",
+            "email": "karlarivas09@hotmail.com",
+            "especializacion": "Medicina Interna - Endocrinologia",
+            "genero": "F",
+            "nombre": "Karla Beatriz",
+            "telefono": "0414-3242319"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 296
+    },
+    {
+        "fields": {
+            "apellido": "Rodriguez Milliet",
+            "cedula": "V-2767216",
+            "email": "artrom41@hotmail.com",
+            "especializacion": "Psiquiatria",
+            "genero": "M",
+            "nombre": "Arturo",
+            "telefono": "0414-2484100"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 297
+    },
+    {
+        "fields": {
+            "apellido": "Gonzalez Aveledo",
+            "cedula": "V-3183628",
+            "email": "lagaveledoesb@gmail.com",
+            "especializacion": "Dermatologia",
+            "genero": "M",
+            "nombre": "Luis Alfredo",
+            "telefono": "0416-6390258"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 298
+    },
+    {
+        "fields": {
+            "apellido": "Aguilar De Petit",
+            "cedula": "V-3564871",
+            "email": "oapetit@hotmail.com",
+            "especializacion": "Ginecologia",
+            "genero": "F",
+            "nombre": "Olivia",
+            "telefono": "0414-3288182"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 299
+    },
+    {
+        "fields": {
+            "apellido": "Mateu Borgo",
+            "cedula": "V-6824881",
+            "email": "mcmb02@hotmail.com",
+            "especializacion": "Cardiologia Pediatrica",
+            "genero": "F",
+            "nombre": "Maria Concepcion",
+            "telefono": "0416-6096612"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 300
+    },
+    {
+        "fields": {
+            "apellido": "Mosquera Sanchez",
+            "cedula": "V-3584851",
+            "email": "drisaac.mosquera@gmail.com",
+            "especializacion": "Neurologia",
+            "genero": "M",
+            "nombre": "Isaac Enrique",
+            "telefono": "0414-3213309"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 301
+    },
+    {
+        "fields": {
+            "apellido": "Martelo De Florik",
+            "cedula": "V-4090399",
+            "email": "russoflorik@gmail.com",
+            "especializacion": "Cirugia Plastica Y Reconstructiva",
+            "genero": "F",
+            "nombre": "Maria Del Pilar",
+            "telefono": "0412-2217596"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 302
+    },
+    {
+        "fields": {
+            "apellido": "De Jongh Garcia",
+            "cedula": "V-3189159",
+            "email": "cdejongh@ciove.com",
+            "especializacion": "Oncologia",
+            "genero": "M",
+            "nombre": "Carlos Alejandro",
+            "telefono": "0412-3200286"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 303
+    },
+    {
+        "fields": {
+            "apellido": "Strubinger Fer",
+            "cedula": "V-9961151",
+            "email": "arsfz5@gmail.com",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Alexander Ramon",
+            "telefono": "0414-3213448"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 304
+    },
+    {
+        "fields": {
+            "apellido": "Colina Cede\u00f1o",
+            "cedula": "V-1750154",
+            "email": "boleroscar@yahoo.com",
+            "especializacion": "Cirugia General",
+            "genero": "M",
+            "nombre": "Oscar Luis",
+            "telefono": "0416-6307347"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 305
+    },
+    {
+        "fields": {
+            "apellido": "Sanabria Borjas",
+            "cedula": "V-3178533",
+            "email": "tomasanab@gmail.com",
+            "especializacion": "Cardiologia",
+            "genero": "M",
+            "nombre": "Tomas Jose",
+            "telefono": "0414-2358231"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 306
+    },
+    {
+        "fields": {
+            "apellido": "Pineda Galavis",
+            "cedula": "V-1242382",
+            "email": "totopinedag@gmail.com",
+            "especializacion": "Cirugia General",
+            "genero": "M",
+            "nombre": "Antonio Maria",
+            "telefono": "0414-3319711"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 307
+    },
+    {
+        "fields": {
+            "apellido": "Saputelli De Breda",
+            "cedula": "V-10881552",
+            "email": "bsaputelli@hotmail.com",
+            "especializacion": "Cardiologia",
+            "genero": "F",
+            "nombre": "Elizabeth Carolina",
+            "telefono": "0414-2338998"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 308
+    },
+    {
+        "fields": {
+            "apellido": "Rotmil De Ackerman",
+            "cedula": "V-3179616",
+            "email": "margaritaakerman@hotmail.com",
+            "especializacion": "Odontologia Y Ortodoncia",
+            "genero": "F",
+            "nombre": "Margarita",
+            "telefono": "0414-3349315"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 309
+    },
+    {
+        "fields": {
+            "apellido": "Requena Cardenas",
+            "cedula": "V-6391910",
+            "email": "ferrequena55@hotmail.com",
+            "especializacion": "Traumatologia Y Ortopedia Pediatrica",
+            "genero": "M",
+            "nombre": "Fernando Antonio",
+            "telefono": "0414-2457090"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 310
+    },
+    {
+        "fields": {
+            "apellido": "Garriga Garcia",
+            "cedula": "V-5533714",
+            "especializacion": "Cirugia Oncologica",
+            "genero": "M",
+            "nombre": "Esteban Agustin",
+            "telefono": "0212-5764141"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 311
+    },
+    {
+        "fields": {
+            "apellido": "Requena Mande",
+            "cedula": "V-1749134",
+            "email": "alvarorequena@cantv.net",
+            "especializacion": "Psiquiatria",
+            "genero": "M",
+            "nombre": "Alvaro Gonzalo",
+            "telefono": "0414-3218871"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 312
+    },
+    {
+        "fields": {
+            "apellido": "Suarez",
+            "cedula": "V-1470099",
+            "email": "claudia1937@cantv.net",
+            "especializacion": "Anatomia Patologica",
+            "genero": "M",
+            "nombre": "Jose Angel",
+            "telefono": "0212-5559554"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 313
+    },
+    {
+        "fields": {
+            "apellido": "Sanchez Sosa",
+            "cedula": "V-9417829",
+            "email": "sanchezandrade@gmail.com",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "M",
+            "nombre": "Jose Del Rosario",
+            "telefono": "0416-6139031"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 314
+    },
+    {
+        "fields": {
+            "apellido": "Krivoy Onikman",
+            "cedula": "V-275521",
+            "email": "krivoy@hotmail.com",
+            "especializacion": "Neurocirugia",
+            "genero": "M",
+            "nombre": "Abraham",
+            "telefono": "0414-3291715"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 315
+    },
+    {
+        "fields": {
+            "apellido": "Abecasis Salama",
+            "cedula": "V-3666227",
+            "email": "nissimabecasis@gmail.com",
+            "especializacion": "Cardiologia",
+            "genero": "M",
+            "nombre": "Nissim",
+            "telefono": "0414-3214169"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 316
+    },
+    {
+        "fields": {
+            "apellido": "Medina Guerra",
+            "cedula": "V-5969947",
+            "email": "imedinague@hotmail.com",
+            "especializacion": "Radioterapia Y Medicina Nuclear",
+            "genero": "F",
+            "nombre": "Yvonne Zulay",
+            "telefono": "0424-2410181"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 317
+    },
+    {
+        "fields": {
+            "apellido": "Hernandez Carstens",
+            "cedula": "V-1710897",
+            "email": "apure63@gmail.com",
+            "especializacion": "Psiquiatria",
+            "genero": "M",
+            "nombre": "Alonso",
+            "telefono": "0414-3061449"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 318
+    },
+    {
+        "fields": {
+            "apellido": "Rojas Villaroel",
+            "cedula": "V-4004254",
+            "email": "orojasv@gmail.com",
+            "especializacion": "Gastroenterologia",
+            "genero": "M",
+            "nombre": "Orlando Ramon",
+            "telefono": "0414-3199706"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 319
+    },
+    {
+        "fields": {
+            "apellido": "Benhamu Belilty",
+            "cedula": "V-5531534",
+            "email": "benhamd@hotmail.com",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Miguel Angel",
+            "telefono": "0414-5202020"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 320
+    },
+    {
+        "fields": {
+            "apellido": "Itriago Pels",
+            "cedula": "V-3666065",
+            "email": "ljitriago@yahoo.es",
+            "especializacion": "Gastroenterologia",
+            "genero": "M",
+            "nombre": "Luis Jose",
+            "telefono": "0414-1021321"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 321
+    },
+    {
+        "fields": {
+            "apellido": "Rojas Ojeda",
+            "cedula": "V-10808576",
+            "email": "rojasmoraima@gmail.com",
+            "especializacion": "Cirugia Pediatrica",
+            "genero": "F",
+            "nombre": "Moraima Ivette",
+            "telefono": "0414-3041251"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 322
+    },
+    {
+        "fields": {
+            "apellido": "Loreto Gonzalez",
+            "cedula": "V-3187335",
+            "email": "franciscoloretomd@yahoo.com",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "M",
+            "nombre": "Francisco Eduardo",
+            "telefono": "0414-3274069"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 323
+    },
+    {
+        "fields": {
+            "apellido": "Goldstein Ellenbogen",
+            "cedula": "V-1899732",
+            "email": "carlosgolds@gmail.com",
+            "especializacion": "Medicina Interna",
+            "genero": "M",
+            "nombre": "Carlos",
+            "telefono": "0416-6277433"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 324
+    },
+    {
+        "fields": {
+            "apellido": "Martinelli Onderka",
+            "cedula": "V-4773100",
+            "email": "icu.amo@gmail.com",
+            "especializacion": "Cirugia General",
+            "genero": "M",
+            "nombre": "Antonio",
+            "telefono": "0414-3234053"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 325
+    },
+    {
+        "fields": {
+            "apellido": "Gutierrez Santos",
+            "cedula": "V-1585905",
+            "email": "argusa52@hotmail.com",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "M",
+            "nombre": "Armando Enrique",
+            "telefono": "0414-2618671"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 326
+    },
+    {
+        "fields": {
+            "apellido": "Godayol Rovira",
+            "cedula": "V-999068",
+            "email": "juangodayol@gmail.com",
+            "especializacion": "Cirugia Oncologica",
+            "genero": "M",
+            "nombre": "Juan",
+            "telefono": "0412-5524075"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 327
+    },
+    {
+        "fields": {
+            "apellido": "Fleury Heemsem",
+            "cedula": "V-2970748",
+            "email": "tanatostanatos@gmail.com",
+            "especializacion": "Urologia",
+            "genero": "M",
+            "nombre": "Andres Rafael",
+            "telefono": "0414-2607868"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 328
+    },
+    {
+        "fields": {
+            "apellido": "Rivas Hernandez",
+            "cedula": "V-6148896",
+            "email": "salvadorrmd@yahoo.com",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Salvador Guillermo",
+            "telefono": "0414-3270831"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 329
+    },
+    {
+        "fields": {
+            "apellido": "Gomez Casta\u00f1eda",
+            "cedula": "V-11313031",
+            "email": "bernardoagc@gmail.com",
+            "especializacion": "Urologia",
+            "genero": "M",
+            "nombre": "Bernardo Andres",
+            "telefono": "0416-6304909"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 330
+    },
+    {
+        "fields": {
+            "apellido": "Rodriguez Riao",
+            "cedula": "V-7503207",
+            "email": "jjrodriguez@cantv.net",
+            "especializacion": "Oncologia",
+            "genero": "M",
+            "nombre": "Juan Jose",
+            "telefono": "0414-2475212"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 331
+    },
+    {
+        "fields": {
+            "apellido": "Blanco Calderon",
+            "cedula": "V-14743891",
+            "email": "gbcalderon@gmail.com",
+            "especializacion": "Anestesiologia",
+            "genero": "F",
+            "nombre": "Gabriela Alejandrina",
+            "telefono": "0414-1314782"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 332
+    },
+    {
+        "fields": {
+            "apellido": "Guzman Blanco",
+            "cedula": "V-3177264",
+            "email": "mgrijm@cantv.net",
+            "especializacion": "Medicina Interna-Infectologia",
+            "genero": "M",
+            "nombre": "Manuel Alfredo",
+            "telefono": "0414-2358753"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 333
+    },
+    {
+        "fields": {
+            "apellido": "Amoedo Carrero",
+            "cedula": "V-11936430",
+            "email": "alizamoedo@hotmail.com",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "F",
+            "nombre": "Aliz Isabel",
+            "telefono": "0412-2931270"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 334
+    },
+    {
+        "fields": {
+            "apellido": "Sanchez Silva",
+            "cedula": "V-3477360",
+            "email": "mimu290@gmail.com",
+            "especializacion": "Cirugia De Columna Vertebral",
+            "genero": "M",
+            "nombre": "Jose Rafael",
+            "telefono": "0414-3200663"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 335
+    },
+    {
+        "fields": {
+            "apellido": "Silva Pardo",
+            "cedula": "V-2768019",
+            "email": "catirasilva@gmail.com",
+            "especializacion": "Medicina Interna-Infectologia",
+            "genero": "F",
+            "nombre": "Isabel Carlota",
+            "telefono": "0416-6330280"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 336
+    },
+    {
+        "fields": {
+            "apellido": "Cardenas Conde",
+            "cedula": "V-2943255",
+            "email": "leopoldoc@gmail.com",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "M",
+            "nombre": "Leopoldo",
+            "telefono": "0412-3210502"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 337
+    },
+    {
+        "fields": {
+            "apellido": "Guinand Ramirez",
+            "cedula": "V-10339815",
+            "email": "alejandroguinand@yahoo.com",
+            "especializacion": "Gastroenterologia",
+            "genero": "M",
+            "nombre": "Alejandro Alberto",
+            "telefono": "0412-9316580"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 338
+    },
+    {
+        "fields": {
+            "apellido": "Hidalgo Campins",
+            "cedula": "V-3231165",
+            "email": "hidalgoezequiel@hotmail.com",
+            "especializacion": "Traumatologia Y Ortopedia",
+            "genero": "M",
+            "nombre": "Ezequiel Armando",
+            "telefono": "0212-9861381"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 339
+    },
+    {
+        "fields": {
+            "apellido": "Rodriguez Capriles",
+            "cedula": "V-6979356",
+            "email": "ivanandresrc@hotmail.com",
+            "especializacion": "Obstetricia Y Ginecologia",
+            "genero": "M",
+            "nombre": "Ivan Andres",
+            "telefono": "0416-3014402"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 340
+    },
+    {
+        "fields": {
+            "apellido": "Rivero Guevara",
+            "cedula": "V-1749395",
+            "email": "edrivero@cantv.net",
+            "especializacion": "Anestesiologia",
+            "genero": "M",
+            "nombre": "Eduardo",
+            "telefono": "0424-1702299"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 341
+    },
+    {
+        "fields": {
+            "apellido": "Hernandez Mantellini",
+            "cedula": "V-2110578",
+            "email": "hatoelbanco@hotmail.com",
+            "especializacion": "Cirugia General",
+            "genero": "M",
+            "nombre": "Pablo Ivan",
+            "telefono": "0414-3257648"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 342
+    },
+    {
+        "fields": {
+            "apellido": "Lecuna Aguerrevere",
+            "cedula": "V-6793089",
+            "email": "pablolecuna@gmail.com",
+            "especializacion": "Gastroenterologia",
+            "genero": "M",
+            "nombre": "Pablo",
+            "telefono": "0414-0170711"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 343
+    },
+    {
+        "fields": {
+            "apellido": "Montbrun Molina",
+            "cedula": "V-5596398",
+            "email": "emontbrun@gmail.com",
+            "especializacion": "Cirugia General",
+            "genero": "M",
+            "nombre": "Enrique Eduardo",
+            "telefono": "0424-3327570"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 344
+    },
+    {
+        "fields": {
+            "apellido": "Navarro Padron",
+            "cedula": "V-1731690",
+            "email": "navarros3@cantv.net",
+            "especializacion": "Pediatria Y Puericultura",
+            "genero": "M",
+            "nombre": "Luis Eduardo",
+            "telefono": "0414-3202773"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 345
+    },
+    {
+        "fields": {
+            "apellido": "Pecirep",
+            "cedula": "V-5408550",
+            "email": "ddpecirep@gmail.com",
+            "especializacion": "Cirugia Cardiovascular",
+            "genero": "M",
+            "nombre": "Dragan",
+            "telefono": "0416-6292244"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 346
+    },
+    {
+        "fields": {
+            "apellido": "Cardenas Caballero",
+            "cedula": "V-23708757",
+            "email": "claudiocardenassmd@gmail.com",
+            "especializacion": "Neurologia",
+            "genero": "M",
+            "nombre": "Claudio Cesar",
+            "telefono": "0424-2556854"
+        },
+        "model": "quirofanos_cmsb.medico",
+        "pk": 347
+    }
+]
