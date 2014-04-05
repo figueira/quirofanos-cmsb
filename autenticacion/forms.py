@@ -4,13 +4,26 @@ from django.core.validators import RegexValidator, validate_slug
 from django.contrib.auth.models import User
 
 from quirofanos_cmsb.helpers.custom_validators import ExpresionRegular, MensajeError, CodigoError
-from quirofanos_cmsb.models import Medico
+from quirofanos_cmsb.models import Medico, Departamento
 
 # Nacionalidades
 NACIONALIDAD = (
 	('V-', u'Venezolano'),
 	('E-', u'Extranjero'),
 	)
+
+# Departamentos
+DEPARTAMENTOS = (
+	('EI', u'Enfermeras Instrumentistas'),
+	('ER', u'Enfermeras Recuperación'),
+	('F' , u'Farmacia'),
+	('DQ', u'Despacho Quirúrgico'),
+	('AP', u'Anatomía Patológica'),
+	('AP', u'Admisión Principal'),
+	('AE', u'Admisión Emergencia'),
+	('E' , u'Emergencia'),
+	('I' , u'Información'),
+)
 
 class InicioSesionForm(forms.Form):
 	''' Formulario de inicio de sesion '''
@@ -19,13 +32,8 @@ class InicioSesionForm(forms.Form):
 
 class RegistroDepartamentoForm(forms.Form):
 	''' Formulario de solicitud de registro de Departamento '''
-	nombre_departamento = forms.CharField(max_length=20, validators=[RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
-	codigo_telefono = forms.CharField(validators=[RegexValidator(ExpresionRegular.CODIGO_TELEFONO, MensajeError.CODIGO_TELEFONO_INVALIDO, CodigoError.CODIGO_TELEFONO_INVALIDO)])
-	telefono_departamento = forms.CharField(validators=[RegexValidator(ExpresionRegular.NUMERO_TELEFONO, MensajeError.NUMERO_TELEFONO_INVALIDO, CodigoError.NUMERO_TELEFONO_INVALIDO)])
-	email_departamento = forms.EmailField(max_length=75)
+	nombre_departamento = forms.CharField(widget=forms.HiddenInput ,max_length=20, validators=[RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
 	nombre_usuario_departamento = forms.CharField(max_length=30, validators=[validate_slug])
-	contrasena_departamento = forms.CharField(widget=forms.PasswordInput)
-	contrasena_confirmacion = forms.CharField(widget=forms.PasswordInput)
 
 	def clean_nombre_usuario_departamento(self):
 		''' Sobreescribe el clean_nombre_usuario_departamento(), validando que el nombre de usuario ingresado sea unico '''
@@ -35,15 +43,6 @@ class RegistroDepartamentoForm(forms.Form):
 			raise forms.ValidationError(MensajeError.EXISTE_USUARIO, code=CodigoError.EXISTE_USUARIO)
 		return nombre_usuario_departamento
 
-	def clean(self):
-		''' Sobreescribe el clean(), validando que las contrasenas ingresadas coincidan '''
-		cleaned_data = super(RegistroDepartamentoForm, self).clean()
-		contrasena_departamento = cleaned_data.get("contrasena_departamento")
-		contrasena_confirmacion = cleaned_data.get("contrasena_confirmacion")
-		if contrasena_departamento and contrasena_confirmacion:
-			if contrasena_departamento != contrasena_confirmacion:
-				raise forms.ValidationError(MensajeError.CONTRASENAS_NO_COINCIDEN, code=CodigoError.CONTRASENAS_NO_COINCIDEN)
-		return cleaned_data
 
 class BusquedaMedicoForm(forms.Form):
 	''' Formulario de busqueda de medico por su numero de cedula '''
@@ -63,6 +62,21 @@ class BusquedaMedicoForm(forms.Form):
 			raise forms.ValidationError(MensajeError.EXISTE_CUENTA, CodigoError.EXISTE_CUENTA)
 		return cedula_medico
 
+class BusquedaDepartamentoForm(forms.Form):
+	''' Formulario de busqueda de Departamento por nombre '''
+	#nombre_departamento = forms.ChoiceField(widget=forms.HiddenInput, choices=DEPARTAMENTOS)
+	nombre_departamento = forms.CharField(max_length=25)
+	
+	def clean_nombre_departamento(self):
+		''' Sobreescribe el clean_nombre_departamento(), validando que el departamento realmente exista en la base de datos '''	
+
+		nombre_departamento = self.cleaned_data['nombre_departamento']
+		departamento = Departamento.objects.filter(nombre=nombre_departamento)
+		departamento = departamento[0]
+
+		if departamento.cuenta:
+			raise forms.ValidationError(MensajeError.EXISTE_CUENTA, CodigoError.EXISTE_CUENTA)
+		return nombre_departamento
 
 class RegistroMedicoForm(forms.Form):
 	''' Formulario de solicitud registro de medico '''

@@ -1,0 +1,65 @@
+[
+	{
+		"fields": {
+			"nombre": "Enfermeras Instrumentistas"
+		},
+		"model": "quirofanos_cmsb.departamento",
+		"pk": 1
+	},
+	{
+		"fields": {
+			"nombre": "Enfermeras Recuperacion"
+		},
+		"model": "quirofanos_cmsb.departamento",
+		"pk": 2
+	},	
+	{
+		"fields": {
+			"nombre": "Farmacia"
+		},
+		"model": "quirofanos_cmsb.departamento",
+		"pk": 3
+	},	
+	{
+		"fields": {
+			"nombre": "Despacho Quirurgico"
+		},
+		"model": "quirofanos_cmsb.departamento",
+		"pk": 4
+	},	
+	{
+		"fields": {
+			"nombre": "Anatomia Patologica"
+		},
+		"model": "quirofanos_cmsb.departamento",
+		"pk": 5
+	},	
+	{
+		"fields": {
+			"nombre": "Admision Principal"
+		},
+		"model": "quirofanos_cmsb.departamento",
+		"pk": 6
+	},	
+	{
+		"fields": {
+			"nombre": "Admision Emergancia"
+		},
+		"model": "quirofanos_cmsb.departamento",
+		"pk": 7
+	},	
+	{
+		"fields": {
+			"nombre": "Emergencia"
+		},
+		"model": "quirofanos_cmsb.departamento",
+		"pk": 8
+	},	
+	{
+		"fields": {
+			"nombre": "Informacion"
+		},
+		"model": "quirofanos_cmsb.departamento",
+		"pk": 9
+	}
+]

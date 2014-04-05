@@ -3,16 +3,24 @@ var mostrarBusquedaCedulaMedico = function() {
   $('#solicitar-cuenta-medico').trigger('click');
 };
 
+// Mostrar busqueda de departamento por nombre
+var mostrarBusquedaNombreDepartamento = function() {
+  $('#solicitar-cuenta-departamento').trigger('click');
+};
+
 // Mostrar formulario de solicitud de registro medico
 var mostrarFormularioSolicitudMedico = function() {
   $("#body-solicitar-cuenta").addClass("hidden");
+  $("#formulario-solicitud-departamento").addClass("hidden");
   $("#formulario-solicitud-medico").removeClass("hidden");
   $("#titulo-solicitar-cuenta").html("Solicitar Cuenta - Médico");
 };
 
 // Mostrar formulario de solicitud de registro departamento
 var mostrarFormularioSolicitudDepartamento = function() {
-  $('#solicitar-cuenta-departamento').trigger('click');
+  $("#body-solicitar-cuenta").addClass("hidden");
+  $("#formulario-solicitud-departamento").removeClass("hidden");
+  $("#titulo-solicitar-cuenta").html("Solicitar Cuenta - Departamento");  
 };
 
 // Inicializar nacionalidad de busqueda cedula medico
@@ -39,6 +47,12 @@ var mostrarErroresCedulaMedico = function() {
   $("#busqueda-cedula-medico-error-help").removeClass("hidden");
 };
 
+// Mostrar errores asociados a la cedula de busqueda medico
+var mostrarErroresNombreDepartamento = function() {
+//Mostrar errores
+};
+
+
 // Mostrar errores asociados al nombre de usuario de solicitud de registro medico
 var mostrarErroresUsuarioMedico = function() {
   $("#nombre-usuario-medico").parent("div").addClass("has-error");
@@ -52,13 +66,14 @@ $(document).ready(function() {
   $("#solicitar-cuenta-medico").click(function() {
     $("#body-solicitar-cuenta").addClass("hidden");
     $("#formulario-busqueda-medico").removeClass("hidden");
+    $("#formulario-solicitud-departamento").addClass("hidden");
     $("#titulo-solicitar-cuenta").html("Solicitar Cuenta - Médico");
   });
 
   // Desplegar formulario de solicitud de cuenta departamento
   $("#solicitar-cuenta-departamento").click(function() {
     $("#body-solicitar-cuenta").addClass("hidden");
-    $("#formulario-solicitud-departamento").removeClass("hidden");
+    $("#formulario-busqueda-departamento").removeClass("hidden");
     $("#titulo-solicitar-cuenta").html("Solicitar Cuenta - Departamento");
   });
 
@@ -66,6 +81,7 @@ $(document).ready(function() {
   $(".volver-solicitar-cuenta").click(function() {
     $("#formulario-busqueda-medico").addClass("hidden");
     $("#formulario-solicitud-medico").addClass("hidden");
+    $("#formulario-busqueda-departamento").addClass("hidden");
     $("#formulario-solicitud-departamento").addClass("hidden");
     $("#body-solicitar-cuenta").removeClass("hidden");
     $("#titulo-solicitar-cuenta").html("Solicitar Cuenta");

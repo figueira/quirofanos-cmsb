@@ -3,7 +3,7 @@ from django.db import models
 from django.core.validators import MinLengthValidator, MinValueValidator, RegexValidator
 from django.contrib.auth.models import User
 
-from hashids import Hashids
+#from hashids import Hashids
 import datetime
 import time
 import uuid
