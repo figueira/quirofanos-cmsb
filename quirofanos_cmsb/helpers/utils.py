@@ -1,5 +1,8 @@
 def obtener_nombre_mes(mes):
-    ''' Funcion que devuelve el nombre de un mes expresado como numero '''
+    ''' Devuelve el nombre de un mes expresado como numero
+
+    Parametros:
+    mes -> numero del mes '''
     return {
     1: 'Enero',
     2: 'Febrero',

@@ -2,8 +2,9 @@
 from django.db import models
 from django.core.validators import MinLengthValidator, MinValueValidator, RegexValidator
 from django.contrib.auth.models import User
+from django.db.models import Sum
 
-#from hashids import Hashids
+from hashids import Hashids
 import datetime
 import time
 import uuid
@@ -184,6 +185,30 @@ class Quirofano(models.Model):
         self.full_clean()
         super(Quirofano, self).save()
 
+    def obtener_nro_intervenciones(self, ano, mes, dia):
+        ''' Calcula el numero de intervenciones que estan pautadas para el quirofano para una fecha
+
+        Parametros:
+        ano -> ano de la fecha a consultar
+        mes -> mes de la fecha a consultar
+        dia -> dia de la fecha a consultar '''
+        try:
+            return self.intervencion_quirurgica_set.filter(fecha_intervencion__year=ano, fecha_intervencion__month=mes, fecha_intervencion__day=dia, reservacion__estado='A').count()
+        except AttributeError:
+            return 0;
+
+    def esta_disponible(self, ano, mes, dia):
+        ''' Devuelve un valor booleano que determina si el quirofano esta disponible o no para una fecha
+
+        Parametros:
+        ano -> ano de la fecha a consultar
+        mes -> mes de la fecha a consultar
+        dia -> dia de la fecha a consultar '''
+        try:
+            return self.intervencion_quirugica_set.filter(fecha_intervencion__year=ano, fecha_intervencion__month=mes, fecha_intervencion__day=dia, reservacion__estado='A').aggregate(Sum('duracion')) > 12.0
+        except AttributeError:
+            return False
+
     def __unicode__(self):
         return str(self.numero) + ', ' + self.get_area_display()
 
@@ -343,10 +368,10 @@ class Paciente(models.Model):
         self.nombre = self.nombre.title()
         self.apellido = self.apellido.title()
 
-        if area_ingreso and not numero_expediente:
+        if self.area_ingreso and not self.numero_expediente:
             raise ValidationError(MensajeError.AREA_INGRESO_SIN_NUMERO_EXPEDIENTE, code=CodigoError.AREA_INGRESO_SIN_NUMERO_EXPEDIENTE)
 
-        if numero_expediente and not area_ingreso:
+        if self.numero_expediente and not self.area_ingreso:
             raise ValidationError(MensajeError.NUMERO_EXPEDIENTE_SIN_AREA_INGRESO, code=CodigoError.NUMERO_EXPEDIENTE_SIN_AREA_INGRESO)
 
         super(Paciente, self).clean()
@@ -394,12 +419,10 @@ class IntervencionQuirurgica(models.Model):
             raise ValidationError(
                 MensajeError.HORA_FIN_MENOR_HORA_INICIO, code=CodigoError.HORA_FIN_MENOR_HORA_INICIO)
 
-        hora_inicio = time.strptime(self.hora_inicio, "%H:%M")
-        hora_fin = time.strptime(self.hora_fin, "%H:%M")
         hora_inicio_seg = datetime.timedelta(
-            hours=hora_inicio.tm_hour, minutes=hora_inicio.tm_min).total_seconds()
+            hours=self.hora_inicio.hour, minutes=self.hora_inicio.minute).total_seconds()
         hora_fin_seg = datetime.timedelta(
-            hours=hora_fin.tm_hour, minutes=hora_fin.tm_min).total_seconds()
+            hours=self.hora_fin.hour, minutes=self.hora_fin.minute).total_seconds()
         diferencia_horas = float(hora_fin_seg) - float(hora_inicio_seg)
         self.duracion = diferencia_horas / 3600
 
