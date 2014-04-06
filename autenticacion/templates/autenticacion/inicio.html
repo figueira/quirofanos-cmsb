@@ -78,7 +78,7 @@
       <!-- Formulario de Solicitud de Registro Departamento -->
       <form class="form-horizontal hidden" role="form" id="formulario-solicitud-departamento" action="{% url 'registro_departamento' %}" method='POST'>
         {% csrf_token %}
-        {% if formulario_registro_departamento.errors %}
+        {% if formulario_registro_departamento %}
         <script type="text/javascript">
         $(function(){
           mostrarFormularioSolicitudDepartamento();
@@ -96,7 +96,8 @@
               </abbr>:
             </label>
             <div class="col-lg-4">
-              {% render_field formulario_registro_departamento.nombre_departamento class="form-control" id="nombre-departamento"%}
+              <input class="form-control" id="nombre-departamento" type="text" value="{{ departamento.nombre }}" disabled>              
+              {% render_field formulario_registro_departamento.nombre_departamento id="nombre-departamento-input" %}
               <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="nombre-departamento-error-feedback-icon"></span>
               <span class="help-block hidden" id="nombre-departamento-error-help">{{ formulario_registro_departamento.nombre_departamento.errors }}</span>
             </div>
@@ -104,12 +105,7 @@
               Teléfono:
             </label>
             <div class="col-lg-2">
-              {% render_field formulario_registro_departamento.codigo_telefono class="form-control" id="codigo-telefono-departamento" placeholder="Código" %}
-              <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="codigo-telefono-departamento-error-feedback-icon"></span>
-              <span class="help-block hidden" id="codigo-telefono-departamento-error-help">{{ formulario_registro_departamento.codigo_telefono.errors }}</span>
-            </div>
-            <div class="col-lg-2">
-              {% render_field formulario_registro_departamento.telefono_departamento class="form-control" id="telefono-departamento" placeholder="Número" %}
+              <input class="form-control" id="nombre-departamento" type="text" value="{{ departamento.telefono }}" disabled>
               <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="telefono-departamento-error-feedback-icon"></span>
               <span class="help-block hidden" id="telefono-departamento-error-help">{{ formulario_registro_departamento.telefono_departamento.errors }}</span>
             </div>
@@ -151,7 +147,7 @@
               Email:
             </label>
             <div class="col-lg-4">
-              {% render_field formulario_registro_departamento.email_departamento class="form-control" id="email-departamento" %}
+              <input class="form-control" id="email-departamento" type="text" value="{{ departamento.email }}" disabled>              
               <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="email-departamento-error-feedback-icon"></span>
               <span class="help-block hidden" id="email-departamento-error-help">{{ formulario_registro_departamento.email_departamento.errors }}</span>
             </div>
@@ -184,57 +180,6 @@
             </script>
             {% endif %}
           </div><!-- Email y Nombre de Usuario -->
-
-          <!-- Contrasena -->
-          <div class="form-group" id="contrasena-departamento-form-group">
-            <label class="col-lg-2 control-label" for="contrasena-departamento">
-              Contraseña:
-            </label>
-            <div class="col-lg-4">
-              {% render_field formulario_registro_departamento.contrasena_departamento class="form-control" id="contrasena-departamento" %}
-              <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="contrasena-departamento-error-feedback-icon"></span>
-              <span class="help-block hidden" id="contrasena-departamento-error-help">{{ formulario_registro_departamento.contrasena_departamento.errors }}</span>
-              <span class="help-block hidden" id="contrasenas-departamento-no-coinciden-error-help">{{ formulario_registro_departamento.non_field_errors }}</span>
-            </div>
-            <label class="col-lg-2 control-label" for="contrasena-departamento-confirmacion">
-              Repita Contraseña:
-            </label>
-            <div class="col-lg-4">
-              {% render_field formulario_registro_departamento.contrasena_confirmacion class="form-control" id="contrasena-departamento-confirmacion" %}
-              <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="contrasena-departamento-confirmacion-error-feedback-icon"></span>
-              <span class="help-block hidden" id="contrasena-departamento-confirmacion-error-help">{{ formulario_registro_departamento.contrasena_confirmacion.errors }}</span>
-            </div>
-            {% if formulario_registro_departamento.contrasena_departamento.errors %}
-            <script type="text/javascript">
-            $(function(){
-              $("#contrasena-departamento").parent("div").addClass("has-error");
-              $("#contrasena-departamento-form-group").addClass("has-feedback");
-              $("#contrasena-departamento-error-feedback-icon").removeClass("hidden");
-              $("#contrasena-departamento-error-help").removeClass("hidden");
-            });
-            </script>
-            {% endif %}
-            {% if formulario_registro_departamento.contrasena_confirmacion.errors %}
-            <script type="text/javascript">
-            $(function(){
-              $("#contrasena-departamento-confirmacion").parent("div").addClass("has-error");
-              $("#contrasena-departamento-form-group").addClass("has-feedback");
-              $("#contrasena-departamento-confirmacion-error-feedback-icon").removeClass("hidden");
-              $("#contrasena-departamento-confirmacion-error-help").removeClass("hidden");
-            });
-            </script>
-            {% endif %}
-            {% if formulario_registro_departamento.non_field_errors  %}
-            <script type="text/javascript">
-            $(function(){
-              $("#contrasena-departamento-form-group").addClass("has-error has-feedback");
-              $("#contrasena-departamento-error-feedback-icon").removeClass("hidden");
-              $("#contrasena-departamento-confirmacion-error-feedback-icon").removeClass("hidden");
-              $("#contrasenas-departamento-no-coinciden-error-help").removeClass("hidden");
-            });
-            </script>
-            {% endif %}
-          </div><!-- Contrasena -->
         </div>
         <div class="panel-footer">
           <div class="form-group">
@@ -325,6 +270,56 @@
           </div><!-- Submit -->
         </div>
       </form><!-- Busqueda de Medico por Cedula -->
+
+
+      <!-- Busqueda de Departamento por nombre -->
+      <form class="form-horizontal hidden" role="form" id="formulario-busqueda-departamento" action="{% url 'busqueda_departamento' %}" method="POST">
+        {% csrf_token %}
+        {% if formulario_busqueda_departamento.errors %}
+        <script type="text/javascript">
+        $(function() {          
+          mostrarBusquedaNombreDepartamento();
+        });
+        </script>
+        {% endif %}
+        <div class="panel-body">
+          <div class="form-group" id="busqueda-nombre-departamento-form-group">
+            <label class="col-lg-offset-3 col-lg-3 control-label" for="busqueda-nombre-departamento">
+              Ingrese Departamento:
+            </label>
+            <div class="col-lg-3">
+              <div class="input-group">
+                {% render_field formulario_busqueda_departamento.nombre_departamento class="form-control" id="busqueda-nombre-departamento" %}                
+              </div>
+              <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="busqueda-cedula-medico-error-feedback-icon"></span>
+              <span class="help-block hidden" id="busqueda-cedula-medico-error-help">{{ formulario_busqueda_departamento.nombre_departamento.errors }}</span>             
+            </div>
+            {% if formulario_busqueda_departamento.nombre_departamento.errors %}
+            <script type="text/javascript">
+            $(function(){
+              mostrarErroresNombreDepartamento();
+            });
+            </script>
+            {% endif %}
+          </div>
+        </div>
+        <div class="panel-footer">
+          <div class="form-group">
+            <div class="col-lg-6">
+              <a href="javascript:void(0);" class="btn btn-default btn-lg volver-solicitar-cuenta">
+                Volver
+              </a>
+            </div>
+
+            <!-- Submit -->
+            <div class="col-lg-offset-10">
+              <button type="submit" class="btn btn-primary btn-lg">
+                Buscar
+              </button>
+            </div>
+          </div><!-- Submit -->
+        </div>
+      </form><!-- Busqueda de Departamento por nombre -->
 
       <!-- Formulario de Solicitud de Registro Medico -->
       <form class="form-horizontal hidden" role="form" id="formulario-solicitud-medico" action="{% url 'registro_medico' %}" method="POST">

@@ -9,7 +9,7 @@ from django.template import RequestContext
 from django.contrib import messages
 
 from quirofanos_cmsb.models import Cuenta, Departamento, Medico
-from autenticacion.forms import InicioSesionForm, CambiarContrasenaForm, BusquedaMedicoForm, RegistroMedicoForm, RegistroDepartamentoForm, RecuperarContrasenaForm
+from autenticacion.forms import InicioSesionForm, CambiarContrasenaForm, BusquedaMedicoForm, RegistroMedicoForm, RegistroDepartamentoForm, RecuperarContrasenaForm, BusquedaDepartamentoForm
 from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito
 
 @require_GET
@@ -22,12 +22,16 @@ def inicio(request):
 		return redirect('calendario')
 
 	formulario_inicio_sesion = InicioSesionForm()
-	formulario_registro_departamento = RegistroDepartamentoForm()
+	formulario_registro_medico = RegistroMedicoForm()
 	formulario_busqueda_medico = BusquedaMedicoForm()
+	formulario_registro_departamento = RegistroDepartamentoForm()
+	formulario_busqueda_departamento = BusquedaDepartamentoForm()
 	datos = {}
 	datos['formulario_inicio_sesion'] = formulario_inicio_sesion
-	datos['formulario_registro_departamento'] = formulario_registro_departamento
+	#datos['formulario_registro_medico'] = formulario_registro_medico
+	#datos['formulario_registro_departamento'] = formulario_registro_departamento
 	datos['formulario_busqueda_medico'] = formulario_busqueda_medico
+	datos['formulario_busqueda_departamento'] = formulario_busqueda_departamento
 	return render_to_response('autenticacion/inicio.html', datos, context_instance=RequestContext(request))
 
 @require_POST
@@ -49,10 +53,38 @@ def busqueda_medico(request):
 
 	formulario_inicio_sesion = InicioSesionForm()
 	formulario_registro_departamento = RegistroDepartamentoForm()
+	formulario_busqueda_departamento = BusquedaDepartamentoForm()
 	datos['formulario_inicio_sesion'] = formulario_inicio_sesion
 	datos['formulario_registro_departamento'] = formulario_registro_departamento
+	datos['formulario_busqueda_departamento'] = formulario_busqueda_departamento
 	datos['formulario_busqueda_medico'] = formulario_busqueda_medico
 	return render_to_response('autenticacion/inicio.html', datos,context_instance=RequestContext(request))
+
+@require_POST
+def busqueda_departamento(request):
+	''' Controlodar correspondiente a la busqueda de departamento por nombre
+
+	Parametros:
+	request -> Solicitud HTTP '''
+	formulario_busqueda_departamento = BusquedaDepartamentoForm(request.POST)
+	datos = {}
+	if formulario_busqueda_departamento.is_valid():
+		nombre_departamento = formulario_busqueda_departamento.cleaned_data['nombre_departamento']
+		formulario_registro_departamento = RegistroDepartamentoForm(initial={'nombre_departamento': nombre_departamento})
+		departamento = Departamento.objects.get(nombre=nombre_departamento)
+		datos['departamento'] = departamento
+		datos['formulario_registro_departamento'] = formulario_registro_departamento
+
+	formulario_inicio_sesion = InicioSesionForm()
+	formulario_registro_medico = RegistroMedicoForm()
+	formulario_busqueda_medico = BusquedaMedicoForm()
+	formulario_busqueda_departamento = BusquedaDepartamentoForm()
+	datos['formulario_inicio_sesion'] = formulario_inicio_sesion
+	datos['formulario_registro_departamento'] = formulario_registro_departamento
+	datos['formulario_busqueda_departamento'] = formulario_busqueda_departamento
+	datos['formulario_busqueda_medico'] = formulario_busqueda_medico
+	return render_to_response('autenticacion/inicio.html', datos,context_instance=RequestContext(request))
+
 
 @require_POST
 def registro_medico(request):
@@ -110,16 +142,25 @@ def registro_departamento(request):
 	Parametros:
 	request -> Solicitud HTTP '''
 	formulario_registro_departamento = RegistroDepartamentoForm(request.POST)
-	if formulario_registro_departamento.is_valid():
-		nombre_departamento = formulario_registro_departamento.cleaned_data['nombre_departamento']
-		codigo_telefono = formulario_registro_departamento.cleaned_data['codigo_telefono']
-		telefono_departamento = formulario_registro_departamento.cleaned_data['telefono_departamento']
-		email_departamento = formulario_registro_departamento.cleaned_data['email_departamento']
-		nombre_usuario_departamento = formulario_registro_departamento.cleaned_data['nombre_usuario_departamento']
-		contrasena_departamento = formulario_registro_departamento.cleaned_data['contrasena_departamento']
-		contrasena_confirmacion = formulario_registro_departamento.cleaned_data['contrasena_confirmacion']
 
-		usuario = User.objects.create_user(nombre_usuario_departamento,email_departamento,contrasena_departamento)
+	formulario_valido = formulario_registro_departamento.is_valid()
+	nombre_departamento = formulario_registro_departamento.cleaned_data['nombre_departamento']
+	departamento = Departamento.objects.filter(nombre=nombre_departamento)
+
+	if not departamento:
+		messages.add_message(request, messages.ERROR, MensajeTemporalError.REGISTRO_MEDICO_CEDULA_MODIFICADA) # Buscar Error adecuado
+		return redirect('inicio')
+
+	departamento = departamento[0]
+	if departamento.cuenta:
+		messages.add_message(request, messages.ERROR, MensajeTemporalError.REGISTRO_MEDICO_CUENTA_EXISTE) # Buscar Error adecuado
+		return redirect('inicio')
+
+
+	if formulario_valido:
+		nombre_usuario_departamento = formulario_registro_departamento.cleaned_data['nombre_usuario_departamento']
+
+		usuario = User.objects.create_user(username=nombre_usuario_departamento,email=departamento.email)
 		usuario.is_active = False
 		usuario.save()
 
@@ -129,10 +170,7 @@ def registro_departamento(request):
 		cuenta_departamento.privilegio = '4'
 		cuenta_departamento.save()
 
-		departamento = Departamento()
 		departamento.cuenta = cuenta_departamento
-		departamento.nombre = nombre_departamento
-		departamento.telefono = codigo_telefono + '-' + telefono_departamento
 		departamento.save()
 
 		messages.add_message(request, messages.SUCCESS, MensajeTemporalExito.SOLICITUD_REGISTRO_EXITOSO)
@@ -261,3 +299,4 @@ def recuperar_contrasena(request):
 				return redirect('recuperar_contrasena')
 	datos["formulario_recuperar_contrasena"] = formulario_recuperar_contrasena
 	return render_to_response('autenticacion/recuperar_contrasena.html', datos, context_instance=RequestContext(request))
+>>>>>>> ed7c5a10b94b67b0b43b7cffd6b1df3a73c16b1f

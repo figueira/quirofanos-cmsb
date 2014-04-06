@@ -10,7 +10,7 @@
 {% endblock scripts %}
 
 {% block nombre-usuario %}
-{% request.session.nombre %}
+{{ request.session.nombre }}
 {% endblock nombre-usuario %}
 
 {% block numero-mensajes %}
