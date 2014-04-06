@@ -30,221 +30,93 @@
 </div>
 <div class="row">
 	<div class="col-lg-offset-1 col-lg-9">
+		<!-- Nav tabs -->
 		<ul class="nav nav-tabs">
-			<li class="active">
-				<a href="#">Pendientes
-					<span class="badge">
-						3
-					</span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					Aprobadas
-					<span class="glyphicon glyphicon-ok">
-					</span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					Rechazadas
-					<span class="glyphicon glyphicon-ban-circle">
-					</span>
-				</a>
-			</li>
+			<li id="tab-pendientes"><a href="{% url 'solicitudes_usuarios' 'pendientes' %}">
+				Pendientes
+				<span class="badge">
+					{{ numero_solicitudes_pendientes }}
+				</span>
+			</a></li>
+			<li id="tab-aprobadas"><a href="{% url 'solicitudes_usuarios' 'aprobadas' %}">
+				Aprobadas
+				<span class="glyphicon glyphicon-ok">
+				</span>
+			</a></li>
+			<li id="tab-rechazadas"><a href="{% url 'solicitudes_usuarios' 'rechazadas' %}">
+				Rechazadas
+				<span class="glyphicon glyphicon-ban-circle">
+				</span>
+			</a></li>
 		</ul>
 	</div>
 	<div class="col-lg-1">
 		<button type="button" class="btn btn-primary dropdown-toggle pull-right" data-toggle="dropdown">
-			Ver
+			{{ tipo_busqueda }}
 			<span class="caret">
 			</span>
 		</button>
 		<ul class="dropdown-menu" role="menu">
+			{% if tipo_busqueda != "Última Semana" %}
 			<li>
-				<a href="#">
-					Última semana
+				<a href="{% url 'solicitudes_usuarios' %}">
+					Última Semana
 				</a>
 			</li>
+			{% endif %}
+			{% if tipo_busqueda != "Último Mes" %}
 			<li>
-				<a href="#">
-					Último mes
+				<a href="{% url 'solicitudes_usuarios' estado_solicitud 2 %}">
+					Último Mes
 				</a>
 			</li>
+			{% endif %}
+			{% if tipo_busqueda != "Últimos 3 meses" %}
 			<li>
-				<a href="#">
-					Últimos 3 meses
+				<a href="{% url 'solicitudes_usuarios' estado_solicitud 3 %}">
+					Últimos 3 Meses
 				</a>
 			</li>
+			{% endif %}
 		</ul>
 	</div>
 </div><!-- Pestañas y Filtro -->
 
 <div class="row">
 	<div class="col-lg-offset-1 col-lg-10">
-		{% if lista_solicitudes_usuario_pendientes|length > 0 %}
-			{% for solicitud in lista_solicitudes_usuario_pendientes %}
-			<ul class="list-group">
-				<a href="javascript:void(0);" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud">
-					{% if solicitud.privilegio == 3 %}
-						<span class="label label-info">
-							Tipo de Usuario: Médico
-						</span>
-						<span class="label label-default">
-							Nombre: {% solicitud.medico %}
-						</span>
-					{% elif solicitud.privilegio == 4 %}
-						<span class="label label-info">
-							Tipo de Usuario: Departamento
-						</span>
-						<span class="label label-default">
-							Nombre: {% solicitud.departamento.nombre %}
-						</span>
-					{% endif %}
-					<span class="pull-right">
-						<small>
-							<strong>
-								Fecha de Solicitud: {% solicitud.usuario.date_joined %}
-							</strong>
-						</small>
-					</span>
-				</a>
-			</ul>
-		{% else %}
-			<strong>No existen solicitudes de registro de usuario pendientes.</strong>
-		{% endif %}
-
-	</div>
-</div><!-- Lista de Solicitudes -->
-
-<!-- Paginacion de Solicitudes -->
-<div class="row">
-	<div class="col-lg-10 col-lg-offset-1">
-		<ul class="pagination">
-			<li class="disabled">
-				<a href="#">
-					&laquo;
-				</a>
-			</li>
-			<li class="active">
-				<a href="#">
-					1
-					<span class="sr-only">
-						(current)
-					</span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					&raquo;
-				</a>
-			</li>
-		</ul>
+		<!-- Tab panes -->
+		<div class="tab-content">
+			<div class="hidden" id="contenido-pendientes">
+				{% include "jefe/lista_solicitudes_usuarios.html" with lista_solicitudes_usuario=lista_solicitudes_usuario_pendientes tipo="pendiente" %}
+			</div><!-- Lista de Solicitudes Pendientes -->
+			<div class="hidden" id="contenido-aprobadas">
+				{% include "jefe/lista_solicitudes_usuarios.html" with lista_solicitudes_usuario=lista_solicitudes_usuario_aprobadas tipo="aprobada" %}
+			</div><!-- Lista de Solicitudes Aprobadas -->
+			<div class="hidden" id="contenido-rechazadas">
+				{% include "jefe/lista_solicitudes_usuarios.html" with lista_solicitudes_usuario=lista_solicitudes_usuario_rechazadas tipo="rechazada" %}
+			</div><!-- Lista de Solicitudes Rechazadas -->
+		</div>
 	</div>
 </div>
 
-<div class="modal fade" id="detalles-solicitud" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-					&times;
-				</button>
-				<h4 class="modal-title" id="myModalLabel">
-					Detalles de Solicitud
-				</h4>
-			</div>
-			<div class="modal-body">
-				<form class="form-horizontal" role="form" id="formulario-solicitud-medico">
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="nombre-medico">
-							Nombre:
-						</label>
-						<div class="col-lg-10">
-							<input type="text" class="form-control" name="nombre-medico" disabled="disabled" value="Pedro José">
-						</div>
-					</div><!-- Nombre -->
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="apellido-medico">
-							Apellido:
-						</label>
-						<div class="col-lg-10">
-							<input type="text" class="form-control" name="apellido-medico" disabled="disabled" value="Ramírez">
-						</div>
-					</div><!-- Apellido -->
-					<div class="form-group">
-						<label class="col-lg-2 control-label">
-							<abbr title="Especializaciones">
-								Esp.
-							</abbr>:
-						</label>
-						<div class="col-lg-10">
-							<span class="label label-info">
-								Esp. 1
-							</span>
-							<span class="label label-info">
-								Esp. 2
-							</span>
-						</div>
-					</div><!-- Especializacion -->
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="cedula-medico">
-							Cédula:
-						</label>
-						<div class="col-lg-10">
-							<input type="text" class="form-control" name="cedula-medico" disabled="disabled" value="V-XX.XXX.XXX">
-						</div>
-					</div><!-- Cedula -->
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="fecha-nacimiento-medico">
-							Fecha
-							<abbr title="Nacimiento">
-								Nac.
-							</abbr>:
-						</label>
-						<div class="col-lg-10">
-							<input type="text" class="form-control" name="fecha-nacimiento-medico" disabled="disabled" value="dd/mm/aaaa">
-						</div>
-					</div><!-- Fecha de Nacimiento -->
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="sexo-medico">
-							Sexo:
-						</label>
-						<div class="col-lg-10">
-							<input type="text" class="form-control" name="sexo-medico" disabled="disabled" value="Masculino">
-						</div>
-					</div><!-- Sexo -->
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="telefono-medico">
-							Teléfono:
-						</label>
-						<div class="col-lg-10">
-							<input type="text" class="form-control" name="telefono-medico" disabled="disabled" value="XXXX-XXX-XX-XX">
-						</div>
-					</div><!-- Telefono -->
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="email-medico">
-							Email:
-						</label>
-						<div class="col-lg-10">
-							<input type="text" class="form-control" name="email-medico" disabled="disabled" value="XXXX@GMAIL.COM">
-						</div>
-					</div><!-- Email -->
-				</form><!-- Detalles Solicitud Acceso Medico -->
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-danger" data-dismiss="modal">
-					<span class="glyphicon glyphicon-remove">
-					</span>
-					Rechazar Solicitud
-				</button>
-				<button type="button" class="btn btn-success" data-dismiss="modal">
-					<span class="glyphicon glyphicon-ok">
-					</span>
-					Aprobar Solicitud
-				</button>
-			</div>
-		</div>
+
+<!-- Paginacion de Solicitudes -->
+<div class="row">
+	<div class="col-lg-6 col-lg-offset-1">
+		<div id="paginacion-pendientes"></div>
+		<div id="paginacion-aprobadas"></div>
+		<div id="paginacion-rechazadas"></div>
 	</div>
-</div><!-- Modal de Detalles de Solicitud de Acceso Medico -->
+</div>
+<script type="text/javascript">
+	{% if estado_solicitud == 'pendientes' %}
+		inicializarPaginacion({{ lista_solicitudes_usuario_pendientes.number }}, {{ lista_solicitudes_usuario_pendientes.paginator.num_pages }}, 'pendientes' )
+	{% elif estado_solicitud == 'aprobadas' %}
+		inicializarPaginacion({{ lista_solicitudes_usuario_aprobadas.number }}, {{ lista_solicitudes_usuario_aprobadas.paginator.num_pages }}, 'aprobadas' );
+	{% elif estado_solicitud == 'rechazadas' %}
+		inicializarPaginacion({{ lista_solicitudes_usuario_rechazadas.number }}, {{ lista_solicitudes_usuario_rechazadas.paginator.num_pages }}, 'rechazadas' );
+	{% endif %}
+	seleccionarPestana("{{ estado_solicitud }}");
+</script>
+
 {% endblock content %}

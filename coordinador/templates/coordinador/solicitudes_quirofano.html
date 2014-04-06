@@ -8,11 +8,11 @@
 <script type="text/javascript" src="{% static 'coordinador/js/solicitudes_quirofano.js' %}">
 </script>
 <script type="text/javascript" src="{% static 'medico/js/formulario_solicitud_quirofano.js' %}">
-</script>	
+</script>
 {% endblock scripts %}
 
 {% block nombre-usuario %}
-{% request.session.nombre %}
+{{ request.session.nombre }}
 {% endblock nombre-usuario %}
 
 {% block numero-mensajes %}
@@ -305,21 +305,21 @@
 						</label>
 						<div class="col-lg-2">
 							<input class="form-control" type="text" value="14/03/2014" disabled>
-						</div>												
-					</div>					
+						</div>
+					</div>
 					<div class="form-group">
 						<label class="col-lg-2 control-label">
-							Hora Inicio: 
+							Hora Inicio:
 						</label>
 						<div class="col-lg-2">
 							<input class="form-control" type="text" value="8:30am" disabled>
 						</div>
 						<label class="col-lg-2 control-label">
-							Hora Fin: 
+							Hora Fin:
 						</label>
 						<div class="col-lg-2">
 							<input class="form-control" type="text" value="10:30am" disabled>
-						</div>											
+						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-lg-2 control-label" for="tipo-solicitud">
@@ -344,7 +344,7 @@
 									Paliativa
 								</label>
 							</div>
-						</div>	
+						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-lg-2 control-label" for="tipo-operacion">
@@ -379,7 +379,7 @@
 							</select>
 						</div>
 					</div>
-					<div class="form-group">						
+					<div class="form-group">
 						<label class="col-lg-2 control-label" for="observaciones">
 							Observaciones:
 						</label>
@@ -404,14 +404,14 @@
 									<input type="radio" name="riesgo" value="regular" checked>
 									Regular
 								</label>
-							</div>	
+							</div>
 							<div class="radio-inline">
 								<label>
 									<input type="radio" name="riesgo" value="malo">
 									Malo
 								</label>
 							</div>
-						</div>					
+						</div>
 					</div>
 					<div class="form-group hidden" id="razon-riesgo">
 						<div class="col-lg-offset-2 col-lg-10">
@@ -442,7 +442,7 @@
 								</option>
 							</select>
 						</div>
-					</div>	
+					</div>
 					<div class="form-group">
 						<label class="col-lg-2 control-label" for="material-quirurgico">
 							Material
@@ -472,18 +472,18 @@
 								Máquina de Autosutura
 							</label>
 						</div>
-					</div>	
+					</div>
 					<div class="form-group">
 						<div class="col-lg-offset-2 col-lg-6">
-							<input type="text" class="form-control" name="otro-material-quirurgico" placeholder="Especifique otro" />						
+							<input type="text" class="form-control" name="otro-material-quirurgico" placeholder="Especifique otro" />
 						</div>
-					</div>							
+					</div>
 					<div class="form-group">
 						<div class="col-lg-offset-10">							<a href="javascript:void(0);" class="btn btn-default" id="ver-info-paciente">
 							Paciente
 							<span class="glyphicon glyphicon-chevron-right">
 							</span>
-						</a>			
+						</a>
 					</div>
 				</div>
 			</form><!-- Formulario Solicitud Quirofano -->
@@ -550,7 +550,7 @@
 						<input type="text" class="form-control" name="telefono-paciente" value="1587765">
 					</div>
 				</div><!-- Telefono -->
-				<div class="form-group">						
+				<div class="form-group">
 					<label class="col-lg-2 control-label" for="diagnostico-ingreso-paciente">
 						Diagnóstico:
 					</label>
@@ -572,7 +572,7 @@
 						<div class="radio-inline">
 							<label>
 								<input type="radio" name="forma-pago" value="seguro">
-								Seguro								
+								Seguro
 							</label>
 						</div>
 					</div>
@@ -610,7 +610,7 @@
 								</option>
 								<option>
 									hab2
-								</option>	
+								</option>
 								<option>
 									hab3
 								</option>
@@ -621,7 +621,7 @@
 				<div class="form-group">
 					<div class="col-lg-offset-2 col-lg-4">
 						<label class="checkbox-inline control-label">
-							<input type="checkbox" name="paciente-impres"> 
+							<input type="checkbox" name="paciente-impres">
 							Paciente Suscrito a Impres
 						</label>
 					</div>
@@ -632,7 +632,7 @@
 				<div class="form-group">
 					<div class="col-lg-offset-2 col-lg-4">
 						<label class="checkbox-inline control-label">
-							<input type="checkbox" name="paciente-medico"> 
+							<input type="checkbox" name="paciente-medico">
 							Paciente Médico
 						</label>
 					</div>
@@ -680,7 +680,7 @@
 				</div>
 			</form><!-- Formulario Solicitud Paciente -->
 
-			<form class="form-horizontal hidden" role="form" id="formulario-solicitud-honorarios">				
+			<form class="form-horizontal hidden" role="form" id="formulario-solicitud-honorarios">
 				<div class="form-group">
 					<label class="col-lg-2 control-label" for="nombre-anestesiologo">
 						Anestesiólogo:
@@ -756,7 +756,7 @@
 							<input type="text" class="form-control" name="honorario-ayudante-3" value="10.000">
 						</div>
 					</div>
-				</div><!-- Tercer Ayudante -->						
+				</div><!-- Tercer Ayudante -->
 				<div class="form-group">
 					<div class="col-lg-2">
 						<a href="javascript:void(0);" class="btn btn-default" id="volver-info-paciente">
