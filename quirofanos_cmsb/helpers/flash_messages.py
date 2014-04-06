@@ -17,4 +17,6 @@ class MensajeTemporalError():
     CAMBIO_CONTRASENA_FALLIDO = _(u'La contraseña actual ingresada no es correcta.')
     RECUPERAR_CONTRASENA_FALLIDO = _(u'El correo electrónico ingresado no está registrado.')
     REGISTRO_MEDICO_CEDULA_MODIFICADA = _(u'Se intentó solicitar una cuenta para una cédula que no corresponde a ningún médico.')
+    REGISTRO_DEPARTAMENTO_NOMBRE_MODIFICADA = _(u'Se intentó solicitar una cuenta para una nombre que no corresponde a ningún departamento.')
     REGISTRO_MEDICO_CUENTA_EXISTE = _(u'Se intentó solicitar una cuenta para un médico que ya ha solicitado su cuenta.')
+    REGISTRO_DEPARTAMENTO_CUENTA_EXISTE = _(u'Se intentó solicitar una cuenta para un departamento que ya ha solicitado su cuenta.')

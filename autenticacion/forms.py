@@ -13,17 +13,7 @@ NACIONALIDAD = (
 	)
 
 # Departamentos
-DEPARTAMENTOS = (
-	('EI', u'Enfermeras Instrumentistas'),
-	('ER', u'Enfermeras Recuperación'),
-	('F' , u'Farmacia'),
-	('DQ', u'Despacho Quirúrgico'),
-	('AP', u'Anatomía Patológica'),
-	('AP', u'Admisión Principal'),
-	('AE', u'Admisión Emergencia'),
-	('E' , u'Emergencia'),
-	('I' , u'Información'),
-)
+DEPARTAMENTOS = [(d.nombre,d.nombre) for d in Departamento.objects.all()]
 
 class InicioSesionForm(forms.Form):
 	''' Formulario de inicio de sesion '''
@@ -64,8 +54,7 @@ class BusquedaMedicoForm(forms.Form):
 
 class BusquedaDepartamentoForm(forms.Form):
 	''' Formulario de busqueda de Departamento por nombre '''
-	#nombre_departamento = forms.ChoiceField(widget=forms.HiddenInput, choices=DEPARTAMENTOS)
-	nombre_departamento = forms.CharField(max_length=25)
+	nombre_departamento = forms.ChoiceField( choices=DEPARTAMENTOS)	
 	
 	def clean_nombre_departamento(self):
 		''' Sobreescribe el clean_nombre_departamento(), validando que el departamento realmente exista en la base de datos '''	
