@@ -205,7 +205,7 @@ a:hover
 
 /* scroll de la tabla de plan quirurgico */
 .scrollable-plan
-{	
+{
 	overflow:auto
 }
 
@@ -226,18 +226,6 @@ a:hover
 	background-color:rgba(255,0,0,0.1)
 }
 
-/* estilo de la paginacion */
-.pagination>.active>a,.pagination>.active>span,.pagination>.active>a:hover,.pagination>.active>span:hover,.pagination>.active>a:focus,.pagination>.active>span:focus
-{
-	background-color:rgba(224,155,155,1)!important;
-	border-color:rgba(224,155,155,1)!important;
-	color:#FFF!important
-}
-
-.pagination>li>a:hover,.pagination>li>span:hover,.pagination>li>a:focus,.pagination>li>span:focus,.pagination>li>a,.pagination>li>span
-{
-	color:rgba(0,0,0,0.7)!important
-}
 
 /* estilo de las etiquetas de informacion */
 .label-info
@@ -248,4 +236,50 @@ a:hover
 /* estilo alerts */
 .alert {
 	text-align: center
+}
+
+/* estilo de paginacion */
+.pagination ul{
+	padding: 0px;
+	list-style: none;
+}
+
+.pagination ul>li{
+	float: left;
+}
+.pagination ul>li:last-child>a, .pagination ul>li:last-child>span {
+	-webkit-border-top-right-radius: 4px;
+	-moz-border-radius-topright: 4px;
+	border-top-right-radius: 4px;
+	-webkit-border-bottom-right-radius: 4px;
+	-moz-border-radius-bottomright: 4px;
+	border-bottom-right-radius: 4px;
+}
+.pagination ul>li:first-child>a, .pagination ul>li:first-child>span {
+	border-left-width: 1px;
+	-webkit-border-top-left-radius: 4px;
+	-moz-border-radius-topleft: 4px;
+	border-top-left-radius: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	-moz-border-radius-bottomleft: 4px;
+	border-bottom-left-radius: 4px;
+}
+.pagination ul>.active>a, .pagination ul>.active>span {
+	cursor: default;
+	background-color:rgba(224,155,155,1)!important;
+	border-color:rgba(224,155,155,1)!important;
+	color:#FFF!important
+}
+.pagination ul>li>a:hover, .pagination ul>li>a:focus, .pagination ul>.active>a, .pagination ul>.active>span {
+	background-color: #f5f5f5;
+	color:rgba(0,0,0,0.7)!important
+}
+.pagination ul>li>a, .pagination ul>li>span {
+	float: left;
+	padding: 4px 12px;
+	line-height: 20px;
+	text-decoration: none;
+	background-color: #ffffff;
+	border: 1px solid #dddddd;
+	border-left-width: 0;
 }

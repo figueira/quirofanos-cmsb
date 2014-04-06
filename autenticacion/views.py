@@ -9,7 +9,7 @@ from django.template import RequestContext
 from django.contrib import messages
 
 from quirofanos_cmsb.models import Cuenta, Departamento, Medico
-from autenticacion.forms import InicioSesionForm, CambiarContrasenaForm, BusquedaMedicoForm, RegistroMedicoForm, RegistroDepartamentoForm, RecuperarContrasenaForm, BusquedaDepartamentoForm 
+from autenticacion.forms import InicioSesionForm, CambiarContrasenaForm, BusquedaMedicoForm, RegistroMedicoForm, RegistroDepartamentoForm, RecuperarContrasenaForm, BusquedaDepartamentoForm
 from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito
 
 @require_GET
@@ -68,9 +68,9 @@ def busqueda_departamento(request):
 	request -> Solicitud HTTP '''
 	formulario_busqueda_departamento = BusquedaDepartamentoForm(request.POST)
 	datos = {}
-	if formulario_busqueda_departamento.is_valid():				
+	if formulario_busqueda_departamento.is_valid():
 		nombre_departamento = formulario_busqueda_departamento.cleaned_data['nombre_departamento']
-		formulario_registro_departamento = RegistroDepartamentoForm(initial={'nombre_departamento': nombre_departamento})		
+		formulario_registro_departamento = RegistroDepartamentoForm(initial={'nombre_departamento': nombre_departamento})
 		departamento = Departamento.objects.get(nombre=nombre_departamento)
 		datos['departamento'] = departamento
 		datos['formulario_registro_departamento'] = formulario_registro_departamento
@@ -142,7 +142,7 @@ def registro_departamento(request):
 	Parametros:
 	request -> Solicitud HTTP '''
 	formulario_registro_departamento = RegistroDepartamentoForm(request.POST)
-	
+
 	formulario_valido = formulario_registro_departamento.is_valid()
 	nombre_departamento = formulario_registro_departamento.cleaned_data['nombre_departamento']
 	departamento = Departamento.objects.filter(nombre=nombre_departamento)
@@ -154,7 +154,7 @@ def registro_departamento(request):
 	departamento = departamento[0]
 	if departamento.cuenta:
 		messages.add_message(request, messages.ERROR, MensajeTemporalError.REGISTRO_MEDICO_CUENTA_EXISTE) # Buscar Error adecuado
-		return redirect('inicio')	
+		return redirect('inicio')
 
 
 	if formulario_valido:
@@ -169,7 +169,7 @@ def registro_departamento(request):
 		cuenta_departamento.estado = 'P'
 		cuenta_departamento.privilegio = '4'
 		cuenta_departamento.save()
-		
+
 		departamento.cuenta = cuenta_departamento
 		departamento.save()
 
@@ -299,3 +299,4 @@ def recuperar_contrasena(request):
 				return redirect('recuperar_contrasena')
 	datos["formulario_recuperar_contrasena"] = formulario_recuperar_contrasena
 	return render_to_response('autenticacion/recuperar_contrasena.html', datos, context_instance=RequestContext(request))
+>>>>>>> ed7c5a10b94b67b0b43b7cffd6b1df3a73c16b1f
