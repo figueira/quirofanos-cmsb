@@ -9,8 +9,11 @@ from django.shortcuts import redirect
 from django.http import Http404
 from datetime import date, timedelta
 
+from hashids import Hashids
+import uuid
+
 from quirofanos_cmsb.models import Cuenta
-from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito
+from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito, construir_mensaje
 
 @require_http_methods(["GET"])
 def solicitudes_usuarios(request, estado="pendientes", periodo=1):
@@ -80,9 +83,13 @@ def aceptar_solicitud_usuario(request, id_cuenta):
     request -> Solicitud HTTP '''
     cuenta_usuario = Cuenta.objects.get(id=id_cuenta)
     cuenta_usuario.estado = 'A'
+    hashids = Hashids(min_length=5, salt=uuid.uuid1().hex)
+    password = hashids.encrypt(cuenta_usuario.id).upper()
+    cuenta_usuario.clave_inicial = password
+    cuenta_usuario.usuario.set_password(password)
     cuenta_usuario.save()
 
-    messages.add_message(request, messages.SUCCESS, MensajeTemporalExito.SOLICITUD_USUARIO_APROBADA)
+    messages.add_message(request, messages.SUCCESS, construir_mensaje(MensajeTemporalExito.SOLICITUD_USUARIO_APROBADA, "La clave de acceso del usuario es: " + cuenta_usuario.clave_inicial))
     return redirect('solicitudes_usuarios')
 
 @require_http_methods(["GET"])

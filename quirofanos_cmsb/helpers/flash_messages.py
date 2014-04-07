@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 from django.utils.translation import ugettext as _
 
+def construir_mensaje(mensaje, extra):
+    return mensaje + ' ' + extra + '.'
+
 class MensajeTemporalExito():
     ''' Clase que contiene constantes para ser utilizadas como mensajes temporales (flash messages) de exito '''
     SOLICITUD_REGISTRO_EXITOSO = _(u'Su solicitud de cuenta ha sido enviada. De ser aprobada, en los próximos días recibirá un correo y/o una llamada telefónica indicándole su contraseña de ingreso.')
     CAMBIO_CONTRASENA_EXITOSO = _(u'Su contraseña ha sido actualizada exitosamente.')
     RECUPERAR_CONTRASENA_EXITOSO = _(u'Se le ha enviado un correo electrónico con instrucciones para recuperar sus credenciales.')
     SOLICITUD_USUARIO_APROBADA = _(u'La solicitud de registro de usuario ha sido aprobada.')
-    SOLICITUD_USUARIO_RECHAZADA= _(u'La solicitud de registro de usuario ha sido rechazada.')
+    SOLICITUD_USUARIO_RECHAZADA = _(u'La solicitud de registro de usuario ha sido rechazada.')
+
 
 class MensajeTemporalError():
     ''' Clase que contiene constantes para ser utilizadas como mensajes temporales (flash messages) de errores '''
