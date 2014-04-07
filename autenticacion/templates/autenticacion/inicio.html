@@ -77,130 +77,6 @@
         </div>
       </div><!-- Solicitar Cuenta -->
 
-      <!-- Formulario de Solicitud de Registro Departamento -->
-      <form class="form-horizontal hidden" role="form" id="formulario-solicitud-departamento" action="{% url 'registro_departamento' %}" method='POST'>
-        {% csrf_token %}
-        {% if formulario_registro_departamento %}
-        <script type="text/javascript">
-        $(function(){
-          mostrarFormularioSolicitudDepartamento();
-        });
-        </script>
-        {% endif %}
-        <div class="panel-body">
-
-          <!-- Nombre y Telefono -->
-          <div class="form-group" id="nombre-telefono-departamento-form-group">
-            <label class="col-lg-2 control-label" for="nombre-departamento">
-              Nombre
-              <abbr title="Departamento">
-                Dpto.
-              </abbr>:
-            </label>
-            <div class="col-lg-4">
-              <input class="form-control" id="nombre-departamento" type="text" value="{{ departamento.nombre }}" disabled>
-              {% render_field formulario_registro_departamento.nombre_departamento id="nombre-departamento-input" %}
-              <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="nombre-departamento-error-feedback-icon"></span>
-              <span class="help-block hidden" id="nombre-departamento-error-help">{{ formulario_registro_departamento.nombre_departamento.errors }}</span>
-            </div>
-            <label class="col-lg-2 control-label" for="telefono-departamento">
-              Teléfono:
-            </label>
-            <div class="col-lg-2">
-              <input class="form-control" id="nombre-departamento" type="text" value="{{ departamento.telefono }}" disabled>
-              <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="telefono-departamento-error-feedback-icon"></span>
-              <span class="help-block hidden" id="telefono-departamento-error-help">{{ formulario_registro_departamento.telefono_departamento.errors }}</span>
-            </div>
-            {% if formulario_registro_departamento.nombre_departamento.errors %}
-            <script type="text/javascript">
-            $(function(){
-              $("#nombre-departamento").parent("div").addClass("has-error");
-              $("#nombre-telefono-departamento-form-group").addClass("has-feedback");
-              $("#nombre-departamento-error-feedback-icon").removeClass("hidden");
-              $("#nombre-departamento-error-help").removeClass("hidden");
-            });
-            </script>
-            {% endif %}
-            {% if formulario_registro_departamento.codigo_telefono.errors %}
-            <script type="text/javascript">
-            $(function(){
-              $("#codigo-telefono-departamento").parent("div").addClass("has-error");
-              $("#nombre-telefono-departamento-form-group").addClass("has-feedback");
-              $("#codigo-telefono-departamento-error-feedback-icon").removeClass("hidden");
-              $("#codigo-telefono-departamento-error-help").removeClass("hidden");
-            });
-            </script>
-            {% endif %}
-            {% if formulario_registro_departamento.telefono_departamento.errors %}
-            <script type="text/javascript">
-            $(function(){
-              $("#telefono-departamento").parent("div").addClass("has-error");
-              $("#nombre-telefono-departamento-form-group").addClass("has-feedback");
-              $("#telefono-departamento-error-feedback-icon").removeClass("hidden");
-              $("#telefono-departamento-error-help").removeClass("hidden");
-            });
-            </script>
-            {% endif %}
-          </div><!-- Nombre y Telefono -->
-
-          <!-- Email y Nombre de Usuario -->
-          <div class="form-group" id="email-nombre-usuario-departamento-form-group">
-            <label class="col-lg-2 control-label" for="email-departamento">
-              Email:
-            </label>
-            <div class="col-lg-4">
-              <input class="form-control" id="email-departamento" type="text" value="{{ departamento.email }}" disabled>
-              <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="email-departamento-error-feedback-icon"></span>
-              <span class="help-block hidden" id="email-departamento-error-help">{{ formulario_registro_departamento.email_departamento.errors }}</span>
-            </div>
-            <label class="col-lg-2 control-label" for="nombre-usuario-departamento">
-              Nombre de Usuario:
-            </label>
-            <div class="col-lg-4">
-              {% render_field formulario_registro_departamento.nombre_usuario_departamento class="form-control" id="nombre-usuario-departamento" %}
-              <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="nombre-usuario-departamento-error-feedback-icon"></span>
-              <span class="help-block hidden" id="nombre-usuario-departamento-error-help">{{ formulario_registro_departamento.nombre_usuario_departamento.errors }}</span>
-            </div>
-            {% if formulario_registro_departamento.email_departamento.errors %}
-            <script type="text/javascript">
-            $(function(){
-              $("#email-departamento").parent("div").addClass("has-error");
-              $("#email-nombre-usuario-departamento-form-group").addClass("has-feedback");
-              $("#email-departamento-error-feedback-icon").removeClass("hidden");
-              $("#email-departamento-error-help").removeClass("hidden");
-            });
-            </script>
-            {% endif %}
-            {% if formulario_registro_departamento.nombre_usuario_departamento.errors %}
-            <script type="text/javascript">
-            $(function(){
-              $("#nombre-usuario-departamento").parent("div").addClass("has-error");
-              $("#email-nombre-usuario-departamento-form-group").addClass("has-feedback");
-              $("#nombre-usuario-departamento-error-feedback-icon").removeClass("hidden");
-              $("#nombre-usuario-departamento-error-help").removeClass("hidden");
-            });
-            </script>
-            {% endif %}
-          </div><!-- Email y Nombre de Usuario -->
-        </div>
-        <div class="panel-footer">
-          <div class="form-group">
-            <div class="col-lg-2">
-              <a href="javascript:void(0);" class="btn btn-default btn-lg volver-solicitar-cuenta">
-                Volver
-              </a>
-            </div>
-
-            <!-- Submit -->
-            <div class="col-lg-offset-10">
-              <button type="submit" class="btn btn-primary btn-lg">
-                Enviar
-              </button>
-            </div>
-          </div><!-- Submit -->
-        </div>
-      </form><!-- Formulario Solicitud de Registro Departamento -->
-
       <!-- Busqueda de Medico por Cedula -->
       <form class="form-horizontal hidden" role="form" id="formulario-busqueda-medico" action="{% url 'busqueda_medico' %}" method="POST">
         {% csrf_token %}
@@ -273,7 +149,7 @@
         </div>
       </form><!-- Busqueda de Medico por Cedula -->
 
-      <!-- Busqueda de Departamento por nombre -->
+      <!-- Busqueda de Departamento por Nombre -->
       <form class="form-horizontal hidden" role="form" id="formulario-busqueda-departamento" action="{% url 'busqueda_departamento' %}" method="POST">
         {% csrf_token %}
         {% if formulario_busqueda_departamento.errors %}
@@ -286,14 +162,11 @@
         <div class="panel-body">
           <div class="form-group" id="busqueda-nombre-departamento-form-group">
             <label class="col-lg-offset-3 col-lg-3 control-label" for="busqueda-nombre-departamento">
-              Ingrese Departamento:
+              Seleccione Departamento:
             </label>
             <div class="col-lg-3">
-              <div class="input-group">
-                {% render_field formulario_busqueda_departamento.nombre_departamento class="form-control" id="busqueda-nombre-departamento" %}
-              </div>
-              <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="busqueda-cedula-medico-error-feedback-icon"></span>
-              <span class="help-block hidden" id="busqueda-cedula-medico-error-help">{{ formulario_busqueda_departamento.nombre_departamento.errors }}</span>
+              {% render_field formulario_busqueda_departamento.nombre_departamento class="form-control" id="busqueda-nombre-departamento" %}
+              <span class="help-block hidden" id="busqueda-nombre-departamento-error-help">{{ formulario_busqueda_departamento.nombre_departamento.errors }}</span>
             </div>
             {% if formulario_busqueda_departamento.nombre_departamento.errors %}
             <script type="text/javascript">
@@ -427,6 +300,82 @@
           </div><!-- Submit -->
         </div>
       </form><!-- Formulario de Solicitud de Registro Medico -->
+
+      <!-- Formulario de Solicitud de Registro Departamento -->
+      <form class="form-horizontal hidden" role="form" id="formulario-solicitud-departamento" action="{% url 'registro_departamento' %}" method='POST'>
+        {% csrf_token %}
+        {% if formulario_registro_departamento %}
+        <script type="text/javascript">
+        $(function(){
+          mostrarFormularioSolicitudDepartamento();
+        });
+        </script>
+        {% endif %}
+        <div class="panel-body">
+
+          <!-- Nombre y Telefono -->
+          <div class="form-group" id="nombre-telefono-departamento-form-group">
+            <label class="col-lg-2 control-label" for="nombre-departamento">
+              Nombre
+              <abbr title="Departamento">
+                Dpto.
+              </abbr>:
+            </label>
+            <div class="col-lg-4">
+              <input class="form-control" id="nombre-departamento" type="text" value="{{ departamento.nombre }}" disabled>
+              {% render_field formulario_registro_departamento.nombre_departamento id="nombre-departamento-input" %}
+            </div>
+            <label class="col-lg-2 control-label" for="telefono-departamento">
+              Teléfono:
+            </label>
+            <div class="col-lg-4">
+              <input class="form-control" id="telefono-departamento" type="text" value="{{ departamento.telefono }}" disabled>
+            </div>
+          </div><!-- Nombre y Telefono -->
+
+          <!-- Email y Nombre de Usuario -->
+          <div class="form-group" id="email-nombre-usuario-departamento-form-group">
+            <label class="col-lg-2 control-label" for="email-departamento">
+              Email:
+            </label>
+            <div class="col-lg-4">
+              <input class="form-control" id="email-departamento" type="text" value="{{ departamento.email }}" disabled>
+            </div>
+            <label class="col-lg-2 control-label" for="nombre-usuario-departamento">
+              Nombre de Usuario:
+            </label>
+            <div class="col-lg-4">
+              {% render_field formulario_registro_departamento.nombre_usuario_departamento class="form-control" id="nombre-usuario-departamento" %}
+              <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="nombre-usuario-departamento-error-feedback-icon"></span>
+              <span class="help-block hidden" id="nombre-usuario-departamento-error-help">{{ formulario_registro_departamento.nombre_usuario_departamento.errors }}</span>
+            </div>
+            {% if formulario_registro_departamento.nombre_usuario_departamento.errors %}
+            <script type="text/javascript">
+            $(function(){
+              mostrarErroresUsuarioDepartamento();
+            });
+            </script>
+            {% endif %}
+          </div><!-- Email y Nombre de Usuario -->
+        </div>
+        <div class="panel-footer">
+          <div class="form-group">
+            <div class="col-lg-2">
+              <a href="javascript:void(0);" class="btn btn-default btn-lg volver-solicitar-cuenta">
+                Volver
+              </a>
+            </div>
+
+            <!-- Submit -->
+            <div class="col-lg-offset-10">
+              <button type="submit" class="btn btn-primary btn-lg">
+                Enviar
+              </button>
+            </div>
+          </div><!-- Submit -->
+        </div>
+      </form><!-- Formulario Solicitud de Registro Departamento -->
+
     </div>
   </div>
 </div>

@@ -64,7 +64,7 @@ def busqueda_departamento(request):
 	datos = {}
 	if formulario_busqueda_departamento.is_valid():
 		nombre_departamento = formulario_busqueda_departamento.cleaned_data['nombre_departamento']
-		departamento = Departamento.objects.filter(nombre=nombre_departamento)
+		departamento = Departamento.objects.get(nombre=nombre_departamento)
 		formulario_registro_departamento = RegistroDepartamentoForm(initial={'nombre_departamento': nombre_departamento})
 		datos['departamento'] = departamento
 		datos['formulario_registro_departamento'] = formulario_registro_departamento
@@ -155,7 +155,14 @@ def registro_departamento(request):
 		cuenta_departamento = Cuenta()
 		cuenta_departamento.usuario = usuario
 		cuenta_departamento.estado = 'P'
-		cuenta_departamento.privilegio = '4' # Chequear si tiene privilegio de asistente plan quirurgico
+		if nombre_departamento == "Enfermeras Recuperacion":
+			cuenta_departamento.privilegio = '3'
+		elif nombre_departamento == "Admision Emergencia":
+			cuenta_departamento.privilegio = '2':
+		elif nombre_departamento == "Admision Principal":
+			cuenta_departamento.privilegio == '5'
+		else:
+			cuenta_departamento.privilegio = '6'
 		cuenta_departamento.save()
 
 		departamento.cuenta = cuenta_departamento
@@ -172,6 +179,7 @@ def registro_departamento(request):
 	datos['formulario_busqueda_medico'] = formulario_busqueda_medico
 	datos['formulario_busqueda_departamento'] = formulario_busqueda_departamento
 	datos['formulario_registro_departamento'] = formulario_registro_departamento
+	datos['departamento'] = departamento
 	return render_to_response('autenticacion/inicio.html', datos,context_instance=RequestContext(request))
 
 @require_POST

@@ -15,9 +15,11 @@ from quirofanos_cmsb.helpers.custom_validators import ExpresionRegular, MensajeE
 PRIVILEGIO = (
     ('0', u'JEFE_PQ'),
     ('1', u'COORDINADOR_PQ'),
-    ('2', u'ASISTENTE_PQ'),
-    ('3', u'MEDICO'),
-    ('4', u'OBSERVADOR'),
+    ('2', u'EMERGENCIA_PQ'),
+    ('3', u'ASISTENTE_PQ'),
+    ('4', u'MEDICO'),
+    ('5', u'OBSERVADOR_PRESUPUESTO'),
+    ('6', u'OBSERVADOR'),
 )
 
 # Estados de una Cuenta
@@ -405,7 +407,7 @@ class IntervencionQuirurgica(models.Model):
     equipos_especiales_requeridos = models.ManyToManyField(
         EquipoEspecial, blank=True, null=True)
     quirofano = models.ForeignKey(Quirofano)
-    monto_honorarios_total = models.DecimalField(max_digits=15, decimal_places=2) # hacer funcion para calcular este monto derivado
+    monto_honorarios_total = models.DecimalField(max_digits=15, decimal_places=2) # implementar funcion para calcular este monto derivado
 
     def clean(self):
         ''' Sobreescribe el clean(), validando los valores del riesgo y la razon del riesgo, ademas de calcular la duracion de la Intervencion Quirurgica '''

@@ -12,9 +12,6 @@ NACIONALIDAD = (
 	('E-', u'Extranjero'),
 	)
 
-# Departamentos
-DEPARTAMENTOS = [(d.nombre,d.nombre) for d in Departamento.objects.all()]
-
 class InicioSesionForm(forms.Form):
 	''' Formulario de inicio de sesion '''
 	nombre_usuario = forms.CharField(max_length=30)
@@ -40,22 +37,11 @@ class BusquedaMedicoForm(forms.Form):
 
 class BusquedaDepartamentoForm(forms.Form):
 	''' Formulario de busqueda de Departamento por nombre '''
-	nombre_departamento = forms.ChoiceField(choices=DEPARTAMENTOS)
-
-	def clean_nombre_departamento(self):
-		''' Sobreescribe el clean_nombre_departamento(), validando que el departamento realmente exista en la base de datos '''
-
-		nombre_departamento = self.cleaned_data['nombre_departamento']
-		departamento = Departamento.objects.filter(nombre=nombre_departamento)
-		departamento = departamento[0]
-
-		if departamento.cuenta:
-			raise forms.ValidationError(MensajeError.EXISTE_CUENTA, CodigoError.EXISTE_CUENTA)
-		return nombre_departamento
+	nombre_departamento = forms.ModelChoiceField(queryset=Departamento.objects.filter(cuenta=None))
 
 class RegistroMedicoForm(forms.Form):
 	''' Formulario de solicitud registro de medico '''
-	cedula_medico = forms.CharField(widget=forms.HiddenInput)
+	cedula_medico = forms.CharField(widget=forms.HiddenInput, required=False)
 	nombre_usuario_medico = forms.CharField(max_length=30, validators=[validate_slug])
 
 	def clean_nombre_usuario_medico(self):
@@ -68,7 +54,7 @@ class RegistroMedicoForm(forms.Form):
 
 class RegistroDepartamentoForm(forms.Form):
 	''' Formulario de solicitud de registro de departamento '''
-	nombre_departamento = forms.CharField(widget=forms.HiddenInput)
+	nombre_departamento = forms.CharField(widget=forms.HiddenInput, required=False)
 	nombre_usuario_departamento = forms.CharField(max_length=30, validators=[validate_slug])
 
 	def clean_nombre_usuario_departamento(self):
