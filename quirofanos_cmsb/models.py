@@ -114,6 +114,7 @@ class Cuenta (models.Model):
     usuario = models.OneToOneField(User)
     estado = models.CharField(max_length=1, choices=ESTADO_CUENTA)
     privilegio = models.CharField(max_length=1, choices=PRIVILEGIO)
+    clave_inicial = models.CharField(max_length=10, validators=[MinLengthValidator(5)], blank=True, null=True)
 
     def save(self):
         ''' Sobreescribe el save() '''

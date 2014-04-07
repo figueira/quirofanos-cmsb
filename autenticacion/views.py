@@ -289,4 +289,3 @@ def recuperar_contrasena(request):
 				return redirect('recuperar_contrasena')
 	datos["formulario_recuperar_contrasena"] = formulario_recuperar_contrasena
 	return render_to_response('autenticacion/recuperar_contrasena.html', datos, context_instance=RequestContext(request))
-
