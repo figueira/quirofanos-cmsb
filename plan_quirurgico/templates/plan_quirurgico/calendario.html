@@ -48,26 +48,13 @@
 	</div>
 	<div class="pull-left">
 		<ul class="nav nav-pills">
-			<li class="active">
-				<a href="#">
-					Área 1
+			{% for area in areas %}
+			<li {% if area.valor == area_actual %}class="active"{% endif %}>
+				<a href="{% url 'calendario' area.valor ano mes %}">
+					{{ area.nombre }}
 				</a>
 			</li>
-			<li>
-				<a href="#">
-					Área 2
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					Área 3
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					Área 4
-				</a>
-			</li>
+			{% endfor %}
 		</ul>
 	</div>
 </div>

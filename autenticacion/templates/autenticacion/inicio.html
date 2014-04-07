@@ -58,6 +58,8 @@
           </h1>
         </div>
       </div>
+
+      <!-- Solicitar Cuenta -->
       <div class="panel-body" id="body-solicitar-cuenta">
         <div class="row">
           <div class="col-lg-offset-4">
@@ -96,7 +98,7 @@
               </abbr>:
             </label>
             <div class="col-lg-4">
-              <input class="form-control" id="nombre-departamento" type="text" value="{{ departamento.nombre }}" disabled>              
+              <input class="form-control" id="nombre-departamento" type="text" value="{{ departamento.nombre }}" disabled>
               {% render_field formulario_registro_departamento.nombre_departamento id="nombre-departamento-input" %}
               <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="nombre-departamento-error-feedback-icon"></span>
               <span class="help-block hidden" id="nombre-departamento-error-help">{{ formulario_registro_departamento.nombre_departamento.errors }}</span>
@@ -147,7 +149,7 @@
               Email:
             </label>
             <div class="col-lg-4">
-              <input class="form-control" id="email-departamento" type="text" value="{{ departamento.email }}" disabled>              
+              <input class="form-control" id="email-departamento" type="text" value="{{ departamento.email }}" disabled>
               <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="email-departamento-error-feedback-icon"></span>
               <span class="help-block hidden" id="email-departamento-error-help">{{ formulario_registro_departamento.email_departamento.errors }}</span>
             </div>
@@ -271,13 +273,12 @@
         </div>
       </form><!-- Busqueda de Medico por Cedula -->
 
-
       <!-- Busqueda de Departamento por nombre -->
       <form class="form-horizontal hidden" role="form" id="formulario-busqueda-departamento" action="{% url 'busqueda_departamento' %}" method="POST">
         {% csrf_token %}
         {% if formulario_busqueda_departamento.errors %}
         <script type="text/javascript">
-        $(function() {          
+        $(function() {
           mostrarBusquedaNombreDepartamento();
         });
         </script>
@@ -289,10 +290,10 @@
             </label>
             <div class="col-lg-3">
               <div class="input-group">
-                {% render_field formulario_busqueda_departamento.nombre_departamento class="form-control" id="busqueda-nombre-departamento" %}                
+                {% render_field formulario_busqueda_departamento.nombre_departamento class="form-control" id="busqueda-nombre-departamento" %}
               </div>
               <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="busqueda-cedula-medico-error-feedback-icon"></span>
-              <span class="help-block hidden" id="busqueda-cedula-medico-error-help">{{ formulario_busqueda_departamento.nombre_departamento.errors }}</span>             
+              <span class="help-block hidden" id="busqueda-cedula-medico-error-help">{{ formulario_busqueda_departamento.nombre_departamento.errors }}</span>
             </div>
             {% if formulario_busqueda_departamento.nombre_departamento.errors %}
             <script type="text/javascript">

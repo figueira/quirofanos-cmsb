@@ -1,0 +1,114 @@
+[
+    {
+        "fields": {
+            "area": "QG",
+            "numero": 0
+        },
+        "model": "quirofanos_cmsb.quirofano"
+    },
+    {
+        "fields": {
+            "area": "QG",
+            "numero": 1
+        },
+        "model": "quirofanos_cmsb.quirofano"
+    },
+    {
+        "fields": {
+            "area": "QG",
+            "numero": 2
+        },
+        "model": "quirofanos_cmsb.quirofano"
+    },
+    {
+        "fields": {
+            "area": "QG",
+            "numero": 3
+        },
+        "model": "quirofanos_cmsb.quirofano"
+    },
+    {
+        "fields": {
+            "area": "QG",
+            "numero": 4
+        },
+        "model": "quirofanos_cmsb.quirofano"
+    },
+    {
+        "fields": {
+            "area": "QG",
+            "numero": 5
+        },
+        "model": "quirofanos_cmsb.quirofano"
+    },
+    {
+        "fields": {
+            "area": "A",
+            "numero": 0
+        },
+        "model": "quirofanos_cmsb.quirofano"
+    },
+    {
+        "fields": {
+            "area": "A",
+            "numero": 1
+        },
+        "model": "quirofanos_cmsb.quirofano"
+    },
+    {
+        "fields": {
+            "area": "A",
+            "numero": 2
+        },
+        "model": "quirofanos_cmsb.quirofano"
+    },
+    {
+        "fields": {
+            "area": "A",
+            "numero": 3
+        },
+        "model": "quirofanos_cmsb.quirofano"
+    },
+    {
+        "fields": {
+            "area": "A",
+            "numero": 4
+        },
+        "model": "quirofanos_cmsb.quirofano"
+    },
+    {
+        "fields": {
+            "area": "SP",
+            "numero": 1
+        },
+        "model": "quirofanos_cmsb.quirofano"
+    },
+    {
+        "fields": {
+            "area": "SP",
+            "numero": 2
+        },
+        "model": "quirofanos_cmsb.quirofano"
+    },
+    {
+        "fields": {
+            "area": "SEE",
+            "numero": 1
+        },
+        "model": "quirofanos_cmsb.quirofano"
+    },
+    {
+        "fields": {
+            "area": "SH",
+            "numero": 1
+        },
+        "model": "quirofanos_cmsb.quirofano"
+    },
+    {
+        "fields": {
+            "area": "AS",
+            "numero": 1
+        },
+        "model": "quirofanos_cmsb.quirofano"
+    }
+]

@@ -70,6 +70,18 @@ def busqueda_departamento(request):
 	datos = {}
 	if formulario_busqueda_departamento.is_valid():
 		nombre_departamento = formulario_busqueda_departamento.cleaned_data['nombre_departamento']
+
+		departamento = Departamento.objects.filter(nombre=nombre_departamento)
+		if not departamento:
+			messages.add_message(request, messages.ERROR, MensajeTemporalError.REGISTRO_DEPARTAMENTO_NOMBRE_MODIFICADA)
+			return redirect('inicio')
+
+		departamento = departamento[0]
+		if departamento.cuenta:
+			messages.add_message(request, messages.ERROR, MensajeTemporalError.REGISTRO_DEPARTAMENTO_CUENTA_EXISTE)
+			return redirect('inicio')
+
+		nombre_departamento = formulario_busqueda_departamento.cleaned_data['nombre_departamento']
 		formulario_registro_departamento = RegistroDepartamentoForm(initial={'nombre_departamento': nombre_departamento})
 		departamento = Departamento.objects.get(nombre=nombre_departamento)
 		datos['departamento'] = departamento
@@ -80,7 +92,6 @@ def busqueda_departamento(request):
 	formulario_busqueda_medico = BusquedaMedicoForm()
 	formulario_busqueda_departamento = BusquedaDepartamentoForm()
 	datos['formulario_inicio_sesion'] = formulario_inicio_sesion
-	datos['formulario_registro_departamento'] = formulario_registro_departamento
 	datos['formulario_busqueda_departamento'] = formulario_busqueda_departamento
 	datos['formulario_busqueda_medico'] = formulario_busqueda_medico
 	return render_to_response('autenticacion/inicio.html', datos,context_instance=RequestContext(request))
@@ -148,12 +159,12 @@ def registro_departamento(request):
 	departamento = Departamento.objects.filter(nombre=nombre_departamento)
 
 	if not departamento:
-		messages.add_message(request, messages.ERROR, MensajeTemporalError.REGISTRO_MEDICO_CEDULA_MODIFICADA) # Buscar Error adecuado
+		messages.add_message(request, messages.ERROR, MensajeTemporalError.REGISTRO_DEPARTAMENTO_NOMBRE_MODIFICADA)
 		return redirect('inicio')
 
 	departamento = departamento[0]
 	if departamento.cuenta:
-		messages.add_message(request, messages.ERROR, MensajeTemporalError.REGISTRO_MEDICO_CUENTA_EXISTE) # Buscar Error adecuado
+		messages.add_message(request, messages.ERROR, MensajeTemporalError.REGISTRO_DEPARTAMENTO_CUENTA_EXISTE)
 		return redirect('inicio')
 
 
