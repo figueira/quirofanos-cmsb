@@ -1,0 +1,213 @@
+{% if lista_solicitudes_usuario|length > 0 %}
+<ul class="list-group">
+    {% for solicitud in lista_solicitudes_usuario %}
+    <a href="#" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud-{{ solicitud.id }}">
+        {% if solicitud.privilegio == '3' %}
+        <span class="label label-info">Tipo de Usuario: Médico</span>
+        <span class="label label-default">Nombre: {{ solicitud.medico }}</span>
+        {% elif solicitud.privilegio == '4' %}
+        <span class="label label-info">Tipo de Usuario: Departamento</span>
+        <span class="label label-default">Nombre: {{ solicitud.departamento.nombre }}</span>
+        {% endif %}
+        <span class="pull-right">
+            <small>
+                <strong>
+                    Fecha de Solicitud: {{ solicitud.usuario.date_joined }}
+                </strong>
+            </small>
+        </span>
+    </a>
+    <div class="modal fade" id="detalles-solicitud-{{ solicitud.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Detalles de Solicitud
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" id="formulario-solicitud-medico">
+                        {% if solicitud.privilegio == '3' %}
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="nombre-medico">
+                                Nombre:
+                            </label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" name="nombre-medico" disabled="disabled" value="{{ solicitud.medico.nombre }}">
+                            </div>
+                        </div><!-- Nombre -->
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="apellido-medico">
+                                Apellido:
+                            </label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" name="apellido-medico" disabled="disabled" value="{{ solicitud.medico.apellido }}">
+                            </div>
+                        </div><!-- Apellido -->
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="nombre-usuario">
+                                Nombre Usuario:
+                            </label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" name="nombre-usuario" disabled="disabled" value="{{ solicitud.usuario.username }}">
+                            </div>
+                        </div><!-- Nombre Usuario -->
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">
+                                <abbr title="Especializaciones">
+                                    Esp.
+                                </abbr>:
+                            </label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" name="especializacion-usuario" disabled="disabled" value="{{ solicitud.medico.especializacion }}">
+                            </div>
+                        </div><!-- Especializacion -->
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="cedula-medico">
+                                Cédula:
+                            </label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" name="cedula-medico" disabled="disabled" value="{{ solicitud.medico.cedula }}">
+                            </div>
+                        </div><!-- Cedula -->
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="sexo-medico">
+                                Género:
+                            </label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" name="sexo-medico" disabled="disabled" value="{{ solicitud.medico.genero }}">
+                            </div>
+                        </div><!-- Sexo -->
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="telefono-medico">
+                                Teléfono:
+                            </label>
+                            <div class="col-lg-10">
+                                {% if solicitud.medico.telefono %}
+                                <input type="text" class="form-control" name="telefono-medico" disabled="disabled" value="{{ solicitud.medico.telefono }}">
+                                {% else %}
+                                <input type="text" class="form-control" name="telefono-medico" disabled="disabled" value="No Posee">
+                                {% endif %}
+                            </div>
+                        </div><!-- Telefono -->
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="email-medico">
+                                Email:
+                            </label>
+                            <div class="col-lg-10">
+                                {% if solicitud.medico.email %}
+                                <input type="text" class="form-control" name="email-medico" disabled="disabled" value="{{ solicitud.medico.email }}">
+                                {% else %}
+                                <input type="text" class="form-control" name="email-medico" disabled="disabled" value="No Posee">
+                                {% endif %}
+                            </div>
+                        </div><!-- Email -->
+                        {% if not solicitud.medico.email and not solicitud.medico.telefono and tipo != 'rechazada' %}
+                        <div class="alert alert-warning">
+                            <strong>El usuario no posee teléfono ni email registrado. Debe ser localizado de alguna manera para otorgarle las credenciales de acceso.
+                            {% if solicitud.clave_inicial %}
+                                La clave de acceso del usuario es: {{ solicitud.clave_inicial }}
+                            {% endif %}
+                            </strong>
+                        </div>
+                        {% elif not solicitud.medico.email and tipo != 'rechazada' %}
+                        <div class="alert alert-warning">
+                            <strong>El usuario debe ser contactado vía telefónica para otorgarle las credenciales de acceso.
+                            {% if solicitud.clave_inicial %}
+                                La clave de acceso del usuario es: {{ solicitud.clave_inicial }}
+                            {% endif %}
+                            </strong>
+                        </div>
+                        {% endif %}
+                        {% elif solicitud.privilegio == '4' %}
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="nombre-departamento">
+                                Nombre:
+                            </label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" name="nombre-departamento" disabled="disabled" value="{{ solicitud.departamento.nombre }}">
+                            </div>
+                        </div><!-- Nombre -->
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="nombre-usuario">
+                                Nombre Usuario:
+                            </label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" name="nombre-usuario" disabled="disabled" value="{{ solicitud.usuario.username }}">
+                            </div>
+                        </div><!-- Nombre Usuario -->
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="telefono-departamento">
+                                Teléfono:
+                            </label>
+                            <div class="col-lg-10">
+                                {% if solicitud.departamento.telefono %}
+                                <input type="text" class="form-control" name="telefono-departamento" disabled="disabled" value="{{ solicitud.departamento.telefono }}">
+                                {% else %}
+                                <input type="text" class="form-control" name="telefono-departamento" disabled="disabled" value="No Posee">
+                                {% endif %}
+                            </div>
+                        </div><!-- Telefono -->
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="email-departamento">
+                                Email:
+                            </label>
+                            <div class="col-lg-10">
+                                {% if solicitud.departamento.email %}
+                                <input type="text" class="form-control" name="email-departamento" disabled="disabled" value="{{ solicitud.departamento.email }}">
+                                {% else %}
+                                <input type="text" class="form-control" name="email-departamento" disabled="disabled" value="No Posee">
+                                {% endif %}
+                            </div>
+                        </div><!-- Email -->
+                        {% if not solicitud.departamento.email and not solicitud.departamento.telefono and tipo != 'rechazada' %}
+                        <div class="alert alert-warning">
+                            <strong>El usuario no posee teléfono ni email registrado. Debe ser localizado de alguna manera para otorgarle las credenciales de acceso.
+                            {% if solicitud.clave_inicial %}
+                                La clave de acceso del usuario es: {{ solicitud.clave_inicial }}
+                            {% endif %}
+                            </strong>
+                        </div>
+                        {% elif not solicitud.departamento.email and tipo != 'rechazada' %}
+                        <div class="alert alert-warning">
+                            <strong>El usuario debe ser contactado vía telefónica para otorgarle las credenciales de acceso.
+                            {% if solicitud.clave_inicial %}
+                                La clave de acceso del usuario es: {{ solicitud.clave_inicial }}
+                            {% endif %}
+                            </strong>
+                        </div>
+                        {% endif %}
+                        {% endif %}
+                    </form><!-- Detalles Solicitud Acceso Usuario -->
+                </div>
+                {% if tipo == 'pendiente' %}
+                <div class="modal-footer">
+                    <a href="{% url 'rechazar_solicitud_usuario' solicitud.id %}">
+                        <button type="button" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove">
+                            </span>
+                            Rechazar Solicitud
+                        </button>
+                    </a>
+                    <a href="{% url 'aceptar_solicitud_usuario' solicitud.id %}">
+                        <button type="button" class="btn btn-success">
+                            <span class="glyphicon glyphicon-ok">
+                            </span>
+                            Aprobar Solicitud
+                        </button>
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div><!-- Modal de Detalles de Solicitud de Acceso Usuario -->
+    {% endfor %}
+</ul>
+{% else %}
+<ul class="list-group-item  ">
+    <strong>No existen solicitudes de registro de usuario {{ tipo }}s.</strong>
+</ul>
+{% endif %}
