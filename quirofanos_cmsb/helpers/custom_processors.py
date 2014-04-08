@@ -26,4 +26,8 @@ def constantes_texto(request):
     datos['LABEL_ESPECIALIZACION_ABREVIADO'] = TextoMostrable.LABEL_ESPECIALIZACION_ABREVIADO
     datos['LABEL_DEPARTAMENTO'] = TextoMostrable.LABEL_DEPARTAMENTO
     datos['LABEL_DEPARTAMENTO_ABREVIADO'] = TextoMostrable.LABEL_DEPARTAMENTO_ABREVIADO
+    datos['LABEL_FECHA_SOLICITUD'] = TextoMostrable.LABEL_FECHA_SOLICITUD
+    datos['LABEL_TIPO_USUARIO'] = TextoMostrable.LABEL_TIPO_USUARIO
+    datos['RECHAZAR_SOLICITUD'] = TextoMostrable.RECHAZAR_SOLICITUD
+    datos['APROBAR_SOLICITUD'] = TextoMostrable.APROBAR_SOLICITUD
     return datos

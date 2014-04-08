@@ -106,7 +106,7 @@ def registro_medico(request):
 		cuenta_medico = Cuenta()
 		cuenta_medico.usuario = usuario
 		cuenta_medico.estado = 'P'
-		cuenta_medico.privilegio = '3'
+		cuenta_medico.privilegio = '4'
 		cuenta_medico.save()
 
 		medico.cuenta = cuenta_medico
@@ -194,10 +194,15 @@ def iniciar_sesion(request):
 		contrasena = formulario_inicio_sesion.cleaned_data['contrasena']
 		user = authenticate(username=nombre_usuario, password=contrasena)
 		if user:
+			cuenta = None
+			try:
+				cuenta = user.cuenta
+			except Cuenta.DoesNotExist:
+				messages.add_message(request, messages.ERROR, MensajeTemporalError.AUTENTICACION_FALLIDA)
+				return redirect('inicio')
 			if user.is_active:
 				login(request, user)
-				request.session["nombre_usuario"] = request.user.username
-				cuenta = request.user.cuenta
+				request.session["nombre_usuario"] = user.username
 				privilegio = cuenta.privilegio
 				if privilegio == "0":
 					request.session["privilegio"] = "JEFE_PQ"

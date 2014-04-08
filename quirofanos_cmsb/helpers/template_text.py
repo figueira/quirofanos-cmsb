@@ -23,3 +23,7 @@ class TextoMostrable():
     LABEL_ESPECIALIZACION_ABREVIADO = _(u'Esp.:')
     LABEL_DEPARTAMENTO = _(u'Departamento')
     LABEL_DEPARTAMENTO_ABREVIADO = _(u'Dpto.:')
+    LABEL_FECHA_SOLICITUD = _(u'Fecha de Solicitud:')
+    LABEL_TIPO_USUARIO = _(u'Tipo de Usuario:')
+    RECHAZAR_SOLICITUD = _(u'Rechazar Solicitud')
+    APROBAR_SOLICITUD = _(u'Aprobar Solicitud')

@@ -59,7 +59,7 @@
 		<ul class="dropdown-menu" role="menu">
 			{% if tipo_busqueda != ULTIMA_SEMANA %}
 			<li>
-				<a href="{% url 'solicitudes_usuarios' %}">
+				<a href="{% url 'solicitudes_usuarios' estado_solicitud %}">
 					{{ ULTIMA_SEMANA }}
 				</a>
 			</li>
