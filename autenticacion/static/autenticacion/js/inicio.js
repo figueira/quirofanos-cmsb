@@ -20,7 +20,7 @@ var mostrarFormularioSolicitudMedico = function() {
 var mostrarFormularioSolicitudDepartamento = function() {
   $("#body-solicitar-cuenta").addClass("hidden");
   $("#formulario-solicitud-departamento").removeClass("hidden");
-  $("#titulo-solicitar-cuenta").html("Solicitar Cuenta - Departamento");  
+  $("#titulo-solicitar-cuenta").html("Solicitar Cuenta - Departamento");
 };
 
 // Inicializar nacionalidad de busqueda cedula medico
@@ -47,11 +47,11 @@ var mostrarErroresCedulaMedico = function() {
   $("#busqueda-cedula-medico-error-help").removeClass("hidden");
 };
 
-// Mostrar errores asociados a la cedula de busqueda medico
+// Mostrar errores asociados al nombre de busqueda departamento
 var mostrarErroresNombreDepartamento = function() {
-//Mostrar errores
+  $("#busqueda-nombre-departamento").parent("div").addClass("has-error");
+  $("#busqueda-nombre-departamento-error-help").removeClass("hidden");
 };
-
 
 // Mostrar errores asociados al nombre de usuario de solicitud de registro medico
 var mostrarErroresUsuarioMedico = function() {
@@ -59,6 +59,14 @@ var mostrarErroresUsuarioMedico = function() {
   $("#email-nombre-usuario-medico-form-group").addClass("has-feedback");
   $("#nombre-usuario-medico-error-feedback-icon").removeClass("hidden");
   $("#nombre-usuario-medico-error-help").removeClass("hidden");
+};
+
+// Mostrar errores asociados al nombre de usuario de solicitud de registro departamento
+var mostrarErroresUsuarioDepartamento = function() {
+  $("#nombre-usuario-departamento").parent("div").addClass("has-error");
+  $("#email-nombre-usuario-departamento-form-group").addClass("has-feedback");
+  $("#nombre-usuario-departamento-error-feedback-icon").removeClass("hidden");
+  $("#nombre-usuario-departamento-error-help").removeClass("hidden");
 };
 
 $(document).ready(function() {

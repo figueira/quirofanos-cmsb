@@ -22,14 +22,10 @@ def inicio(request):
 		return redirect('calendario')
 
 	formulario_inicio_sesion = InicioSesionForm()
-	formulario_registro_medico = RegistroMedicoForm()
 	formulario_busqueda_medico = BusquedaMedicoForm()
-	formulario_registro_departamento = RegistroDepartamentoForm()
 	formulario_busqueda_departamento = BusquedaDepartamentoForm()
 	datos = {}
 	datos['formulario_inicio_sesion'] = formulario_inicio_sesion
-	#datos['formulario_registro_medico'] = formulario_registro_medico
-	#datos['formulario_registro_departamento'] = formulario_registro_departamento
 	datos['formulario_busqueda_medico'] = formulario_busqueda_medico
 	datos['formulario_busqueda_departamento'] = formulario_busqueda_departamento
 	return render_to_response('autenticacion/inicio.html', datos, context_instance=RequestContext(request))
@@ -52,10 +48,8 @@ def busqueda_medico(request):
 		datos['formulario_registro_medico'] = formulario_registro_medico
 
 	formulario_inicio_sesion = InicioSesionForm()
-	formulario_registro_departamento = RegistroDepartamentoForm()
 	formulario_busqueda_departamento = BusquedaDepartamentoForm()
 	datos['formulario_inicio_sesion'] = formulario_inicio_sesion
-	datos['formulario_registro_departamento'] = formulario_registro_departamento
 	datos['formulario_busqueda_departamento'] = formulario_busqueda_departamento
 	datos['formulario_busqueda_medico'] = formulario_busqueda_medico
 	return render_to_response('autenticacion/inicio.html', datos,context_instance=RequestContext(request))
@@ -70,27 +64,13 @@ def busqueda_departamento(request):
 	datos = {}
 	if formulario_busqueda_departamento.is_valid():
 		nombre_departamento = formulario_busqueda_departamento.cleaned_data['nombre_departamento']
-
-		departamento = Departamento.objects.filter(nombre=nombre_departamento)
-		if not departamento:
-			messages.add_message(request, messages.ERROR, MensajeTemporalError.REGISTRO_DEPARTAMENTO_NOMBRE_MODIFICADA)
-			return redirect('inicio')
-
-		departamento = departamento[0]
-		if departamento.cuenta:
-			messages.add_message(request, messages.ERROR, MensajeTemporalError.REGISTRO_DEPARTAMENTO_CUENTA_EXISTE)
-			return redirect('inicio')
-
-		nombre_departamento = formulario_busqueda_departamento.cleaned_data['nombre_departamento']
-		formulario_registro_departamento = RegistroDepartamentoForm(initial={'nombre_departamento': nombre_departamento})
 		departamento = Departamento.objects.get(nombre=nombre_departamento)
+		formulario_registro_departamento = RegistroDepartamentoForm(initial={'nombre_departamento': nombre_departamento})
 		datos['departamento'] = departamento
 		datos['formulario_registro_departamento'] = formulario_registro_departamento
 
 	formulario_inicio_sesion = InicioSesionForm()
-	formulario_registro_medico = RegistroMedicoForm()
 	formulario_busqueda_medico = BusquedaMedicoForm()
-	formulario_busqueda_departamento = BusquedaDepartamentoForm()
 	datos['formulario_inicio_sesion'] = formulario_inicio_sesion
 	datos['formulario_busqueda_departamento'] = formulario_busqueda_departamento
 	datos['formulario_busqueda_medico'] = formulario_busqueda_medico
@@ -136,13 +116,13 @@ def registro_medico(request):
 		return redirect('inicio')
 
 	formulario_inicio_sesion = InicioSesionForm()
-	formulario_registro_departamento = RegistroDepartamentoForm()
 	formulario_busqueda_medico = BusquedaMedicoForm()
+	formulario_busqueda_departamento = BusquedaDepartamentoForm()
 	datos = {}
 	datos['formulario_registro_medico'] = formulario_registro_medico
 	datos['formulario_inicio_sesion'] = formulario_inicio_sesion
-	datos['formulario_registro_departamento'] = formulario_registro_departamento
 	datos['formulario_busqueda_medico'] = formulario_busqueda_medico
+	datos['formulario_busqueda_departamento'] = formulario_busqueda_departamento
 	datos['medico'] = medico
 	return render_to_response('autenticacion/inicio.html', datos,context_instance=RequestContext(request))
 
@@ -153,13 +133,11 @@ def registro_departamento(request):
 	Parametros:
 	request -> Solicitud HTTP '''
 	formulario_registro_departamento = RegistroDepartamentoForm(request.POST)
-
 	formulario_valido = formulario_registro_departamento.is_valid()
 	nombre_departamento = formulario_registro_departamento.cleaned_data['nombre_departamento']
 	departamento = Departamento.objects.filter(nombre=nombre_departamento)
-
 	if not departamento:
-		messages.add_message(request, messages.ERROR, MensajeTemporalError.REGISTRO_DEPARTAMENTO_NOMBRE_MODIFICADA)
+		messages.add_message(request, messages.ERROR, MensajeTemporalError.REGISTRO_DEPARTAMENTO_NOMBRE_MODIFICADO)
 		return redirect('inicio')
 
 	departamento = departamento[0]
@@ -167,18 +145,24 @@ def registro_departamento(request):
 		messages.add_message(request, messages.ERROR, MensajeTemporalError.REGISTRO_DEPARTAMENTO_CUENTA_EXISTE)
 		return redirect('inicio')
 
-
 	if formulario_valido:
 		nombre_usuario_departamento = formulario_registro_departamento.cleaned_data['nombre_usuario_departamento']
 
-		usuario = User.objects.create_user(username=nombre_usuario_departamento,email=departamento.email)
+		usuario = User.objects.create_user(username=nombre_usuario_departamento, email=departamento.email)
 		usuario.is_active = False
 		usuario.save()
 
 		cuenta_departamento = Cuenta()
 		cuenta_departamento.usuario = usuario
 		cuenta_departamento.estado = 'P'
-		cuenta_departamento.privilegio = '4'
+		if nombre_departamento == "Enfermeras Recuperacion":
+			cuenta_departamento.privilegio = '3'
+		elif nombre_departamento == "Admision Emergencia":
+			cuenta_departamento.privilegio = '2':
+		elif nombre_departamento == "Admision Principal":
+			cuenta_departamento.privilegio == '5'
+		else:
+			cuenta_departamento.privilegio = '6'
 		cuenta_departamento.save()
 
 		departamento.cuenta = cuenta_departamento
@@ -188,11 +172,14 @@ def registro_departamento(request):
 		return redirect('inicio')
 
 	formulario_inicio_sesion = InicioSesionForm()
-	formulario_registro_medico = RegistroMedicoForm()
+	formulario_busqueda_medico = BusquedaMedicoForm()
+	formulario_busqueda_departamento = BusquedaDepartamentoForm()
 	datos = {}
-	datos['formulario_registro_departamento'] = formulario_registro_departamento
 	datos['formulario_inicio_sesion'] = formulario_inicio_sesion
-	datos['formulario_registro_medico'] = formulario_registro_medico
+	datos['formulario_busqueda_medico'] = formulario_busqueda_medico
+	datos['formulario_busqueda_departamento'] = formulario_busqueda_departamento
+	datos['formulario_registro_departamento'] = formulario_registro_departamento
+	datos['departamento'] = departamento
 	return render_to_response('autenticacion/inicio.html', datos,context_instance=RequestContext(request))
 
 @require_POST

@@ -15,7 +15,7 @@ import uuid
 from quirofanos_cmsb.models import Cuenta
 from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito, construir_mensaje
 
-@require_http_methods(["GET"])
+@require_GET
 def solicitudes_usuarios(request, estado="pendientes", periodo=1):
     ''' Controlador correspondiente al listado de solicitudes de usuarios
 
@@ -23,6 +23,8 @@ def solicitudes_usuarios(request, estado="pendientes", periodo=1):
     request -> Solicitud HTTP '''
     periodo = int(periodo)
     if periodo < 1 or periodo > 3:
+        raise Http404
+    if estado not in ("pendientes", "aprobadas", "rechazadas"):
         raise Http404
 
     datos = {}
