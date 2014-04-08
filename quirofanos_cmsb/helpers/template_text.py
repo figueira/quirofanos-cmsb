@@ -1,0 +1,25 @@
+# -*- coding: utf-8 -*-
+from django.utils.translation import ugettext as _
+
+class TextoMostrable():
+    NO_POSEE = _(u'No posee')
+    ULTIMA_SEMANA = _(u'Última Semana')
+    ULTIMO_MES = _(u'Último Mes')
+    ULTIMOS_TRES_MESES = _(u'Últimos 3 Meses')
+    PENDIENTES = _(u'Pendientes')
+    APROBADAS = _(u'Aprobadas')
+    RECHAZADAS = _(u'Rechazadas')
+    VOLVER = _(u'Volver')
+    BUSCAR = _(u'Buscar')
+    ENVIAR = _(u'Enviar')
+    LABEL_NOMBRE = _(u'Nombre:')
+    LABEL_APELLIDO = _(u'Apellido:')
+    LABEL_CEDULA = _(u'Cédula:')
+    LABEL_GENERO = _(u'Género:')
+    LABEL_TELEFONO = _(u'Teléfono:')
+    LABEL_EMAIL = _(u'Email:')
+    LABEL_NOMBRE_USUARIO = _(u'Nombre de Usuario:')
+    LABEL_ESPECIALIZACION = _(u'Especialización')
+    LABEL_ESPECIALIZACION_ABREVIADO = _(u'Esp.:')
+    LABEL_DEPARTAMENTO = _(u'Departamento')
+    LABEL_DEPARTAMENTO_ABREVIADO = _(u'Dpto.:')

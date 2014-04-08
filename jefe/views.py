@@ -14,6 +14,7 @@ import uuid
 
 from quirofanos_cmsb.models import Cuenta
 from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito, construir_mensaje
+from quirofanos_cmsb.helpers.template_text import TextoMostrable
 
 @require_GET
 def solicitudes_usuarios(request, estado="pendientes", periodo=1):
@@ -29,13 +30,13 @@ def solicitudes_usuarios(request, estado="pendientes", periodo=1):
 
     datos = {}
     fecha_valor = date.today() - timedelta(days=8)
-    datos['tipo_busqueda'] = u'Última Semana'
+    datos['tipo_busqueda'] = TextoMostrable.ULTIMA_SEMANA
     if (periodo == 2):
         fecha_valor = date.today() - timedelta(days=31)
-        datos['tipo_busqueda'] = u'Último Mes'
+        datos['tipo_busqueda'] = TextoMostrable.ULTIMO_MES
     elif (periodo == 3):
         fecha_valor = date.today() - timedelta(days=93)
-        datos['tipo_busqueda'] = u'Últimos 3 Meses'
+        datos['tipo_busqueda'] = TextoMostrable.ULTIMOS_TRES_MESES
 
     lista_solicitudes_usuario_pendientes = Cuenta.objects.filter(estado='P', usuario__date_joined__gte=fecha_valor).order_by('-usuario__date_joined').exclude(privilegio='0').exclude(privilegio='1')
     lista_solicitudes_usuario_aprobadas = Cuenta.objects.filter(estado='A', usuario__date_joined__gte=fecha_valor).order_by('-usuario__date_joined').exclude(privilegio='0').exclude(privilegio='1')
