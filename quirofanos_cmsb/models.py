@@ -10,6 +10,7 @@ import time
 import uuid
 
 from quirofanos_cmsb.helpers.custom_validators import ExpresionRegular, MensajeError, CodigoError
+from quirofanos_cmsb.helpers import utils
 
 # Tipos de Privilegios
 PRIVILEGIO = (
@@ -188,15 +189,15 @@ class Quirofano(models.Model):
         self.full_clean()
         super(Quirofano, self).save()
 
-    def obtener_nro_intervenciones(self, ano, mes, dia):
+    def obtener_numero_intervenciones(self, ano, mes, dia):
         ''' Calcula el numero de intervenciones que estan pautadas para el quirofano para una fecha
 
         Parametros:
-        ano -> ano de la fecha a consultar
-        mes -> mes de la fecha a consultar
-        dia -> dia de la fecha a consultar '''
+        ano -> Ano de la fecha a consultar
+        mes -> Mes de la fecha a consultar
+        dia -> Dia de la fecha a consultar '''
         try:
-            return self.intervencion_quirurgica_set.filter(fecha_intervencion__year=ano, fecha_intervencion__month=mes, fecha_intervencion__day=dia, reservacion__estado='A').count()
+            return self.intervencionquirurgica_set.filter(fecha_intervencion__year=ano, fecha_intervencion__month=mes, fecha_intervencion__day=dia, reservacion__estado='A').count()
         except AttributeError:
             return 0;
 
@@ -204,13 +205,30 @@ class Quirofano(models.Model):
         ''' Devuelve un valor booleano que determina si el quirofano esta disponible o no para una fecha
 
         Parametros:
-        ano -> ano de la fecha a consultar
-        mes -> mes de la fecha a consultar
-        dia -> dia de la fecha a consultar '''
+        ano -> Ano de la fecha a consultar
+        mes -> Mes de la fecha a consultar
+        dia -> Dia de la fecha a consultar '''
         try:
-            return self.intervencion_quirugica_set.filter(fecha_intervencion__year=ano, fecha_intervencion__month=mes, fecha_intervencion__day=dia, reservacion__estado='A').aggregate(Sum('duracion')) > 12.0
+            return not self.intervencionquirugica_set.filter(fecha_intervencion__year=ano, fecha_intervencion__month=mes, fecha_intervencion__day=dia, reservacion__estado='A').aggregate(Sum('duracion')) > 12.00
         except AttributeError:
-            return False
+            return True
+
+    def obtener_intervenciones_por_hora(self, ano, mes, dia):
+        ''' Devuelve un diccionario en donde se tiene para cada media hora del dia una intervencion quirurgica que cubre ese horario
+
+        Parametros:
+        ano -> Ano de la fecha a consultar
+        mes -> Mes de la fecha a consultar
+        dia -> Dia de la fecha a consultar '''
+        try:
+            intervenciones = self.intervencionquirurgica_set.filter(fecha_intervencion__year=ano, fecha_intervencion__month=mes, fecha_intervencion__day=dia, reservacion__estado='A').order_by('hora_inicio')
+            datos = {}
+            for intervencion in intervenciones:
+                for media_hora in intervencion.iterador_medias_horas():
+                    datos[media_hora] = intervencion
+            return datos
+        except AttributeError:
+            return None
 
     def __unicode__(self):
         return str(self.numero) + ', ' + self.get_area_display()
@@ -427,7 +445,11 @@ class IntervencionQuirurgica(models.Model):
         hora_fin_seg = datetime.timedelta(
             hours=self.hora_fin.hour, minutes=self.hora_fin.minute).total_seconds()
         diferencia_horas = float(hora_fin_seg) - float(hora_inicio_seg)
-        self.duracion = diferencia_horas / 3600
+        self.duracion = round(diferencia_horas / 3600, 2)
+
+        if self.duracion < 1.00:
+            raise ValidationError(
+                MensajeError.DURACION_MENOR_QUE_UNA_HORA, code=CodigoError.DURACION_MENOR_QUE_UNA_HORA)
 
         super(IntervencionQuirurgica, self).clean()
 
@@ -435,6 +457,20 @@ class IntervencionQuirurgica(models.Model):
         ''' Sobreescribe el save() '''
         self.full_clean()
         super(IntervencionQuirurgica, self).save()
+
+    def obtener_hora_inicio_horas(self):
+        ''' Devuelve la hora de inicio como un float '''
+        return round(datetime.timedelta(hours=self.hora_inicio.hour, minutes=self.hora_inicio.minute).total_seconds() / 3600, 2)
+
+    def obtener_hora_fin_horas(self):
+        ''' Devuelve la hora de fin como un float '''
+        return round(datetime.timedelta(hours=self.hora_fin.hour, minutes=self.hora_fin.minute).total_seconds() / 3600, 2)
+
+    def iterador_medias_horas(self):
+        ''' Devuelve un iterador sobre las medias horas del dia que cubre la intervencion quirurgica '''
+        hora_inicio_horas = self.obtener_hora_inicio_horas()
+        hora_fin_horas = self.obtener_hora_fin_horas()
+        return utils.rango_decimal(hora_inicio_horas, hora_fin_horas, 0.5)
 
     def __unicode__(self):
         return self.paciente.__unicode__() + ', ' + self.reservacion.medico.__unicode__() + ', ' + str(self.fecha_intervencion)

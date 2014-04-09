@@ -30,4 +30,14 @@ def constantes_texto(request):
     datos['LABEL_TIPO_USUARIO'] = TextoMostrable.LABEL_TIPO_USUARIO
     datos['RECHAZAR_SOLICITUD'] = TextoMostrable.RECHAZAR_SOLICITUD
     datos['APROBAR_SOLICITUD'] = TextoMostrable.APROBAR_SOLICITUD
+    datos['LABEL_INTERVENCION_PLURAL'] = TextoMostrable.LABEL_INTERVENCION_PLURAL
+    datos['LABEL_INTERVENCION_ABREVIADO'] = TextoMostrable.LABEL_INTERVENCION_ABREVIADO
+    datos['LABEL_QUIRURGICA_PLURAL'] = TextoMostrable.LABEL_QUIRURGICA_PLURAL
+    datos['DISPONIBLE'] = TextoMostrable.DISPONIBLE
+    datos['NO_DISPONIBLE'] = TextoMostrable.NO_DISPONIBLE
+    datos['LABEL_PACIENTE'] = TextoMostrable.LABEL_PACIENTE
+    datos['LABEL_INTERVENCION'] = TextoMostrable.LABEL_INTERVENCION
+    datos['LABEL_QUIRURGICA'] = TextoMostrable.LABEL_QUIRURGICA
+    datos['LABEL_MEDICO'] = TextoMostrable.LABEL_MEDICO
+    datos['SOLICITAR_QUIROFANO'] = TextoMostrable.SOLICITAR_QUIROFANO
     return datos

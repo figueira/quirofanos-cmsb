@@ -17,11 +17,14 @@ from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, Mensaje
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
 
 @require_GET
+@login_required
 def solicitudes_usuarios(request, estado="pendientes", periodo=1):
     ''' Controlador correspondiente al listado de solicitudes de usuarios
 
     Parametros:
-    request -> Solicitud HTTP '''
+    request -> Solicitud HTTP
+    estado -> Estado de las solicitudes a consultar
+    periodo -> Periodo a consultar '''
     periodo = int(periodo)
     if periodo < 1 or periodo > 3:
         raise Http404
@@ -79,28 +82,35 @@ def solicitudes_usuarios(request, estado="pendientes", periodo=1):
     return render_to_response('jefe/solicitudes_usuarios.html', datos, context_instance=RequestContext(request))
 
 @require_http_methods(["GET"])
+@login_required
 def aceptar_solicitud_usuario(request, id_cuenta):
     ''' Controlador correspondiente a la aprobacion de solicitudes de usuarios
 
     Parametros:
-    request -> Solicitud HTTP '''
+    request -> Solicitud HTTP
+    id_cuenta -> Id de cuenta a ser aprobada '''
     cuenta_usuario = Cuenta.objects.get(id=id_cuenta)
     cuenta_usuario.estado = 'A'
     hashids = Hashids(min_length=5, salt=uuid.uuid1().hex)
     password = hashids.encrypt(cuenta_usuario.id).upper()
     cuenta_usuario.clave_inicial = password
-    cuenta_usuario.usuario.set_password(password)
+    usuario = cuenta_usuario.usuario
+    usuario.is_active = True
+    usuario.set_password(password)
+    usuario.save()
     cuenta_usuario.save()
 
     messages.add_message(request, messages.SUCCESS, construir_mensaje(MensajeTemporalExito.SOLICITUD_USUARIO_APROBADA, "La clave de acceso del usuario es: " + cuenta_usuario.clave_inicial))
     return redirect('solicitudes_usuarios')
 
 @require_http_methods(["GET"])
+@login_required
 def rechazar_solicitud_usuario(request, id_cuenta):
     ''' Controlador correspondiente al rechazo de solicitudes de usuarios
 
     Parametros:
-    request -> Solicitud HTTP '''
+    request -> Solicitud HTTP
+    id_cuenta -> Id de cuenta a ser rechazada '''
     cuenta_usuario = Cuenta.objects.get(id=id_cuenta)
     cuenta_usuario.estado = 'R'
     cuenta_usuario.save()

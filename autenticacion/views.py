@@ -213,17 +213,28 @@ def iniciar_sesion(request):
 					request.session["template_base"] = "coordinador/contexto.html"
 					request.session["nombre"] = u'Coordinador Plan Quirúrgico'
 				elif privilegio == "2":
+					request.session["privilegio"] = "EMERGENCIA_PQ"
+					request.session["template_base"] = "contexto.html"
+					departamento = cuenta.departamento
+					request.session["nombre"] = departamento.nombre
+				elif privilegio == "3":
 					request.session["privilegio"] = "ASISTENTE_PQ"
 					request.session["template_base"] = "contexto.html"
-					request.session["nombre"] = u'Asistente Plan Quirúrgico'
-				elif privilegio == "3":
+					departamento = cuenta.departamento
+					request.session["nombre"] = departamento.nombre
+				elif privilegio == "4":
 					request.session["privilegio"] = "MEDICO"
 					request.session["template_base"] = "medico/contexto.html"
 					medico = cuenta.medico
 					nombre_medico = medico.nombre
 					apellido_medico = medico.apellido
 					request.session["nombre"] = nombre_medico + ' ' + apellido_medico
-				elif privilegio == "4":
+				elif privilegio == "5":
+					request.session["privilegio"] = "OBSERVADOR_PRESUPUESTO"
+					request.session["template_base"] = "contexto.html"
+					departamento = cuenta.departamento
+					request.session["nombre"] = departamento.nombre
+				elif privilegio == "6":
 					request.session["privilegio"] = "OBSERVADOR"
 					request.session["template_base"] = "contexto.html"
 					departamento = cuenta.departamento
