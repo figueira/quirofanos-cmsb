@@ -92,7 +92,6 @@
 	</div>
 </div><!-- Modal de la Duracion de la Operacion -->
 
-
 <!-- Modal del Detalle de la Operacion -->
 <div class="modal fade" id="detalle-operacion" tabindex="-1" role="dialog" aria-labelledby="titulo-detalles-operacion" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
@@ -621,8 +620,9 @@
 					{% if quirofano.intervenciones %}
 					{% if media_hora in quirofano.intervenciones.keys %}
 					{% with quirofano.intervenciones|valor_clave:media_hora as intervencion %}
+					{% with quirofano.intervenciones.values|ocurrencias:intervencion as duracion %}
 					{% if intervencion.obtener_hora_inicio_horas == media_hora %}
-					<td class="unavailable" data-togle="tooltip" data-placement="right" title="{{ quirofano.nombre }}">
+					<td rowspan="{{ duracion }}"class="unavailable" data-togle="tooltip" data-placement="right" title="{{ quirofano.nombre }}">
 						<a href="#" class="pull-right" data-toggle="modal" data-target="#">
 							<span class="glyphicon glyphicon-fullscreen"></span>
 						</a>
@@ -633,9 +633,8 @@
 							{{ LABEL_MEDICO }} {{ intervencion.reservacion.medico }}
 						</p>
 					</td>
-					{% else %}
-					<td class="unavailable" data-toggle="tooltip" data-placement="right" title="{{ quirofano.nombre }}"></td>
 					{% endif %}
+					{% endwith %}
 					{% endwith %}
 					{% else %}
 					<td class="available" data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}">
@@ -650,6 +649,23 @@
 				{% endfor %}
 			</tbody>
 		</table>
-	</div><!-- Plan Quirurgico por Dia -->
-</div>
+	</div>
+
+	<div class="col-lg-1">
+		<table class="table table-help">
+			<thead>
+				<th>
+				</th>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<p class="label label-available">{{ DISPONIBLE }}</p>
+						<p class="label label-unavailable">{{ NO_DISPONIBLE }}</p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div><!-- Plan Quirurgico por Dia -->
 {% endblock content %}

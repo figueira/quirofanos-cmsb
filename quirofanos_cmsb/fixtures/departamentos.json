@@ -8,7 +8,7 @@
 	},
 	{
 		"fields": {
-			"nombre": "Enfermeras Recuperacion"
+			"nombre": "Enfermeras Recuperaci\u00f3n"
 		},
 		"model": "quirofanos_cmsb.departamento",
 		"pk": 2
@@ -22,28 +22,28 @@
 	},
 	{
 		"fields": {
-			"nombre": "Despacho Quirurgico"
+			"nombre": "Despacho Quir\u00fargico"
 		},
 		"model": "quirofanos_cmsb.departamento",
 		"pk": 4
 	},
 	{
 		"fields": {
-			"nombre": "Anatomia Patologica"
+			"nombre": "Anatom\u00eda Patol\u00f3gica"
 		},
 		"model": "quirofanos_cmsb.departamento",
 		"pk": 5
 	},
 	{
 		"fields": {
-			"nombre": "Admision Principal"
+			"nombre": "Admisi\u00f3n Principal"
 		},
 		"model": "quirofanos_cmsb.departamento",
 		"pk": 6
 	},
 	{
 		"fields": {
-			"nombre": "Admision Emergencia"
+			"nombre": "Admisi\u00f3n Emergencia"
 		},
 		"model": "quirofanos_cmsb.departamento",
 		"pk": 7
@@ -57,7 +57,7 @@
 	},
 	{
 		"fields": {
-			"nombre": "Informacion"
+			"nombre": "Informaci\u00f3n"
 		},
 		"model": "quirofanos_cmsb.departamento",
 		"pk": 9

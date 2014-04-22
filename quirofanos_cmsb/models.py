@@ -125,6 +125,7 @@ class Cuenta (models.Model):
         super(Cuenta, self).save()
 
     def __unicode__(self):
+        ''' Representacion unicode '''
         return self.usuario.username + ', ' + self.get_estado_display() + ', ' + self.get_privilegio_display()
 
 class Medico (models.Model):
@@ -143,9 +144,10 @@ class Medico (models.Model):
     especializacion = models.CharField(max_length=50, validators=[RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
 
     def clean(self):
-        ''' Sobreescribe el clean(), colocando nombre y apellido capitalizados '''
+        ''' Sobreescribe el clean(), colocando nombre, apellido capitalizados y el email todo en minuscula '''
         self.nombre = self.nombre.title()
         self.apellido = self.apellido.title()
+        self.email = self.email.lower()
         super(Medico, self).clean()
 
     def save(self):
@@ -154,6 +156,7 @@ class Medico (models.Model):
         super(Medico, self).save()
 
     def __unicode__(self):
+        ''' Representacion unicode '''
         return self.nombre + ' ' + self.apellido
 
 class Departamento (models.Model):
@@ -166,8 +169,9 @@ class Departamento (models.Model):
     email = models.EmailField(max_length=75, blank=True, null=True)
 
     def clean(self):
-        ''' Sobreescribe el clean(), colocando el nombre capitalizado '''
+        ''' Sobreescribe el clean(), colocando el nombre capitalizado y el email todo en minuscula '''
         self.nombre = self.nombre.title()
+        self.email = self.email.lower()
         super(Departamento, self).clean()
 
     def save(self):
@@ -176,6 +180,7 @@ class Departamento (models.Model):
         super(Departamento, self).save()
 
     def __unicode__(self):
+        ''' Representacion unicode '''
         return self.nombre
 
 
@@ -231,6 +236,7 @@ class Quirofano(models.Model):
             return None
 
     def __unicode__(self):
+        ''' Representacion unicode '''
         return str(self.numero) + ', ' + self.get_area_display()
 
 
@@ -250,6 +256,7 @@ class MaterialQuirurgico(models.Model):
         super(MaterialQuirurgico, self).save()
 
     def __unicode__(self):
+        ''' Representacion unicode '''
         return self.nombre
 
 
@@ -269,6 +276,7 @@ class ServicioOperatorio(models.Model):
         super(ServicioOperatorio, self).save()
 
     def __unicode__(self):
+        ''' Representacion unicode '''
         return self.nombre
 
 
@@ -288,6 +296,7 @@ class EquipoEspecial(models.Model):
         super(EquipoEspecial, self).save()
 
     def __unicode__(self):
+        ''' Representacion unicode '''
         return self.nombre
 
 
@@ -310,7 +319,8 @@ class SistemaCorporal(models.Model):
         super(SistemaCorporal, self).save()
 
     def __unicode__(self):
-        return self.codigo_icd_10_pcs + ', ' + self.nombre
+        ''' Representacion unicode '''
+        return self.nombre + ' [' + self.codigo_icd_10_pcs + ']'
 
 
 class TipoProcedimientoQuirurgico(models.Model):
@@ -331,7 +341,8 @@ class TipoProcedimientoQuirurgico(models.Model):
         super(TipoProcedimientoQuirurgico, self).save()
 
     def __unicode__(self):
-        return self.codigo_icd_10_pcs + ', ' + self.nombre
+        ''' Representacion unicode '''
+        return self.nombre + ' [' + self.codigo_icd_10_pcs + ']'
 
 
 class OrganoCorporal(models.Model):
@@ -354,12 +365,24 @@ class OrganoCorporal(models.Model):
         super(OrganoCorporal, self).save()
 
     def __unicode__(self):
+        ''' Representacion unicode '''
         return self.nombre
 
 class CompaniaAseguradora(models.Model):
     nombre = models.CharField(max_length=50, validators=[RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
 
+    def clean(self):
+        ''' Sobreescribe el clean(), colocando el nombre capitalizado '''
+        self.nombre = self.nombre.title()
+        super(OrganoCorporal, self).clean()
+
+    def save(self):
+        ''' Sobreescribe el save() '''
+        self.full_clean()
+        super(CompaniaAseguradora, self).save()
+
     def __unicode__(self):
+        ''' Representacion unicode '''
         return self.nombre
 
 class Paciente(models.Model):
@@ -403,6 +426,7 @@ class Paciente(models.Model):
         super(Paciente, self).save()
 
     def __unicode__(self):
+        ''' Representacion unicode '''
         return self.nombre + ' ' + self.apellido
 
 
@@ -425,7 +449,6 @@ class IntervencionQuirurgica(models.Model):
     equipos_especiales_requeridos = models.ManyToManyField(
         EquipoEspecial, blank=True, null=True)
     quirofano = models.ForeignKey(Quirofano)
-    monto_honorarios_total = models.DecimalField(max_digits=15, decimal_places=2) # implementar funcion para calcular este monto derivado
 
     def clean(self):
         ''' Sobreescribe el clean(), validando los valores del riesgo y la razon del riesgo, ademas de calcular la duracion de la Intervencion Quirurgica '''
@@ -458,6 +481,13 @@ class IntervencionQuirurgica(models.Model):
         self.full_clean()
         super(IntervencionQuirurgica, self).save()
 
+    def obtener_monto_honorarios_total(self):
+        ''' Devuelve el monto total de honorarios de la Intervencion Quirurgica '''
+        monto_honorarios_total = 0
+        for procedimiento in self.procedimientoquirurgico_set.all():
+            monto_honorarios_total = monto_honorarios_total + procedimiento.obtener_monto_honorarios_total()
+        return monto_honorarios_total
+
     def obtener_hora_inicio_horas(self):
         ''' Devuelve la hora de inicio como un float '''
         return round(datetime.timedelta(hours=self.hora_inicio.hour, minutes=self.hora_inicio.minute).total_seconds() / 3600, 2)
@@ -473,6 +503,7 @@ class IntervencionQuirurgica(models.Model):
         return utils.rango_decimal(hora_inicio_horas, hora_fin_horas, 0.5)
 
     def __unicode__(self):
+        ''' Representacion unicode '''
         return self.paciente.__unicode__() + ', ' + self.reservacion.medico.__unicode__() + ', ' + str(self.fecha_intervencion)
 
 class ProcedimientoQuirurgico(models.Model):
@@ -483,7 +514,21 @@ class ProcedimientoQuirurgico(models.Model):
     monto_honorarios_cirujano_principal = models.DecimalField(max_digits=15, decimal_places=2)
     medicos_participantes = models.ManyToManyField(Medico, through='Participacion')
 
+    def save(self):
+        ''' Sobreescribe el save() '''
+        self.full_clean()
+        super(ProcedimientoQuirurgico, self).save()
+
+    def obtener_monto_honorarios_total(self):
+        ''' Devuelve el monto total de honorarios del procedimiento quirurgico '''
+        monto_honorarios_total = monto_honorarios_cirujano_principal
+        for medico in self.medicos_participantes.all():
+            participacion = Participacion.get(procedimiento_quirurgico=self, medico=medico)
+            monto_honorarios_total = monto_honorarios_total + participacion.monto_honorarios
+        return monto_honorarios_total
+
     def __unicode__(self):
+        ''' Representacion unicode '''
         return self.intervencion_quirurgica.__unicode__() + ', ' + self.organo_corporal.sistema_corporal.__unicode__() + ', ' + self.tipo_procedimiento_quirurgico.__unicode__() + ', ' + self.organo_corporal.__unicode__()
 
 
@@ -500,6 +545,7 @@ class Participacion(models.Model):
         super(Participacion, self).save()
 
     def __unicode__(self):
+        ''' Representacion unicode '''
         return self.intervencion_quirurgica.__unicode__() + ', ' + self.medico.__unicode__() + ', ' + self.get_rol_display()
 
 
@@ -512,7 +558,7 @@ class Reservacion (models.Model):
     tipo_solicitud = models.CharField(
         max_length=1, choices=TIPO_SOLICITUD_QUIROFANO)
     dias_hospitalizacion = models.IntegerField(
-        validators=[MinValueValidator(0)])
+        validators=[MinValueValidator(0)], default=0)
     medico = models.ForeignKey(Medico)
     intervencion_quirurgica = models.OneToOneField(IntervencionQuirurgica)
 
@@ -527,4 +573,5 @@ class Reservacion (models.Model):
         super(Reservacion, self).save()
 
     def __unicode__(self):
+        ''' Representacion unicode '''
         return self.intervencion_quirurgica.__unicode__() + ', ' + self.get_tipo_solicitud_display() + ', ' + self.get_estado_display() + ', ' + str(self.fecha_reservacion)

@@ -127,7 +127,7 @@ a:hover
 .table>thead>tr>td.available,.table>tbody>tr>td.available,.table>tfoot>tr>td.available,.table>thead>tr>th.available,.table>tbody>tr>th.available,.table>tfoot>tr>th.available,.table>thead>tr.available>td,.table>tbody>tr.available>td,.table>tfoot>tr.available>td,.table>thead>tr.available>th,.table>tbody>tr.available>th,.table>tfoot>tr.available>th
 {
 	background-color:#BAD3EB!important;
-	cursor: pointer
+	cursor:pointer
 }
 
 .table>thead>tr>td.unavailable,.table>tbody>tr>td.unavailable,.table>tfoot>tr>td.unavailable,.table>thead>tr>th.unavailable,.table>tbody>tr>th.unavailable,.table>tfoot>tr>th.unavailable,.table>thead>tr.unavailable>td,.table>tbody>tr.unavailable>td,.table>tfoot>tr.unavailable>td,.table>thead>tr.unavailable>th,.table>tbody>tr.unavailable>th,.table>tfoot>tr.unavailable>th
@@ -138,7 +138,7 @@ a:hover
 .table-hover>tbody>tr>td.available:hover,.table-hover>tbody>tr>th.available:hover,.table-hover>tbody>tr.available:hover>td,.table-hover>tbody>tr.available:hover>th
 {
 	background-color:#87A1B9!important;
-	cursor: pointer
+	cursor:pointer
 }
 
 .table-hover>tbody>tr>td.unavailable:hover,.table-hover>tbody>tr>th.unavailable:hover,.table-hover>tbody>tr.unavailable:hover>td,.table-hover>tbody>tr.unavailable:hover>th
@@ -209,6 +209,17 @@ a:hover
 .scrollable-plan
 {
 	overflow:auto
+}
+
+/* estilo de las casillas no disponibles en la tabla del plan diario */
+.table-bordered>thead>tr>th.unavailable,.table-bordered>tbody>tr>th,.table-bordered>tfoot>tr>th.unavailable,.table-bordered>thead>tr>td.unavailable,.table-bordered>tbody>tr>td.unavailable,.table-bordered>tfoot>tr>td.unavailable
+{
+	border:none!important
+}
+
+.table-plan>thead>tr>td.unavailable,.table-plan>tbody>tr>td.unavailable,.table-plan>tfoot>tr>td.unavailable,.table-plan>thead>tr>th.unavailable,.table-plan>tbody>tr>th.unavailable,.table-plan>tfoot>tr>th.unavailable,.table-plan>thead>tr.unavailable>td,.table-plan>tbody>tr.unavailable>td,.table-plan>tfoot>tr.unavailable>td,.table-plan>thead>tr.unavailable>th,.table-plan>tbody>tr.unavailable>th,.table-plan>tfoot>tr.unavailable>th
+{
+	outline: solid rgba(172, 66, 66, 1) thin
 }
 
 .table-plan>tbody>tr>td.unavailable:hover,.table-plan>tbody>tr>th.unavailable:hover,.table-plan>tbody>tr.unavailable:hover>td,.table-plan>tbody>tr.unavailable:hover>th

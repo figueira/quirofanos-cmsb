@@ -134,3 +134,7 @@ AUTH_PROFILE_MODULE = 'quirofanos_cmsb.Cuenta'
 # Login URL
 
 LOGIN_URL = 'inicio'
+
+# Email Dummy Backend (Quitar en Produccion y Colocar la Configuracion para Utilizar el SMTP de Gmail)
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
