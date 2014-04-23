@@ -1,0 +1,250 @@
+[
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "00",
+            "nombre": "Sistema Nervioso Central"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "01",
+            "nombre": "Sistema Nervioso Perif\u00e9rico"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "02",
+            "nombre": "Coraz\u00f3n Y Grandes Vasos"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "03",
+            "nombre": "Arterias Superiores"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "04",
+            "nombre": "Arterias Menores"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "05",
+            "nombre": "Venas Superiores"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "06",
+            "nombre": "Venas Inferiores"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 7
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "07",
+            "nombre": "Sistemas Linf\u00e1tico Y Hematol\u00f3gico"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 8
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "08",
+            "nombre": "Ojos"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 9
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "09",
+            "nombre": "O\u00eddo, Nariz, Senos Paranasales"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 10
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "0B",
+            "nombre": "Sistema Respiratorio"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 11
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "0C",
+            "nombre": "Boca Y Garganta"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 12
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "0D",
+            "nombre": "Sistema Gastrointestinal"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 13
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "0F",
+            "nombre": "Sistema Hepatobiliar Y P\u00e1ncreas"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 14
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "0G",
+            "nombre": "Sistema Endocrino"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 15
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "0H",
+            "nombre": "Piel Y Mamas"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 16
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "0J",
+            "nombre": "Tejido Subcut\u00e1neo Y Fascia"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 17
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "0K",
+            "nombre": "M\u00fasculos"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 18
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "0L",
+            "nombre": "Tendones"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 19
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "0M",
+            "nombre": "Bursas Y Ligamentos"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 20
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "0N",
+            "nombre": "Cabeza Y Huesos Faciales"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 21
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "0P",
+            "nombre": "Huesos Superiores"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 22
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "0Q",
+            "nombre": "Huesos Menores"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 23
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "0R",
+            "nombre": "Articulaciones Superiores"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 24
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "0S",
+            "nombre": "Articulaciones Bajas"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 25
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "0T",
+            "nombre": "Sistema Urinario"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 26
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "0U",
+            "nombre": "Sistema Reproductor Femenino"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 27
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "0V",
+            "nombre": "Sistema Reproductor Masculino"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 28
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "0W",
+            "nombre": "Regiones Anat\u00f3micas, General"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 29
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "0X",
+            "nombre": "Regiones Anat\u00f3micas, Extremidades Superiores"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 30
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "0Y",
+            "nombre": "Regiones Anat\u00f3micas, Extremidades Inferiores"
+        },
+        "model": "quirofanos_cmsb.sistemacorporal",
+        "pk": 31
+    }
+]

@@ -1,0 +1,250 @@
+[
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "0",
+            "nombre": "Alteraci\u00f3n"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "1",
+            "nombre": "Bypass"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "2",
+            "nombre": "Cambio"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "3",
+            "nombre": "Control"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "4",
+            "nombre": "Creaci\u00f3n"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "5",
+            "nombre": "Destrucci\u00f3n"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "6",
+            "nombre": "Desapego"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 7
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "7",
+            "nombre": "Dilataci\u00f3n"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 8
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "8",
+            "nombre": "Divisi\u00f3n"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 9
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "9",
+            "nombre": "Drenaje"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 10
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "B",
+            "nombre": "Excisi\u00f3n"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 11
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "C",
+            "nombre": "Extirpaci\u00f3n"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 12
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "D",
+            "nombre": "Extracci\u00f3n"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 13
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "F",
+            "nombre": "Fragmentaci\u00f3n"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 14
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "G",
+            "nombre": "Fusi\u00f3n"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 15
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "H",
+            "nombre": "Inserci\u00f3n"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 16
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "J",
+            "nombre": "Inspecci\u00f3n"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 17
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "K",
+            "nombre": "Map"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 18
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "L",
+            "nombre": "Oclusi\u00f3n"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 19
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "M",
+            "nombre": "Reinserci\u00f3n"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 20
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "N",
+            "nombre": "Liberaci\u00f3n"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 21
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "P",
+            "nombre": "Eliminaci\u00f3n"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 22
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "Q",
+            "nombre": "Reparaci\u00f3n"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 23
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "R",
+            "nombre": "Reemplazo"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 24
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "S",
+            "nombre": "Reposici\u00f3n"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 25
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "T",
+            "nombre": "Resecci\u00f3n"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 26
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "U",
+            "nombre": "Suplemento"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 27
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "V",
+            "nombre": "Restricci\u00f3n"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 28
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "W",
+            "nombre": "Revisi\u00f3n"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 29
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "X",
+            "nombre": "Transferencia"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 30
+    },
+    {
+        "fields": {
+            "codigo_icd_10_pcs": "Y",
+            "nombre": "Transplante"
+        },
+        "model": "quirofanos_cmsb.tipoprocedimientoquirurgico",
+        "pk": 31
+    }
+]
