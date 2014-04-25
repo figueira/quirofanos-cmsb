@@ -158,7 +158,7 @@ def registro_departamento(request):
 		if nombre_departamento == "Enfermeras Recuperacion":
 			cuenta_departamento.privilegio = '3'
 		elif nombre_departamento == "Admision Emergencia":
-			cuenta_departamento.privilegio = '2':
+			cuenta_departamento.privilegio = '2'
 		elif nombre_departamento == "Admision Principal":
 			cuenta_departamento.privilegio == '5'
 		else:

@@ -32,7 +32,7 @@ def calendario(request, area_actual='QG', ano=date.today().year, mes=date.today(
 		area['nombre'] = quirofano.get_area_display()
 		areas.append(area)
 		areas_valores.append(area['valor'])
-	quirofanos_area = Quirofano.objects.filter(area=area)
+	quirofanos_area = Quirofano.objects.filter(area=area_actual)
 
 	if mes < 1 or mes > 12:
 		raise Http404
