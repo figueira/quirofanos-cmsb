@@ -171,7 +171,8 @@ class Departamento (models.Model):
     def clean(self):
         ''' Sobreescribe el clean(), colocando el nombre capitalizado y el email todo en minuscula '''
         self.nombre = self.nombre.title()
-        self.email = self.email.lower()
+        if self.email:
+            self.email = self.email.lower()
         super(Departamento, self).clean()
 
     def save(self):
