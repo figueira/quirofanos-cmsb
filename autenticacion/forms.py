@@ -38,7 +38,12 @@ class BusquedaMedicoForm(BaseForm):
 
 class BusquedaDepartamentoForm(BaseForm):
 	''' Formulario de busqueda de Departamento por nombre '''
-	nombre_departamento = forms.ModelChoiceField(queryset=Departamento.objects.filter(cuenta=None))
+	c = Departamento.objects.all().count()
+	d = Departamento.objects.exclude(cuenta=None).count()
+	if c != d:
+		nombre_departamento = forms.ModelChoiceField(queryset=Departamento.objects.filter(cuenta=None))
+	else:
+		nombre_departamento = None
 
 class RegistroMedicoForm(BaseForm):
 	''' Formulario de solicitud registro de medico '''

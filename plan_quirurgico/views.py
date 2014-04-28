@@ -15,13 +15,14 @@ from quirofanos_cmsb.helpers.template_text import TextoMostrable
 @require_GET
 @login_required
 def calendario(request, area_actual='QG', ano=date.today().year, mes=date.today().month):
+#def calendario(request, area_actual, ano, mes):
 	''' Controlador correspondiente al calendario de disponibilidad de quirofanos por mes
 
 	Parametros:
 	request -> Solicitud HTTP
 	area -> Area de quirofanos a ser consultada
 	ano -> Ano del calendario
-	mes -> Mes del calendario '''
+	mes -> Mes del calendario '''		
 	ano = int(ano)
 	mes = int(mes)
 	quirofanos_area_distinta = Quirofano.objects.distinct('area')
