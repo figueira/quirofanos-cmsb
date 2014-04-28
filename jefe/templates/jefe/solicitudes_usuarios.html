@@ -33,18 +33,18 @@
 		<!-- Nav tabs -->
 		<ul class="nav nav-tabs">
 			<li id="tab-pendientes"><a href="{% url 'solicitudes_usuarios' 'pendientes' %}">
-				Pendientes
+				{{ PENDIENTES }}
 				<span class="badge">
 					{{ numero_solicitudes_pendientes }}
 				</span>
 			</a></li>
 			<li id="tab-aprobadas"><a href="{% url 'solicitudes_usuarios' 'aprobadas' %}">
-				Aprobadas
+				{{ APROBADAS }}
 				<span class="glyphicon glyphicon-ok">
 				</span>
 			</a></li>
 			<li id="tab-rechazadas"><a href="{% url 'solicitudes_usuarios' 'rechazadas' %}">
-				Rechazadas
+				{{ RECHAZADAS }}
 				<span class="glyphicon glyphicon-ban-circle">
 				</span>
 			</a></li>
@@ -57,24 +57,24 @@
 			</span>
 		</button>
 		<ul class="dropdown-menu" role="menu">
-			{% if tipo_busqueda != "Última Semana" %}
+			{% if tipo_busqueda != ULTIMA_SEMANA %}
 			<li>
-				<a href="{% url 'solicitudes_usuarios' %}">
-					Última Semana
+				<a href="{% url 'solicitudes_usuarios' estado_solicitud %}">
+					{{ ULTIMA_SEMANA }}
 				</a>
 			</li>
 			{% endif %}
-			{% if tipo_busqueda != "Último Mes" %}
+			{% if tipo_busqueda != ULTIMO_MES %}
 			<li>
 				<a href="{% url 'solicitudes_usuarios' estado_solicitud 2 %}">
-					Último Mes
+					{{ ULTIMO_MES }}
 				</a>
 			</li>
 			{% endif %}
-			{% if tipo_busqueda != "Últimos 3 meses" %}
+			{% if tipo_busqueda != ULTIMOS_TRES_MESES %}
 			<li>
 				<a href="{% url 'solicitudes_usuarios' estado_solicitud 3 %}">
-					Últimos 3 Meses
+					{{ ULTIMOS_TRES_MESES }}
 				</a>
 			</li>
 			{% endif %}

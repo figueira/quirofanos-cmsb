@@ -106,7 +106,7 @@ def registro_medico(request):
 		cuenta_medico = Cuenta()
 		cuenta_medico.usuario = usuario
 		cuenta_medico.estado = 'P'
-		cuenta_medico.privilegio = '3'
+		cuenta_medico.privilegio = '4'
 		cuenta_medico.save()
 
 		medico.cuenta = cuenta_medico
@@ -194,10 +194,15 @@ def iniciar_sesion(request):
 		contrasena = formulario_inicio_sesion.cleaned_data['contrasena']
 		user = authenticate(username=nombre_usuario, password=contrasena)
 		if user:
+			cuenta = None
+			try:
+				cuenta = user.cuenta
+			except Cuenta.DoesNotExist:
+				messages.add_message(request, messages.ERROR, MensajeTemporalError.AUTENTICACION_FALLIDA)
+				return redirect('inicio')
 			if user.is_active:
 				login(request, user)
-				request.session["nombre_usuario"] = request.user.username
-				cuenta = request.user.cuenta
+				request.session["nombre_usuario"] = user.username
 				privilegio = cuenta.privilegio
 				if privilegio == "0":
 					request.session["privilegio"] = "JEFE_PQ"
@@ -208,17 +213,28 @@ def iniciar_sesion(request):
 					request.session["template_base"] = "coordinador/contexto.html"
 					request.session["nombre"] = u'Coordinador Plan Quirúrgico'
 				elif privilegio == "2":
+					request.session["privilegio"] = "EMERGENCIA_PQ"
+					request.session["template_base"] = "contexto.html"
+					departamento = cuenta.departamento
+					request.session["nombre"] = departamento.nombre
+				elif privilegio == "3":
 					request.session["privilegio"] = "ASISTENTE_PQ"
 					request.session["template_base"] = "contexto.html"
-					request.session["nombre"] = u'Asistente Plan Quirúrgico'
-				elif privilegio == "3":
+					departamento = cuenta.departamento
+					request.session["nombre"] = departamento.nombre
+				elif privilegio == "4":
 					request.session["privilegio"] = "MEDICO"
 					request.session["template_base"] = "medico/contexto.html"
 					medico = cuenta.medico
 					nombre_medico = medico.nombre
 					apellido_medico = medico.apellido
 					request.session["nombre"] = nombre_medico + ' ' + apellido_medico
-				elif privilegio == "4":
+				elif privilegio == "5":
+					request.session["privilegio"] = "OBSERVADOR_PRESUPUESTO"
+					request.session["template_base"] = "contexto.html"
+					departamento = cuenta.departamento
+					request.session["nombre"] = departamento.nombre
+				elif privilegio == "6":
 					request.session["privilegio"] = "OBSERVADOR"
 					request.session["template_base"] = "contexto.html"
 					departamento = cuenta.departamento

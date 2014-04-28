@@ -33,6 +33,7 @@ class MensajeError():
     AREA_INGRESO_SIN_NUMERO_EXPEDIENTE = _(u'El área de ingreso de un paciente no puede existir sin un número de expediente asociado.')
     NUMERO_EXPEDIENTE_SIN_AREA_INGRESO = _(u'El número de expediente de un paciente no puede existir sin un área de ingreso asociada.')
     EXISTE_CUENTA = _(u'El médico asociado a la cédula ingresada ya ha solicitado su cuenta.')
+    DURACION_MENOR_QUE_UNA_HORA = _(u'La duración de una intervención quirúrgica debe ser mínimo una hora.')
 
 class CodigoError():
     ''' Constantes que contienen codigos de error a ser utilizados en validaciones de modelos y formularios '''
@@ -53,3 +54,4 @@ class CodigoError():
     AREA_INGRESO_SIN_NUMERO_EXPEDIENTE = "area_ingreso_sin_numero_expediente"
     NUMERO_EXPEDIENTE_SIN_AREA_INGRESO = "numero_expediente_sin_area_ingreso"
     EXISTE_CUENTA = "existe_cuenta"
+    DURACION_MENOR_QUE_UNA_HORA = "duracion_menor_que_una_hora"

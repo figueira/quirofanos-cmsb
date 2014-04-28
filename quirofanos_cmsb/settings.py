@@ -84,7 +84,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
@@ -118,6 +117,7 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
     "django.core.context_processors.static",
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
+    "quirofanos_cmsb.helpers.custom_processors.constantes_texto",
     )
 
 # Authentication Backends
@@ -133,3 +133,7 @@ AUTH_PROFILE_MODULE = 'quirofanos_cmsb.Cuenta'
 # Login URL
 
 LOGIN_URL = 'inicio'
+
+# Email Dummy Backend (Quitar en Produccion y Colocar la Configuracion para Utilizar el SMTP de Gmail)
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

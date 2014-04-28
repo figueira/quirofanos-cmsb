@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 from quirofanos_cmsb.helpers.custom_validators import ExpresionRegular, MensajeError, CodigoError
 from quirofanos_cmsb.models import Medico, Departamento
+from quirofanos_cmsb.forms import BaseForm
 
 # Nacionalidades
 NACIONALIDAD = (
@@ -12,12 +13,12 @@ NACIONALIDAD = (
 	('E-', u'Extranjero'),
 	)
 
-class InicioSesionForm(forms.Form):
+class InicioSesionForm(BaseForm):
 	''' Formulario de inicio de sesion '''
 	nombre_usuario = forms.CharField(max_length=30)
 	contrasena = forms.CharField(widget=forms.PasswordInput)
 
-class BusquedaMedicoForm(forms.Form):
+class BusquedaMedicoForm(BaseForm):
 	''' Formulario de busqueda de medico por su numero de cedula '''
 	nacionalidad_medico = forms.ChoiceField(widget=forms.HiddenInput, choices=NACIONALIDAD, initial='V-')
 	cedula_medico = forms.CharField(max_length=12, validators=[RegexValidator(ExpresionRegular.CEDULA, MensajeError.CEDULA_INVALIDA, CodigoError.CEDULA_INVALIDA)])
@@ -35,11 +36,11 @@ class BusquedaMedicoForm(forms.Form):
 			raise forms.ValidationError(MensajeError.EXISTE_CUENTA, CodigoError.EXISTE_CUENTA)
 		return cedula_medico
 
-class BusquedaDepartamentoForm(forms.Form):
+class BusquedaDepartamentoForm(BaseForm):
 	''' Formulario de busqueda de Departamento por nombre '''
 	nombre_departamento = forms.ModelChoiceField(queryset=Departamento.objects.filter(cuenta=None))
 
-class RegistroMedicoForm(forms.Form):
+class RegistroMedicoForm(BaseForm):
 	''' Formulario de solicitud registro de medico '''
 	cedula_medico = forms.CharField(widget=forms.HiddenInput, required=False)
 	nombre_usuario_medico = forms.CharField(max_length=30, validators=[validate_slug])
@@ -52,7 +53,7 @@ class RegistroMedicoForm(forms.Form):
 			raise forms.ValidationError(MensajeError.EXISTE_USUARIO, code=CodigoError.EXISTE_USUARIO)
 		return nombre_usuario_medico
 
-class RegistroDepartamentoForm(forms.Form):
+class RegistroDepartamentoForm(BaseForm):
 	''' Formulario de solicitud de registro de departamento '''
 	nombre_departamento = forms.CharField(widget=forms.HiddenInput, required=False)
 	nombre_usuario_departamento = forms.CharField(max_length=30, validators=[validate_slug])
@@ -65,7 +66,7 @@ class RegistroDepartamentoForm(forms.Form):
 			raise forms.ValidationError(MensajeError.EXISTE_USUARIO, code=CodigoError.EXISTE_USUARIO)
 		return nombre_usuario_departamento
 
-class CambiarContrasenaForm(forms.Form):
+class CambiarContrasenaForm(BaseForm):
 	''' Formulario de cambio de contrasena '''
 	contrasena_actual = forms.CharField(widget=forms.PasswordInput)
 	contrasena_nueva = forms.CharField(widget=forms.PasswordInput)
@@ -85,6 +86,6 @@ class CambiarContrasenaForm(forms.Form):
 		return cleaned_data
 
 
-class RecuperarContrasenaForm(forms.Form):
+class RecuperarContrasenaForm(BaseForm):
 	''' Formulario de recuperar contrasena '''
 	correo_electronico = forms.EmailField(max_length=75)

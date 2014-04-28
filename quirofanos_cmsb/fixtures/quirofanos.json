@@ -4,111 +4,127 @@
             "area": "QG",
             "numero": 0
         },
-        "model": "quirofanos_cmsb.quirofano"
+        "model": "quirofanos_cmsb.quirofano",
+        "pk": 1
     },
     {
         "fields": {
             "area": "QG",
             "numero": 1
         },
-        "model": "quirofanos_cmsb.quirofano"
+        "model": "quirofanos_cmsb.quirofano",
+        "pk": 2
     },
     {
         "fields": {
             "area": "QG",
             "numero": 2
         },
-        "model": "quirofanos_cmsb.quirofano"
+        "model": "quirofanos_cmsb.quirofano",
+        "pk": 3
     },
     {
         "fields": {
             "area": "QG",
             "numero": 3
         },
-        "model": "quirofanos_cmsb.quirofano"
+        "model": "quirofanos_cmsb.quirofano",
+        "pk": 4
     },
     {
         "fields": {
             "area": "QG",
             "numero": 4
         },
-        "model": "quirofanos_cmsb.quirofano"
+        "model": "quirofanos_cmsb.quirofano",
+        "pk": 5
     },
     {
         "fields": {
             "area": "QG",
             "numero": 5
         },
-        "model": "quirofanos_cmsb.quirofano"
+        "model": "quirofanos_cmsb.quirofano",
+        "pk": 6
     },
     {
         "fields": {
             "area": "A",
             "numero": 0
         },
-        "model": "quirofanos_cmsb.quirofano"
+        "model": "quirofanos_cmsb.quirofano",
+        "pk": 7
     },
     {
         "fields": {
             "area": "A",
             "numero": 1
         },
-        "model": "quirofanos_cmsb.quirofano"
+        "model": "quirofanos_cmsb.quirofano",
+        "pk": 8
     },
     {
         "fields": {
             "area": "A",
             "numero": 2
         },
-        "model": "quirofanos_cmsb.quirofano"
+        "model": "quirofanos_cmsb.quirofano",
+        "pk": 9
     },
     {
         "fields": {
             "area": "A",
             "numero": 3
         },
-        "model": "quirofanos_cmsb.quirofano"
+        "model": "quirofanos_cmsb.quirofano",
+        "pk": 10
     },
     {
         "fields": {
             "area": "A",
             "numero": 4
         },
-        "model": "quirofanos_cmsb.quirofano"
+        "model": "quirofanos_cmsb.quirofano",
+        "pk": 11
     },
     {
         "fields": {
             "area": "SP",
             "numero": 1
         },
-        "model": "quirofanos_cmsb.quirofano"
+        "model": "quirofanos_cmsb.quirofano",
+        "pk": 12
     },
     {
         "fields": {
             "area": "SP",
             "numero": 2
         },
-        "model": "quirofanos_cmsb.quirofano"
+        "model": "quirofanos_cmsb.quirofano",
+        "pk": 13
     },
     {
         "fields": {
             "area": "SEE",
             "numero": 1
         },
-        "model": "quirofanos_cmsb.quirofano"
+        "model": "quirofanos_cmsb.quirofano",
+        "pk": 14
     },
     {
         "fields": {
             "area": "SH",
             "numero": 1
         },
-        "model": "quirofanos_cmsb.quirofano"
+        "model": "quirofanos_cmsb.quirofano",
+        "pk": 15
     },
     {
         "fields": {
             "area": "AS",
             "numero": 1
         },
-        "model": "quirofanos_cmsb.quirofano"
+        "model": "quirofanos_cmsb.quirofano",
+        "pk": 16
     }
 ]

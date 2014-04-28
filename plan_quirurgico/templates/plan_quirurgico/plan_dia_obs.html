@@ -1,5 +1,4 @@
-<!-- DEPENDIENDO DEL TIPO DE USUARIO SE EXTENDERA UN CONTEXTO DISTINTO -->
-{% extends "medico/contexto.html" %}
+{% extends request.session.template_base %}
 
 {% load staticfiles %}
 
@@ -23,7 +22,7 @@
 {% block content %}
 <div class="page-header">
 	<h1>Plan Quirúrgico
-		<small> - Área 1 - dd/mm/aaaa</small> 
+		<small> - Área 1 - dd/mm/aaaa</small>
 	</h1>
 </div><br>
 
@@ -55,21 +54,21 @@
 						</label>
 						<div class="col-lg-2">
 							<input class="form-control" type="text" value="14/03/2014" disabled>
-						</div>												
-					</div>					
+						</div>
+					</div>
 					<div class="form-group">
 						<label class="col-lg-2 control-label">
-							Hora Inicio: 
+							Hora Inicio:
 						</label>
 						<div class="col-lg-2">
 							<input class="form-control" type="text" value="8:30am" disabled>
 						</div>
 						<label class="col-lg-2 control-label">
-							Hora Fin: 
+							Hora Fin:
 						</label>
 						<div class="col-lg-2">
 							<input class="form-control" type="text" value="10:30am" disabled>
-						</div>											
+						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-lg-2 control-label" for="tipo-solicitud">
@@ -94,7 +93,7 @@
 									Paliativa
 								</label>
 							</div>
-						</div>	
+						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-lg-2 control-label" for="tipo-operacion">
@@ -129,7 +128,7 @@
 							</select>
 						</div>
 					</div>
-					<div class="form-group">						
+					<div class="form-group">
 						<label class="col-lg-2 control-label" for="observaciones">
 							Observaciones:
 						</label>
@@ -153,14 +152,14 @@
 									<input type="radio" name="riesgo" value="regular" checked disabled>
 									Regular
 								</label>
-							</div>	
+							</div>
 							<div class="radio-inline">
 								<label>
 									<input type="radio" name="riesgo" value="malo" disabled>
 									Malo
 								</label>
 							</div>
-						</div>					
+						</div>
 					</div>
 					<div class="form-group hidden" id="razon-riesgo">
 						<div class="col-lg-offset-2 col-lg-10">
@@ -190,7 +189,7 @@
 								</option>
 							</select>
 						</div>
-					</div>	
+					</div>
 					<div class="form-group">
 						<label class="col-lg-2 control-label" for="material-quirurgico">
 							Material
@@ -220,13 +219,13 @@
 								Máquina de Autosutura
 							</label>
 						</div>
-					</div>						
+					</div>
 					<div class="form-group">
 						<div class="col-lg-offset-10">							<a href="javascript:void(0);" class="btn btn-default" id="ver-info-paciente">
 							Paciente
 							<span class="glyphicon glyphicon-chevron-right">
 							</span>
-						</a>			
+						</a>
 					</div>
 				</div>
 			</form><!-- Formulario Solicitud Quirofano -->
@@ -293,7 +292,7 @@
 						<input type="text" class="form-control" name="telefono-paciente" value="1587765" disabled>
 					</div>
 				</div><!-- Telefono -->
-				<div class="form-group">						
+				<div class="form-group">
 					<label class="col-lg-2 control-label" for="diagnostico-ingreso-paciente">
 						Diagnóstico:
 					</label>
@@ -315,7 +314,7 @@
 						<div class="radio-inline">
 							<label>
 								<input type="radio" name="forma-pago" value="seguro" disabled>
-								Seguro								
+								Seguro
 							</label>
 						</div>
 					</div>
@@ -353,7 +352,7 @@
 								</option>
 								<option>
 									hab2
-								</option>	
+								</option>
 								<option>
 									hab3
 								</option>
@@ -364,7 +363,7 @@
 				<div class="form-group">
 					<div class="col-lg-offset-2 col-lg-4">
 						<label class="checkbox-inline control-label">
-							<input type="checkbox" name="paciente-impres" disabled> 
+							<input type="checkbox" name="paciente-impres" disabled>
 							Paciente Suscrito a Impres
 						</label>
 					</div>
@@ -375,7 +374,7 @@
 				<div class="form-group">
 					<div class="col-lg-offset-2 col-lg-4">
 						<label class="checkbox-inline control-label">
-							<input type="checkbox" name="paciente-medico" disabled> 
+							<input type="checkbox" name="paciente-medico" disabled>
 							Paciente Médico
 						</label>
 					</div>
@@ -423,7 +422,7 @@
 				</div>
 			</form><!-- Formulario Solicitud Paciente -->
 
-			<form class="form-horizontal hidden" role="form" id="formulario-solicitud-honorarios">				
+			<form class="form-horizontal hidden" role="form" id="formulario-solicitud-honorarios">
 				<div class="form-group">
 					<label class="col-lg-2 control-label" for="nombre-anestesiologo">
 						Anestesiólogo:
@@ -499,7 +498,7 @@
 							<input type="text" class="form-control" name="honorario-ayudante-3" value="10.000" disabled>
 						</div>
 					</div>
-				</div><!-- Tercer Ayudante -->						
+				</div><!-- Tercer Ayudante -->
 				<div class="form-group">
 					<div class="col-lg-2">
 						<a href="javascript:void(0);" class="btn btn-default" id="volver-info-paciente">
@@ -548,8 +547,8 @@
 				<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle-operacion">
 					<span class="glyphicon glyphicon-fullscreen"></span>
 				</a>
-				<p class="label label-info">	
-					Paciente: Pérez Romero, José 
+				<p class="label label-info">
+					Paciente: Pérez Romero, José
 				</p><br>
 				<p class="label label-default">
 					<abbr title="Intervención">Int.</abbr> Quirúrgica: Colocación de Cateter
@@ -563,7 +562,7 @@
 				</p><br>
 				<p class="label label-success">
 					En Habitación: 705
-				</p>		
+				</p>
 			</div>
 		</div>
 	</div>
@@ -576,8 +575,8 @@
 				<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle-operacion">
 					<span class="glyphicon glyphicon-fullscreen"></span>
 				</a>
-				<p class="label label-info">	
-					Paciente: Pérez Romero, José 
+				<p class="label label-info">
+					Paciente: Pérez Romero, José
 				</p><br>
 				<p class="label label-default">
 					<abbr title="Intervención">Int.</abbr> Quirúrgica: Colocación de Cateter
@@ -591,7 +590,7 @@
 				</p><br>
 				<p class="label label-success">
 					En Recuperación
-				</p>		
+				</p>
 			</div>
 		</div>
 	</div>
@@ -604,8 +603,8 @@
 				<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle-operacion">
 					<span class="glyphicon glyphicon-fullscreen"></span>
 				</a>
-				<p class="label label-info">	
-					Paciente: Pérez Romero, José 
+				<p class="label label-info">
+					Paciente: Pérez Romero, José
 				</p><br>
 				<p class="label label-default">
 					<abbr title="Intervención">Int.</abbr> Quirúrgica: Colocación de Cateter
@@ -619,7 +618,7 @@
 				</p><br>
 				<p class="label label-warning">
 					En Curso
-				</p>		
+				</p>
 			</div>
 		</div>
 	</div>
@@ -632,8 +631,8 @@
 				<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle-operacion">
 					<span class="glyphicon glyphicon-fullscreen"></span>
 				</a>
-				<p class="label label-info">	
-					Paciente: Pérez Romero, José 
+				<p class="label label-info">
+					Paciente: Pérez Romero, José
 				</p><br>
 				<p class="label label-default">
 					<abbr title="Intervención">Int.</abbr> Quirúrgica: Colocación de Cateter
@@ -647,7 +646,7 @@
 				</p><br>
 				<p class="label label-success">
 					En Habitación: 520
-				</p>		
+				</p>
 			</div>
 		</div>
 	</div>
@@ -660,8 +659,8 @@
 				<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle-operacion">
 					<span class="glyphicon glyphicon-fullscreen"></span>
 				</a>
-				<p class="label label-info">	
-					Paciente: Pérez Romero, José 
+				<p class="label label-info">
+					Paciente: Pérez Romero, José
 				</p><br>
 				<p class="label label-default">
 					<abbr title="Intervención">Int.</abbr> Quirúrgica: Colocación de Cateter
@@ -675,7 +674,7 @@
 				</p><br>
 				<p class="label label-danger">
 					En Espera
-				</p>		
+				</p>
 			</div>
 		</div>
 	</div>
@@ -688,8 +687,8 @@
 				<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle-operacion">
 					<span class="glyphicon glyphicon-fullscreen"></span>
 				</a>
-				<p class="label label-info">	
-					Paciente: Pérez Romero, José 
+				<p class="label label-info">
+					Paciente: Pérez Romero, José
 				</p><br>
 				<p class="label label-default">
 					<abbr title="Intervención">Int.</abbr> Quirúrgica: Colocación de Cateter
@@ -703,7 +702,7 @@
 				</p><br>
 				<p class="label label-danger">
 					En Espera
-				</p>		
+				</p>
 			</div>
 		</div>
 	</div>
@@ -716,8 +715,8 @@
 				<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle-operacion">
 					<span class="glyphicon glyphicon-fullscreen"></span>
 				</a>
-				<p class="label label-info">	
-					Paciente: Pérez Romero, José 
+				<p class="label label-info">
+					Paciente: Pérez Romero, José
 				</p><br>
 				<p class="label label-default">
 					<abbr title="Intervención">Int.</abbr> Quirúrgica: Colocación de Cateter
@@ -731,7 +730,7 @@
 				</p><br>
 				<p class="label label-danger">
 					En Espera
-				</p>		
+				</p>
 			</div>
 		</div>
 	</div>
@@ -744,8 +743,8 @@
 				<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle-operacion">
 					<span class="glyphicon glyphicon-fullscreen"></span>
 				</a>
-				<p class="label label-info">	
-					Paciente: Pérez Romero, José 
+				<p class="label label-info">
+					Paciente: Pérez Romero, José
 				</p><br>
 				<p class="label label-default">
 					<abbr title="Intervención">Int.</abbr> Quirúrgica: Colocación de Cateter
@@ -759,7 +758,7 @@
 				</p><br>
 				<p class="label label-danger">
 					En Espera
-				</p>		
+				</p>
 			</div>
 		</div>
 	</div>
@@ -772,8 +771,8 @@
 				<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle-operacion">
 					<span class="glyphicon glyphicon-fullscreen"></span>
 				</a>
-				<p class="label label-info">	
-					Paciente: Pérez Romero, José 
+				<p class="label label-info">
+					Paciente: Pérez Romero, José
 				</p><br>
 				<p class="label label-default">
 					<abbr title="Intervención">Int.</abbr> Quirúrgica: Colocación de Cateter
@@ -787,7 +786,7 @@
 				</p><br>
 				<p class="label label-danger">
 					En Espera
-				</p>		
+				</p>
 			</div>
 		</div>
 	</div>
@@ -800,8 +799,8 @@
 				<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle-operacion">
 					<span class="glyphicon glyphicon-fullscreen"></span>
 				</a>
-				<p class="label label-info">	
-					Paciente: Pérez Romero, José 
+				<p class="label label-info">
+					Paciente: Pérez Romero, José
 				</p><br>
 				<p class="label label-default">
 					<abbr title="Intervención">Int.</abbr> Quirúrgica: Colocación de Cateter
@@ -815,7 +814,7 @@
 				</p><br>
 				<p class="label label-success">
 					En Habitación: 705
-				</p>		
+				</p>
 			</div>
 		</div>
 	</div>
@@ -828,8 +827,8 @@
 				<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle-operacion">
 					<span class="glyphicon glyphicon-fullscreen"></span>
 				</a>
-				<p class="label label-info">	
-					Paciente: Pérez Romero, José 
+				<p class="label label-info">
+					Paciente: Pérez Romero, José
 				</p><br>
 				<p class="label label-default">
 					<abbr title="Intervención">Int.</abbr> Quirúrgica: Colocación de Cateter
@@ -843,7 +842,7 @@
 				</p><br>
 				<p class="label label-success">
 					En Habitación: 705
-				</p>		
+				</p>
 			</div>
 		</div>
 	</div>

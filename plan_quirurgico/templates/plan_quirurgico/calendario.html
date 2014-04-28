@@ -64,278 +64,48 @@
 		<table class="table table-bordered table-responsive table-hover">
 			<thead>
 				<tr>
-					<th class="col-lg-1">Domingo</th>
 					<th class="col-lg-1">Lunes</th>
 					<th class="col-lg-1">Martes</th>
 					<th class="col-lg-1">Miércoles</th>
 					<th class="col-lg-1">Jueves</th>
 					<th class="col-lg-1">Viernes</th>
 					<th class="col-lg-1">Sábado</th>
+					<th class="col-lg-1">Domingo</th>
 				</tr>
 			</thead>
 			<tbody>
+				{% for semana in semanas %}
 				<tr>
-					<td class="available">
-						<span class="badge pull-right">1</span>
+					{% for dia in semana %}
+					{% if dia.dia_mes == 0 %}
+					<td>
+					</td>
+					{% else %}
+					{% if dia.disponibilidad %}
+					<td class="available calendario-dia-disponible" href="{% url 'plan_dia' area_actual ano mes dia.dia_mes %}">
+						<span class="pull-right">
+							<strong>{{ dia.dia_mes }}</strong>
+						</span>
 						<br>
 						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
+							<abbr title="{{ LABEL_INTERVENCION_PLURAL }}">{{ LABEL_INTERVENCION_ABREVIADO }}</abbr>
+							{{ LABEL_QUIRURGICA_PLURAL }} {{ dia.numero_intervenciones }}
 						</p>
 					</td>
+					{% else %}
 					<td class="unavailable">
-						<span class="badge pull-right">2</span>
+						<span class="pull-right">{{ dia.dia_mes }}</span>
 						<br>
 						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
+							<abbr title="{{ LABEL_INTERVENCION_PLURAL }}">{{ LABEL_INTERVENCION_ABREVIADO }}</abbr>
+							{{ LABEL_QUIRURGICA_PLURAL }} {{ dia.numero_intervenciones }}
 						</p>
 					</td>
-					<td class="unavailable">
-						<span class="badge pull-right">3</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-					<td class="available">
-						<span class="badge pull-right">4</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-					<td class="available">
-						<span class="badge pull-right">5</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-					<td class="unavailable">
-						<span class="badge pull-right">6</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-					<td class="available">
-						<span class="badge pull-right">7</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
+					{% endif %}
+					{% endif %}
+					{% endfor %}
 				</tr>
-				<tr>
-					<td class="unavailable">
-						<span class="badge pull-right">8</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-					<td class="available">
-						<span class="badge pull-right">9</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-					<td class="available">
-						<span class="badge pull-right">10</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-					<td class="unavailable">
-						<span class="badge pull-right">11</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-					<td class="available">
-						<span class="badge pull-right">12</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-					<td class="unavailable">
-						<span class="badge pull-right">13</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-					<td class="available">
-						<span class="badge pull-right">14</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-				</tr>
-				<tr>
-					<td class="available">
-						<span class="badge pull-right">15</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-					<td class="unavailable">
-						<span class="badge pull-right">16</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-					<td class="unavailable">
-						<span class="badge pull-right">17</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-					<td class="available">
-						<span class="badge pull-right">18</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-					<td class="available">
-						<span class="badge pull-right">19</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-					<td class="available">
-						<span class="badge pull-right">20</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-					<td class="unavailable">
-						<span class="badge pull-right">21</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-				</tr>
-				<tr>
-					<td class="unavailable">
-						<span class="badge pull-right">22</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-					<td class="available">
-						<span class="badge pull-right">23</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-					<td class="available">
-						<span class="badge pull-right">24</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-					<td class="unavailable">
-						<span class="badge pull-right">25</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-					<td class="unavailable">
-						<span class="badge pull-right">26</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-					<td class="unavailable">
-						<span class="badge pull-right">27</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-					<td class="unavailable">
-						<span class="badge pull-right">28</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-				</tr>
-				<tr>
-					<td class="available">
-						<span class="badge pull-right">29</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-					<td class="available">
-						<span class="badge pull-right">30</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-					<td class="unavailable">
-						<span class="badge pull-right">31</span>
-						<br>
-						<p class="label label-default">
-							<abbr title="Intervenciones">Int.</abbr>
-							Quirúrgicas: XX
-						</p>
-					</td>
-					<td class="unavailable"></td>
-					<td class="unavailable"></td>
-					<td class="unavailable"></td>
-					<td class="unavailable"></td>
-				</tr>
+				{% endfor %}
 			</tbody>
 		</table>
 	</div>
@@ -348,8 +118,8 @@
 			<tbody>
 				<tr>
 					<td>
-						<p class="label label-available">Disponible</p>
-						<p class="label label-unavailable">No disponible</p>
+						<p class="label label-available">{{ DISPONIBLE }}</p>
+						<p class="label label-unavailable">{{ NO_DISPONIBLE }}</p>
 					</td>
 				</tr>
 			</tbody>
