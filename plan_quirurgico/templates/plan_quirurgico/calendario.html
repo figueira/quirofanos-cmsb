@@ -34,14 +34,14 @@
 </div>
 <div class="row">
 	<div class="col-lg-offset-1 col-lg-2">
-		<a href="#">
+		<a href="{% url 'calendario' area_actual ano mes_anterior %}">
 			<span class="glyphicon glyphicon-chevron-left">
 			</span>
 		</a>
 		<span class="lead">
 			{{ mes_nombre }} {{ ano }}
 		</span>
-		<a href="#">
+		<a href="{% url 'calendario' area_actual ano mes_proximo %}">
 			<span class="glyphicon glyphicon-chevron-right">
 			</span>
 		</a>

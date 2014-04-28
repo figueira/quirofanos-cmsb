@@ -64,6 +64,8 @@ def calendario(request, area_actual='QG', ano=date.today().year, mes=date.today(
 	datos  = {}
 	datos['ano'] = ano
 	datos['mes'] = mes
+	datos['mes_anterior'] = mes -1
+	datos['mes_proximo'] = mes +1
 	datos['mes_nombre'] = utils.obtener_nombre_mes(mes)
 	datos['area_actual'] = area_actual
 	datos['areas'] = areas
