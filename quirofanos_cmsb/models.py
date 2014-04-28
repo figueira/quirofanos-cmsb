@@ -147,7 +147,8 @@ class Medico (models.Model):
         ''' Sobreescribe el clean(), colocando nombre, apellido capitalizados y el email todo en minuscula '''
         self.nombre = self.nombre.title()
         self.apellido = self.apellido.title()
-        self.email = self.email.lower()
+        if self.email:
+            self.email = self.email.lower()
         super(Medico, self).clean()
 
     def save(self):
