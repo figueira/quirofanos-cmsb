@@ -636,7 +636,7 @@
             "email": "cudemar@cantv.net",
             "especializacion": "Cirugia Oncologica",
             "genero": "M",
-            "nombre": "Gaston A.",
+            "nombre": "Gaston A",
             "telefono": "0416-6220503"
         },
         "model": "quirofanos_cmsb.medico",
@@ -726,7 +726,7 @@
             "email": "vpadulaf@cantv.net",
             "especializacion": "Pediatria Y Neonatologia",
             "genero": "M",
-            "nombre": "Victor M.",
+            "nombre": "Victor M",
             "telefono": "0416-6210910"
         },
         "model": "quirofanos_cmsb.medico",
@@ -888,7 +888,7 @@
     },
     {
         "fields": {
-            "apellido": "E. De Sekler",
+            "apellido": "E De Sekler",
             "cedula": "V-1728645",
             "email": "e.sekler@gmail.com",
             "especializacion": "Medicina Interna",
@@ -1347,7 +1347,7 @@
             "email": "andres.lairet@gmail.com",
             "especializacion": "Cardiologia",
             "genero": "M",
-            "nombre": "Andres E.",
+            "nombre": "Andres E",
             "telefono": "0416-6219077"
         },
         "model": "quirofanos_cmsb.medico",
@@ -1823,7 +1823,7 @@
             "email": "luisb.bellorin@hotmail.com",
             "especializacion": "Neurocirugia",
             "genero": "M",
-            "nombre": "Luis B.",
+            "nombre": "Luis B",
             "telefono": "0416-6217722"
         },
         "model": "quirofanos_cmsb.medico",
@@ -2986,7 +2986,7 @@
             "email": "nayeskara@hotmail.com",
             "especializacion": "Neurologia",
             "genero": "F",
-            "nombre": "Nayeska B.",
+            "nombre": "Nayeska B",
             "telefono": "0416-7220573"
         },
         "model": "quirofanos_cmsb.medico",

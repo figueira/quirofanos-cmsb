@@ -147,7 +147,8 @@ class Medico (models.Model):
         ''' Sobreescribe el clean(), colocando nombre, apellido capitalizados y el email todo en minuscula '''
         self.nombre = self.nombre.title()
         self.apellido = self.apellido.title()
-        self.email = self.email.lower()
+        if self.email:
+            self.email = self.email.lower()
         super(Medico, self).clean()
 
     def save(self):
@@ -352,7 +353,7 @@ class OrganoCorporal(models.Model):
     nombre = models.CharField(max_length=50, unique=True, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
     sistema_corporal = models.ForeignKey(SistemaCorporal)
-    procedimientos_permitidos = models.ManyToManyField(TipoProcedimientoQuirurgico)
+    tipos_procedimientos_permitidos = models.ManyToManyField(TipoProcedimientoQuirurgico)
 
     def clean(self):
         ''' Sobreescribe el clean(), colocando el codigo en mayuscula y el nombre capitalizado '''

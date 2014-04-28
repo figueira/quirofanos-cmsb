@@ -24,3 +24,5 @@ class MensajeTemporalError():
     REGISTRO_DEPARTAMENTO_NOMBRE_MODIFICADO = _(u'Se intentó solicitar una cuenta para un departamento inexistente.')
     REGISTRO_MEDICO_CUENTA_EXISTE = _(u'Se intentó solicitar una cuenta para un médico que ya ha solicitado su cuenta.')
     REGISTRO_DEPARTAMENTO_CUENTA_EXISTE = _(u'Se intentó solicitar una cuenta para un departamento que ya ha solicitado su cuenta.')
+    APROBACION_USUARIO_FALLIDA = _(u'Se intentó aprobar una cuenta de usuario no existente.')
+    RECHAZO_USUARIO_FALLIDO = _(u'Se intentó rechazar una cuenta de usuario no existente.')
