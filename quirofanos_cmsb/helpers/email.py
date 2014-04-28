@@ -1,7 +1,7 @@
 from django.core import mail
 connection = mail.get_connection()
 
-def enviar_email(asunto, contenido_texto, contenido_html=None, recipiente):
+def enviar_email(asunto, contenido_texto, contenido_html, recipiente):
     ''' Envia un correo electronico
 
     Parametros:
@@ -11,7 +11,7 @@ def enviar_email(asunto, contenido_texto, contenido_html=None, recipiente):
     recipiente -> email recipiente del correo '''
     connection.open()
     email = mail.EmailMultiAlternatives(asunto, contenido_texto, [recipiente])
-    if contenido_html:
+    if contenido_html != '':
         email.attach_alternative(contenido_html, "text/html")
     email.send(fail_silently=False)
     connection.close()
