@@ -2,6 +2,7 @@
 
 {% load staticfiles %}
 {% load custom_filters %}
+{% load widget_tweaks %}
 
 {% block title %}{{ block.super }} | Plan Día {% endblock title %}
 
@@ -26,10 +27,10 @@
 
 <div class="page-header">
 	<h1>
-	<a href="{% url 'calendario' area_actual ano mes %}">
-		<span class="glyphicon glyphicon-chevron-left">
-		</span>
-		Plan Quirúrgico
+		<a href="{% url 'calendario' area_actual ano mes %}">
+			<span class="glyphicon glyphicon-chevron-left">
+			</span>
+			Plan Quirúrgico
 		</a>
 		<small> - {{ area_nombre }} - {{ dia }}/{{ mes }}/{{ ano }}</small>
 		<small class="pull-right">
@@ -39,16 +40,27 @@
 		</small>
 	</h1>
 </div>
+
+<!-- Aviso Seleccionar Turno Intervencion -->
 <div class="row">
-	<div class="col-lg-10 col-lg-offset-1 hidden" id="duracion-operacion">
+	<div class="col-lg-10 col-lg-offset-1 well well-warning hidden" id="duracion-intervencion-aviso">
+		<strong>
+			{{ LABEL_DURACION_INTERVENCION }} {{ horas_intervencion }} {{ HORAS }} {{ minutos_intervencion }} {{ MINUTOS }}
+		</strong>
 		<p class="text-muted">
-			Duración de la intervención: XX:XX
+			<strong>{{ MENSAJE_SELECCIONAR_TURNO_INTERVENCION }}</strong>
 		</p>
-		<p class="bg-warning">
-			Por favor seleccione el turno de su preferencia.
-		</p>
+		<a href="{% url 'plan_dia' area_actual ano mes dia %}" class="btn btn-default pull-right">{{ CANCELAR }}</a>
 	</div>
-</div><br>
+</div><br><!-- Aviso Seleccionar Turno Intervencion -->
+
+{% if seleccionar_turno %}
+<script type="text/javascript">
+$(function(){
+	mostrarAvisoSeleccionarTurnoIntervencion();
+});
+</script>
+{% endif %}
 
 <!-- Modal de la Duracion de la Operacion -->
 <div class="modal fade" id="solicitar-quirofano" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -62,36 +74,62 @@
 					Duración de la Intervención Quirúrgica
 				</h4>
 			</div>
-			<div class="modal-body">
-				<form role="form" class="form-horizontal col-lg-offset-1">
-					<div class="form-group">
+			<form role="form" class="form-horizontal col-lg-offset-1" action="{% url 'plan_dia' area_actual ano mes dia %}" method="POST">
+				<div class="modal-body">
+					{% csrf_token %}
+					{% if formulario_duracion_intervencion_quirurgica.errors %}
+					<script type="text/javascript">
+					$(function(){
+						mostrarModalFormularioDuracionIntervencionQuirurgica();
+					});
+					</script>
+					{% endif %}
+					<div class="form-group" id="duracion-form-group">
 						<label class="col-lg-2 control-label" for="duracion-horas">
 							<span class="glyphicon glyphicon-time">
 							</span>
-							Hrs:
+							{{ LABEL_HORAS }}
 						</label>
 						<div class="col-lg-3">
-							<input type="number" class="form-control" name="duracion-horas" placeholder="0">
+							{% render_field formulario_duracion_intervencion_quirurgica.horas class="form-control" id="duracion-horas" %}
+							<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="duracion-horas-error-feedback-icon"></span>
+							<span class="help-block hidden" id="duracion-horas-error-help">{{ formulario_duracion_intervencion_quirurgica.horas.errors }}</span>
 						</div>
 						<label class="col-lg-2 control-label" for="duracion-minutos">
 							<span class="glyphicon glyphicon-time">
 							</span>
-							Mins:
+							{{ LABEL_MINUTOS }}
 						</label>
 						<div class="col-lg-3">
-							<input type="number" class="form-control" name="duracion-minutos" placeholder="0">
+							{% render_field formulario_duracion_intervencion_quirurgica.minutos class="form-control" id="duracion-minutos" %}
+							<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="duracion-minutos-error-feedback-icon"></span>
+							<span class="help-block hidden" id="duracion-minutos-error-help">{{ formulario_duracion_intervencion_quirurgica.minutos.errors }}</span>
 						</div>
+						{% if formulario_duracion_intervencion_quirurgica.horas.errors %}
+						<script type="text/javascript">
+						$(function(){
+							mostrarErroresDuracionHoras();
+						});
+						</script>
+						{% endif %}
+						{% if formulario_duracion_intervencion_quirurgica.minutos.errors %}
+						<script type="text/javascript">
+						$(function(){
+							mostrarErroresDuracionMinutos();
+						});
+						</script>
+						{% endif %}
 					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">
-					Cancelar
-				</button>
-				<button type="button" id="aceptar-duracion" class="btn btn-primary" data-dismiss="modal">
-					Aceptar
-				</button>
-			</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						{{ CANCELAR }}
+					</button>
+					<button type="submit" id="aceptar-duracion" class="btn btn-primary">
+						{{ ACEPTAR }}
+					</button>
+				</div>
+			</form>
 		</div>
 	</div>
 </div><!-- Modal de la Duracion de la Operacion -->
@@ -301,288 +339,288 @@
 							</span>
 						</a>
 					</div>
-				</div>
-			</form><!-- Formulario Solicitud Quirofano -->
+				</form><!-- Formulario Solicitud Quirofano -->
 
-			<form class="form-horizontal hidden" role="form" id="formulario-solicitud-paciente">
-				<div class="form-group">
-					<label class="col-lg-2 control-label" for="nombre-paciente">
-						Nombre:
-					</label>
-					<div class="col-lg-4">
-						<input type="text" class="form-control" name="nombre-paciente" value="Enrique" disabled>
-					</div>
-					<label class="col-lg-2 control-label" for="apellido-paciente">
-						Apellido:
-					</label>
-					<div class="col-lg-4">
-						<input type="text" class="form-control" name="apellido-paciente" value="Mata" disabled>
-					</div>
-				</div><!-- Nombre y Apellido -->
-				<div class="form-group">
-					<label class="col-lg-2 control-label" for="cedula-paciente">
-						Cedula:
-					</label>
-					<div class="col-lg-4">
-						<input type="text" class="form-control" name="cedula-paciente" value="19803052" disabled>
-					</div>
-					<label class="col-lg-2 control-label" for="fecha-nacimiento-paciente">
-						Fecha
-						<abbr title="Nacimiento">
-							Nac.
-						</abbr>:
-					</label>
-					<div class="col-lg-4">
-						<input type="date" class="form-control" name="fecha-nacimiento-paciente" disabled>
-					</div>
-				</div><!-- Cedula y Fecha de Nacimiento -->
-				<div clas="form-group">
-					<label class="col-lg-2 control-label" for="sexo-paciente">
-						Sexo:
-					</label>
-					<div class="col-lg-10">
-						<div class="radio-inline">
-							<label>
-								<input type="radio" name="sexo-paciente" value="M" checked disabled>
-								Masculino
-							</label>
-						</div>
-						<div class="radio-inline">
-							<label>
-								<input type="radio" name="sexo-paciente" value="F" disabled>
-								Femenino
-							</label>
-						</div>
-					</div>
-				</div><!-- Sexo -->
-				<div class="form-group">
-					<label class="col-lg-2 control-label" for="telefono-paciente">
-						Teléfono:
-					</label>
-					<div class="col-lg-2">
-						<input type="text" class="form-control" value="424" disabled>
-					</div>
-					<div class="col-lg-3">
-						<input type="text" class="form-control" name="telefono-paciente" value="1587765" disabled>
-					</div>
-				</div><!-- Telefono -->
-				<div class="form-group">
-					<label class="col-lg-2 control-label" for="diagnostico-ingreso-paciente">
-						Diagnóstico:
-					</label>
-					<div class="col-lg-10">
-						<textarea class="form-control" name="diagnostico-ingreso-paciente" rows="3" disabled>Obesidad</textarea>
-					</div>
-				</div><!-- Diagnostico -->
-				<div clas="form-group">
-					<label class="col-lg-2 control-label" for="forma-pago">
-						Forma de Pago:
-					</label>
-					<div class="col-lg-10">
-						<div class="radio-inline">
-							<label>
-								<input type="radio" name="forma-pago" value="particular" checked disabled>
-								Particular
-							</label>
-						</div>
-						<div class="radio-inline">
-							<label>
-								<input type="radio" name="forma-pago" value="seguro" disabled>
-								Seguro
-							</label>
-						</div>
-					</div>
-				</div><!-- Forma de Pago -->
-				<div class="form-group hidden" id="seguros">
-					<label class="col-lg-2 control-label" for="compania-aseguradora">
-						Aseguradora:
-					</label>
-					<div class="col-lg-10">
-						<select class="form-control" name="compania-aseguradora" disabled>
-							<option>
-								Seguros Altamira
-							</option>
-							<option>
-								Seguros Mercantil
-							</option>
-						</select>
-					</div>
-				</div><!-- Seguros -->
-				<div class="form-group">
-					<div class="col-lg-offset-2 col-lg-4">
-						<label class="checkbox-inline">
-							<input type="checkbox" name="paciente-hospitalizado" disabled>
-							Paciente Hospitalizado
-						</label>
-					</div>
-					<div class="hidden" id="habitacion">
-						<label class="col-lg-2 control-label" for="paciente-hospitalizado-habitacion">
-							Habitación:
+				<form class="form-horizontal hidden" role="form" id="formulario-solicitud-paciente">
+					<div class="form-group">
+						<label class="col-lg-2 control-label" for="nombre-paciente">
+							Nombre:
 						</label>
 						<div class="col-lg-4">
-							<select class="form-control" name="paciente-hospitalizado-habitacion" disabled>
+							<input type="text" class="form-control" name="nombre-paciente" value="Enrique" disabled>
+						</div>
+						<label class="col-lg-2 control-label" for="apellido-paciente">
+							Apellido:
+						</label>
+						<div class="col-lg-4">
+							<input type="text" class="form-control" name="apellido-paciente" value="Mata" disabled>
+						</div>
+					</div><!-- Nombre y Apellido -->
+					<div class="form-group">
+						<label class="col-lg-2 control-label" for="cedula-paciente">
+							Cedula:
+						</label>
+						<div class="col-lg-4">
+							<input type="text" class="form-control" name="cedula-paciente" value="19803052" disabled>
+						</div>
+						<label class="col-lg-2 control-label" for="fecha-nacimiento-paciente">
+							Fecha
+							<abbr title="Nacimiento">
+								Nac.
+							</abbr>:
+						</label>
+						<div class="col-lg-4">
+							<input type="date" class="form-control" name="fecha-nacimiento-paciente" disabled>
+						</div>
+					</div><!-- Cedula y Fecha de Nacimiento -->
+					<div clas="form-group">
+						<label class="col-lg-2 control-label" for="sexo-paciente">
+							Sexo:
+						</label>
+						<div class="col-lg-10">
+							<div class="radio-inline">
+								<label>
+									<input type="radio" name="sexo-paciente" value="M" checked disabled>
+									Masculino
+								</label>
+							</div>
+							<div class="radio-inline">
+								<label>
+									<input type="radio" name="sexo-paciente" value="F" disabled>
+									Femenino
+								</label>
+							</div>
+						</div>
+					</div><!-- Sexo -->
+					<div class="form-group">
+						<label class="col-lg-2 control-label" for="telefono-paciente">
+							Teléfono:
+						</label>
+						<div class="col-lg-2">
+							<input type="text" class="form-control" value="424" disabled>
+						</div>
+						<div class="col-lg-3">
+							<input type="text" class="form-control" name="telefono-paciente" value="1587765" disabled>
+						</div>
+					</div><!-- Telefono -->
+					<div class="form-group">
+						<label class="col-lg-2 control-label" for="diagnostico-ingreso-paciente">
+							Diagnóstico:
+						</label>
+						<div class="col-lg-10">
+							<textarea class="form-control" name="diagnostico-ingreso-paciente" rows="3" disabled>Obesidad</textarea>
+						</div>
+					</div><!-- Diagnostico -->
+					<div clas="form-group">
+						<label class="col-lg-2 control-label" for="forma-pago">
+							Forma de Pago:
+						</label>
+						<div class="col-lg-10">
+							<div class="radio-inline">
+								<label>
+									<input type="radio" name="forma-pago" value="particular" checked disabled>
+									Particular
+								</label>
+							</div>
+							<div class="radio-inline">
+								<label>
+									<input type="radio" name="forma-pago" value="seguro" disabled>
+									Seguro
+								</label>
+							</div>
+						</div>
+					</div><!-- Forma de Pago -->
+					<div class="form-group hidden" id="seguros">
+						<label class="col-lg-2 control-label" for="compania-aseguradora">
+							Aseguradora:
+						</label>
+						<div class="col-lg-10">
+							<select class="form-control" name="compania-aseguradora" disabled>
 								<option>
-									hab1
+									Seguros Altamira
 								</option>
 								<option>
-									hab2
-								</option>
-								<option>
-									hab3
+									Seguros Mercantil
 								</option>
 							</select>
 						</div>
-					</div>
-				</div><!-- Paciente Hospitalizado -->
-				<div class="form-group">
-					<div class="col-lg-offset-2 col-lg-4">
-						<label class="checkbox-inline control-label">
-							<input type="checkbox" name="paciente-impres" disabled>
-							Paciente Suscrito a Impres
+					</div><!-- Seguros -->
+					<div class="form-group">
+						<div class="col-lg-offset-2 col-lg-4">
+							<label class="checkbox-inline">
+								<input type="checkbox" name="paciente-hospitalizado" disabled>
+								Paciente Hospitalizado
+							</label>
+						</div>
+						<div class="hidden" id="habitacion">
+							<label class="col-lg-2 control-label" for="paciente-hospitalizado-habitacion">
+								Habitación:
+							</label>
+							<div class="col-lg-4">
+								<select class="form-control" name="paciente-hospitalizado-habitacion" disabled>
+									<option>
+										hab1
+									</option>
+									<option>
+										hab2
+									</option>
+									<option>
+										hab3
+									</option>
+								</select>
+							</div>
+						</div>
+					</div><!-- Paciente Hospitalizado -->
+					<div class="form-group">
+						<div class="col-lg-offset-2 col-lg-4">
+							<label class="checkbox-inline control-label">
+								<input type="checkbox" name="paciente-impres" disabled>
+								Paciente Suscrito a Impres
+							</label>
+						</div>
+						<div class="col-lg-6 hidden" id="carnet-impres">
+							<input type="text" class="form-control" name="carnet-impres" placeholder="Indique carnet impres" disabled>
+						</div>
+					</div><!-- Paciente Impres -->
+					<div class="form-group">
+						<div class="col-lg-offset-2 col-lg-4">
+							<label class="checkbox-inline control-label">
+								<input type="checkbox" name="paciente-medico" disabled>
+								Paciente Médico
+							</label>
+						</div>
+						<div class="col-lg-6 hidden" id="numero-inscripcion-medico">
+							<input type="text" class="form-control" name="numero-inscripcion-medico" placeholder="Indique numero de inscripcion" disabled>
+						</div>
+					</div><!-- Paciente Medico -->
+					<div class="form-group">
+						<div class="col-lg-offset-2 col-lg-10">
+							<label class="checkbox-inline control-label">
+								<input type="checkbox" name="paciente-pariente-medico" disabled>
+								Paciente Pariente de Médico
+							</label>
+						</div>
+					</div><!-- Paciente Pariente Medico -->
+					<div class="form-group hidden" id="medico-pariente">
+						<label class="col-lg-offset-2 col-lg-2 control-label" for="nombre-medico-pariente">
+							Indique Médico:
 						</label>
+						<div class="col-lg-3">
+							<input type="text" class="form-control input-medico-pariente" name="nombre-medico-pariente" placeholder="Nombre" disabled>
+						</div>
+						<div class="col-lg-3">
+							<input type="text" class="form-control input-medico-pariente" name="apellido-medico-pariente" placeholder="Apellido" disabled>
+						</div>
+						<div class="col-lg-2">
+							<input type="text" class="form-control input-medico-pariente" name="cedula-medico-pariente" placeholder="Cédula" disabled>
+						</div>
+					</div><!-- Paciente Pariente de Medico -->
+					<div class="form-group">
+						<div class="col-lg-2">
+							<a href="javascript:void(0);" class="btn btn-default" id="volver-info-quirofano">
+								<span class="glyphicon glyphicon-chevron-left">
+								</span>
+								Quirófano
+							</a>
+						</div>
+						<div class="col-lg-offset-10">
+							<a href="javascript:void(0);" class="btn btn-default" id="ver-info-honorarios">
+								Honorarios
+								<span class="glyphicon glyphicon-chevron-right">
+								</span>
+							</a>
+						</div>
 					</div>
-					<div class="col-lg-6 hidden" id="carnet-impres">
-						<input type="text" class="form-control" name="carnet-impres" placeholder="Indique carnet impres" disabled>
-					</div>
-				</div><!-- Paciente Impres -->
-				<div class="form-group">
-					<div class="col-lg-offset-2 col-lg-4">
-						<label class="checkbox-inline control-label">
-							<input type="checkbox" name="paciente-medico" disabled>
-							Paciente Médico
-						</label>
-					</div>
-					<div class="col-lg-6 hidden" id="numero-inscripcion-medico">
-						<input type="text" class="form-control" name="numero-inscripcion-medico" placeholder="Indique numero de inscripcion" disabled>
-					</div>
-				</div><!-- Paciente Medico -->
-				<div class="form-group">
-					<div class="col-lg-offset-2 col-lg-10">
-						<label class="checkbox-inline control-label">
-							<input type="checkbox" name="paciente-pariente-medico" disabled>
-							Paciente Pariente de Médico
-						</label>
-					</div>
-				</div><!-- Paciente Pariente Medico -->
-				<div class="form-group hidden" id="medico-pariente">
-					<label class="col-lg-offset-2 col-lg-2 control-label" for="nombre-medico-pariente">
-						Indique Médico:
-					</label>
-					<div class="col-lg-3">
-						<input type="text" class="form-control input-medico-pariente" name="nombre-medico-pariente" placeholder="Nombre" disabled>
-					</div>
-					<div class="col-lg-3">
-						<input type="text" class="form-control input-medico-pariente" name="apellido-medico-pariente" placeholder="Apellido" disabled>
-					</div>
-					<div class="col-lg-2">
-						<input type="text" class="form-control input-medico-pariente" name="cedula-medico-pariente" placeholder="Cédula" disabled>
-					</div>
-				</div><!-- Paciente Pariente de Medico -->
-				<div class="form-group">
-					<div class="col-lg-2">
-						<a href="javascript:void(0);" class="btn btn-default" id="volver-info-quirofano">
-							<span class="glyphicon glyphicon-chevron-left">
-							</span>
-							Quirófano
-						</a>
-					</div>
-					<div class="col-lg-offset-10">
-						<a href="javascript:void(0);" class="btn btn-default" id="ver-info-honorarios">
-							Honorarios
-							<span class="glyphicon glyphicon-chevron-right">
-							</span>
-						</a>
-					</div>
-				</div>
-			</form><!-- Formulario Solicitud Paciente -->
+				</form><!-- Formulario Solicitud Paciente -->
 
-			<form class="form-horizontal hidden" role="form" id="formulario-solicitud-honorarios">
-				<div class="form-group">
-					<label class="col-lg-2 control-label" for="nombre-anestesiologo">
-						Anestesiólogo:
-					</label>
-					<div class="col-lg-3">
-						<input type="text" class="form-control" name="nombre-anestesiologo" value="Juan" disabled>
-					</div>
-					<div class="col-lg-3">
-						<input type="text" class="form-control" name="apellido-anestesiologo" value="Requesens" disabled>
-					</div>
-					<div class="col-lg-4">
-						<div class="input-group">
-							<span class="input-group-addon">
-								Bs.
-							</span>
-							<input type="text" class="form-control" name="honorario-anestesiologo" value="10.000" disabled>
+				<form class="form-horizontal hidden" role="form" id="formulario-solicitud-honorarios">
+					<div class="form-group">
+						<label class="col-lg-2 control-label" for="nombre-anestesiologo">
+							Anestesiólogo:
+						</label>
+						<div class="col-lg-3">
+							<input type="text" class="form-control" name="nombre-anestesiologo" value="Juan" disabled>
+						</div>
+						<div class="col-lg-3">
+							<input type="text" class="form-control" name="apellido-anestesiologo" value="Requesens" disabled>
+						</div>
+						<div class="col-lg-4">
+							<div class="input-group">
+								<span class="input-group-addon">
+									Bs.
+								</span>
+								<input type="text" class="form-control" name="honorario-anestesiologo" value="10.000" disabled>
+							</div>
+						</div>
+					</div><!-- Anestesiologo -->
+					<div class="form-group">
+						<label class="col-lg-2 control-label" for="nombre-ayudante-1">
+							Primer Ayudante:
+						</label>
+						<div class="col-lg-3">
+							<input type="text" class="form-control" name="nombre-ayudante-1" value="Juan" disabled>
+						</div>
+						<div class="col-lg-3">
+							<input type="text" class="form-control" name="apellido-ayudante-1" value="Pirela" disabled>
+						</div>
+						<div class="col-lg-4">
+							<div class="input-group">
+								<span class="input-group-addon">
+									Bs.
+								</span>
+								<input type="text" class="form-control" name="honorario-ayudante-1" value="10.000" disabled>
+							</div>
+						</div>
+					</div><!-- Primer Ayudante -->
+					<div class="form-group">
+						<label class="col-lg-2 control-label" for="nombre-ayudante-2">
+							Segundo Ayudante:
+						</label>
+						<div class="col-lg-3">
+							<input type="text" class="form-control" name="nombre-ayudante-2" value="Juan" disabled>
+						</div>
+						<div class="col-lg-3">
+							<input type="text" class="form-control" name="apellido-ayudante-2" value="Ramos" disabled>
+						</div>
+						<div class="col-lg-4">
+							<div class="input-group">
+								<span class="input-group-addon">
+									Bs.
+								</span>
+								<input type="text" class="form-control" name="honorario-ayudante-2" value="10.000" disabled>
+							</div>
+						</div>
+					</div><!-- Segundo Ayudante -->
+					<div class="form-group">
+						<label class="col-lg-2 control-label" for="nombre-ayudante-3">
+							Tercer Ayudante:
+						</label>
+						<div class="col-lg-3">
+							<input type="text" class="form-control" name="nombre-ayudante-3" value="Armando" disabled>
+						</div>
+						<div class="col-lg-3">
+							<input type="text" class="form-control" name="apellido-ayudante-3" value="Casas" disabled>
+						</div>
+						<div class="col-lg-4">
+							<div class="input-group">
+								<span class="input-group-addon">
+									Bs.
+								</span>
+								<input type="text" class="form-control" name="honorario-ayudante-3" value="10.000" disabled>
+							</div>
+						</div>
+					</div><!-- Tercer Ayudante -->
+					<div class="form-group">
+						<div class="col-lg-2">
+							<a href="javascript:void(0);" class="btn btn-default" id="volver-info-paciente">
+								<span class="glyphicon glyphicon-chevron-left">
+								</span>
+								Paciente
+							</a>
 						</div>
 					</div>
-				</div><!-- Anestesiologo -->
-				<div class="form-group">
-					<label class="col-lg-2 control-label" for="nombre-ayudante-1">
-						Primer Ayudante:
-					</label>
-					<div class="col-lg-3">
-						<input type="text" class="form-control" name="nombre-ayudante-1" value="Juan" disabled>
-					</div>
-					<div class="col-lg-3">
-						<input type="text" class="form-control" name="apellido-ayudante-1" value="Pirela" disabled>
-					</div>
-					<div class="col-lg-4">
-						<div class="input-group">
-							<span class="input-group-addon">
-								Bs.
-							</span>
-							<input type="text" class="form-control" name="honorario-ayudante-1" value="10.000" disabled>
-						</div>
-					</div>
-				</div><!-- Primer Ayudante -->
-				<div class="form-group">
-					<label class="col-lg-2 control-label" for="nombre-ayudante-2">
-						Segundo Ayudante:
-					</label>
-					<div class="col-lg-3">
-						<input type="text" class="form-control" name="nombre-ayudante-2" value="Juan" disabled>
-					</div>
-					<div class="col-lg-3">
-						<input type="text" class="form-control" name="apellido-ayudante-2" value="Ramos" disabled>
-					</div>
-					<div class="col-lg-4">
-						<div class="input-group">
-							<span class="input-group-addon">
-								Bs.
-							</span>
-							<input type="text" class="form-control" name="honorario-ayudante-2" value="10.000" disabled>
-						</div>
-					</div>
-				</div><!-- Segundo Ayudante -->
-				<div class="form-group">
-					<label class="col-lg-2 control-label" for="nombre-ayudante-3">
-						Tercer Ayudante:
-					</label>
-					<div class="col-lg-3">
-						<input type="text" class="form-control" name="nombre-ayudante-3" value="Armando" disabled>
-					</div>
-					<div class="col-lg-3">
-						<input type="text" class="form-control" name="apellido-ayudante-3" value="Casas" disabled>
-					</div>
-					<div class="col-lg-4">
-						<div class="input-group">
-							<span class="input-group-addon">
-								Bs.
-							</span>
-							<input type="text" class="form-control" name="honorario-ayudante-3" value="10.000" disabled>
-						</div>
-					</div>
-				</div><!-- Tercer Ayudante -->
-				<div class="form-group">
-					<div class="col-lg-2">
-						<a href="javascript:void(0);" class="btn btn-default" id="volver-info-paciente">
-							<span class="glyphicon glyphicon-chevron-left">
-							</span>
-							Paciente
-						</a>
-					</div>
-				</div>
-			</form><!-- Formulario Solicitud Honorarios -->
+				</form><!-- Formulario Solicitud Honorarios -->
+			</div>
 		</div>
 	</div>
 </div>

@@ -15,6 +15,8 @@ def constantes_texto(request):
     datos['VOLVER'] = TextoMostrable.VOLVER
     datos['BUSCAR'] = TextoMostrable.BUSCAR
     datos['ENVIAR'] = TextoMostrable.ENVIAR
+    datos['ACEPTAR'] = TextoMostrable.ACEPTAR
+    datos['CANCELAR'] = TextoMostrable.CANCELAR
     datos['LABEL_NOMBRE'] = TextoMostrable.LABEL_NOMBRE
     datos['LABEL_APELLIDO'] = TextoMostrable.LABEL_APELLIDO
     datos['LABEL_CEDULA'] = TextoMostrable.LABEL_CEDULA
@@ -40,4 +42,10 @@ def constantes_texto(request):
     datos['LABEL_QUIRURGICA'] = TextoMostrable.LABEL_QUIRURGICA
     datos['LABEL_MEDICO'] = TextoMostrable.LABEL_MEDICO
     datos['SOLICITAR_QUIROFANO'] = TextoMostrable.SOLICITAR_QUIROFANO
+    datos['LABEL_HORAS'] = TextoMostrable.LABEL_HORAS
+    datos['LABEL_MINUTOS'] = TextoMostrable.LABEL_MINUTOS
+    datos['HORAS'] = TextoMostrable.HORAS
+    datos['MINUTOS'] = TextoMostrable.MINUTOS
+    datos['MENSAJE_SELECCIONAR_TURNO_INTERVENCION'] = TextoMostrable.MENSAJE_SELECCIONAR_TURNO_INTERVENCION
+    datos['LABEL_DURACION_INTERVENCION'] = TextoMostrable.LABEL_DURACION_INTERVENCION
     return datos

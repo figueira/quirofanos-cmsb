@@ -9,7 +9,9 @@ $azul-disponible-oscuro: #87A1B9
 $gris-no-disponible: rgba(196, 196, 196, 0.3)
 $gris-no-disponible-oscuro: rgba(196, 196, 196, 1)
 $negro-opaco: rgba(0, 0, 0, 0.7)
-$rojo-transparente: rgba(255, 0, 0, 0.1) */
+$rojo-transparente: rgba(255, 0, 0, 0.1)
+$amarillo-claro: #FDF6A4 0
+$amarillo-mas-claro: #FCFCB6 100% */
 
 /* body padding top para evadir la superposicion del navbar de bootstrap por encima del contenido */
 body
@@ -219,7 +221,7 @@ a:hover
 
 .table-plan>thead>tr>td.unavailable,.table-plan>tbody>tr>td.unavailable,.table-plan>tfoot>tr>td.unavailable,.table-plan>thead>tr>th.unavailable,.table-plan>tbody>tr>th.unavailable,.table-plan>tfoot>tr>th.unavailable,.table-plan>thead>tr.unavailable>td,.table-plan>tbody>tr.unavailable>td,.table-plan>tfoot>tr.unavailable>td,.table-plan>thead>tr.unavailable>th,.table-plan>tbody>tr.unavailable>th,.table-plan>tfoot>tr.unavailable>th
 {
-	outline: solid rgba(172, 66, 66, 1) thin
+	outline:solid rgba(172,66,66,1) thin
 }
 
 .table-plan>tbody>tr>td.unavailable:hover,.table-plan>tbody>tr>th.unavailable:hover,.table-plan>tbody>tr.unavailable:hover>td,.table-plan>tbody>tr.unavailable:hover>th
@@ -307,4 +309,10 @@ a:hover
 	background-color:#fff;
 	border:1px solid #ddd;
 	border-left-width:0
+}
+
+/* estilo well de aviso */
+.well-warning
+{
+	background-image:linear-gradient(to bottom,#FDF6A4 0,#FCFCB6 100%)!important
 }

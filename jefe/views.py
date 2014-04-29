@@ -8,8 +8,9 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
-from datetime import date, timedelta
+from django.contrib.auth.decorators import user_passes_test
 
+from datetime import date, timedelta
 from hashids import Hashids
 import uuid
 
@@ -17,10 +18,12 @@ from quirofanos_cmsb.models import Cuenta
 from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito, construir_mensaje
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
 from quirofanos_cmsb.helpers.email import enviar_email
+from quirofanos_cmsb.helpers.user_tests import es_jefe
 from jefe.forms import GestionarSolicitudUsuarioForm
 
 @require_GET
 @login_required
+@user_passes_test(es_jefe)
 def solicitudes_usuarios(request, estado="pendientes", periodo=1):
     ''' Controlador correspondiente al listado de solicitudes de usuarios
 
@@ -87,6 +90,7 @@ def solicitudes_usuarios(request, estado="pendientes", periodo=1):
 
 @require_POST
 @login_required
+@user_passes_test(es_jefe)
 def aceptar_solicitud_usuario(request):
     ''' Controlador correspondiente a la aprobacion de solicitudes de usuarios
 
@@ -133,6 +137,7 @@ def aceptar_solicitud_usuario(request):
 
 @require_POST
 @login_required
+@user_passes_test(es_jefe)
 def rechazar_solicitud_usuario(request):
     ''' Controlador correspondiente al rechazo de solicitudes de usuarios
 

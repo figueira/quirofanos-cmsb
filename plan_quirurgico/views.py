@@ -4,6 +4,7 @@ from django.http import Http404
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods, require_GET, require_POST
+from django.shortcuts import redirect
 
 from datetime import date
 import calendar
@@ -11,6 +12,7 @@ import calendar
 from quirofanos_cmsb.helpers import utils
 from quirofanos_cmsb.models import Quirofano
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
+from plan_quirurgico.forms import DuracionIntervencionQuirurgicaForm
 
 @require_GET
 @login_required
@@ -72,6 +74,8 @@ def calendario(request, area_actual='QG', ano=date.today().year, mes=date.today(
 	datos['semanas'] = semanas_diccionarios
 	return render_to_response('plan_quirurgico/calendario.html', datos, context_instance=RequestContext(request))
 
+@require_http_methods(["GET", "POST"])
+@login_required
 def plan_dia(request, area, ano, mes, dia):
 	''' Controlador correspondiente al detalle del plan quirurgico por dia
 
@@ -94,6 +98,19 @@ def plan_dia(request, area, ano, mes, dia):
 	if dia < 1 or dia > calendar.monthrange(ano, mes)[1]:
 		raise Http404
 
+	seleccionar_turno = False
+	horas_intervencion = 0
+	minutos_intervencion = 0
+	formulario_duracion_intervencion_quirurgica = DuracionIntervencionQuirurgicaForm()
+	if request.POST:
+		formulario_duracion_intervencion_quirurgica = DuracionIntervencionQuirurgicaForm(request.POST)
+		if formulario_duracion_intervencion_quirurgica.is_valid():
+			seleccionar_turno = True
+			horas_intervencion = formulario_duracion_intervencion_quirurgica.cleaned_data['horas']
+			minutos_intervencion = formulario_duracion_intervencion_quirurgica.cleaned_data['minutos']
+			# Calcular duracion de la intervencion en cantidad de medias horas
+			pass
+
 	quirofanos_area = Quirofano.objects.filter(area=area)
 	quirofanos_area_intervenciones = []
 	for quirofano in quirofanos_area:
@@ -103,6 +120,9 @@ def plan_dia(request, area, ano, mes, dia):
 		else:
 			quirofano_diccionario['nombre'] = TextoMostrable.QUIROFANO + ' ' + str(quirofano.numero)
 		quirofano_diccionario['intervenciones'] = quirofano.obtener_intervenciones_por_hora(ano, mes, dia)
+		if seleccionar_turno:
+			# Rellenar quirofano_diccionario['turnos_disponibles'] segun la duracion de la intervencion en cantidad de medias horas
+			pass
 		quirofanos_area_intervenciones.append(quirofano_diccionario)
 
 	datos = {}
@@ -114,8 +134,14 @@ def plan_dia(request, area, ano, mes, dia):
 	datos['quirofanos'] = quirofanos_area_intervenciones
 	datos['medias_horas'] = [x for x in utils.rango_decimal(7, 19.5, 0.5)]
 	datos['medias_horas_legibles'] = [utils.obtener_representacion_media_hora(x) for x in datos['medias_horas']]
+	datos['formulario_duracion_intervencion_quirurgica'] = formulario_duracion_intervencion_quirurgica
+	datos['seleccionar_turno'] = seleccionar_turno
+	datos['horas_intervencion'] = horas_intervencion
+	datos['minutos_intervencion'] = minutos_intervencion
 	return render_to_response('plan_quirurgico/plan_dia.html', datos, context_instance=RequestContext(request))
 
+@require_GET
+@login_required
 def plan_dia_obs(request):
 	''' Controlador correspondiente al detalle del plan quirurgico por dia
 
