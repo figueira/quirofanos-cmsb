@@ -316,3 +316,11 @@ a:hover
 {
 	background-image:linear-gradient(to bottom,#FDF6A4 0,#FCFCB6 100%)!important
 }
+
+/* estilo de turnos que pueden ser seleccionados */
+.available-select
+{
+	outline:solid #87A1B9 thin;
+	vertical-align:middle!important;
+	text-align:center
+}

@@ -74,7 +74,7 @@ $(function(){
 					Duración de la Intervención Quirúrgica
 				</h4>
 			</div>
-			<form role="form" class="form-horizontal col-lg-offset-1" action="{% url 'plan_dia' area_actual ano mes dia %}" method="POST">
+			<form role="form" class="form-horizontal col-lg-offset-1" action="{% url 'plan_dia' area_actual ano mes dia %}" method="POST" novalidate>
 				<div class="modal-body">
 					{% csrf_token %}
 					{% if formulario_duracion_intervencion_quirurgica.errors %}
@@ -664,7 +664,7 @@ $(function(){
 					{% with quirofano.intervenciones|valor_clave:media_hora as intervencion %}
 					{% with quirofano.intervenciones.values|ocurrencias:intervencion as duracion %}
 					{% if intervencion.obtener_hora_inicio_horas == media_hora %}
-					<td rowspan="{{ duracion }}"class="unavailable" data-togle="tooltip" data-placement="right" title="{{ quirofano.nombre }}">
+					<td class="unavailable" data-togle="tooltip" data-placement="right" title="{{ quirofano.nombre }}" rowspan="{{ duracion }}">
 						<a href="#" class="pull-right" data-toggle="modal" data-target="#">
 							<span class="glyphicon glyphicon-fullscreen"></span>
 						</a>
@@ -679,12 +679,38 @@ $(function(){
 					{% endwith %}
 					{% endwith %}
 					{% else %}
-					<td class="available" data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}">
+					{% if seleccionar_turno %}
+					{% if media_hora in quirofano.turnos_disponibles %}
+					<td class="available available-select" data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}" rowspan="{{ cantidad_medias_horas_intervencion }}">
+							<a class="btn btn-primary" href="#">
+								{{ SELECCIONAR_TURNO }}
+							</a>
+					</td>
+					{% elif media_hora in quirofano.medias_horas_disponibles_atravesadas %}
+					<td data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}">
 					</td>
 					{% endif %}
 					{% else %}
 					<td class="available" data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}">
 					</td>
+					{% endif %}
+					{% endif %}
+					{% else %}
+					{% if seleccionar_turno %}
+					{% if media_hora in quirofano.turnos_disponibles %}
+					<td class="available available-select" data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}" rowspan="{{ cantidad_medias_horas_intervencion }}">
+							<a class="btn btn-primary" href="#">
+								{{ SELECCIONAR_TURNO }}
+							</a>
+					</td>
+					{% elif media_hora in quirofano.medias_horas_disponibles_atravesadas %}
+					<td data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}">
+					</td>
+					{% endif %}
+					{% else %}
+					<td class="available" data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}">
+					</td>
+					{% endif %}
 					{% endif %}
 					{% endfor %}
 				</tr>

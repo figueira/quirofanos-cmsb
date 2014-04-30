@@ -34,17 +34,31 @@
 </div>
 <div class="row">
 	<div class="col-lg-offset-1 col-lg-2">
+		{% if not ano_anterior %}
 		<a href="{% url 'calendario' area_actual ano mes_anterior %}">
 			<span class="glyphicon glyphicon-chevron-left">
 			</span>
 		</a>
+		{% else %}
+		<a href="{% url 'calendario' area_actual ano_anterior mes_anterior %}">
+			<span class="glyphicon glyphicon-chevron-left">
+			</span>
+		</a>
+		{% endif %}
 		<span class="lead">
 			{{ mes_nombre }} {{ ano }}
 		</span>
+		{% if not ano_proximo %}
 		<a href="{% url 'calendario' area_actual ano mes_proximo %}">
 			<span class="glyphicon glyphicon-chevron-right">
 			</span>
 		</a>
+		{% else %}
+		<a href="{% url 'calendario' area_actual ano_proximo mes_proximo %}">
+			<span class="glyphicon glyphicon-chevron-right">
+			</span>
+		</a>
+		{% endif %}
 	</div>
 	<div class="pull-left">
 		<ul class="nav nav-pills">

@@ -6,8 +6,9 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods, require_GET, require_POST
 from django.shortcuts import redirect
 
-from datetime import date
+from datetime import date, timedelta
 import calendar
+import math
 
 from quirofanos_cmsb.helpers import utils
 from quirofanos_cmsb.models import Quirofano
@@ -66,8 +67,16 @@ def calendario(request, area_actual='QG', ano=date.today().year, mes=date.today(
 	datos  = {}
 	datos['ano'] = ano
 	datos['mes'] = mes
-	datos['mes_anterior'] = mes -1
-	datos['mes_proximo'] = mes +1
+	if not mes - 1 < 1:
+		datos['mes_anterior'] = mes - 1
+	else:
+		datos['ano_anterior'] = ano - 1
+		datos['mes_anterior'] = 12
+	if not mes + 1 > 12:
+		datos['mes_proximo'] = mes + 1
+	else:
+		datos['ano_proximo'] = ano + 1
+		datos['mes_proximo'] = 1
 	datos['mes_nombre'] = utils.obtener_nombre_mes(mes)
 	datos['area_actual'] = area_actual
 	datos['areas'] = areas
@@ -101,6 +110,7 @@ def plan_dia(request, area, ano, mes, dia):
 	seleccionar_turno = False
 	horas_intervencion = 0
 	minutos_intervencion = 0
+	cantidad_medias_horas_intervencion = 0
 	formulario_duracion_intervencion_quirurgica = DuracionIntervencionQuirurgicaForm()
 	if request.POST:
 		formulario_duracion_intervencion_quirurgica = DuracionIntervencionQuirurgicaForm(request.POST)
@@ -108,11 +118,12 @@ def plan_dia(request, area, ano, mes, dia):
 			seleccionar_turno = True
 			horas_intervencion = formulario_duracion_intervencion_quirurgica.cleaned_data['horas']
 			minutos_intervencion = formulario_duracion_intervencion_quirurgica.cleaned_data['minutos']
-			# Calcular duracion de la intervencion en cantidad de medias horas
-			pass
+			duracion_horas = round(timedelta(hours=horas_intervencion, minutes=minutos_intervencion).total_seconds() / 3600, 2)
+			cantidad_medias_horas_intervencion = int(math.ceil(duracion_horas / 0.5))
 
 	quirofanos_area = Quirofano.objects.filter(area=area)
 	quirofanos_area_intervenciones = []
+	medias_horas = [x for x in utils.rango_decimal(7, 19.5, 0.5)]
 	for quirofano in quirofanos_area:
 		quirofano_diccionario = {}
 		if quirofano.numero == 0:
@@ -121,8 +132,27 @@ def plan_dia(request, area, ano, mes, dia):
 			quirofano_diccionario['nombre'] = TextoMostrable.QUIROFANO + ' ' + str(quirofano.numero)
 		quirofano_diccionario['intervenciones'] = quirofano.obtener_intervenciones_por_hora(ano, mes, dia)
 		if seleccionar_turno:
-			# Rellenar quirofano_diccionario['turnos_disponibles'] segun la duracion de la intervencion en cantidad de medias horas
-			pass
+			medias_horas_disponibles = list(set(medias_horas).difference(set(quirofano_diccionario['intervenciones'].keys())))
+			medias_horas_disponibles.sort()
+			medias_horas_disponibles_para_duracion = []
+			medias_horas_disponibles_atravesadas = []
+			indices_por_saltar = 0
+			for i in range(0, len(medias_horas_disponibles)):
+				disponible = True
+				if indices_por_saltar > 0:
+					indices_por_saltar = indices_por_saltar - 1
+					continue
+				for j in range(1, cantidad_medias_horas_intervencion):
+					if (i + j >= len(medias_horas_disponibles)) or not (medias_horas_disponibles[i+j] == medias_horas_disponibles[i] + j*0.5):
+						disponible = False
+						break
+				if disponible:
+					medias_horas_disponibles_para_duracion.append(medias_horas_disponibles[i])
+					indices_por_saltar = cantidad_medias_horas_intervencion - 1
+				else:
+					medias_horas_disponibles_atravesadas.append(medias_horas_disponibles[i])
+			quirofano_diccionario['turnos_disponibles'] = medias_horas_disponibles_para_duracion
+			quirofano_diccionario['medias_horas_disponibles_atravesadas'] = medias_horas_disponibles_atravesadas
 		quirofanos_area_intervenciones.append(quirofano_diccionario)
 
 	datos = {}
@@ -132,12 +162,13 @@ def plan_dia(request, area, ano, mes, dia):
 	datos['dia'] = dia
 	datos['area_actual'] = area
 	datos['quirofanos'] = quirofanos_area_intervenciones
-	datos['medias_horas'] = [x for x in utils.rango_decimal(7, 19.5, 0.5)]
-	datos['medias_horas_legibles'] = [utils.obtener_representacion_media_hora(x) for x in datos['medias_horas']]
+	datos['medias_horas'] = medias_horas
+	datos['medias_horas_legibles'] = [utils.obtener_representacion_media_hora(x) for x in medias_horas]
 	datos['formulario_duracion_intervencion_quirurgica'] = formulario_duracion_intervencion_quirurgica
 	datos['seleccionar_turno'] = seleccionar_turno
 	datos['horas_intervencion'] = horas_intervencion
 	datos['minutos_intervencion'] = minutos_intervencion
+	datos['cantidad_medias_horas_intervencion'] = cantidad_medias_horas_intervencion
 	return render_to_response('plan_quirurgico/plan_dia.html', datos, context_instance=RequestContext(request))
 
 @require_GET

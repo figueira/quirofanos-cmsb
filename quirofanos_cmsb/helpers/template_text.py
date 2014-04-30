@@ -72,3 +72,4 @@ class TextoMostrable():
     MINUTOS = _(u'mins')
     MENSAJE_SELECCIONAR_TURNO_INTERVENCION = _(u'Por favor seleccione el turno de su preferencia.')
     LABEL_DURACION_INTERVENCION = _(u'Duración de la intervención:')
+    SELECCIONAR_TURNO = _(u'Seleccionar Turno')

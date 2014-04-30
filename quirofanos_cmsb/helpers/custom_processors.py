@@ -48,4 +48,5 @@ def constantes_texto(request):
     datos['MINUTOS'] = TextoMostrable.MINUTOS
     datos['MENSAJE_SELECCIONAR_TURNO_INTERVENCION'] = TextoMostrable.MENSAJE_SELECCIONAR_TURNO_INTERVENCION
     datos['LABEL_DURACION_INTERVENCION'] = TextoMostrable.LABEL_DURACION_INTERVENCION
+    datos['SELECCIONAR_TURNO'] = TextoMostrable.SELECCIONAR_TURNO
     return datos
