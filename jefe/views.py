@@ -7,6 +7,7 @@ from django.template import RequestContext
 from django.contrib import messages
 from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
+from django.db import transaction
 
 from datetime import date, timedelta
 from hashids import Hashids
@@ -102,15 +103,16 @@ def aceptar_solicitud_usuario(request):
         except ObjectDoesNotExist:
             messages.add_message(request, messages.ERROR, MensajeTemporalError. APROBACION_USUARIO_FALLIDA)
 
-        cuenta_usuario.estado = 'A'
-        hashids = Hashids(min_length=5, salt=uuid.uuid1().hex)
-        password = hashids.encrypt(cuenta_usuario.id).upper()
-        cuenta_usuario.clave_inicial = password
-        usuario = cuenta_usuario.usuario
-        usuario.is_active = True
-        usuario.set_password(password)
-        usuario.save()
-        cuenta_usuario.save()
+        with transaction.atomic():
+            cuenta_usuario.estado = 'A'
+            hashids = Hashids(min_length=5, salt=uuid.uuid1().hex)
+            password = hashids.encrypt(cuenta_usuario.id).upper()
+            cuenta_usuario.clave_inicial = password
+            usuario = cuenta_usuario.usuario
+            usuario.is_active = True
+            usuario.set_password(password)
+            usuario.save()
+            cuenta_usuario.save()
 
         ''' Enviar Email al usuario '''
         tipo_usuario = ''

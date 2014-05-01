@@ -2,11 +2,11 @@
 
 {% load staticfiles %}
 
-{% block title %} {{block.super}} | Solictud {% endblock title %} 
+{% block title %} {{block.super}} | Solicitud de Quirófano {% endblock title %}
 
 {% block scripts %}
 <script type="text/javascript" src="{% static 'medico/js/formulario_solicitud_quirofano.js' %}">
-</script>	
+</script>
 {% endblock scripts %}
 
 {% block nombre-usuario %}
@@ -29,7 +29,7 @@
 					<h1 class="panel-title" id="titulo-detalles-solicitud">
 						Detalles de Solicitud - Quirófano
 					</h1>
-				</div>				
+				</div>
 			</div>
 			<form class="form-horizontal" role="form" id="formulario-solicitud-quirofano">
 				<div class="panel-body">
@@ -51,21 +51,21 @@
 						</label>
 						<div class="col-lg-2">
 							<input class="form-control" type="text" value="14/03/2014" disabled>
-						</div>												
-					</div>					
+						</div>
+					</div>
 					<div class="form-group">
 						<label class="col-lg-2 control-label">
-							Hora Inicio: 
+							Hora Inicio:
 						</label>
 						<div class="col-lg-2">
 							<input class="form-control" type="text" value="8:30am" disabled>
 						</div>
 						<label class="col-lg-2 control-label">
-							Hora Fin: 
+							Hora Fin:
 						</label>
 						<div class="col-lg-2">
 							<input class="form-control" type="text" value="10:30am" disabled>
-						</div>											
+						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-lg-2 control-label" for="tipo-solicitud">
@@ -90,7 +90,7 @@
 									Paliativa
 								</label>
 							</div>
-						</div>	
+						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-lg-2 control-label" for="tipo-operacion">
@@ -125,7 +125,7 @@
 							</select>
 						</div>
 					</div>
-					<div class="form-group">						
+					<div class="form-group">
 						<label class="col-lg-2 control-label" for="observaciones">
 							Observaciones:
 						</label>
@@ -149,14 +149,14 @@
 									<input type="radio" name="riesgo" value="regular">
 									Regular
 								</label>
-							</div>	
+							</div>
 							<div class="radio-inline">
 								<label>
 									<input type="radio" name="riesgo" value="malo">
 									Malo
 								</label>
 							</div>
-						</div>					
+						</div>
 					</div>
 					<div class="form-group hidden" id="razon-riesgo">
 						<div class="col-lg-offset-2 col-lg-10">
@@ -174,63 +174,63 @@
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="equipo-radiocirugia" >
 									Equipo Radiocirugía
-							</label>				
+							</label>
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="equipo-o.r.l" >
 									Equipo O.R.L
-							</label>					
+							</label>
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="equipo-fluoroscopia" >
 									Equipo Fluoroscopia
-							</label>					
+							</label>
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="equipo-endocirugia" >
 									Equipo Endocirugía
-							</label>					
+							</label>
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="equipo-video-broncoscopio" >
 									Equipo Video Broncoscopio
-							</label>						
+							</label>
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="equipo-ureteroscopio" >
 									Equipo Ureteroscopio
-							</label>						
+							</label>
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="equipo-anspach" >
 									Equipo Anspach
-							</label>						
+							</label>
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="equipo-explorador-de-acceso-vascular" >
 									Equipo Explorador de Acceso Vascular
-							</label>					
+							</label>
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="equipo-hal" >
 									Equipo Hal
-							</label>				
+							</label>
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="equipo-laser-green-light" >
 									Equipo Laser Green Light
-							</label>					
+							</label>
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="equipo-litotripsia" >
 									Equipo Litotripsia
-							</label>						
+							</label>
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="equipo-traccionador-de-hombro" >
 									Equipo Traccionador de Hombro
-							</label>						
+							</label>
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="equipo-isquemia" >
 									Equipo Isquemia
-							</label>					
+							</label>
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="intercambiador-de-calor" >
 									Intercambiador de Calor
-							</label>						
+							</label>
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="sacagrapa" >
 									Sacagrapa
-							</label>						
+							</label>
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="sonda-transesofagica" >
 									Sonda Transesofagica
@@ -242,7 +242,7 @@
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="ligasure" >
 									Ligasure
-							</label>						
+							</label>
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="Instrumental-de-laparoscopia" >
 									Instrumental de Laparoscopia
@@ -258,7 +258,7 @@
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="espaciadores-de-cemento" >
 									Espaciadores de Cemento
-							</label>						
+							</label>
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="dermatomo" >
 									Dermatomo
@@ -266,7 +266,7 @@
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="expansor-de-ingerto" >
 									Expansor de Ingerto
-							</label>						
+							</label>
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="torastoscopia" >
 									Torastoscopia
@@ -274,7 +274,7 @@
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="dilatador-filiform" >
 									Dilatador Filiform
-							</label>		
+							</label>
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="navegador" >
 									Navegador
@@ -282,13 +282,13 @@
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="microscopio-moller" >
 									Microscopio Möller
-							</label>	
+							</label>
 							<label class="checkbox-inline">
 								<input type="checkbox" name="equipo_especial" value="terapia-respiratoria" >
 									Terapia Respiratoria
-							</label>								
+							</label>
 						</div>
-					</div>					
+					</div>
 					<div class="form-group">
 						<label class="col-lg-2 control-label" for="material-quirurgico">
 							Material
@@ -318,10 +318,10 @@
 								Máquina de Autosutura
 							</label>
 						</div>
-					</div>	
+					</div>
 					<div class="form-group">
 						<div class="col-lg-offset-2 col-lg-6">
-							<input type="text" class="form-control" name="otro-material-quirurgico" placeholder="Especifique otro" />						
+							<input type="text" class="form-control" name="otro-material-quirurgico" placeholder="Especifique otro" />
 						</div>
 					</div>
 				</div>
@@ -399,7 +399,7 @@
 							<input type="text" class="form-control" name="telefono-paciente" placeholder="Área">
 						</div>
 					</div><!-- Telefono -->
-					<div class="form-group">						
+					<div class="form-group">
 						<label class="col-lg-2 control-label" for="diagnostico-ingreso-paciente">
 							Diagnóstico:
 						</label>
@@ -422,7 +422,7 @@
 							<div class="radio-inline">
 								<label>
 									<input type="radio" name="forma-pago" value="seguro">
-									Seguro								
+									Seguro
 								</label>
 							</div>
 						</div>
@@ -460,7 +460,7 @@
 									</option>
 									<option>
 										hab2
-									</option>	
+									</option>
 									<option>
 										hab3
 									</option>
@@ -471,7 +471,7 @@
 					<div class="form-group">
 						<div class="col-lg-offset-2 col-lg-4">
 							<label class="checkbox-inline control-label">
-								<input type="checkbox" name="paciente-impres"> 
+								<input type="checkbox" name="paciente-impres">
 								Paciente Suscrito a Impres
 							</label>
 						</div>
@@ -482,7 +482,7 @@
 					<div class="form-group">
 						<div class="col-lg-offset-2 col-lg-4">
 							<label class="checkbox-inline control-label">
-								<input type="checkbox" name="paciente-medico"> 
+								<input type="checkbox" name="paciente-medico">
 								Paciente Médico
 							</label>
 						</div>
@@ -530,8 +530,8 @@
 				</div>
 			</form><!-- Formulario Solicitud Paciente -->
 
-			<form class="form-horizontal hidden" role="form" id="formulario-solicitud-honorarios">	
-				<div class="panel-body">			
+			<form class="form-horizontal hidden" role="form" id="formulario-solicitud-honorarios">
+				<div class="panel-body">
 					<div class="form-group">
 						<label class="col-lg-2 control-label" for="nombre-anestesiologo">
 							Anestesiólogo:
@@ -607,9 +607,9 @@
 								<input type="text" class="form-control" name="honorario-ayudante-3" placeholder="Monto honorarios">
 							</div>
 						</div>
-					</div><!-- Tercer Ayudante -->	
+					</div><!-- Tercer Ayudante -->
 				</div>
-				<div class="panel-footer">					
+				<div class="panel-footer">
 					<div class="form-group">
 						<div class="col-lg-2">
 							<a href="javascript:void(0);" class="btn btn-default" id="volver-info-paciente">

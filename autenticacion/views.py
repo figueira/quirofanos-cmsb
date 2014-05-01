@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods, require_GET, require_POST
 from django.template import RequestContext
 from django.contrib import messages
+from django.db import transaction
 
 from quirofanos_cmsb.models import Cuenta, Departamento, Medico
 from autenticacion.forms import InicioSesionForm, CambiarContrasenaForm, BusquedaMedicoForm, RegistroMedicoForm, RegistroDepartamentoForm, RecuperarContrasenaForm, BusquedaDepartamentoForm
@@ -96,23 +97,24 @@ def registro_medico(request):
 		return redirect('inicio')
 
 	if formulario_valido:
-		nombre_usuario_medico = formulario_registro_medico.cleaned_data['nombre_usuario_medico']
+		with transaction.atomic():
+			nombre_usuario_medico = formulario_registro_medico.cleaned_data['nombre_usuario_medico']
 
-		usuario = User.objects.create_user(username=nombre_usuario_medico, email=medico.email)
-		usuario.is_active = False
+			usuario = User.objects.create_user(username=nombre_usuario_medico, email=medico.email)
+			usuario.is_active = False
 
-		cuenta_medico = Cuenta()
-		cuenta_medico.usuario = usuario
-		cuenta_medico.estado = 'P'
-		cuenta_medico.privilegio = '4'
+			cuenta_medico = Cuenta()
+			cuenta_medico.usuario = usuario
+			cuenta_medico.estado = 'P'
+			cuenta_medico.privilegio = '4'
 
-		usuario.save()
-		cuenta_medico.save()
-		medico.cuenta = cuenta_medico
-		medico.save()
+			usuario.save()
+			cuenta_medico.save()
+			medico.cuenta = cuenta_medico
+			medico.save()
 
-		messages.add_message(request, messages.SUCCESS, MensajeTemporalExito.SOLICITUD_REGISTRO_EXITOSO)
-		return redirect('inicio')
+			messages.add_message(request, messages.SUCCESS, MensajeTemporalExito.SOLICITUD_REGISTRO_EXITOSO)
+			return redirect('inicio')
 
 	formulario_inicio_sesion = InicioSesionForm()
 	formulario_busqueda_medico = BusquedaMedicoForm()
@@ -145,29 +147,30 @@ def registro_departamento(request):
 		return redirect('inicio')
 
 	if formulario_valido:
-		nombre_usuario_departamento = formulario_registro_departamento.cleaned_data['nombre_usuario_departamento']
+		with transaction.atomic():
+			nombre_usuario_departamento = formulario_registro_departamento.cleaned_data['nombre_usuario_departamento']
 
-		usuario = User.objects.create_user(username=nombre_usuario_departamento, email=departamento.email)
-		usuario.is_active = False
+			usuario = User.objects.create_user(username=nombre_usuario_departamento, email=departamento.email)
+			usuario.is_active = False
 
-		cuenta_departamento = Cuenta()
-		cuenta_departamento.usuario = usuario
-		cuenta_departamento.estado = 'P'
-		if nombre_departamento == "Enfermeras Recuperacion":
-			cuenta_departamento.privilegio = '3'
-		elif nombre_departamento == "Admision Emergencia":
-			cuenta_departamento.privilegio = '2'
-		elif nombre_departamento == "Admision Principal":
-			cuenta_departamento.privilegio == '5'
-		else:
-			cuenta_departamento.privilegio = '6'
-		usuario.save()
-		cuenta_departamento.save()
-		departamento.cuenta = cuenta_departamento
-		departamento.save()
+			cuenta_departamento = Cuenta()
+			cuenta_departamento.usuario = usuario
+			cuenta_departamento.estado = 'P'
+			if nombre_departamento == "Enfermeras Recuperacion":
+				cuenta_departamento.privilegio = '3'
+			elif nombre_departamento == "Admision Emergencia":
+				cuenta_departamento.privilegio = '2'
+			elif nombre_departamento == "Admision Principal":
+				cuenta_departamento.privilegio == '5'
+			else:
+				cuenta_departamento.privilegio = '6'
+			usuario.save()
+			cuenta_departamento.save()
+			departamento.cuenta = cuenta_departamento
+			departamento.save()
 
-		messages.add_message(request, messages.SUCCESS, MensajeTemporalExito.SOLICITUD_REGISTRO_EXITOSO)
-		return redirect('inicio')
+			messages.add_message(request, messages.SUCCESS, MensajeTemporalExito.SOLICITUD_REGISTRO_EXITOSO)
+			return redirect('inicio')
 
 	formulario_inicio_sesion = InicioSesionForm()
 	formulario_busqueda_medico = BusquedaMedicoForm()
@@ -275,10 +278,11 @@ def cambiar_contrasena(request):
 			contrasena_actual = formulario_cambio_contrasena.cleaned_data['contrasena_actual']
 			contrasena_nueva = formulario_cambio_contrasena.cleaned_data['contrasena_nueva']
 			if request.user.check_password(contrasena_actual):
-				request.user.set_password(contrasena_nueva)
-				request.user.save()
-				messages.add_message(request, messages.SUCCESS, MensajeTemporalExito.CAMBIO_CONTRASENA_EXITOSO)
-				return redirect('calendario')
+				with transaction.atomic():
+					request.user.set_password(contrasena_nueva)
+					request.user.save()
+					messages.add_message(request, messages.SUCCESS, MensajeTemporalExito.CAMBIO_CONTRASENA_EXITOSO)
+					return redirect('calendario')
 			else:
 				messages.add_message(request, messages.ERROR,
 					MensajeTemporalError.CAMBIO_CONTRASENA_FALLIDO)
