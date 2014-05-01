@@ -21,6 +21,12 @@ def obtener_nombre_mes(mes):
     }[mes]
 
 def rango_decimal(comienzo, final, paso):
+    ''' Devuelve un rango de numeros decimales
+
+    Parametros:
+    comienzo -> Numero inicial
+    fianl -> Numero final
+    paso -> Paso entre cada numero '''
     r = comienzo
     while r < final:
         yield r
@@ -58,3 +64,36 @@ def obtener_representacion_media_hora(media_hora):
     18.5: TextoMostrable.DIECIOCHO_MEDIA_PM,
     19: TextoMostrable.DIECINUEVE_PM,
     }[media_hora]
+
+def obtener_medias_horas():
+    ''' Devuelve una lista de todas las medias horas posibles '''
+    return [x for x in rango_decimal(7.0, 19.5, 0.5)]
+
+def obtener_turnos_disponibles(duracion_en_medias_horas,medias_horas_no_disponibles, turnos_disponibles, turnos_atravesados):
+    ''' Rellena una lista de turnos_disponibles a partir de los cuales puede comenzar una intervencion quirurgica segun la duracion dada en cantidad de medias horas, ademas rellena una lista de turnos atravesados a partir de los cuales no puede comenzar la intervencion quirurgica
+
+    Parametros:
+    duracion_en_medias_horas -> Duracion de la intervencion quirurgica en cantidad de medias horas
+    medias_horas_no_disponibles -> Lista de las medias horas ocupadas por intervenciones quirurgicas
+    turnos_disponibles -> Lista de turnos disponibles que sera rellenada
+    turnos_atravesados -> Lista de turnos atravesados que sera rellenada '''
+    medias_horas = obtener_medias_horas()
+    medias_horas_disponibles = list(set(medias_horas).difference(set(medias_horas_no_disponibles)))
+    medias_horas_disponibles.sort()
+    indices_por_saltar = 0
+    for i in range(0, len(medias_horas_disponibles)):
+        disponible = True
+        if indices_por_saltar > 0:
+            indices_por_saltar = indices_por_saltar - 1
+            continue
+
+        for j in range(1, duracion_en_medias_horas):
+            if (i + j >= len(medias_horas_disponibles)) or not (medias_horas_disponibles[i+j] == medias_horas_disponibles[i] + j*0.5):
+                disponible = False
+                break
+
+        if disponible:
+            turnos_disponibles.append(medias_horas_disponibles[i])
+            indices_por_saltar = duracion_en_medias_horas - 1
+        else:
+            turnos_atravesados.append(medias_horas_disponibles[i])

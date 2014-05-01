@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.http import Http404
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods, require_GET, require_POST
-from django.shortcuts import redirect
 
 from datetime import date, timedelta
 import calendar
@@ -86,7 +85,7 @@ def calendario(request, area_actual='QG', ano=date.today().year, mes=date.today(
 @require_http_methods(["GET", "POST"])
 @login_required
 def plan_dia(request, area, ano, mes, dia):
-	''' Controlador correspondiente al detalle del plan quirurgico por dia
+	''' Controlador correspondiente al detalle del plan quirurgico por dia para usuarios medicos
 
 	Parametros:
 	request -> Solucitud HTTP
@@ -106,6 +105,8 @@ def plan_dia(request, area, ano, mes, dia):
 		raise Http404
 	if dia < 1 or dia > calendar.monthrange(ano, mes)[1]:
 		raise Http404
+	if request.user.cuenta.privilegio != '4':
+		return redirect('plan_dia_obs', area, ano, mes, dia)
 
 	seleccionar_turno = False
 	horas_intervencion = 0
@@ -123,34 +124,19 @@ def plan_dia(request, area, ano, mes, dia):
 
 	quirofanos_area = Quirofano.objects.filter(area=area)
 	quirofanos_area_intervenciones = []
-	medias_horas = [x for x in utils.rango_decimal(7, 19.5, 0.5)]
+	medias_horas = utils.obtener_medias_horas()
 	for quirofano in quirofanos_area:
 		quirofano_diccionario = {}
 		if quirofano.numero == 0:
 			quirofano_diccionario['nombre'] = TextoMostrable.SALA_RECUPERACION
 		else:
 			quirofano_diccionario['nombre'] = TextoMostrable.QUIROFANO + ' ' + str(quirofano.numero)
+		quirofano_diccionario['clave_primaria'] = quirofano.id
 		quirofano_diccionario['intervenciones'] = quirofano.obtener_intervenciones_por_hora(ano, mes, dia)
 		if seleccionar_turno:
-			medias_horas_disponibles = list(set(medias_horas).difference(set(quirofano_diccionario['intervenciones'].keys())))
-			medias_horas_disponibles.sort()
 			medias_horas_disponibles_para_duracion = []
 			medias_horas_disponibles_atravesadas = []
-			indices_por_saltar = 0
-			for i in range(0, len(medias_horas_disponibles)):
-				disponible = True
-				if indices_por_saltar > 0:
-					indices_por_saltar = indices_por_saltar - 1
-					continue
-				for j in range(1, cantidad_medias_horas_intervencion):
-					if (i + j >= len(medias_horas_disponibles)) or not (medias_horas_disponibles[i+j] == medias_horas_disponibles[i] + j*0.5):
-						disponible = False
-						break
-				if disponible:
-					medias_horas_disponibles_para_duracion.append(medias_horas_disponibles[i])
-					indices_por_saltar = cantidad_medias_horas_intervencion - 1
-				else:
-					medias_horas_disponibles_atravesadas.append(medias_horas_disponibles[i])
+			utils.obtener_turnos_disponibles(cantidad_medias_horas_intervencion, quirofano_diccionario['intervenciones'].keys(), medias_horas_disponibles_para_duracion, medias_horas_disponibles_atravesadas)
 			quirofano_diccionario['turnos_disponibles'] = medias_horas_disponibles_para_duracion
 			quirofano_diccionario['medias_horas_disponibles_atravesadas'] = medias_horas_disponibles_atravesadas
 		quirofanos_area_intervenciones.append(quirofano_diccionario)
@@ -173,11 +159,15 @@ def plan_dia(request, area, ano, mes, dia):
 
 @require_GET
 @login_required
-def plan_dia_obs(request):
-	''' Controlador correspondiente al detalle del plan quirurgico por dia
+def plan_dia_obs(request, area, ano, mes, dia):
+	''' Controlador correspondiente al detalle del plan quirurgico por dia para usuarios observadores
 
 	Parametros:
-	request -> Solucitud HTTP '''
+	request -> Solucitud HTTP
+	area -> Area de quirofanos a consultar
+	ano -> Ano a consultar
+	mes -> Mes a consultar
+	dia -> Dia a consultar '''
 
-	return render_to_response('plan_quirurgico/plan_dia_obs.html')
+	return render_to_response('plan_quirurgico/plan_dia_obs.html', context_instance=RequestContext(request))
 

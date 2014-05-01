@@ -682,7 +682,7 @@ $(function(){
 					{% if seleccionar_turno %}
 					{% if media_hora in quirofano.turnos_disponibles %}
 					<td class="available available-select" data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}" rowspan="{{ cantidad_medias_horas_intervencion }}">
-							<a class="btn btn-primary" href="#">
+							<a class="btn btn-primary" href="{% url 'solicitud_quirofano' ano mes dia quirofano.clave_primaria media_hora cantidad_medias_horas_intervencion %}">
 								{{ SELECCIONAR_TURNO }}
 							</a>
 					</td>
@@ -699,7 +699,7 @@ $(function(){
 					{% if seleccionar_turno %}
 					{% if media_hora in quirofano.turnos_disponibles %}
 					<td class="available available-select" data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}" rowspan="{{ cantidad_medias_horas_intervencion }}">
-							<a class="btn btn-primary" href="#">
+							<a class="btn btn-primary" href="{% url 'solicitud_quirofano' ano mes dia quirofano.clave_primaria media_hora cantidad_medias_horas_intervencion %}">
 								{{ SELECCIONAR_TURNO }}
 							</a>
 					</td>

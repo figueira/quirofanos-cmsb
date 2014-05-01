@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.contrib.auth.models import User
-from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods, require_GET, require_POST
@@ -101,14 +100,14 @@ def registro_medico(request):
 
 		usuario = User.objects.create_user(username=nombre_usuario_medico, email=medico.email)
 		usuario.is_active = False
-		usuario.save()
 
 		cuenta_medico = Cuenta()
 		cuenta_medico.usuario = usuario
 		cuenta_medico.estado = 'P'
 		cuenta_medico.privilegio = '4'
-		cuenta_medico.save()
 
+		usuario.save()
+		cuenta_medico.save()
 		medico.cuenta = cuenta_medico
 		medico.save()
 
@@ -150,7 +149,6 @@ def registro_departamento(request):
 
 		usuario = User.objects.create_user(username=nombre_usuario_departamento, email=departamento.email)
 		usuario.is_active = False
-		usuario.save()
 
 		cuenta_departamento = Cuenta()
 		cuenta_departamento.usuario = usuario
@@ -163,8 +161,8 @@ def registro_departamento(request):
 			cuenta_departamento.privilegio == '5'
 		else:
 			cuenta_departamento.privilegio = '6'
+		usuario.save()
 		cuenta_departamento.save()
-
 		departamento.cuenta = cuenta_departamento
 		departamento.save()
 

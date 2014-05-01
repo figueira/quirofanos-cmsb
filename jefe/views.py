@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render_to_response
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render_to_response, redirect
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.http import require_http_methods, require_GET, require_POST
 from django.template import RequestContext
 from django.contrib import messages
-from django.shortcuts import redirect
 from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
-from django.contrib.auth.decorators import user_passes_test
 
 from datetime import date, timedelta
 from hashids import Hashids
@@ -131,7 +129,6 @@ def aceptar_solicitud_usuario(request):
         messages.add_message(request, messages.SUCCESS, construir_mensaje(MensajeTemporalExito.SOLICITUD_USUARIO_APROBADA, "La clave de acceso del usuario es: " + cuenta_usuario.clave_inicial))
     else:
         messages.add_message(request, messages.ERROR, MensajeTemporalError. APROBACION_USUARIO_FALLIDA)
-
 
     return redirect('solicitudes_usuarios')
 
