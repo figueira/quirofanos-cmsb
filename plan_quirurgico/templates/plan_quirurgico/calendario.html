@@ -1,6 +1,7 @@
 {% extends request.session.template_base %}
 
 {% load staticfiles %}
+{% load widget_tweaks %}
 
 {% block title %}{{ block.super }} | Calendario{% endblock title %}
 
@@ -12,10 +13,12 @@
 {% block flash-messages %}
 {% if messages %}
 {% for message in messages %}
-<div class="alert alert-{{ message.tags }} fade in">
-	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-	<strong>{{ message }}</strong>
-</div>
+{% if message.extra_tags != 'modal' %}
+	<div class="alert alert-{{ message.tags }} fade in">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		<strong>{{ message }}</strong>
+	</div>
+{% endif %}
 {% endfor %}
 {% endif %}
 {% endblock flash-messages %}
@@ -140,4 +143,111 @@
 		</table>
 	</div>
 </div>
+
+{% if es_primer_ingreso %}
+<script type="text/javascript">
+$(function() {
+		    // Mostrar la opcion de actualizacion de clave de acceso en caso de
+		    // ser el primer ingreso del usuario
+		    $('#actualizacion-contrasena-modal').modal('show');
+		});
+</script>
+{% endif %}
+
+<div class="modal fade" id="actualizacion-contrasena-modal" data-backdrop="static">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header d">
+				<h4 class="modal-title"><strong>Actualizar Clave de Acceso</strong></h4>
+			</div>
+			<form class="form-horizontal" role="form" action="{% url 'calendario' %}" method='POST'>
+				{% csrf_token %}
+				<div class="modal-body">
+					{% if messages %}
+					{% for message in messages %}
+					{% if message.extra_tags == 'modal' %}
+						<div class="alert alert-{{ message.tags }} fade in">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+							<strong>{{ message }}</strong>
+						</div>
+					{% endif %}
+					{% endfor %}
+					{% endif %}
+					<div class="form-group" id="contrasena-actual-form-group">
+						<label class="col-lg-4 control-label" for="contrasena-actual">Contraseña Actual:</label>
+						<div class="col-lg-8">
+                            {% render_field formulario_cambio_contrasena.contrasena_actual class="form-control" id="contrasena-actual"%}
+							<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="contrasena-actual-error-feedback-icon"></span>
+							<span class="help-block hidden" id="contrasena-actual-error-help">{{ formulario_cambio_contrasena.contrasena_actual.errors }}</span>
+						</div>
+						{% if formulario_cambio_contrasena.contrasena_actual.errors %}
+						<script type="text/javascript">
+						$(function() {
+							$("#contrasena-actual").parent("div").addClass("has-error")
+							$("#contrasena-actual-form-group").addClass("has-feedback");
+							$("#contrasena-actual-error-feedback-icon").removeClass("hidden");
+							$("#contrasena-actual-error-help").removeClass("hidden");
+						});
+						</script>
+						{% endif %}
+					</div>
+					<div class="form-group" id="contrasena-nueva-form-group">
+						<label class="col-lg-4 control-label" for="contrasena-nueva">Nueva Contraseña:</label>
+						<div class="col-lg-8">
+							{% render_field formulario_cambio_contrasena.contrasena_nueva class="form-control" id="contrasena-nueva"%}
+							<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="contrasena-nueva-error-feedback-icon"></span>
+							<span class="help-block hidden" id="contrasena-nueva-error-help">{{ formulario_cambio_contrasena.contrasena_nueva.errors }}{{ formulario_cambio_contrasena.non_field_errors }}</span>
+						</div>
+						{% if formulario_cambio_contrasena.contrasena_nueva.errors %}
+						<script type="text/javascript">
+						$(function() {
+							$("#contrasena-nueva").parent("div").addClass("has-error")
+							$("#contrasena-nueva-form-group").addClass("has-feedback");
+							$("#contrasena-nueva-error-feedback-icon").removeClass("hidden");
+							$("#contrasena-nueva-error-help").removeClass("hidden");
+						});
+						</script>
+						{% endif %}
+					</div>
+					<div class="form-group" id="contrasena-nueva-confirmacion-form-group">
+						<label class="col-lg-4 control-label" for="contrasena-confirmacion">Repita Nueva Contraseña:</label>
+						<div class="col-lg-8">
+							{% render_field formulario_cambio_contrasena.contrasena_confirmacion class="form-control" id="contrasena-nueva-confirmacion"%}
+							<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="contrasena-nueva-confirmacion-error-feedback-icon"></span>
+							<span class="help-block hidden" id="contrasena-nueva-confirmacion-error-help">{{ formulario_cambio_contrasena.contrasena_confirmacion.errors }}{{ formulario_cambio_contrasena.non_field_errors }}</span>
+						</div>
+						{% if formulario_cambio_contrasena.contrasena_confirmacion.errors %}
+						<script type="text/javascript">
+						$(function() {
+							$("#contrasena-nueva-confirmacion").parent("div").addClass("has-error")
+							$("#contrasena-nueva-confirmacion-form-group").addClass("has-feedback");
+							$("#contrasena-nueva-confirmacion-error-feedback-icon").removeClass("hidden");
+							$("#contrasena-nueva-confirmacion-error-help").removeClass("hidden");
+						});
+						</script>
+						{% endif %}
+						{% if formulario_cambio_contrasena.non_field_errors %}
+						<script type="text/javascript">
+						$(function() {
+							$("#contrasena-nueva-confirmacion").parent("div").addClass("has-error")
+							$("#contrasena-nueva-confirmacion-form-group").addClass("has-feedback");
+							$("#contrasena-nueva-confirmacion-error-feedback-icon").removeClass("hidden");
+							$("#contrasena-nueva-confirmacion-error-help").removeClass("hidden");
+							$("#contrasena-nueva").parent("div").addClass("has-error")
+							$("#contrasena-nueva-form-group").addClass("has-feedback");
+							$("#contrasena-nueva-error-feedback-icon").removeClass("hidden");
+							$("#contrasena-nueva-error-help").removeClass("hidden");
+						});
+						</script>
+						{% endif %}
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary">Actualizar</button>
+				</div>
+			</form>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 {% endblock content %}

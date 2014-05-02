@@ -4,6 +4,8 @@ from django.http import Http404
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods, require_GET, require_POST
+from django.contrib import messages
+from django.db import transaction
 
 from datetime import date, timedelta
 import calendar
@@ -12,9 +14,10 @@ import math
 from quirofanos_cmsb.helpers import utils
 from quirofanos_cmsb.models import Quirofano
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
-from plan_quirurgico.forms import DuracionIntervencionQuirurgicaForm
+from plan_quirurgico.forms import DuracionIntervencionQuirurgicaForm, CambiarContrasenaForm
+from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito
 
-@require_GET
+@require_http_methods(["GET", "POST"])
 @login_required
 def calendario(request, area_actual='QG', ano=date.today().year, mes=date.today().month):
 	''' Controlador correspondiente al calendario de disponibilidad de quirofanos por mes
@@ -80,6 +83,31 @@ def calendario(request, area_actual='QG', ano=date.today().year, mes=date.today(
 	datos['area_actual'] = area_actual
 	datos['areas'] = areas
 	datos['semanas'] = semanas_diccionarios
+
+	datos['es_primer_ingreso'] = True
+	if request.user.check_password(request.user.cuenta.clave_inicial):
+		if request.method == 'GET':
+			formulario_cambio_contrasena = CambiarContrasenaForm()
+		elif request.method == 'POST':
+			formulario_cambio_contrasena = CambiarContrasenaForm(request.POST)
+			if formulario_cambio_contrasena.is_valid():
+				contrasena_actual = formulario_cambio_contrasena.cleaned_data['contrasena_actual']
+				contrasena_nueva = formulario_cambio_contrasena.cleaned_data['contrasena_nueva']
+				if request.user.check_password(contrasena_actual):
+					with transaction.atomic():
+						request.user.set_password(contrasena_nueva)
+						request.user.save()
+						messages.add_message(request, messages.SUCCESS,MensajeTemporalExito.CAMBIO_CONTRASENA_EXITOSO)
+						datos['es_primer_ingreso'] = False
+						return redirect('calendario')
+				else:
+					messages.add_message(request, messages.ERROR,
+						MensajeTemporalError.CAMBIO_CONTRASENA_FALLIDO,extra_tags='modal')
+					return redirect('calendario')
+		datos["formulario_cambio_contrasena"] = formulario_cambio_contrasena
+	else:
+		datos['es_primer_ingreso'] = False
+
 	return render_to_response('plan_quirurgico/calendario.html', datos, context_instance=RequestContext(request))
 
 @require_http_methods(["GET", "POST"])
@@ -170,4 +198,3 @@ def plan_dia_obs(request, area, ano, mes, dia):
 	dia -> Dia a consultar '''
 
 	return render_to_response('plan_quirurgico/plan_dia_obs.html', context_instance=RequestContext(request))
-
