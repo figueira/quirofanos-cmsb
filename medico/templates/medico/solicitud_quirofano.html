@@ -1,6 +1,7 @@
 {% extends "medico/contexto.html" %}
 
 {% load staticfiles %}
+{% load widget_tweaks %}
 
 {% block title %} {{block.super}} | Solicitud de Quirófano {% endblock title %}
 
@@ -27,603 +28,330 @@
 			<div class="panel-heading">
 				<div class="row">
 					<h1 class="panel-title" id="titulo-detalles-solicitud">
-						Detalles de Solicitud - Quirófano
+						Detalles de Solicitud - Paciente
 					</h1>
 				</div>
 			</div>
+
+			<!-- Formulario Solicitud Quirofano -->
 			<form class="form-horizontal" role="form" id="formulario-solicitud-quirofano">
-				<div class="panel-body">
-					<div class="form-group">
-						<label class="col-lg-2 control-label">
-							Área:
-						</label>
-						<div class="col-lg-2">
-							<input class="form-control" type="text" value="Quirúrgica" disabled>
-						</div>
-						<label class="col-lg-2 control-label">
-							Quirófano:
-						</label>
-						<div class="col-lg-2">
-							<input class="form-control" type="text" value="Quirófano 4" disabled>
-						</div>
-						<label class="col-lg-2 control-label">
-							Fecha:
-						</label>
-						<div class="col-lg-2">
-							<input class="form-control" type="text" value="14/03/2014" disabled>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label">
-							Hora Inicio:
-						</label>
-						<div class="col-lg-2">
-							<input class="form-control" type="text" value="8:30am" disabled>
-						</div>
-						<label class="col-lg-2 control-label">
-							Hora Fin:
-						</label>
-						<div class="col-lg-2">
-							<input class="form-control" type="text" value="10:30am" disabled>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="tipo-solicitud">
-							Tipo:
-						</label>
-						<div class="col-lg-10">
-							<div class="radio-inline">
-								<label>
-									<input type="radio" name="tipo-solicitud" value="emergencia" >
-									Emergencia
-								</label>
+				{% csrf_token %}
+				<input type="hidden" name="accion" value="{{ accion }}">
+				<div id="datos-paciente">
+					<div class="panel-body">
+						<div class="form-group">
+							<label class="col-lg-2 control-label" for="nombre-paciente">
+								{{ LABEL_NOMBRE }}
+							</label>
+							<div class="col-lg-4">
+								{% render_field formulario_solicitud_quirofano.nombre_paciente class="form-control" id="nombre-paciente" %}
 							</div>
-							<div class="radio-inline">
-								<label>
-									<input type="radio" name="tipo-solicitud" value="electiva">
-									Electiva
-								</label>
-							</div>
-							<div class="radio-inline">
-								<label>
-									<input type="radio" name="tipo-solicitud" value="paliativa" >
-									Paliativa
-								</label>
+							<label class="col-lg-2 control-label" for="apellido-paciente">
+								{{ LABEL_APELLIDO }}
+							</label>
+							<div class="col-lg-4">
+								{% render_field formulario_solicitud_quirofano.apellido_paciente class="form-control" id="apellido-paciente" %}
 							</div>
 						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="tipo-operacion">
-							Operación:
-						</label>
-						<div class="col-lg-10">
-							<select class="form-control" name="tipo-operacion">
-								<option>
-									Reducción Gastrica
-								</option>
-								<option>
-									Liposucción
-								</option>
-								<option>
-									Intervención Cardíaca
-								</option>
-							</select>
+						<div class="form-group">
+							<label class="col-lg-2 control-label" for="cedula-paciente">
+								{{ LABEL_CEDULA }}
+							</label>
+							<div class="col-lg-4">
+								{% render_field formulario_solicitud_quirofano.cedula_paciente class="form-control" id="cedula-paciente" %}
+							</div>
+							<label class="col-lg-2 control-label" for="fecha-nacimiento-paciente">
+								{{ LABEL_FECHA_NACIMIENTO }}
+							</label>
+							<div class="col-lg-4">
+								{% render_field formulario_solicitud_quirofano.fecha_nacimiento_paciente class="form-control" id="fecha-nacimiento-paciente" %}
+							</div>
 						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="tipo-anestesia">
-							Anestesia:
-						</label>
-						<div class="col-lg-10">
-							<select class="form-control" name="tipo-anestesia">
-								<option>
-									General
-								</option>
-								<option>
-									Local
-								</option>
-							</select>
+						<div clas="form-group">
+							<label class="col-lg-2 control-label">
+								{{ LABEL_GENERO }}
+							</label>
+							<div class="col-lg-10">
+								{% for radio in formulario_solicitud_quirofano.genero_paciente %}
+								<label class="radio-inline">
+									{% render_field radio %}
+								</label>
+								{% endfor %}
+							</div>
 						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="observaciones">
-							Observaciones:
-						</label>
-						<div class="col-lg-10">
-							<textarea class="form-control" name="observaciones" rows="3"></textarea>
+						<div class="form-group">
+							<label class="col-lg-2 control-label" for="codigo-telefono-paciente">
+								{{ LABEL_TELEFONO }}
+							</label>
+							<div class="col-lg-2">
+								{% render_field formulario_solicitud_quirofano.codigo_telefono_paciente class="form-control" id="codigo-telefono-paciente" placeholder=LABEL_CODIGO_TELEFONO %}
+							</div>
+							<div class="col-lg-3">
+								{% render_field formulario_solicitud_quirofano.numero_telefono_paciente class="form-control" id="numero-telefono-paciente" placeholder=LABEL_NUMERO_TELEFONO %}
+							</div>
 						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="riesgo">
-							Nivel de Riesgo:
-						</label>
-						<div class="col-lg-10">
-							<div class="radio-inline">
+						<div class="form-group">
+							<label class="col-lg-2 control-label" for="diagnostico-ingreso-paciente">
+								{{ LABEL_DIAGNOSTICO }}
+							</label>
+							<div class="col-lg-10">
+								{% render_field formulario_solicitud_quirofano.diagnostico_ingreso_paciente class="form-control" id="diagnostico-ingreso-paciente" %}
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-2 control-label" for="forma-pago">
+								{{ LABEL_FORMA_PAGO }}
+							</label>
+							<div class="col-lg-4">
+								<div class="radio-inline">
+									<label>
+										<input type="radio" name="forma-pago" value="particular">
+										Particular
+									</label>
+								</div>
+								<div class="radio-inline">
+									<label>
+										<input type="radio" name="forma-pago" value="seguro">
+										Seguro
+									</label>
+								</div>
+							</div>
+							<div class="hidden" id="seguros">
+								<label class="col-lg-2 control-label" for="compania-aseguradora-paciente">
+									{{ LABEL_ASEGURADORA }}
+								</label>
+								<div class="col-lg-4">
+									{% render_field formulario_solicitud_quirofano.compania_aseguradora_paciente class="form-control" id="compania-aseguradora-paciente" %}
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-lg-offset-2 col-lg-2 checkbox">
 								<label>
-									<input type="radio" name="riesgo" value="bueno" >
-									Bueno
+									<input type="checkbox" name="paciente-hospitalizado">
+									{{ LABEL_PACIENTE_HOSPITALIZADO }}
 								</label>
 							</div>
-							<div class="radio-inline">
-								<label>
-									<input type="radio" name="riesgo" value="regular">
-									Regular
+							<div class="hidden" id="habitacion">
+								<label class="col-lg-2 control-label" for="habitacion-paciente">
+									{{ LABEL_HABITACION }}
 								</label>
-							</div>
-							<div class="radio-inline">
-								<label>
-									<input type="radio" name="riesgo" value="malo">
-									Malo
-								</label>
+								<div class="col-lg-2">
+									{% render_field formulario_solicitud_quirofano.numero_habitacion_paciente class="form-control" id="habitacion-paciente" %}
+								</div>
 							</div>
 						</div>
 					</div>
-					<div class="form-group hidden" id="razon-riesgo">
-						<div class="col-lg-offset-2 col-lg-10">
-							<textarea class="form-control" id="razon-riesgo-input" name="razon" rows="3" placeholder="Indique razón del riesgo"></textarea>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="equipo-especial-requerido">
-							Equipos
-							<abbr title="Especiales">
-								Esp.
-							</abbr>:
-						</label>
-						<div class="col-lg-10">
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="equipo-radiocirugia" >
-									Equipo Radiocirugía
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="equipo-o.r.l" >
-									Equipo O.R.L
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="equipo-fluoroscopia" >
-									Equipo Fluoroscopia
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="equipo-endocirugia" >
-									Equipo Endocirugía
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="equipo-video-broncoscopio" >
-									Equipo Video Broncoscopio
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="equipo-ureteroscopio" >
-									Equipo Ureteroscopio
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="equipo-anspach" >
-									Equipo Anspach
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="equipo-explorador-de-acceso-vascular" >
-									Equipo Explorador de Acceso Vascular
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="equipo-hal" >
-									Equipo Hal
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="equipo-laser-green-light" >
-									Equipo Laser Green Light
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="equipo-litotripsia" >
-									Equipo Litotripsia
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="equipo-traccionador-de-hombro" >
-									Equipo Traccionador de Hombro
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="equipo-isquemia" >
-									Equipo Isquemia
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="intercambiador-de-calor" >
-									Intercambiador de Calor
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="sacagrapa" >
-									Sacagrapa
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="sonda-transesofagica" >
-									Sonda Transesofagica
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="intensificador-de-imagen" >
-									Intensificador de Imagen
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="ligasure" >
-									Ligasure
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="Instrumental-de-laparoscopia" >
-									Instrumental de Laparoscopia
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="bisturi-armonico" >
-									Bisturi Armonico
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="caja-traumatologica" >
-									Caja Traumatologica
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="espaciadores-de-cemento" >
-									Espaciadores de Cemento
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="dermatomo" >
-									Dermatomo
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="expansor-de-ingerto" >
-									Expansor de Ingerto
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="torastoscopia" >
-									Torastoscopia
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="dilatador-filiform" >
-									Dilatador Filiform
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="navegador" >
-									Navegador
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="microscopio-moller" >
-									Microscopio Möller
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="equipo_especial" value="terapia-respiratoria" >
-									Terapia Respiratoria
-							</label>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="material-quirurgico">
-							Material
-							<abbr title="Quirúrgico">
-								Quir.
-							</abbr>:
-						</label>
-						<div class="col-lg-10">
-							<label class="checkbox-inline">
-								<input type="checkbox" name="material-quirurgico">
-								Sutura Especial
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="material-quirurgico">
-								Protack
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="material-quirurgico">
-								Malla Polipropileno
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="material-quirurgico">
-								Malla Dual Mesh
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="material-quirurgico">
-								Máquina de Autosutura
-							</label>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-lg-offset-2 col-lg-6">
-							<input type="text" class="form-control" name="otro-material-quirurgico" placeholder="Especifique otro" />
+					<div class="panel-footer">
+						<div class="form-group">
+							<div class="col-lg-offset-10">
+								<a href="javascript:void(0);" class="btn btn-default" id="ver-info-quirofano">{{ QUIROFANO }}
+									<span class="glyphicon glyphicon-chevron-right"></span>
+								</a>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="panel-footer">
-					<div class="form-group">
-						<div class="col-lg-offset-10">
-							<a href="javascript:void(0);" class="btn btn-default" id="ver-info-paciente">Paciente
-								<span class="glyphicon glyphicon-chevron-right"></span>
-							</a>
+
+				<div class="hidden" id="datos-quirofano">
+					<div class="panel-body">
+						<div class="form-group">
+							<label class="col-lg-2 control-label">
+								{{ LABEL_AREA }}
+							</label>
+							<div class="col-lg-2">
+								<input class="form-control" type="text" value="{{ area_legible }}" disabled>
+							</div>
+							<label class="col-lg-2 control-label">
+								{{ LABEL_QUIROFANO }}
+							</label>
+							<div class="col-lg-2">
+								<input class="form-control" type="text" value="{{ quirofano_legible }}" disabled>
+							</div>
+							<label class="col-lg-2 control-label">
+								{{ LABEL_FECHA }}
+							</label>
+							<div class="col-lg-2">
+								<input class="form-control" type="text" value="{{ fecha_intervencion_legible }}" disabled>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-2 control-label">
+								{{ LABEL_HORA_INICIO }}
+							</label>
+							<div class="col-lg-2">
+								<input class="form-control" type="text" value="{{ hora_inicio_legible }}" disabled>
+							</div>
+							<label class="col-lg-2 control-label">
+								{{ LABEL_HORA_FIN }}
+							</label>
+							<div class="col-lg-2">
+								<input class="form-control" type="text" value="{{ hora_fin_legible }}" disabled>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-2 control-label" for="tipo-anestesia">
+								{{ LABEL_ANESTESIA }}
+							</label>
+							<div class="col-lg-10">
+								{% for radio in formulario_solicitud_quirofano.preferencia_anestesica %}
+								<label class="radio-inline">
+									{% render_field radio %}
+								</label>
+								{% endfor %}
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-2 control-label" for="observaciones">
+								{{ LABEL_OBSERVACIONES }}
+							</label>
+							<div class="col-lg-10">
+								{% render_field formulario_solicitud_quirofano.observaciones class="form-control" id="observaciones" %}
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-2 control-label" for="riesgo">
+								{{ LABEL_NIVEL_RIESGO }}
+							</label>
+							<div class="col-lg-10">
+								{% for radio in formulario_solicitud_quirofano.riesgo %}
+								<label class="radio-inline">
+									{% render_field radio %}
+								</label>
+								{% endfor %}
+							</div>
+						</div>
+						<div class="form-group hidden" id="razon-riesgo">
+							<div class="col-lg-offset-2 col-lg-10">
+								{% render_field formulario_solicitud_quirofano.razon_riesgo class="form-control" id="razon-riesgo-input" placeholder=LABEL_RAZON_RIESGO %}
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-2 control-label" for="equipo-especial-requerido">
+								{{ LABEL_EQUIPOS_ESPECIALES }}
+							</label>
+							<div class="col-lg-10">
+								{% render_field formulario_solicitud_quirofano.equipos_especiales_requeridos class="form-control" id="equipo-especial-requerido" %}
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-2 control-label" for="material-quirurgico">
+								{{ LABEL_MATERIAL_QUIRURGICO }}
+							</label>
+							<div class="col-lg-10">
+								{% render_field formulario_solicitud_quirofano.materiales_quirurgicos_requeridos class="form-control" id="material-quirurgico-requerido" %}
+							</div>
+						</div>
+					</div>
+					<div class="panel-footer">
+						<div class="form-group">
+							<div class="col-lg-2">
+								<a href="javascript:void(0);" class="btn btn-default" id="ver-info-paciente">
+									<span class="glyphicon glyphicon-chevron-left"></span> {{ PACIENTE }}
+								</a>
+							</div>
+							<div class="col-lg-offset-10">
+								<button type="submit" class="btn btn-primary btn-lg">{{ ENVIAR }}</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="hidden" id="datos-procedimiento-quirurgico">
+					<div class="panel-body">
+						<div class="form-group">
+							<label class="col-lg-2 control-label" for="nombre-anestesiologo">
+								Anestesiólogo:
+							</label>
+							<div class="col-lg-3">
+								<input type="text" class="form-control" name="nombre-anestesiologo" placeholder="Nombre" />
+							</div>
+							<div class="col-lg-3">
+								<input type="text" class="form-control" name="apellido-anestesiologo" placeholder="Apellido" />
+							</div>
+							<div class="col-lg-4">
+								<div class="input-group">
+									<span class="input-group-addon">
+										Bs.
+									</span>
+									<input type="text" class="form-control" name="honorario-anestesiologo" placeholder="Monto honorarios">
+								</div>
+							</div>
+						</div><!-- Anestesiologo -->
+						<div class="form-group">
+							<label class="col-lg-2 control-label" for="nombre-ayudante-1">
+								Primer Ayudante:
+							</label>
+							<div class="col-lg-3">
+								<input type="text" class="form-control" name="nombre-ayudante-1" placeholder="Nombre" />
+							</div>
+							<div class="col-lg-3">
+								<input type="text" class="form-control" name="apellido-ayudante-1" placeholder="Apellido" />
+							</div>
+							<div class="col-lg-4">
+								<div class="input-group">
+									<span class="input-group-addon">
+										Bs.
+									</span>
+									<input type="text" class="form-control" name="honorario-ayudante-1" placeholder="Monto honorarios">
+								</div>
+							</div>
+						</div><!-- Primer Ayudante -->
+						<div class="form-group">
+							<label class="col-lg-2 control-label" for="nombre-ayudante-2">
+								Segundo Ayudante:
+							</label>
+							<div class="col-lg-3">
+								<input type="text" class="form-control" name="nombre-ayudante-2" placeholder="Nombre" />
+							</div>
+							<div class="col-lg-3">
+								<input type="text" class="form-control" name="apellido-ayudante-2" placeholder="Apellido" />
+							</div>
+							<div class="col-lg-4">
+								<div class="input-group">
+									<span class="input-group-addon">
+										Bs.
+									</span>
+									<input type="text" class="form-control" name="honorario-ayudante-2" placeholder="Monto honorarios">
+								</div>
+							</div>
+						</div><!-- Segundo Ayudante -->
+						<div class="form-group">
+							<label class="col-lg-2 control-label" for="nombre-ayudante-3">
+								Tercer Ayudante:
+							</label>
+							<div class="col-lg-3">
+								<input type="text" class="form-control" name="nombre-ayudante-3" placeholder="Nombre" />
+							</div>
+							<div class="col-lg-3">
+								<input type="text" class="form-control" name="apellido-ayudante-3" placeholder="Apellido" />
+							</div>
+							<div class="col-lg-4">
+								<div class="input-group">
+									<span class="input-group-addon">
+										Bs.
+									</span>
+									<input type="text" class="form-control" name="honorario-ayudante-3" placeholder="Monto honorarios">
+								</div>
+							</div>
+						</div><!-- Tercer Ayudante -->
+					</div>
+					<div class="panel-footer">
+						<div class="form-group">
+							<div class="col-lg-2">
+								<a href="javascript:void(0);" class="btn btn-default" id="volver-info-paciente">
+									<span class="glyphicon glyphicon-chevron-left"></span>
+									Paciente
+								</a>
+							</div>
+							<div class="col-lg-offset-10">
+								<a href="#" class="btn btn-primary btn-lg">Enviar
+								</a>
+							</div>
 						</div>
 					</div>
 				</div>
 			</form><!-- Formulario Solicitud Quirofano -->
-
-			<form class="form-horizontal hidden" role="form" id="formulario-solicitud-paciente">
-				<div class="panel-body">
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="nombre-paciente">
-							Nombre:
-						</label>
-						<div class="col-lg-4">
-							<input type="text" class="form-control" name="nombre-paciente">
-						</div>
-						<label class="col-lg-2 control-label" for="apellido-paciente">
-							Apellido:
-						</label>
-						<div class="col-lg-4">
-							<input type="text" class="form-control" name="apellido-paciente">
-						</div>
-					</div><!-- Nombre y Apellido -->
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="cedula-paciente">
-							Cedula:
-						</label>
-						<div class="col-lg-4">
-							<input type="text" class="form-control" name="cedula-paciente">
-						</div>
-						<label class="col-lg-2 control-label" for="fecha-nacimiento-paciente">
-							Fecha
-							<abbr title="Nacimiento">
-								Nac.
-							</abbr>:
-						</label>
-						<div class="col-lg-4">
-							<input type="date" class="form-control" name="fecha-nacimiento-paciente">
-						</div>
-					</div><!-- Cedula y Fecha de Nacimiento -->
-					<div clas="form-group">
-						<label class="col-lg-2 control-label" for="sexo-paciente">
-							Sexo:
-						</label>
-						<div class="col-lg-10">
-							<div class="radio-inline">
-								<label>
-									<input type="radio" name="sexo-paciente" value="M">
-									Masculino
-								</label>
-							</div>
-							<div class="radio-inline">
-								<label>
-									<input type="radio" name="sexo-paciente" value="F">
-									Femenino
-								</label>
-							</div>
-						</div>
-					</div><!-- Sexo -->
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="telefono-paciente">
-							Teléfono:
-						</label>
-						<div class="col-lg-2">
-							<input type="text" class="form-control" placeholder="Código">
-						</div>
-						<div class="col-lg-3">
-							<input type="text" class="form-control" name="telefono-paciente" placeholder="Área">
-						</div>
-					</div><!-- Telefono -->
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="diagnostico-ingreso-paciente">
-							Diagnóstico:
-						</label>
-						<div class="col-lg-10">
-							<textarea class="form-control" name="diagnostico-ingreso-paciente" rows="3">
-							</textarea>
-						</div>
-					</div><!-- Diagnostico -->
-					<div clas="form-group">
-						<label class="col-lg-2 control-label" for="forma-pago">
-							Forma de Pago:
-						</label>
-						<div class="col-lg-10">
-							<div class="radio-inline">
-								<label>
-									<input type="radio" name="forma-pago" value="particular">
-									Particular
-								</label>
-							</div>
-							<div class="radio-inline">
-								<label>
-									<input type="radio" name="forma-pago" value="seguro">
-									Seguro
-								</label>
-							</div>
-						</div>
-					</div><!-- Forma de Pago -->
-					<div class="form-group hidden" id="seguros">
-						<label class="col-lg-2 control-label" for="compania-aseguradora">
-							Aseguradora:
-						</label>
-						<div class="col-lg-10">
-							<select class="form-control" name="compania-aseguradora">
-								<option>
-									Seguros Altamira
-								</option>
-								<option>
-									Seguros Mercantil
-								</option>
-							</select>
-						</div>
-					</div><!-- Seguros -->
-					<div class="form-group">
-						<div class="col-lg-offset-2 col-lg-4">
-							<label class="checkbox-inline">
-								<input type="checkbox" name="paciente-hospitalizado">
-								Paciente Hospitalizado
-							</label>
-						</div>
-						<div class="hidden" id="habitacion">
-							<label class="col-lg-2 control-label" for="paciente-hospitalizado-habitacion">
-								Habitación:
-							</label>
-							<div class="col-lg-4">
-								<select class="form-control" name="paciente-hospitalizado-habitacion">
-									<option>
-										hab1
-									</option>
-									<option>
-										hab2
-									</option>
-									<option>
-										hab3
-									</option>
-								</select>
-							</div>
-						</div>
-					</div><!-- Paciente Hospitalizado -->
-					<div class="form-group">
-						<div class="col-lg-offset-2 col-lg-4">
-							<label class="checkbox-inline control-label">
-								<input type="checkbox" name="paciente-impres">
-								Paciente Suscrito a Impres
-							</label>
-						</div>
-						<div class="col-lg-6 hidden" id="carnet-impres">
-							<input type="text" class="form-control" name="carnet-impres" placeholder="Indique carnet impres">
-						</div>
-					</div><!-- Paciente Impres -->
-					<div class="form-group">
-						<div class="col-lg-offset-2 col-lg-4">
-							<label class="checkbox-inline control-label">
-								<input type="checkbox" name="paciente-medico">
-								Paciente Médico
-							</label>
-						</div>
-						<div class="col-lg-6 hidden" id="numero-inscripcion-medico">
-							<input type="text" class="form-control" name="numero-inscripcion-medico" placeholder="Indique numero de inscripcion">
-						</div>
-					</div><!-- Paciente Medico -->
-					<div class="form-group">
-						<div class="col-lg-offset-2 col-lg-10">
-							<label class="checkbox-inline control-label">
-								<input type="checkbox" name="paciente-pariente-medico">
-								Paciente Pariente de Médico
-							</label>
-						</div>
-					</div><!-- Paciente Pariente Medico -->
-					<div class="form-group hidden" id="medico-pariente">
-						<label class="col-lg-offset-2 col-lg-2 control-label" for="nombre-medico-pariente">
-							Indique Médico:
-						</label>
-						<div class="col-lg-3">
-							<input type="text" class="form-control input-medico-pariente" name="nombre-medico-pariente" placeholder="Nombre"/>
-						</div>
-						<div class="col-lg-3">
-							<input type="text" class="form-control input-medico-pariente" name="apellido-medico-pariente" placeholder="Apellido"/>
-						</div>
-						<div class="col-lg-2">
-							<input type="text" class="form-control input-medico-pariente" name="cedula-medico-pariente" placeholder="Cédula"/>
-						</div>
-					</div><!-- Paciente Pariente de Medico -->
-				</div>
-				<div class="panel-footer">
-					<div class="form-group">
-						<div class="col-lg-2">
-							<a href="javascript:void(0);" class="btn btn-default" id="volver-info-quirofano">
-								<span class="glyphicon glyphicon-chevron-left"></span>
-								Quirófano
-							</a>
-						</div>
-						<div class="col-lg-offset-10">
-							<a href="javascript:void(0);" class="btn btn-default" id="ver-info-honorarios">Honorarios
-								<span class="glyphicon glyphicon-chevron-right"></span>
-							</a>
-						</div>
-					</div>
-				</div>
-			</form><!-- Formulario Solicitud Paciente -->
-
-			<form class="form-horizontal hidden" role="form" id="formulario-solicitud-honorarios">
-				<div class="panel-body">
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="nombre-anestesiologo">
-							Anestesiólogo:
-						</label>
-						<div class="col-lg-3">
-							<input type="text" class="form-control" name="nombre-anestesiologo" placeholder="Nombre" />
-						</div>
-						<div class="col-lg-3">
-							<input type="text" class="form-control" name="apellido-anestesiologo" placeholder="Apellido" />
-						</div>
-						<div class="col-lg-4">
-							<div class="input-group">
-								<span class="input-group-addon">
-									Bs.
-								</span>
-								<input type="text" class="form-control" name="honorario-anestesiologo" placeholder="Monto honorarios">
-							</div>
-						</div>
-					</div><!-- Anestesiologo -->
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="nombre-ayudante-1">
-							Primer Ayudante:
-						</label>
-						<div class="col-lg-3">
-							<input type="text" class="form-control" name="nombre-ayudante-1" placeholder="Nombre" />
-						</div>
-						<div class="col-lg-3">
-							<input type="text" class="form-control" name="apellido-ayudante-1" placeholder="Apellido" />
-						</div>
-						<div class="col-lg-4">
-							<div class="input-group">
-								<span class="input-group-addon">
-									Bs.
-								</span>
-								<input type="text" class="form-control" name="honorario-ayudante-1" placeholder="Monto honorarios">
-							</div>
-						</div>
-					</div><!-- Primer Ayudante -->
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="nombre-ayudante-2">
-							Segundo Ayudante:
-						</label>
-						<div class="col-lg-3">
-							<input type="text" class="form-control" name="nombre-ayudante-2" placeholder="Nombre" />
-						</div>
-						<div class="col-lg-3">
-							<input type="text" class="form-control" name="apellido-ayudante-2" placeholder="Apellido" />
-						</div>
-						<div class="col-lg-4">
-							<div class="input-group">
-								<span class="input-group-addon">
-									Bs.
-								</span>
-								<input type="text" class="form-control" name="honorario-ayudante-2" placeholder="Monto honorarios">
-							</div>
-						</div>
-					</div><!-- Segundo Ayudante -->
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="nombre-ayudante-3">
-							Tercer Ayudante:
-						</label>
-						<div class="col-lg-3">
-							<input type="text" class="form-control" name="nombre-ayudante-3" placeholder="Nombre" />
-						</div>
-						<div class="col-lg-3">
-							<input type="text" class="form-control" name="apellido-ayudante-3" placeholder="Apellido" />
-						</div>
-						<div class="col-lg-4">
-							<div class="input-group">
-								<span class="input-group-addon">
-									Bs.
-								</span>
-								<input type="text" class="form-control" name="honorario-ayudante-3" placeholder="Monto honorarios">
-							</div>
-						</div>
-					</div><!-- Tercer Ayudante -->
-				</div>
-				<div class="panel-footer">
-					<div class="form-group">
-						<div class="col-lg-2">
-							<a href="javascript:void(0);" class="btn btn-default" id="volver-info-paciente">
-								<span class="glyphicon glyphicon-chevron-left"></span>
-								Paciente
-							</a>
-						</div>
-						<div class="col-lg-offset-10">
-							<a href="#" class="btn btn-primary btn-lg">Enviar
-							</a>
-						</div>
-					</div>
-				</div>
-			</form><!-- Formulario Solicitud Honorarios -->
 		</div>
 	</div>
 </div>

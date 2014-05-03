@@ -49,4 +49,26 @@ def constantes_texto(request):
     datos['MENSAJE_SELECCIONAR_TURNO_INTERVENCION'] = TextoMostrable.MENSAJE_SELECCIONAR_TURNO_INTERVENCION
     datos['LABEL_DURACION_INTERVENCION'] = TextoMostrable.LABEL_DURACION_INTERVENCION
     datos['SELECCIONAR_TURNO'] = TextoMostrable.SELECCIONAR_TURNO
+    datos['LABEL_AREA'] = TextoMostrable.LABEL_AREA
+    datos['LABEL_QUIROFANO'] = TextoMostrable.LABEL_QUIROFANO
+    datos['LABEL_FECHA'] = TextoMostrable.LABEL_FECHA
+    datos['LABEL_HORA_INICIO'] = TextoMostrable.LABEL_HORA_INICIO
+    datos['LABEL_HORA_FIN'] = TextoMostrable.LABEL_HORA_FIN
+    datos['LABEL_ANESTESIA'] = TextoMostrable.LABEL_ANESTESIA
+    datos['LABEL_OBSERVACIONES'] = TextoMostrable.LABEL_OBSERVACIONES
+    datos['LABEL_NIVEL_RIESGO'] = TextoMostrable.LABEL_NIVEL_RIESGO
+    datos['LABEL_EQUIPOS_ESPECIALES'] = TextoMostrable.LABEL_EQUIPOS_ESPECIALES
+    datos['LABEL_MATERIAL_QUIRURGICO'] = TextoMostrable.LABEL_MATERIAL_QUIRURGICO
+    datos['LABEL_FECHA_NACIMIENTO'] = TextoMostrable.LABEL_FECHA_NACIMIENTO
+    datos['LABEL_DIAGNOSTICO'] = TextoMostrable.LABEL_DIAGNOSTICO
+    datos['LABEL_FORMA_PAGO'] = TextoMostrable.LABEL_FORMA_PAGO
+    datos['LABEL_ASEGURADORA'] = TextoMostrable.LABEL_ASEGURADORA
+    datos['LABEL_HABITACION'] = TextoMostrable.LABEL_HABITACION
+    datos['LABEL_PACIENTE_HOSPITALIZADO'] = TextoMostrable.LABEL_PACIENTE_HOSPITALIZADO
+    datos['PACIENTE'] = TextoMostrable.PACIENTE
+    datos['LABEL_CODIGO_TELEFONO'] = TextoMostrable.LABEL_CODIGO_TELEFONO
+    datos['LABEL_NUMERO_TELEFONO'] = TextoMostrable.LABEL_NUMERO_TELEFONO
+    datos['QUIROFANO'] = TextoMostrable.QUIROFANO
+    datos['LABEL_RAZON_RIESGO'] = TextoMostrable.LABEL_RAZON_RIESGO
     return datos
+

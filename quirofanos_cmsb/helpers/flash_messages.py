@@ -26,3 +26,4 @@ class MensajeTemporalError():
     REGISTRO_DEPARTAMENTO_CUENTA_EXISTE = _(u'Se intentó solicitar una cuenta para un departamento que ya ha solicitado su cuenta.')
     APROBACION_USUARIO_FALLIDA = _(u'Se intentó aprobar una cuenta de usuario no existente.')
     RECHAZO_USUARIO_FALLIDO = _(u'Se intentó rechazar una cuenta de usuario no existente.')
+    TIPO_PROCEDIMIENTO_QUIRURGICO_INVALIDO = _(u'Se intentó agregar un procedimiento quirúrgico inválido.')
