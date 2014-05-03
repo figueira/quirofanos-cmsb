@@ -1,3 +1,9 @@
+// Mostrar modal de agregar procedimiento quirurgico
+var mostrarModalAgregarProcedimientoQuirurgico = function() {
+	$("#accion-formulario").val("procedimiento_quirurgico")
+	$("#agregar-procedimiento-quirurgico-modal").modal();
+};
+
 $(document).ready(function() {
 	// Ir a formulario de paciente
 	$("#ver-info-paciente").click(function() {
@@ -40,5 +46,15 @@ $(document).ready(function() {
 	var hospitalizado = $("input[name=paciente-hospitalizado]");
 	hospitalizado.change(function(){
 		$("#habitacion").toggleClass("hidden");
+	});
+
+	// Cambiar la accion en formulario para que demuestre que se esta agregando un procedimiento quirurgico
+	$("#agregar-procedimiento-quirurgico-btn").click(function() {
+		$("#accion-formulario").val("procedimiento_quirurgico")
+	});
+
+	// Cambiar la accion en formulario para que demuestre que NO se esta agregando un procedimiento quirurgico
+	$("#cancelar-agregar-procedimiento-quirurgico").click(function() {
+		$("#accion-formulario").val("solicitud_quirofano")
 	});
 });

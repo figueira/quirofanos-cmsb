@@ -510,7 +510,7 @@ class IntervencionQuirurgica(models.Model):
 
 class ProcedimientoQuirurgico(models.Model):
     ''' Clase que representa un Procedimiento Quirurgico '''
-    intervencion_quirurgica = models.ForeignKey(IntervencionQuirurgica)
+    intervencion_quirurgica = models.ForeignKey(IntervencionQuirurgica, blank=True, null=True)
     tipo_procedimiento_quirurgico = models.ForeignKey(TipoProcedimientoQuirurgico)
     organo_corporal = models.ForeignKey(OrganoCorporal)
     monto_honorarios_cirujano_principal = models.DecimalField(max_digits=15, decimal_places=2)
@@ -520,6 +520,15 @@ class ProcedimientoQuirurgico(models.Model):
         ''' Sobreescribe el save() '''
         self.full_clean()
         super(ProcedimientoQuirurgico, self).save()
+
+    def obtener_monto_honorarios_anestesiologo(self):
+        return round(0.4*self.monto_honorarios_cirujano_principal, 2)
+
+    def obtener_monto_honorarios_primer_ayudante(self):
+        return round(0.4*self.monto_honorarios_cirujano_principal, 2)
+
+    def obtener_monto_honorarios_segundo_ayudante(self):
+        return round(0.3*self.monto_honorarios_cirujano_principal, 2)
 
     def obtener_monto_honorarios_total(self):
         ''' Devuelve el monto total de honorarios del procedimiento quirurgico '''

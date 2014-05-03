@@ -70,5 +70,13 @@ def constantes_texto(request):
     datos['LABEL_NUMERO_TELEFONO'] = TextoMostrable.LABEL_NUMERO_TELEFONO
     datos['QUIROFANO'] = TextoMostrable.QUIROFANO
     datos['LABEL_RAZON_RIESGO'] = TextoMostrable.LABEL_RAZON_RIESGO
+    datos['LABEL_ANESTESIOLOGO'] = TextoMostrable.LABEL_ANESTESIOLOGO
+    datos['LABEL_ANESTESIOLOGO_ABREVIADO'] = TextoMostrable.LABEL_ANESTESIOLOGO_ABREVIADO
+    datos['LABEL_BOLIVARES'] = TextoMostrable.LABEL_BOLIVARES
+    datos['LABEL_PRIMER_AYUDANTE'] = TextoMostrable.LABEL_PRIMER_AYUDANTE
+    datos['LABEL_SEGUNDO_AYUDANTE'] = TextoMostrable.LABEL_SEGUNDO_AYUDANTE
+    datos['LABEL_TERCER_AYUDANTE'] = TextoMostrable.LABEL_TERCER_AYUDANTE
+    datos['LABEL_CIRUJANO_PRINCIPAL'] = TextoMostrable.LABEL_CIRUJANO_PRINCIPAL
+    datos['LABEL_HONORARIOS'] = TextoMostrable.LABEL_HONORARIOS
     return datos
 

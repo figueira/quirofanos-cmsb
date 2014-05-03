@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.core.validators import RegexValidator
+from django.forms import extras
 
 from quirofanos_cmsb.forms import BaseForm
 from quirofanos_cmsb.helpers.custom_validators import ExpresionRegular, MensajeError, CodigoError
@@ -15,7 +16,7 @@ class SolicitudQuirofanoForm(BaseForm):
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
     cedula_paciente = forms.CharField(max_length=12, validators=[
                               RegexValidator(ExpresionRegular.CEDULA_BD, MensajeError.CEDULA_BD_INVALIDA, CodigoError.CEDULA_BD_INVALIDA)])
-    fecha_nacimiento_paciente = forms.DateField(input_formats=["%d/%m/%Y"])
+    fecha_nacimiento_paciente = forms.DateField(input_formats=['%d/%m/%Y', '%m/%d/%Y', '%Y-%m-%d'])
     codigo_telefono_paciente = forms.CharField(validators=[RegexValidator(ExpresionRegular.CODIGO_TELEFONO, MensajeError.CODIGO_TELEFONO_INVALIDO, CodigoError.CODIGO_TELEFONO_INVALIDO)])
     numero_telefono_paciente = forms.CharField(validators=[RegexValidator(ExpresionRegular.NUMERO_TELEFONO, MensajeError.NUMERO_TELEFONO_INVALIDO, CodigoError.NUMERO_TELEFONO_INVALIDO)])
     genero_paciente = forms.ChoiceField(choices=GENERO, widget=forms.RadioSelect)
@@ -37,14 +38,14 @@ class SolicitudQuirofanoForm(BaseForm):
 
 class ProcedimientoQuirurgicoForm(BaseForm):
     ''' Formulario para agregar un procedimiento quirurgico a una solicitud de quirofano '''
-    id_organo_corporal = forms.IntegerField(min_value=1, required=False)
-    id_tipo_procedimiento_quirurgico = forms.IntegerField(min_value=1, required=False)
-    monto_honorarios_cirujano_principal = forms.DecimalField(max_digits=15, decimal_places=2)
+    id_organo_corporal = forms.IntegerField(min_value=1, widget=forms.HiddenInput, required=False)
+    id_tipo_procedimiento_quirurgico = forms.IntegerField(min_value=1, widget=forms.HiddenInput, required=False)
+    monto_honorarios_cirujano_principal = forms.DecimalField(min_value=0.00, max_digits=15, decimal_places=2)
     anestesiologo = forms.ModelChoiceField(queryset=Medico.objects.all())
     primer_ayudante = forms.ModelChoiceField(queryset=Medico.objects.all())
     segundo_ayudante = forms.ModelChoiceField(queryset=Medico.objects.all())
     tercer_ayudante = forms.ModelChoiceField(queryset=Medico.objects.all())
-    monto_honorarios_tercer_ayudante = forms.DecimalField(max_digits=15, decimal_places=2, required=False)
+    monto_honorarios_tercer_ayudante = forms.DecimalField(min_value=0.00, max_digits=15, decimal_places=2, required=False)
 
 
 

@@ -5,6 +5,8 @@ from django.http import Http404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.template import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
+from django.forms.forms import NON_FIELD_ERRORS
+from django.db import transaction
 
 import calendar
 
@@ -12,7 +14,7 @@ from quirofanos_cmsb.helpers.user_tests import es_medico
 from quirofanos_cmsb.helpers import utils
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
 from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError
-from quirofanos_cmsb.models import Quirofano, OrganoCorporal, TipoProcedimientoQuirurgico
+from quirofanos_cmsb.models import Quirofano, OrganoCorporal, TipoProcedimientoQuirurgico, Participacion, ProcedimientoQuirurgico
 from medico.forms import SolicitudQuirofanoForm, ProcedimientoQuirurgicoForm
 
 @require_http_methods(["GET", "POST"])
@@ -66,7 +68,7 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 	hora_fin_legible = utils.obtener_representacion_media_hora(hora_inicio + duracion_en_medias_horas*0.5)
 
 	formulario_solicitud_quirofano = SolicitudQuirofanoForm(prefix="solicitud_quirofano")
-	formulario_procedimiento_quirurgico = ProcedimientoQuirurgicoForm("procedimiento_quirurgico")
+	formulario_procedimiento_quirurgico = ProcedimientoQuirurgicoForm(prefix="procedimiento_quirurgico")
 	agregando_procedimiento_quirurgico = False
 	if request.method == 'POST':
 		formulario_solicitud_quirofano = SolicitudQuirofanoForm(prefix="solicitud_quirofano", data=request.POST)
@@ -79,18 +81,48 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 				id_tipo_procedimiento_quirurgico = formulario_procedimiento_quirurgico.cleaned_data["id_tipo_procedimiento_quirurgico"]
 				organo_corporal = OrganoCorporal.objects.get(pk=id_organo_corporal)
 				tipo_procedimiento_quirurgico = TipoProcedimientoQuirurgico.objects.get(pk=id_tipo_procedimiento_quirurgico)
+				if tipo_procedimiento_quirurgico not in organo_corporal.tipos_procedimientos_permitidos:
+					raise ObjectDoesNotExist
+
 				if formulario_procedimiento_quirurgico_valido:
-					# Anadir procedimiento quirurgico
-					pass
+					monto_honorarios_cirujano_principal = formulario_procedimiento_quirurgico.cleaned_data["monto_honorarios_cirujano_principal"]
+					anestesiologo = formulario_procedimiento_quirurgico.cleaned_data["anestesiologo"]
+					primer_ayudante = formulario_procedimiento_quirurgico.cleaned_data["primer_ayudante"]
+					segundo_ayudante = formulario_procedimiento_quirurgico.cleaned_data["segundo_ayudante"]
+					tercer_ayudante = formulario_procedimiento_quirurgico.cleaned_data["tercer_ayudante"]
+					monto_honorarios_tercer_ayudante = formulario_procedimiento_quirurgico.cleaned_data["monto_honorarios_tercer_ayudante"]
+					with transaction.atomic():
+						procedimiento_quirurgico = ProcedimientoQuirurgico()
+						procedimiento_quirurgico.organo_corporal = organo_corporal
+						procedimiento_quirurgico.tipo_procedimiento_quirurgico = tipo_procedimiento_quirurgico
+						procedimiento_quirurgico.monto_honorarios_cirujano_principal = monto_honorarios_cirujano_principal
+						procedimiento_quirurgico.save()
+						Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=anestesiologo, rol='0', monto_honorarios=procedimiento_quirurgico.obtener_monto_honorarios_anestesiologo)
+						Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=primer_ayudante, rol='1', monto_honorarios=procedimiento_quirurgico.obtener_monto_honorarios_primer_ayudante)
+						Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=segundo_ayudante, rol='2', monto_honorarios=procedimiento_quirurgico.obtener_monto_honorarios_segundo_ayudante)
+						Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=tercer_ayudante, rol='3', monto_honorarios=monto_honorarios_tercer_ayudante)
+
 			except ObjectDoesNotExist:
 				lista_errores = formulario_procedimiento_quirurgico.error_class([MensajeTemporalError.TIPO_PROCEDIMIENTO_QUIRURGICO_INVALIDO])
 				formulario_procedimiento_quirurgico._errors[NON_FIELD_ERRORS] = lista_errores
 		elif request.POST["accion"] == "solicitud_quirofano":
-			if formulario_solicitud_quirofano.is_valid():
-				# Anadir solicitud de quirofano
-				pass
+			formulario_solicitud_quirofano_valido = formulario_solicitud_quirofano.is_valid()
+			if ProcedimientoQuirurgico.objects.filter(intervencion_quirurgica=None).count() > 0:
+				if formulario_solicitud_quirofano_valido:
+					# Anadir solicitud de quirofano
+					pass
+
+			else:
+				lista_errores = formulario_solicitud_quirofano.error_class([MensajeTemporalError.NO_SE_AGREGO_PROCEDIMIENTO_QUIRURGICO])
+				formulario_solicitud_quirofano._errors[NON_FIELD_ERRORS] = lista_errores
 
 	datos = {}
+	datos["dia"] = dia
+	datos["mes"] = mes
+	datos["ano"] = ano
+	datos["hora_inicio"] = hora_inicio
+	datos["id_quirofano"] = id_quirofano
+	datos["duracion_en_medias_horas"] = duracion_en_medias_horas
 	datos["formulario_solicitud_quirofano"] = formulario_solicitud_quirofano
 	datos["formulario_procedimiento_quirurgico"] = formulario_procedimiento_quirurgico
 	datos["agregando_procedimiento_quirurgico"] = agregando_procedimiento_quirurgico
