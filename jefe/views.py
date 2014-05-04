@@ -51,7 +51,7 @@ def solicitudes_usuarios(request, estado="pendientes", periodo=1):
     lista_solicitudes_usuario_rechazadas = Cuenta.objects.filter(estado='R', usuario__date_joined__gte=fecha_valor).order_by('-usuario__date_joined').exclude(privilegio='0').exclude(privilegio='1')
     numero_solicitudes_pendientes = Cuenta.objects.filter(estado='P').count()
 
-    paginator_pendientes = Paginator(lista_solicitudes_usuario_pendientes, 2)
+    paginator_pendientes = Paginator(lista_solicitudes_usuario_pendientes, 10)
     page = request.GET.get('page')
     try:
         lista_solicitudes_usuario_pendientes = paginator_pendientes.page(page)
@@ -60,7 +60,7 @@ def solicitudes_usuarios(request, estado="pendientes", periodo=1):
     except EmptyPage:
         lista_solicitudes_usuario_pendientes = paginator_pendientes.page(paginator_pendientes.num_pages)
 
-    paginator_aprobadas = Paginator(lista_solicitudes_usuario_aprobadas, 2)
+    paginator_aprobadas = Paginator(lista_solicitudes_usuario_aprobadas, 10)
     page = request.GET.get('page')
     try:
         lista_solicitudes_usuario_aprobadas = paginator_aprobadas.page(page)
@@ -69,7 +69,7 @@ def solicitudes_usuarios(request, estado="pendientes", periodo=1):
     except EmptyPage:
         lista_solicitudes_usuario_aprobadas = paginator_aprobadas.page(paginator_aprobadas.num_pages)
 
-    paginator_rechazadas = Paginator(lista_solicitudes_usuario_rechazadas, 2)
+    paginator_rechazadas = Paginator(lista_solicitudes_usuario_rechazadas, 10)
     page = request.GET.get('page')
     try:
         lista_solicitudes_usuario_rechazadas = paginator_rechazadas.page(page)

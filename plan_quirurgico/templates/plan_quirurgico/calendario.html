@@ -166,7 +166,7 @@ $(function() {
 					{% if messages %}
 					{% for message in messages %}
 					{% if message.extra_tags == 'modal' %}
-						<div class="alert alert-{{ message.tags }} fade in">
+						<div class="alert alert-danger fade in">
 							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 							<strong>{{ message }}</strong>
 						</div>
@@ -249,5 +249,64 @@ $(function() {
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+
+{% if  not es_primer_ingreso and not posee_email %}
+<script type="text/javascript">
+	$(function() {
+	    // Mostrar la opcion de actualizacion de email en caso de
+		// no poseer uno asociado
+		$('#actualizacion-email-modal').modal('show');
+	});
+</script>
+{% endif %}
+
+<div class="modal fade" id="actualizacion-email-modal" data-backdrop="static">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header d">
+				<h4 class="modal-title"><strong>Actualizar Correo Electrónico</strong></h4>
+			</div>
+			<form class="form-horizontal" role="form" action="{% url 'calendario' %}" method='POST'>
+				{% csrf_token %}
+				<div class="modal-body">
+					{% if messages %}
+					{% for message in messages %}
+					{% if message.extra_tags == 'modal' %}
+					<div class="alert alert-success fade in">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						<strong>{{ message }}</strong>
+					</div>
+					{% endif %}
+					{% endfor %}
+					{% endif %}
+					<div class="form-group" id="correo-electronico-form-group">
+						<label class="col-lg-4 control-label" for="correo-electronico">Correo Electrónico:</label>
+						<div class="col-lg-8">
+                            {% render_field formulario_actualizacion_email.correo_electronico class="form-control" id="correo-electronico" %}
+							<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="correo-electronico-error-feedback-icon"></span>
+							<span class="help-block hidden" id="correo-electronico-error-help">{{ formulario_actualizacion_email.correo_electronico.errors }}</span>
+						</div>
+						{% if formulario_actualizacion_email.correo_electronico.errors %}
+						<script type="text/javascript">
+						$(function() {
+							$("#correo-electronico").parent("div").addClass("has-error")
+							$("#correo-electronico-form-group").addClass("has-feedback");
+							$("#correo-electronico-error-feedback-icon").removeClass("hidden");
+							$("#correo-electronico-error-help").removeClass("hidden");
+						});
+						</script>
+						{% endif %}
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary">Actualizar</button>
+				</div>
+			</form>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
 
 {% endblock content %}

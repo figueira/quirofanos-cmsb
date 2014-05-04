@@ -1,0 +1,70 @@
+{% extends request.session.template_base %}
+
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+{% block title %}{{ block.super }} | Cambiar Correo Electrónico {% endblock title %}
+
+{% block flash-messages %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} fade in">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+  <strong>{{ message }}</strong>
+</div>
+{% endfor %}
+{% endif %}
+{% endblock flash-messages %}
+
+{% block nombre-usuario %}
+{{ request.session.nombres }}
+{% endblock nombre-usuario %}
+
+{% block numero-mensajes %}
+3
+{% endblock numero-mensajes %}
+
+{% block content %}
+<div class="page-header">
+    <h1>
+        Cambiar Correo Electrónico
+    </h1>
+</div>
+<div class="row">
+    <div class="col-lg-offset-3 col-lg-6">
+        <div class="panel panel-default">
+            <form class="form-horizontal" role="form" action="{% url 'cambiar_correo_electronico' %}" method='POST'>
+                {% csrf_token %}
+                <div class="panel-body">
+                    <div class="form-group" id="correo-electronico-form-group">
+                        <label class="col-lg-4 control-label" for="correo-electronico">Correo Electrónico:</label>
+                        <div class="col-lg-6">
+                            {% render_field formulario_actualizacion_email.correo_electronico class="form-control" id="correo-electronico" %}
+                            <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="correo-electronico-error-feedback-icon"></span>
+                            <span class="help-block hidden" id="correo-electronico-error-help">{{ formulario_actualizacion_email.correo_electronico.errors }}</span>
+                        </div>
+                        {% if formulario_actualizacion_email.correo_electronico.errors %}
+                        <script type="text/javascript">
+                        $(function() {
+                            $("#correo-electronico").parent("div").addClass("has-error")
+                            $("#correo-electronico-form-group").addClass("has-feedback");
+                            $("#correo-electronico-error-feedback-icon").removeClass("hidden");
+                            $("#correo-electronico-error-help").removeClass("hidden");
+                        });
+                        </script>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="panel-footer">
+                   <!-- Submit -->
+                    <div class="col-lg-offset-10">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            Actualizar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

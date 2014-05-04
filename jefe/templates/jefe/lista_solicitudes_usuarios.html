@@ -118,7 +118,7 @@
                         {% if not solicitud.medico.email and not solicitud.medico.telefono and tipo != 'rechazada' %}
                         <div class="alert alert-warning">
                             <strong>El usuario no posee teléfono ni email registrado. Debe ser localizado de alguna manera para otorgarle las credenciales de acceso.
-                                {% if solicitud.clave_inicial %}
+                                {% if solicitud.clave_inicial and tipo != 'pendiente' %}
                                 La clave de acceso del usuario es: {{ solicitud.clave_inicial }}
                                 {% endif %}
                             </strong>
@@ -126,7 +126,7 @@
                         {% elif not solicitud.medico.email and tipo != 'rechazada' %}
                         <div class="alert alert-warning">
                             <strong>El usuario debe ser contactado vía telefónica para otorgarle las credenciales de acceso.
-                                {% if solicitud.clave_inicial %}
+                                {% if solicitud.clave_inicial and tipo != 'pendiente' %}
                                 La clave de acceso del usuario es: {{ solicitud.clave_inicial }}
                                 {% endif %}
                             </strong>
@@ -169,13 +169,13 @@
                                 {{ LABEL_EMAIL }}
                             </label>
                             <div class="col-lg-10">
-                                <input type="text" class="form-control" name="email-departamento" disabled="disabled" value="{% if solicitud.departamenti.email %}{{ solicitud.departamento.email }}{% else %}{{ NO_POSEE }}{% endif %}">
+                                <input type="text" class="form-control" name="email-departamento" disabled="disabled" value="{% if solicitud.departamento.email %}{{ solicitud.departamento.email }}{% else %}{{ NO_POSEE }}{% endif %}">
                             </div>
                         </div><!-- Email -->
                         {% if not solicitud.departamento.email and not solicitud.departamento.telefono and tipo != 'rechazada' %}
                         <div class="alert alert-warning">
                             <strong>El usuario no posee teléfono ni email registrado. Debe ser localizado de alguna manera para otorgarle las credenciales de acceso.
-                                {% if solicitud.clave_inicial %}
+                                {% if solicitud.clave_inicial and tipo != 'pendiente' %}
                                 La clave de acceso del usuario es: {{ solicitud.clave_inicial }}
                                 {% endif %}
                             </strong>
@@ -183,7 +183,7 @@
                         {% elif not solicitud.departamento.email and tipo != 'rechazada' %}
                         <div class="alert alert-warning">
                             <strong>El usuario debe ser contactado vía telefónica para otorgarle las credenciales de acceso.
-                                {% if solicitud.clave_inicial %}
+                                {% if solicitud.clave_inicial and tipo != 'pendiente' %}
                                 La clave de acceso del usuario es: {{ solicitud.clave_inicial }}
                                 {% endif %}
                             </strong>

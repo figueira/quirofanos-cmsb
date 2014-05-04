@@ -6,11 +6,17 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods, require_GET, require_POST
 from django.template import RequestContext
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 
+from hashids import Hashids
+import uuid
+
 from quirofanos_cmsb.models import Cuenta, Departamento, Medico
-from autenticacion.forms import InicioSesionForm, CambiarContrasenaForm, BusquedaMedicoForm, RegistroMedicoForm, RegistroDepartamentoForm, RecuperarContrasenaForm, BusquedaDepartamentoForm
+from autenticacion.forms import InicioSesionForm, CambiarContrasenaForm, BusquedaMedicoForm, RegistroMedicoForm, RegistroDepartamentoForm, RecuperarContrasenaForm, BusquedaDepartamentoForm, ActualizarEmailForm
 from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito
+from quirofanos_cmsb.helpers.email import enviar_email
+from quirofanos_cmsb.helpers.utils import obtener_tipo_usuario
 
 @require_GET
 def inicio(request):
@@ -303,15 +309,79 @@ def recuperar_contrasena(request):
 	elif request.method == 'POST':
 		formulario_recuperar_contrasena = RecuperarContrasenaForm(request.POST)
 		if formulario_recuperar_contrasena.is_valid():
-			correo_electronico = formulario_recuperar_contrasena.cleaned_data['correo_electronico']
-			usuario = User.objects.filter(email=correo_electronico, is_active=True)
+			nombre_usuario = formulario_recuperar_contrasena.cleaned_data['nombre_usuario']
+			usuario = User.objects.filter(username=nombre_usuario, is_active=True).first()
 			if usuario:
-				# Enviar email
+				''' Enviar Email al usuario '''
+				tipo_usuario = obtener_tipo_usuario(usuario.cuenta)
+				email_usuario = ''
+
+				if tipo_usuario == 'medico':
+					if usuario.cuenta.medico.email:
+						email_usuario = usuario.cuenta.medico.email
+					else:
+						messages.add_message(request, messages.ERROR,MensajeTemporalError.RECUPERAR_CONTRASENA_SIN_EMAIL)
+						return redirect('recuperar_contrasena')
+
+				elif tipo_usuario == 'departamento':
+					if usuario.cuenta.departamento.email:
+						email_usuario = usuario.cuenta.departamento.email
+					else:
+						messages.add_message(request, messages.ERROR,MensajeTemporalError.RECUPERAR_CONTRASENA_SIN_EMAIL)
+						return redirect('recuperar_contrasena')
+				else:
+					if usuario.email:
+						email_usuario = usuario.email
+
+				with transaction.atomic():
+					hashids = Hashids(min_length=5, salt=uuid.uuid1().hex)
+					password = hashids.encrypt(usuario.cuenta.id).upper()
+					usuario.cuenta.clave_inicial = password
+					usuario.set_password(password)
+					usuario.save()
+					usuario.cuenta.save()
+
+				enviar_email(asunto='Recuperación de Clave de Acceso.', contenido_texto='Su clave de acceso ha sido recuperada. Su nombre de usuario es: ' + usuario.username + ' y su clave de acceso es: ' + usuario.cuenta.clave_inicial + ' .', contenido_html='', recipiente='mjramos91@gmail.com')
+
 				messages.add_message(request, messages.SUCCESS, MensajeTemporalExito.RECUPERAR_CONTRASENA_EXITOSO)
+
 				return redirect('inicio')
 			else:
 				messages.add_message(request, messages.ERROR,
 					MensajeTemporalError.RECUPERAR_CONTRASENA_FALLIDO)
 				return redirect('recuperar_contrasena')
+
 	datos["formulario_recuperar_contrasena"] = formulario_recuperar_contrasena
 	return render_to_response('autenticacion/recuperar_contrasena.html', datos, context_instance=RequestContext(request))
+
+@require_http_methods(["GET", "POST"])
+@login_required
+def cambiar_correo_electronico(request):
+	''' Controlador correspondiente al cambio de correo electronico
+
+	Parametros:
+	request -> Solicitud HTTP '''
+	datos = {}
+	tipo_usuario = obtener_tipo_usuario(request.user.cuenta)
+
+	if request.method == 'GET':
+		formulario_actualizacion_email = ActualizarEmailForm()
+	elif request.method == 'POST':
+		formulario_actualizacion_email = ActualizarEmailForm(request.POST)
+		if formulario_actualizacion_email.is_valid():
+			correo_electronico = formulario_actualizacion_email.cleaned_data['correo_electronico']
+			with transaction.atomic():
+				if tipo_usuario == 'medico':
+					request.user.cuenta.medico.email = correo_electronico
+					request.user.cuenta.medico.save()
+				elif tipo_usuario == 'departamento':
+					request.user.cuenta.departamento.email = correo_electronico
+					request.user.cuenta.departamento.save()
+
+				messages.add_message(request, messages.SUCCESS,MensajeTemporalExito.ACTUALIZACION_EMAIL_EXITOSO)
+
+				return redirect('calendario')
+
+	datos["formulario_actualizacion_email"] = formulario_actualizacion_email
+
+	return render_to_response('autenticacion/cambiar_correo_electronico.html', datos, context_instance=RequestContext(request))

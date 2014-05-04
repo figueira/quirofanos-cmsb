@@ -1,0 +1,37 @@
+[
+    {
+        "fields": {
+            "nombre": "Tranfusi\u00f3n"
+        },
+        "model": "quirofanos_cmsb.serviciooperatorio",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "nombre": "Anatom\u00eda Patol\u00f3gica"
+        },
+        "model": "quirofanos_cmsb.serviciooperatorio",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "nombre": "Unidad de Cuidados Intensivos"
+        },
+        "model": "quirofanos_cmsb.serviciooperatorio",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "nombre": "Analgesia Post-operatoria"
+        },
+        "model": "quirofanos_cmsb.serviciooperatorio",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "nombre": "Telemetr\u00eda"
+        },
+        "model": "quirofanos_cmsb.serviciooperatorio",
+        "pk": 5
+    }
+]

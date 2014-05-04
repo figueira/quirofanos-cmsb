@@ -5,6 +5,7 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods, require_GET, require_POST
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 
 from datetime import date, timedelta
@@ -14,8 +15,10 @@ import math
 from quirofanos_cmsb.helpers import utils
 from quirofanos_cmsb.models import Quirofano
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
-from plan_quirurgico.forms import DuracionIntervencionQuirurgicaForm, CambiarContrasenaForm
+from plan_quirurgico.forms import DuracionIntervencionQuirurgicaForm
+from autenticacion.forms import CambiarContrasenaForm, ActualizarEmailForm
 from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito
+from quirofanos_cmsb.helpers.utils import obtener_tipo_usuario
 
 @require_http_methods(["GET", "POST"])
 @login_required
@@ -84,6 +87,39 @@ def calendario(request, area_actual='QG', ano=date.today().year, mes=date.today(
 	datos['areas'] = areas
 	datos['semanas'] = semanas_diccionarios
 
+	tipo_usuario = obtener_tipo_usuario(request.user.cuenta)
+	posee_email = False
+
+	if tipo_usuario == 'medico':
+		if request.user.cuenta.medico.email:
+			posee_email = True
+	elif tipo_usuario == 'departamento':
+		if request.user.cuenta.departamento.email:
+			posee_email = True
+	else:
+		posee_email = True
+
+   	if not posee_email:
+		if request.method == 'GET':
+			formulario_actualizacion_email = ActualizarEmailForm()
+		elif request.method == 'POST':
+			formulario_actualizacion_email = ActualizarEmailForm(request.POST)
+			if formulario_actualizacion_email.is_valid():
+				correo_electronico = formulario_actualizacion_email.cleaned_data['correo_electronico']
+				with transaction.atomic():
+					if tipo_usuario == 'medico':
+						request.user.cuenta.medico.email = correo_electronico
+						request.user.cuenta.medico.save()
+					elif tipo_usuario == 'departamento':
+						request.user.cuenta.departamento.email = correo_electronico
+						request.user.cuenta.departamento.save()
+					posee_email = True
+
+				messages.add_message(request, messages.SUCCESS,MensajeTemporalExito.ACTUALIZACION_EMAIL_EXITOSO)
+		datos["formulario_actualizacion_email"] = formulario_actualizacion_email
+
+	datos['posee_email'] = posee_email
+
 	datos['es_primer_ingreso'] = True
 	if request.user.check_password(request.user.cuenta.clave_inicial):
 		if request.method == 'GET':
@@ -97,7 +133,10 @@ def calendario(request, area_actual='QG', ano=date.today().year, mes=date.today(
 					with transaction.atomic():
 						request.user.set_password(contrasena_nueva)
 						request.user.save()
-						messages.add_message(request, messages.SUCCESS,MensajeTemporalExito.CAMBIO_CONTRASENA_EXITOSO)
+						if posee_email:
+							messages.add_message(request, messages.SUCCESS,MensajeTemporalExito.CAMBIO_CONTRASENA_EXITOSO)
+						else:
+							messages.add_message(request, messages.SUCCESS,MensajeTemporalExito.CAMBIO_CONTRASENA_EXITOSO, extra_tags='modal')
 						datos['es_primer_ingreso'] = False
 						return redirect('calendario')
 				else:

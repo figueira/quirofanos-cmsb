@@ -1,0 +1,205 @@
+[
+    {
+        "fields": {
+            "nombre": "Equipo Radiocirug\u00eda"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "nombre": "Equipo O.R.L"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "nombre": "Equipo Fluoroscopia"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "nombre": "Equipo Endocirug\u00eda"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "nombre": "Equipo Video Broncoscopio"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "nombre": "Equipo Ureteroscopio"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "nombre": "Equipo Anspach"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 7
+    },
+    {
+        "fields": {
+            "nombre": "Equipo Explorador de Acceso Vascular"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 8
+    },
+    {
+        "fields": {
+            "nombre": "Equipo Hal"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 9
+    },
+    {
+        "fields": {
+            "nombre": "Equipo Laser Green Light"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 10
+    },
+    {
+        "fields": {
+            "nombre": "Equipo Litotripsia"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 11
+    },
+    {
+        "fields": {
+            "nombre": "Equipo Traccionador de Hombro"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 12
+    },
+    {
+        "fields": {
+            "nombre": "Equipo Isquemia"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 13
+    },
+    {
+        "fields": {
+            "nombre": "Intercambiador de Calor"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 14
+    },
+    {
+        "fields": {
+            "nombre": "Sacagrapa"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 15
+    },
+    {
+        "fields": {
+            "nombre": "Sonda Transesofagica"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 16
+    },
+    {
+        "fields": {
+            "nombre": "Intensificador de Imagen"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 17
+    },
+    {
+        "fields": {
+            "nombre": "Ligasure"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 18
+    },
+    {
+        "fields": {
+            "nombre": "Instrumental de Laparoscopia"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 19
+    },
+    {
+        "fields": {
+            "nombre": "Bisturi Arm\u00f3nico"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 20
+    },
+    {
+        "fields": {
+            "nombre": "Caja Traumatol\u00f3gica"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 21
+    },
+    {
+        "fields": {
+            "nombre": "Espaciadores de Cemento"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 22
+    },
+    {
+        "fields": {
+            "nombre": "Dermatomo"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 23
+    },
+    {
+        "fields": {
+            "nombre": "Expansor de Ingerto"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 24
+    },
+    {
+        "fields": {
+            "nombre": "Toratoscopia"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 25
+    },
+    {
+        "fields": {
+            "nombre": "Dilatador Filiform"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 26
+    },
+    {
+        "fields": {
+            "nombre": "Navegador"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 27
+    },
+    {
+        "fields": {
+            "nombre": "Microscopio M\u00f6ller"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 28
+    },
+    {
+        "fields": {
+            "nombre": "Terapia Respiratoria"
+        },
+        "model": "quirofanos_cmsb.equipoespecial",
+        "pk": 29
+    }
+]
