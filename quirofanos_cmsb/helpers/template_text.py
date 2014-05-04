@@ -101,3 +101,8 @@ class TextoMostrable():
     LABEL_TERCER_AYUDANTE = _(u'Tercer Ayudante:')
     LABEL_CIRUJANO_PRINCIPAL = _(u'Cirujano Principal:')
     LABEL_HONORARIOS = _(u'Honorarios...')
+    LABEL_SERVICIOS_OPERATORIOS = _(u'Servicios Operatorios:')
+    LABEL_PACIENTE_CON_EXPEDIENTE = _(u'Paciente con Expediente')
+    LABEL_AREA_INGRESO = _(u'Área de Ingreso:')
+    LABEL_NUMERO_EXPEDIENTE = _(u'Número de Expediente...')
+    LABEL_DIAS_HOSPITALIZACION = _(u'Días de Hospitalización:')

@@ -88,20 +88,6 @@ ROL_PARTICIPACION = (
     ('3', u'Tercer Ayudante'),
 )
 
-# Parentezco de Pacientes y Medicos
-PARENTEZCO = (
-    ('0', u'Padre'),
-    ('1', u'Madre'),
-    ('2', u'Hijo(a)'),
-    ('3', u'Hermano(a)'),
-    ('4', u'Abuelo(a)'),
-    ('5', u'Nieto(a)'),
-    ('6', u'Tío(a)'),
-    ('7', u'Primo(a)'),
-    ('8', u'Esposo(a)'),
-    ('9', u'Sobrino(a)'),
-)
-
 # Areas de ingreso asociadas al numero de expediente de un paciente
 AREA_INGRESO = (
     ('AA', u'Admisión por Ambulatorio'),

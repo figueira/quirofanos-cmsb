@@ -6,6 +6,7 @@ from django.forms import extras
 from quirofanos_cmsb.forms import BaseForm
 from quirofanos_cmsb.helpers.custom_validators import ExpresionRegular, MensajeError, CodigoError
 from quirofanos_cmsb.models import GENERO, CompaniaAseguradora, AREA_INGRESO, ServicioOperatorio, TIPO_ANESTESIA, TIPO_RIESGO, MaterialQuirurgico, EquipoEspecial, Medico
+from autenticacion.forms import NACIONALIDAD
 
 class SolicitudQuirofanoForm(BaseForm):
     ''' Formulario de solicitud de quirofano '''
@@ -14,6 +15,7 @@ class SolicitudQuirofanoForm(BaseForm):
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
     apellido_paciente = forms.CharField(max_length=50, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
+    nacionalidad_paciente = forms.ChoiceField(widget=forms.HiddenInput, choices=NACIONALIDAD, initial='V-')
     cedula_paciente = forms.CharField(max_length=12, validators=[
                               RegexValidator(ExpresionRegular.CEDULA_BD, MensajeError.CEDULA_BD_INVALIDA, CodigoError.CEDULA_BD_INVALIDA)])
     fecha_nacimiento_paciente = forms.DateField(input_formats=['%d/%m/%Y', '%m/%d/%Y', '%Y-%m-%d'])
