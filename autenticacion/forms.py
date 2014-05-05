@@ -93,4 +93,8 @@ class CambiarContrasenaForm(BaseForm):
 
 class RecuperarContrasenaForm(BaseForm):
 	''' Formulario de recuperar contrasena '''
+	nombre_usuario = forms.CharField(max_length=30, validators=[validate_slug])
+
+class ActualizarEmailForm(BaseForm):
+	''' Formulario de actualizacion de email  '''
 	correo_electronico = forms.EmailField(max_length=75)

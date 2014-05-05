@@ -1,0 +1,37 @@
+[
+    {
+        "fields": {
+            "nombre": "Sutura Especiales"
+        },
+        "model": "quirofanos_cmsb.materialquirurgico",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "nombre": "Protack"
+        },
+        "model": "quirofanos_cmsb.materialquirurgico",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "nombre": "Malla Polipropileno (Marlex)"
+        },
+        "model": "quirofanos_cmsb.materialquirurgico",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "nombre": "Malla Dual Mesh"
+        },
+        "model": "quirofanos_cmsb.materialquirurgico",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "nombre": "M\u00e1quina de Autosuturadora"
+        },
+        "model": "quirofanos_cmsb.materialquirurgico",
+        "pk": 5
+    }
+]

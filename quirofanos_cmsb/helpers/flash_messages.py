@@ -11,7 +11,7 @@ class MensajeTemporalExito():
     RECUPERAR_CONTRASENA_EXITOSO = _(u'Se le ha enviado un correo electrónico con instrucciones para recuperar sus credenciales.')
     SOLICITUD_USUARIO_APROBADA = _(u'La solicitud de registro de usuario ha sido aprobada.')
     SOLICITUD_USUARIO_RECHAZADA = _(u'La solicitud de registro de usuario ha sido rechazada.')
-
+    ACTUALIZACION_EMAIL_EXITOSO = _(u'Su correo electrónico ha sido actualizado exitosamente.')
 
 class MensajeTemporalError():
     ''' Clase que contiene constantes para ser utilizadas como mensajes temporales (flash messages) de errores '''
@@ -19,7 +19,7 @@ class MensajeTemporalError():
     AUTENTICACION_USUARIO_INACTIVO = _(u'Su cuenta todavía no ha sido aprobada.')
     AUTENTICACION_CAMPO_VACIO = _(u'Por favor ingrese su nombre de usuario y contraseña.')
     CAMBIO_CONTRASENA_FALLIDO = _(u'La contraseña actual ingresada no es correcta.')
-    RECUPERAR_CONTRASENA_FALLIDO = _(u'El correo electrónico ingresado no está registrado.')
+    RECUPERAR_CONTRASENA_FALLIDO = _(u'No existe un usuario registrado en el sistema con el nombre de usuario ingresado. Por Favor comuníquese con el administrador del sistema en caso de haber olvidado su nombre de usuario.')
     REGISTRO_MEDICO_CEDULA_MODIFICADA = _(u'Se intentó solicitar una cuenta para una cédula que no corresponde a ningún médico.')
     REGISTRO_DEPARTAMENTO_NOMBRE_MODIFICADO = _(u'Se intentó solicitar una cuenta para un departamento inexistente.')
     REGISTRO_MEDICO_CUENTA_EXISTE = _(u'Se intentó solicitar una cuenta para un médico que ya ha solicitado su cuenta.')
@@ -28,3 +28,4 @@ class MensajeTemporalError():
     RECHAZO_USUARIO_FALLIDO = _(u'Se intentó rechazar una cuenta de usuario no existente.')
     TIPO_PROCEDIMIENTO_QUIRURGICO_INVALIDO = _(u'Se intentó agregar un procedimiento quirúrgico inválido.')
     NO_SE_AGREGO_PROCEDIMIENTO_QUIRURGICO = _(u'Debe agregar al menos un (1) procedimiento quirúrgico.')
+    RECUPERAR_CONTRASENA_SIN_EMAIL = _(u'No posee un correo electrónico asociado a esta cuenta. Por Favor comuníquese con el administrador del sistema para la recuperación de su clave de acceso.')

@@ -28,20 +28,20 @@
             <form class="form-horizontal" role="form" action="{% url 'recuperar_contrasena' %}" method='POST'>
                 {% csrf_token %}
                 <div class="panel-body">
-                    <div class="form-group" id="correo-electronico-form-group">
-                        <label class="col-lg-4 control-label" for="correo-electronico">Correo Electrónico:</label>
-                        <div class="col-lg-8">
-                            {% render_field formulario_recuperar_contrasena.correo_electronico class="form-control" id="correo-electronico"%}
-                            <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="correo-electronico-error-feedback-icon"></span>
-                            <span class="help-block hidden" id="correo-electronico-error-help">{{ formulario_recuperar_contrasena.correo_electronico.errors }}</span>
+                    <div class="form-group" id="nombre-usuario-form-group">
+                        <label class="col-lg-4 control-label" for="nombre-usuario">Nombre de Usuario:</label>
+                        <div class="col-lg-6">
+                            {% render_field formulario_recuperar_contrasena.nombre_usuario class="form-control" id="nombre-usuario" %}
+                            <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="nombre-usuario-error-feedback-icon"></span>
+                            <span class="help-block hidden" id="nombre-usuario-error-help">{{ formulario_recuperar_contrasena.nombre_usuario.errors }}</span>
                         </div>
-                        {% if formulario_recuperar_contrasena.correo_electronico.errors %}
+                        {% if formulario_recuperar_contrasena.nombre_usuario.errors %}
                         <script type="text/javascript">
                         $(function() {
-                            $("#correo-electronico").parent("div").addClass("has-error")
-                            $("#correo-electronico-form-group").addClass("has-feedback");
-                            $("#correo-electronico-error-feedback-icon").removeClass("hidden");
-                            $("#correo-electronico-error-help").removeClass("hidden");
+                            $("#nombre-usuario").parent("div").addClass("has-error")
+                            $("#nombre-usuario-form-group").addClass("has-feedback");
+                            $("#nombre-usuario-error-feedback-icon").removeClass("hidden");
+                            $("#nombre-usuario-error-help").removeClass("hidden");
                         });
                         </script>
                         {% endif %}
@@ -51,7 +51,7 @@
                     <!-- Submit -->
                     <div class="col-lg-offset-10">
                         <button type="submit" class="btn btn-primary btn-lg">
-                            Enviar
+                            Recuperar
                         </button>
                     </div>
                 </div>

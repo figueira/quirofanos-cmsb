@@ -97,3 +97,20 @@ def obtener_turnos_disponibles(duracion_en_medias_horas,medias_horas_no_disponib
             indices_por_saltar = duracion_en_medias_horas - 1
         else:
             turnos_atravesados.append(medias_horas_disponibles[i])
+
+def obtener_tipo_usuario(cuenta):
+    ''' Devuelve el tipo de usuario de una cuenta determinada
+
+    Parametros:
+    cuenta -> cuenta del usuario '''
+    tipo_usuario = ''
+    if (cuenta.privilegio == "0"):
+        tipo_usuario = 'jefepq'
+    elif (cuenta.privilegio == "1"):
+        tipo_usuario = 'coordinadorpq'
+    elif (cuenta.privilegio == "4"):
+        tipo_usuario = 'medico'
+    else:
+        tipo_usuario = 'departamento'
+
+    return tipo_usuario
