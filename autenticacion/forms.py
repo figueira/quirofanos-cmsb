@@ -23,18 +23,24 @@ class BusquedaMedicoForm(BaseForm):
 	nacionalidad_medico = forms.ChoiceField(widget=forms.HiddenInput, choices=NACIONALIDAD, initial='V-')
 	cedula_medico = forms.CharField(max_length=12, validators=[RegexValidator(ExpresionRegular.CEDULA, MensajeError.CEDULA_INVALIDA, CodigoError.CEDULA_INVALIDA)])
 
-	def clean_cedula_medico(self):
-		''' Sobreescribe el clean_cedula_medico(), validando que la cedula realmente exista en la base de datos '''
-		cedula_medico = self.cleaned_data['cedula_medico']
-		cedula_medico_bd = self.cleaned_data['nacionalidad_medico'] + cedula_medico
-		medico = Medico.objects.filter(cedula=cedula_medico_bd)
-		if not medico:
-			raise forms.ValidationError(MensajeError.CEDULA_BD_NO_EXISTE, CodigoError.CEDULA_BD_NO_EXISTE)
+	def clean(self):
+		''' Sobreescribe el clean(), validando que la cedula realmente exista en la base de datos '''
+		cleaned_data = super(BusquedaMedicoForm, self).clean()
+		cedula_medico = cleaned_data.get('cedula_medico')
+		nacionalidad_medico = cleaned_data.get('nacionalidad_medico')
+		if cedula_medico and nacionalidad_medico:
+			cedula_medico_bd = nacionalidad_medico + cedula_medico
+			medico = Medico.objects.filter(cedula=cedula_medico_bd)
+			if not medico:
+				self._errors["cedula_medico"] = self.error_class([MensajeError.CEDULA_BD_NO_EXISTE])
+				del cleaned_data["cedula_medico"]
 
-		medico = medico[0]
-		if medico.cuenta:
-			raise forms.ValidationError(MensajeError.EXISTE_CUENTA, CodigoError.EXISTE_CUENTA)
-		return cedula_medico
+			medico = medico[0]
+			if medico.cuenta:
+				self._errors["cedula_medico"] = self.error_class([MensajeError.EXISTE_CUENTA])
+				del cleaned_data["cedula_medico"]
+
+		return cleaned_data
 
 class BusquedaDepartamentoForm(BaseForm):
 	''' Formulario de busqueda de Departamento por nombre '''
@@ -88,6 +94,7 @@ class CambiarContrasenaForm(BaseForm):
 		if contrasena_nueva and contrasena_confirmacion:
 			if contrasena_nueva != contrasena_confirmacion:
 				raise forms.ValidationError(MensajeError.CONTRASENAS_NO_COINCIDEN, code=CodigoError.CONTRASENAS_NO_COINCIDEN)
+
 		return cleaned_data
 
 

@@ -9,12 +9,13 @@ from django.forms.forms import NON_FIELD_ERRORS
 from django.db import transaction
 
 import calendar
+from datetime import date
 
 from quirofanos_cmsb.helpers.user_tests import es_medico
 from quirofanos_cmsb.helpers import utils
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
 from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError
-from quirofanos_cmsb.models import Quirofano, OrganoCorporal, TipoProcedimientoQuirurgico, Participacion, ProcedimientoQuirurgico
+from quirofanos_cmsb.models import Quirofano, OrganoCorporal, TipoProcedimientoQuirurgico, Participacion, ProcedimientoQuirurgico, Reservacion, IntervencionQuirurgica, Paciente
 from medico.forms import SolicitudQuirofanoForm, ProcedimientoQuirurgicoForm
 
 @require_http_methods(["GET", "POST"])
@@ -65,7 +66,8 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 	area_legible = quirofano.get_area_display()
 	fecha_intervencion_legible = str(dia) + "/" + str(mes) + "/" + str(ano)
 	hora_inicio_legible = utils.obtener_representacion_media_hora(hora_inicio)
-	hora_fin_legible = utils.obtener_representacion_media_hora(hora_inicio + duracion_en_medias_horas*0.5)
+	hora_fin = hora_inicio + duracion_en_medias_horas*0.5
+	hora_fin_legible = utils.obtener_representacion_media_hora(hora_fin)
 
 	formulario_solicitud_quirofano = SolicitudQuirofanoForm(prefix="solicitud_quirofano")
 	formulario_procedimiento_quirurgico = ProcedimientoQuirurgicoForm(prefix="procedimiento_quirurgico")
@@ -107,10 +109,73 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 				formulario_procedimiento_quirurgico._errors[NON_FIELD_ERRORS] = lista_errores
 		elif request.POST["accion"] == "solicitud_quirofano":
 			formulario_solicitud_quirofano_valido = formulario_solicitud_quirofano.is_valid()
-			if ProcedimientoQuirurgico.objects.filter(intervencion_quirurgica=None).count() > 0:
+			procedimientos_quirurgicos = ProcedimientoQuirurgico.objects.filter(intervencion_quirurgica=None)
+			if procedimientos_quirurgicos.count() > 0:
 				if formulario_solicitud_quirofano_valido:
-					# Anadir solicitud de quirofano
-					pass
+					with transaction.atomic():
+						paciente = Paciente()
+						paciente.nombre = formulario_solicitud_quirofano.cleaned_data["nombre_paciente"]
+						paciente.apellido = formulario_solicitud_quirofano.cleaned_data["apellido_paciente"]
+						paciente.cedula = formulario_solicitud_quirofano.cleaned_data["nacionalidad_paciente"] + formulario_solicitud_quirofano.cleaned_data["cedula_paciente"]
+						paciente.fecha_nacimiento = formulario_solicitud_quirofano.cleaned_data["fecha_nacimiento_paciente"]
+						paciente.genero = formulario_solicitud_quirofano.cleaned_data["genero_paciente"]
+						paciente.telefono = formulario_solicitud_quirofano.cleaned_data["codigo_telefono_paciente"] + "-" + formulario_solicitud_quirofano.cleaned_data["numero_telefono_paciente"]
+						paciente.diagnostico_ingreso = formulario_solicitud_quirofano.cleaned_data["diagnostico_ingreso_paciente"]
+						if formulario_solicitud_quirofano.cleaned_data["paciente_con_expediente"]:
+							paciente.area_ingreso = formulario_solicitud_quirofano.cleaned_data["area_ingreso_paciente"]
+							paciente.numero_expediente =  formulario_solicitud_quirofano.cleaned_data["numero_expediente_paciente"]
+
+						if formulario_solicitud_quirofano.cleaned_data["paciente_hospitalizado"]:
+							paciente.numero_habitacion = formulario_solicitud_quirofano.cleaned_data["numero_habitacion_paciente"]
+
+						if formulario_solicitud_quirofano.cleaned_data["tipo_pago_paciente"] == "S":
+							paciente.compania_aseguradora = formulario_solicitud_quirofano.cleaned_data["compania_aseguradora_paciente"]
+
+						paciente.save()
+
+						servicios_operatorios_paciente = formulario_solicitud_quirofano.cleaned_data.get("servicios_operatorios_paciente")
+						if servicios_operatorios_paciente is not []:
+							paciente.servicios_operatorios_requeridos = servicios_operatorios_paciente
+						paciente.save()
+
+						intervencion_quirurgica = IntervencionQuirurgica()
+						intervencion_quirurgica.paciente = paciente
+						intervencion_quirurgica.estado = "0"
+						intervencion_quirurgica.fecha_intervencion = date(ano, mes, dia)
+						hora_inicio_tupla = utils.obtener_hora(hora_inicio)
+						hora_fin_tupla = utils.obtener_hora(hora_fin)
+						intervencion_quirurgica.hora_inicio = time(hora_inicio_tupla[0], hora_inicio_tupla[1])
+						intervencion_quirurgica.hora_fin = time(hora_fin_tupla[0], hora_fin_tupla[1])
+						intervencion_quirurgica.observaciones = formulario_solicitud_quirofano.cleaned_data["observaciones"]
+						intervencion_quirurgica.preferencia_anestesica = formulario_solicitud_quirofano.cleaned_data["preferencia_anestesica"]
+						intervencion_quirurgica.quirofano = quirofano
+						intervencion_quirurgica.riesgo = formulario_solicitud_quirofano.cleaned_data["riesgo"]
+						if intervencion_quirurgica.riesgo == "M":
+							intervencion_quirurfica.razon_riesgo = formulario_solicitud_quirofano.cleaned_data["razon_riesgo"]
+
+						intervencion_quirurgica.save()
+
+						materiales_quirurgicos_requeridos = formulario_solicitud_quirofano.cleaned_data.get("materiales_quirurgicos_requeridos")
+						if materiales_quirurgicos_requeridos is not []:
+							intervencion_quirurgica.materiales_quirurgicos_requeridos = materiales_quirurgicos_requeridos
+
+						equipos_especiales_requeridos = formulario_solicitud_quirofano.cleaned_data.get("equipos_especiales_requeridos")
+						if equipos_especiales_requeridos is not []:
+							intervencion_quirurgica.equipos_especiales_requeridos = equipos_especiales_requeridos
+
+						intervencion_quirurgica.save()
+
+						reservacion = Reservacion()
+						reservacion.intervencion_quirurgica = intervencion_quirurgica
+						reservacion.dias_hospitalizacion = formulario_solicitud_quirofano.cleaned_data["dias_hospitalizacion"]
+						reservacion.estado = "P"
+						reservacion.tipo_solicitud = "1"
+						reservacion.medico = request.user.cuenta.medico
+						reservacion.save()
+
+						for procedimiento_quirurgico in procedimientos_quirurgicos:
+							procedimiento_quirurgico.intervencion_quirurgica = intervencion_quirurgica
+							procedimiento_quirurgico.save()
 
 			else:
 				lista_errores = formulario_solicitud_quirofano.error_class([MensajeTemporalError.NO_SE_AGREGO_PROCEDIMIENTO_QUIRURGICO])

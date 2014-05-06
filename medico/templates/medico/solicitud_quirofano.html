@@ -221,7 +221,7 @@
 										<div class="checkbox">
 											{% render_field checkbox %}
 										</div>
-										{% if forloop.counter == 2 and not forloop.last %}
+										{% if forloop.counter|divisibleby:1 and not forloop.last %}
 									</div>
 									<div class="col-lg-2">
 										{% elif forloop.last %}
@@ -241,12 +241,10 @@
 							{% endif %}
 						</div>
 						<div class="form-group" id="numero-habitacion-paciente-form-group">
-							<div class="col-lg-offset-2 col-lg-2 checkbox">
-								<label>
-									<input type="checkbox" name="paciente-hospitalizado">
-									{{ LABEL_PACIENTE_HOSPITALIZADO }}
-								</label>
-							</div>
+							<label class="col-lg-2 control-label">
+								{% render_field formulario_solicitud_quirofano.paciente_hospitalizado %}
+								{{ LABEL_PACIENTE_HOSPITALIZADO }}
+							</label>
 							<div class="hidden" id="habitacion">
 								<label class="col-lg-2 control-label" for="numero-habitacion-paciente">
 									{{ LABEL_HABITACION }}
@@ -255,6 +253,7 @@
 									{% render_field formulario_solicitud_quirofano.numero_habitacion_paciente class="form-control" id="numero-habitacion-paciente" %}
 									<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="numero-habitacion-paciente-error-feedback-icon"></span>
 									<span class="help-block hidden" id="numero-habitacion-paciente-error-help">{{ formulario_solicitud_quirofano.numero_habitacion_paciente.errors }}</span>
+									<span class="help-block hidden" id="paciente-hospitalizado-error-help">{{ formulario_solicitud_quirofano.paciente_hospitalizado.errors }}</span>
 								</div>
 								{% if formulario_solicitud_quirofano.numero_habitacion_paciente.errors %}
 								<script type="text/javascript">
@@ -263,20 +262,32 @@
 								});
 								</script>
 								{% endif %}
+								{% if formulario_solicitud_quirofano.paciente_hospitalizado.errors %}
+								<script type="text/javascript">
+								$(function() {
+									mostrarErroresPacienteHospitalizado();
+								});
+								</script>
+								{% endif %}
 							</div>
+							{% if formulario_solicitud_quirofano.paciente_hospitalizado.value %}
+							<script type="text/javascript">
+							$(function() {
+								mostrarNumeroHabitacionPaciente();
+							});
+							</script>
+							{% endif %}
 						</div>
 						<div class="form-group" id="area-ingreso-numero-expediente-form-group">
-							<div class="col-lg-offset-2 col-lg-2 checkbox">
-								<label>
-									<input type="checkbox" name="paciente-con-expediente">
-									{{ LABEL_PACIENTE_CON_EXPEDIENTE }}
-								</label>
-							</div>
+							<label class="col-lg-2 control-label">
+								{% render_field formulario_solicitud_quirofano.paciente_con_expediente id="paciente-con-expediente" %}
+								{{ LABEL_PACIENTE_CON_EXPEDIENTE }}
+							</label>
 							<div class="hidden" id="area-ingreso-numero-expediente">
 								<label class="col-lg-2 control-label" for="area-ingreso-paciente">
 									{{ LABEL_AREA_INGRESO }}
 								</label>
-								<div class="col-lg-3">
+								<div class="col-lg-4">
 									{% render_field formulario_solicitud_quirofano.area_ingreso_paciente class="form-control" id="area-ingreso-paciente" %}
 									<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="area-ingreso-paciente-error-feedback-icon"></span>
 									<span class="help-block hidden" id="area-ingreso-paciente-error-help">{{ formulario_solicitud_quirofano.area_ingreso_paciente.errors }}</span>
@@ -292,6 +303,7 @@
 									{% render_field formulario_solicitud_quirofano.numero_expediente_paciente class="form-control" id="numero-expediente-paciente" placeholder=LABEL_NUMERO_EXPEDIENTE %}
 									<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="numero-expediente-paciente-error-feedback-icon"></span>
 									<span class="help-block hidden" id="numero-expediente-paciente-error-help">{{ formulario_solicitud_quirofano.numero_expediente_paciente.errors }}</span>
+									<span class="help-block hidden" id="paciente-con-expediente-error-help">{{ formulario_solicitud_quirofano.paciente_con_expediente.errors }}</span>
 								</div>
 								{% if formulario_solicitud_quirofano.numero_expediente_paciente.errors %}
 								<script type="text/javascript">
@@ -300,25 +312,34 @@
 								});
 								</script>
 								{% endif %}
+								{% if formulario_solicitud_quirofano.paciente_con_expediente.errors %}
+								<script type="text/javascript">
+								$(function() {
+									mostrarErroresPacienteConExpediente();
+								});
+								</script>
+								{% endif %}
 							</div>
+							{% if formulario_solicitud_quirofano.paciente_con_expediente.value %}
+							<script type="text/javascript">
+							$(function() {
+								mostrarCamposExpedientePaciente();
+							});
+							</script>
+							{% endif %}
 						</div>
-						<div class="form-group">
-							<label class="col-lg-2 control-label" for="forma-pago">
+						<div class="form-group" id="compania-aseguradora-paciente-form-group">
+							<label class="col-lg-2 control-label">
 								{{ LABEL_FORMA_PAGO }}
 							</label>
-							<div class="col-lg-4">
-								<div class="radio-inline">
-									<label>
-										<input type="radio" name="forma-pago" value="particular">
-										Particular
-									</label>
-								</div>
-								<div class="radio-inline">
-									<label>
-										<input type="radio" name="forma-pago" value="seguro">
-										Seguro
-									</label>
-								</div>
+							<div class="col-lg-4" id="radios-tipo-pago-paciente">
+								{% for radio in formulario_solicitud_quirofano.tipo_pago_paciente %}
+								<label class="radio-inline">
+									{% render_field radio %}
+								</label>
+								{% endfor %}
+								<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="tipo-pago-paciente-error-feedback-icon"></span>
+								<span class="help-block hidden" id="tipo-pago-paciente-error-help">{{ formulario_solicitud_quirofano.tipo_pago_paciente.errors }}</span>
 							</div>
 							<div class="hidden" id="seguros">
 								<label class="col-lg-2 control-label" for="compania-aseguradora-paciente">
@@ -326,7 +347,6 @@
 								</label>
 								<div class="col-lg-4">
 									{% render_field formulario_solicitud_quirofano.compania_aseguradora_paciente class="form-control" id="compania-aseguradora-paciente" %}
-									<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="compania-aseguradora-paciente-error-feedback-icon"></span>
 									<span class="help-block hidden" id="compania-aseguradora-paciente-error-help">{{ formulario_solicitud_quirofano.compania_aseguradora_paciente.errors }}</span>
 								</div>
 								{% if formulario_solicitud_quirofano.compania_aseguradora_paciente.errors %}
@@ -337,6 +357,13 @@
 								</script>
 								{% endif %}
 							</div>
+							{% if formulario_solicitud_quirofano.tipo_pago_paciente.value == "S" %}
+							<script type="text/javascript">
+							$(function() {
+								mostrarCompaniaAseguradoraPaciente();
+							});
+							</script>
+							{% endif %}
 						</div>
 					</div>
 					<div class="panel-footer">
@@ -365,7 +392,7 @@
 							<div class="col-lg-2">
 								<input class="form-control" type="text" value="{{ quirofano_legible }}" disabled>
 							</div>
-							<label class="col-lg-2 control-label">
+							<label class="col-lg-1 control-label">
 								{{ LABEL_FECHA }}
 							</label>
 							<div class="col-lg-2">
@@ -386,19 +413,19 @@
 								<input class="form-control" type="text" value="{{ hora_fin_legible }}" disabled>
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="form-group" id="preferencia-anestesica-form-group">
 							<label class="col-lg-2 control-label" for="preferencia-anestesica">
 								{{ LABEL_ANESTESIA }}
 							</label>
-							<div class="col-lg-10">
+							<div class="col-lg-10" id="radios-preferencia-anestesica">
 								{% for radio in formulario_solicitud_quirofano.preferencia_anestesica %}
 								<label class="radio-inline">
 									{% render_field radio %}
 								</label>
 								{% endfor %}
+								<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="preferencia-anestesica-error-feedback-icon"></span>
+								<span class="help-block hidden" id="preferencia-anestesica-error-help">{{ formulario_solicitud_quirofano.preferencia_anestesica.errors }}</span>
 							</div>
-							<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="preferencia-anestesica-error-feedback-icon"></span>
-							<span class="help-block hidden" id="preferencia-anestesica-error-help">{{ formulario_solicitud_quirofano.preferencia_anestesica.errors }}</span>
 							{% if formulario_solicitud_quirofano.preferencia_anestesica.errors %}
 							<script type="text/javascript">
 							$(function() {
@@ -407,7 +434,7 @@
 							</script>
 							{% endif %}
 						</div>
-						<div class="form-group">
+						<div class="form-group" id="observaciones-form-group">
 							<label class="col-lg-2 control-label" for="observaciones">
 								{{ LABEL_OBSERVACIONES }}
 							</label>
@@ -424,19 +451,19 @@
 							</script>
 							{% endif %}
 						</div>
-						<div class="form-group">
+						<div class="form-group" id="riesgo-form-group">
 							<label class="col-lg-2 control-label" for="riesgo">
 								{{ LABEL_NIVEL_RIESGO }}
 							</label>
-							<div class="col-lg-10">
+							<div class="col-lg-10" id="radios-riesgo">
 								{% for radio in formulario_solicitud_quirofano.riesgo %}
 								<label class="radio-inline">
 									{% render_field radio %}
 								</label>
 								{% endfor %}
+								<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="riesgo-error-feedback-icon"></span>
+								<span class="help-block hidden" id="riesgo-error-help">{{ formulario_solicitud_quirofano.riesgo.errors }}</span>
 							</div>
-							<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="riesgo-error-feedback-icon"></span>
-							<span class="help-block hidden" id="riesgo-error-help">{{ formulario_solicitud_quirofano.riesgo.errors }}</span>
 							{% if formulario_solicitud_quirofano.riesgo.errors %}
 							<script type="text/javascript">
 							$(function() {
@@ -459,13 +486,19 @@
 							</script>
 							{% endif %}
 						</div>
-						<div class="form-group">
+						{% if formulario_solicitud_quirofano.riesgo.value == "M" %}
+						<script type="text/javascript">
+						$(function() {
+							mostrarRazonRiesgo();
+						});
+						</script>
+						{% endif %}
+						<div class="form-group" id="dias-hospitalizacion-form-group">
 							<label class="col-lg-2 control-label" for="dias-hospitalizacion">
 								{{ LABEL_DIAS_HOSPITALIZACION }}
 							</label>
 							<div class="col-lg-2">
 								{% render_field formulario_solicitud_quirofano.dias_hospitalizacion class="form-control" id="dias-hospitalizacion" %}
-								<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="dias-hospitalizacion-error-feedback-icon"></span>
 								<span class="help-block hidden" id="dias-hospitalizacion-error-help">{{ formulario_solicitud_quirofano.dias_hospitalizacion.errors }}</span>
 							</div>
 							{% if formulario_solicitud_quirofano.dias_hospitalizacion.errors %}
@@ -476,11 +509,11 @@
 							</script>
 							{% endif %}
 						</div>
-						<div class="form-group">
+						<div class="form-group" id="equipos-especiales-requeridos-form-group">
 							<label class="col-lg-2 control-label" for="equipos-especiales-requeridos">
 								{{ LABEL_EQUIPOS_ESPECIALES }}
 							</label>
-							<div class="col-lg-10">
+							<div class="col-lg-10" id="checkboxes-equipos-especiales-requeridos">
 								<div class="row">
 									{% for checkbox in formulario_solicitud_quirofano.equipos_especiales_requeridos %}
 									{% if forloop.first %}
@@ -489,7 +522,7 @@
 										<div class="checkbox">
 											{% render_field checkbox %}
 										</div>
-										{% if forloop.counter == 4 and not forloop.last %}
+										{% if forloop.counter|divisibleby:5 and not forloop.last %}
 									</div>
 									<div class="col-lg-2">
 										{% elif forloop.last %}
@@ -497,9 +530,9 @@
 									{% endif %}
 									{% endfor %}
 								</div>
+								<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="equipos-especiales-requeridos-error-feedback-icon"></span>
+								<span class="help-block hidden" id="equipos-especiales-requeridos-error-help">{{ formulario_solicitud_quirofano.equipos_especiales_requeridos.errors }}</span>
 							</div>
-							<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="equipos-especiales-requeridos-error-feedback-icon"></span>
-							<span class="help-block hidden" id="equipos-especiales-requeridos-error-help">{{ formulario_solicitud_quirofano.equipos_especiales_requeridos.errors }}</span>
 							{% if formulario_solicitud_quirofano.equipos_especiales_requeridos.errors %}
 							<script type="text/javascript">
 							$(function() {
@@ -508,11 +541,11 @@
 							</script>
 							{% endif %}
 						</div>
-						<div class="form-group">
+						<div class="form-group" id="materiales-quirurgicos-requeridos-form-group">
 							<label class="col-lg-2 control-label" for="materiales-quirurgicos-requeridos">
 								{{ LABEL_MATERIAL_QUIRURGICO }}
 							</label>
-							<div class="col-lg-10">
+							<div class="col-lg-10" id="checkboxes-materiales-quirurgicos-requeridos">
 								<div class="row">
 									{% for checkbox in formulario_solicitud_quirofano.materiales_quirurgicos_requeridos %}
 									{% if forloop.first %}
@@ -521,7 +554,7 @@
 										<div class="checkbox">
 											{% render_field checkbox %}
 										</div>
-										{% if forloop.counter == 4 and not forloop.last %}
+										{% if forloop.counter|divisibleby:1 and not forloop.last %}
 									</div>
 									<div class="col-lg-2">
 										{% elif forloop.last %}
@@ -529,9 +562,9 @@
 									{% endif %}
 									{% endfor %}
 								</div>
+								<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="materiales-quirurgicos-requeridos-error-feedback-icon"></span>
+								<span class="help-block hidden" id="materiales-quirurgicos-requeridos-error-help">{{ formulario_solicitud_quirofano.materiales_quirurgicos_requeridos.errors }}</span>
 							</div>
-							<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="materiales-quirurgicos-requeridos-error-feedback-icon"></span>
-							<span class="help-block hidden" id="materiales-quirurgicos-requeridos-error-help">{{ formulario_solicitud_quirofano.materiales_quirurgicos_requeridos.errors }}</span>
 							{% if formulario_solicitud_quirofano.materiales_quirurgicos_requeridos.errors %}
 							<script type="text/javascript">
 							$(function() {

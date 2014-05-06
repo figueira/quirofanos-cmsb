@@ -1,3 +1,23 @@
+// Mostrar numero habitacion paciente
+var mostrarNumeroHabitacionPaciente = function() {
+	$("#habitacion").removeClass("hidden")
+};
+
+// Mostrar campos expediente paciente
+var mostrarCamposExpedientePaciente = function() {
+	$("#area-ingreso-numero-expediente").removeClass("hidden")
+};
+
+// Mostrar compania aseguradora paciente
+var mostrarCompaniaAseguradoraPaciente = function() {
+	$("#seguros").removeClass("hidden")
+};
+
+// Mostrar razon riesgo
+var mostrarRazonRiesgo = function() {
+	$("#razon-riesgo").removeClass("hidden");
+};
+
 // Mostrar modal de agregar procedimiento quirurgico
 var mostrarModalAgregarProcedimientoQuirurgico = function() {
 	$("#accion-formulario").val("procedimiento_quirurgico")
@@ -92,6 +112,13 @@ var mostrarErroresServiciosOperatoriosPaciente = function() {
 	$("#servicios-operatorios-paciente-error-help").removeClass("hidden");
 };
 
+// Mostrar errores paciente hospitalizado
+var mostrarErroresPacienteHospitalizado = function() {
+	$("#numero-habitacion-paciente-form-group").addClass("has-error");
+	$("#habitacion").removeClass("hidden");
+	$("#paciente-hospitalizado-error-help").removeClass("hidden");
+};
+
 // Mostrar errores numero habitacion paciente
 var mostrarErroresNumeroHabitacionPaciente = function() {
 	$("#habitacion").removeClass("hidden");
@@ -100,6 +127,13 @@ var mostrarErroresNumeroHabitacionPaciente = function() {
 	$("#numero-habitacion-paciente-error-feedback-icon").removeClass("hidden");
 	$("#numero-habitacion-paciente-error-help").removeClass("hidden");
 };
+
+// Mostrar errores paciente con expediente
+var mostrarErroresPacienteConExpediente = function() {
+	$("#area-ingreso-numero-expediente-form-group").addClass("has-error")
+	$("#area-ingreso-numero-expediente").removeClass("hidden");
+	$("#paciente-con-expediente-error-help").removeClass("hidden");
+}
 
 // Mostrar errores area ingreso paciente
 var mostrarErroresAreaIngresoPaciente = function() {
@@ -117,6 +151,69 @@ var mostrarErroresNumeroExpedientePaciente = function() {
 	$("#area-ingreso-numero-expediente-form-group").addClass("has-feedback");
 	$("#numero-expediente-paciente-error-feedback-icon").removeClass("hidden");
 	$("#numero-expediente-paciente-error-help").removeClass("hidden");
+};
+
+// Mostrar errores compania aseguradora paciente
+var mostrarErroresCompaniaAseguradoraPaciente = function() {
+	$("#seguros").removeClass("hidden");
+	$("#compania-aseguradora-paciente").parent("div").addClass("has-error");
+	$("#compania-aseguradora-paciente-error-help").removeClass("hidden");
+};
+
+// Mostrar errores preferencia anestesica
+var mostrarErroresPreferenciaAnestesica = function() {
+	$("#radios-preferencia-anestesica").addClass("has-error");
+	$("#preferencia-anestesica-form-group").addClass("has-feedback");
+	$("#preferencia-anestesica-error-feedback-icon").removeClass("hidden");
+	$("#preferencia-anestesica-error-help").removeClass("hidden");
+};
+
+// Mostrar errores observaciones
+var mostrarErroresObservaciones = function() {
+	$("#observaciones").parent("div").addClass("has-error");
+	$("#observaciones-form-group").addClass("has-feedback");
+	$("#observaciones-error-feedback-icon").removeClass("hidden");
+	$("#observaciones-error-help").removeClass("hidden");
+};
+
+// Mostrar errores riesgo
+var mostrarErroresRiesgo = function() {
+	$("#radios-riesgo").addClass("has-error");
+	$("#riesgo-form-group").addClass("has-feedback");
+	$("#riesgo-error-feedback-icon").removeClass("hidden");
+	$("#riesgo-error-help").removeClass("hidden");
+};
+
+// Mostrar errores razon riesgo
+var mostrarErroresRazonRiesgo = function() {
+	$("#razon-riesgo-input").parent("div").addClass("has-error");
+	$("#razon-riesgo").addClass("has-feedback");
+	$("#razon-riesgo-error-feedback-icon").removeClass("hidden");
+	$("#razon-riesgo-error-help").removeClass("hidden");
+};
+
+// Mostrar errores dias hospitalizacion
+var mostrarErroresDiasHospitalizacion = function() {
+	$("#dias-hospitalizacion").parent("div").addClass("has-error");
+	$("#dias-hospitalizacion-form-group").addClass("has-feedback");
+	$("#dias-hospitalizacion-error-feedback-icon").removeClass("hidden");
+	$("#dias-hospitalizacion-error-help").removeClass("hidden");
+};
+
+// Mostrar errores equipos especiales requeridos
+var mostrarErroresEquiposEspecialesRequeridos = function() {
+	$("#checkboxes-equipos-especiales-requeridos").addClass("has-error");
+	$("#equipos-especiales-requeridos-form-group").addClass("has-feedback");
+	$("#equipos-especiales-requeridos-error-feedback-icon").removeClass("hidden");
+	$("#equipos-especiales-requeridos-error-help").removeClass("hidden");
+};
+
+// Mostrar errores materiales quirurgicos requeridos
+var mostrarErroresMaterialesQuirurgicosRequeridos = function() {
+	$("#checkboxes-materiales-quirurgicos-requeridos").addClass("has-error");
+	$("#materiales-quirurgicos-requeridos-form-group").addClass("has-feedback");
+	$("#materiales-quirurgicos-requeridos-error-feedback-icon").removeClass("hidden");
+	$("#materiales-quirurgicos-requeridos-error-help").removeClass("hidden");
 };
 
 $(document).ready(function() {
@@ -147,10 +244,10 @@ $(document).ready(function() {
 	});
 
 	// Mostrar o no mostrar aseguradoras
-	var forma_pago = $("input[name=forma-pago]");
+	var forma_pago = $("input[name=solicitud_quirofano-tipo_pago_paciente]");
 	forma_pago.change(function(){
-		seguro = $("input[name=forma-pago]:checked");
-		if (seguro.val() == "seguro")
+		seguro = $("input[name=solicitud_quirofano-tipo_pago_paciente]:checked");
+		if (seguro.val() == "S")
 			$("#seguros").removeClass("hidden");
 		else {
 			$("#seguros").addClass("hidden");
@@ -158,15 +255,21 @@ $(document).ready(function() {
 	});
 
 	// Mostrar o no mostrar habitacion de paciente
-	var hospitalizado = $("input[name=paciente-hospitalizado]");
+	var hospitalizado = $("input[name=solicitud_quirofano-paciente_hospitalizado]");
 	hospitalizado.change(function(){
 		$("#habitacion").toggleClass("hidden");
+		if ($("#habitacion").hasClass("hidden")) {
+			$("#numero-habitacion-paciente").val("");
+		}
 	});
 
 	// Mostrar o no mostrar numero de expediente paciente
-	var expediente = $("input[name=paciente-con-expediente]");
+	var expediente = $("input[name=solicitud_quirofano-paciente_con_expediente]");
 	expediente.change(function(){
 		$("#area-ingreso-numero-expediente").toggleClass("hidden");
+		if ($("#area-ingreso-numero-expediente").hasClass("hidden")) {
+			$("#numero-expediente-paciente").val("")
+		}
 	});
 
 	// Cambiar la accion en formulario para que demuestre que se esta agregando un procedimiento quirurgico

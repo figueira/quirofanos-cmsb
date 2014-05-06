@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
 
 def obtener_nombre_mes(mes):
@@ -31,6 +32,14 @@ def rango_decimal(comienzo, final, paso):
     while r < final:
         yield r
         r = r + paso
+
+def obtener_hora(hora_en_float):
+    horas = int(hora_en_float)
+    parte_decimal = hora_en_float - int(hora_en_float)
+    minutos = 0
+    if parte_decimal == 0.5:
+        minutos = 30
+    return (horas, minutos)
 
 def obtener_representacion_media_hora(media_hora):
     ''' Devuelve una representacion legible de una media hora del dia

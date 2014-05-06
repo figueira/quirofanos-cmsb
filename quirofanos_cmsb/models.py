@@ -442,10 +442,10 @@ class IntervencionQuirurgica(models.Model):
         ''' Sobreescribe el clean(), validando los valores del riesgo y la razon del riesgo, ademas de calcular la duracion de la Intervencion Quirurgica '''
         if self.riesgo == 'M' and self.razon_riesgo is None:
             raise ValidationError(
-                MensajeError.RIESGO_MALO_SIN_RAZON, code=CodigoError.RIESGO_MALO_SIN_RAZON)
+                MensajeError.RIESGO_MALO_SIN_RAZON_BD, code=CodigoError.RIESGO_MALO_SIN_RAZON_BD)
         elif self.riesgo != 'M' and self.razon_riesgo is not None:
             raise ValidationError(
-                MensajeError.RIESGO_NO_MALO_CON_RAZON, code=CodigoError.RIESGO_NO_MALO_CON_RAZON)
+                MensajeError.RIESGO_NO_MALO_CON_RAZON_BD, code=CodigoError.RIESGO_NO_MALO_CON_RAZON_BD)
 
         if self.hora_fin <= self.hora_inicio:
             raise ValidationError(
