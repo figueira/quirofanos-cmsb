@@ -224,6 +224,9 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 				lista_errores = formulario_solicitud_quirofano.error_class([MensajeTemporalError.NO_SE_AGREGO_PROCEDIMIENTO_QUIRURGICO])
 				formulario_solicitud_quirofano._errors[NON_FIELD_ERRORS] = lista_errores
 
+	elif request.method == 'GET':
+		procedimientos_quirurgicos.delete()
+
 	sistemas_corporales = SistemaCorporal.objects.all()
 	sistemas_corporales_diccionarios = []
 	for sistema_corporal in sistemas_corporales:
