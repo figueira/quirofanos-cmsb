@@ -88,20 +88,6 @@ ROL_PARTICIPACION = (
     ('3', u'Tercer Ayudante'),
 )
 
-# Parentezco de Pacientes y Medicos
-PARENTEZCO = (
-    ('0', u'Padre'),
-    ('1', u'Madre'),
-    ('2', u'Hijo(a)'),
-    ('3', u'Hermano(a)'),
-    ('4', u'Abuelo(a)'),
-    ('5', u'Nieto(a)'),
-    ('6', u'Tío(a)'),
-    ('7', u'Primo(a)'),
-    ('8', u'Esposo(a)'),
-    ('9', u'Sobrino(a)'),
-)
-
 # Areas de ingreso asociadas al numero de expediente de un paciente
 AREA_INGRESO = (
     ('AA', u'Admisión por Ambulatorio'),
@@ -471,10 +457,10 @@ class IntervencionQuirurgica(models.Model):
         ''' Sobreescribe el clean(), validando los valores del riesgo y la razon del riesgo, ademas de calcular la duracion de la Intervencion Quirurgica '''
         if self.riesgo == 'M' and self.razon_riesgo is None:
             raise ValidationError(
-                MensajeError.RIESGO_MALO_SIN_RAZON, code=CodigoError.RIESGO_MALO_SIN_RAZON)
+                MensajeError.RIESGO_MALO_SIN_RAZON_BD, code=CodigoError.RIESGO_MALO_SIN_RAZON_BD)
         elif self.riesgo != 'M' and self.razon_riesgo is not None:
             raise ValidationError(
-                MensajeError.RIESGO_NO_MALO_CON_RAZON, code=CodigoError.RIESGO_NO_MALO_CON_RAZON)
+                MensajeError.RIESGO_NO_MALO_CON_RAZON_BD, code=CodigoError.RIESGO_NO_MALO_CON_RAZON_BD)
 
         if self.hora_fin <= self.hora_inicio:
             raise ValidationError(
@@ -525,7 +511,7 @@ class IntervencionQuirurgica(models.Model):
 
 class ProcedimientoQuirurgico(models.Model):
     ''' Clase que representa un Procedimiento Quirurgico '''
-    intervencion_quirurgica = models.ForeignKey(IntervencionQuirurgica)
+    intervencion_quirurgica = models.ForeignKey(IntervencionQuirurgica, blank=True, null=True)
     tipo_procedimiento_quirurgico = models.ForeignKey(TipoProcedimientoQuirurgico)
     organo_corporal = models.ForeignKey(OrganoCorporal)
     monto_honorarios_cirujano_principal = models.DecimalField(max_digits=15, decimal_places=2)
@@ -535,6 +521,15 @@ class ProcedimientoQuirurgico(models.Model):
         ''' Sobreescribe el save() '''
         self.full_clean()
         super(ProcedimientoQuirurgico, self).save()
+
+    def obtener_monto_honorarios_anestesiologo(self):
+        return round(0.4*self.monto_honorarios_cirujano_principal, 2)
+
+    def obtener_monto_honorarios_primer_ayudante(self):
+        return round(0.4*self.monto_honorarios_cirujano_principal, 2)
+
+    def obtener_monto_honorarios_segundo_ayudante(self):
+        return round(0.3*self.monto_honorarios_cirujano_principal, 2)
 
     def obtener_monto_honorarios_total(self):
         ''' Devuelve el monto total de honorarios del procedimiento quirurgico '''
