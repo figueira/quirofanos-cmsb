@@ -17,7 +17,7 @@ from datetime import time
 from quirofanos_cmsb.helpers.user_tests import es_medico
 from quirofanos_cmsb.helpers import utils
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
-from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError
+from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito
 from quirofanos_cmsb.models import Quirofano, SistemaCorporal, OrganoCorporal, TipoProcedimientoQuirurgico, Participacion, ProcedimientoQuirurgico, Reservacion, IntervencionQuirurgica, Paciente
 from medico.forms import SolicitudQuirofanoForm, ProcedimientoQuirurgicoForm, EliminarProcedimientoQuirurgicoForm
 
@@ -75,17 +75,19 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 	formulario_solicitud_quirofano = SolicitudQuirofanoForm(prefix="solicitud_quirofano")
 	formulario_procedimiento_quirurgico = ProcedimientoQuirurgicoForm(prefix="procedimiento_quirurgico")
 	formulario_eliminar_procedimiento_quirurgico = EliminarProcedimientoQuirurgicoForm(prefix="eliminar_procedimiento_quirurgico")
-	agregando_procedimiento_quirurgico = False
+	agregando_procedimiento = False
 	procedimiento_agregado = False
 	procedimiento_eliminado = False
 	procedimientos_quirurgicos = ProcedimientoQuirurgico.objects.filter(intervencion_quirurgica=None)
+	errores_primera_pagina = True
+	id_sistema_corporal_actual = None
 
 	if request.method == 'POST':
 		formulario_solicitud_quirofano = SolicitudQuirofanoForm(prefix="solicitud_quirofano", data=request.POST)
 		formulario_procedimiento_quirurgico = ProcedimientoQuirurgicoForm(prefix="procedimiento_quirurgico", data=request.POST)
 		formulario_eliminar_procedimiento_quirurgico = EliminarProcedimientoQuirurgicoForm(prefix="eliminar_procedimiento_quirurgico", data=request.POST)
 		if request.POST["accion"] == "procedimiento_quirurgico":
-			agregando_procedimiento_quirurgico = True
+			agregando_procedimiento = True
 			try:
 				formulario_procedimiento_quirurgico_valido = formulario_procedimiento_quirurgico.is_valid()
 				id_organo_corporal = formulario_procedimiento_quirurgico.cleaned_data["id_organo_corporal"]
@@ -94,6 +96,8 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 				tipo_procedimiento_quirurgico = TipoProcedimientoQuirurgico.objects.get(pk=id_tipo_procedimiento_quirurgico)
 				if tipo_procedimiento_quirurgico not in organo_corporal.tipos_procedimientos_permitidos.all():
 					raise ObjectDoesNotExist
+
+				id_sistema_corporal_actual = organo_corporal.sistema_corporal_id
 
 				if formulario_procedimiento_quirurgico_valido:
 					monto_honorarios_cirujano_principal = formulario_procedimiento_quirurgico.cleaned_data["monto_honorarios_cirujano_principal"]
@@ -115,7 +119,7 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 							monto_honorarios_tercer_ayudante = 0.00
 
 						Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=tercer_ayudante, rol='3', monto_honorarios=monto_honorarios_tercer_ayudante)
-					agregando_procedimiento_quirurgico = False
+					agregando_procedimiento = False
 					procedimiento_agregado = True
 
 			except ObjectDoesNotExist:
@@ -185,7 +189,7 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 						intervencion_quirurgica.quirofano = quirofano
 						intervencion_quirurgica.riesgo = formulario_solicitud_quirofano.cleaned_data["riesgo"]
 						if intervencion_quirurgica.riesgo == "M":
-							intervencion_quirurfica.razon_riesgo = formulario_solicitud_quirofano.cleaned_data["razon_riesgo"]
+							intervencion_quirurgica.razon_riesgo = formulario_solicitud_quirofano.cleaned_data["razon_riesgo"]
 
 						intervencion_quirurgica.save()
 
@@ -215,6 +219,8 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 					return redirect('mis_solicitudes')
 
 			else:
+				errores_primera_pagina = formulario_solicitud_quirofano["nombre_paciente"].errors or formulario_solicitud_quirofano["apellido_paciente"].errors or formulario_solicitud_quirofano["cedula_paciente"].errors or formulario_solicitud_quirofano["genero_paciente"].errors or formulario_solicitud_quirofano["fecha_nacimiento_paciente"].errors or formulario_solicitud_quirofano["codigo_telefono_paciente"].errors or formulario_solicitud_quirofano["numero_telefono_paciente"].errors or formulario_solicitud_quirofano["diagnostico_ingreso_paciente"].errors or formulario_solicitud_quirofano["servicios_operatorios_paciente"].errors or formulario_solicitud_quirofano["paciente_hospitalizado"].errors or formulario_solicitud_quirofano["numero_habitacion_paciente"].errors or formulario_solicitud_quirofano["paciente_con_expediente"].errors or formulario_solicitud_quirofano["area_ingreso_paciente"].errors or formulario_solicitud_quirofano["numero_expediente_paciente"].errors or formulario_solicitud_quirofano["tipo_pago_paciente"].errors or formulario_solicitud_quirofano["compania_aseguradora_paciente"].errors
+
 				lista_errores = formulario_solicitud_quirofano.error_class([MensajeTemporalError.NO_SE_AGREGO_PROCEDIMIENTO_QUIRURGICO])
 				formulario_solicitud_quirofano._errors[NON_FIELD_ERRORS] = lista_errores
 
@@ -259,7 +265,7 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 	datos["formulario_solicitud_quirofano"] = formulario_solicitud_quirofano
 	datos["formulario_procedimiento_quirurgico"] = formulario_procedimiento_quirurgico
 	datos["formulario_eliminar_procedimiento_quirurgico"] = formulario_eliminar_procedimiento_quirurgico
-	datos["agregando_procedimiento_quirurgico"] = agregando_procedimiento_quirurgico
+	datos["agregando_procedimiento"] = agregando_procedimiento
 	datos["procedimiento_agregado"] = procedimiento_agregado
 	datos["procedimiento_eliminado"] = procedimiento_eliminado
 	datos["accion"] = "solicitud_quirofano"
@@ -270,6 +276,10 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 	datos["fecha_intervencion_legible"] = fecha_intervencion_legible
 	datos["json_sistemas_corporales"] = json.dumps(sistemas_corporales_diccionarios, sort_keys=True, indent=4, separators=(',', ': '))
 	datos["procedimientos_quirurgicos"] = procedimientos_quirurgicos
+	datos["nombre_cirujano_principal"] = request.user.cuenta.medico.nombre
+	datos["apellido_cirujano_principal"] = request.user.cuenta.medico.apellido
+	datos["errores_primera_pagina"] = errores_primera_pagina
+	datos["id_sistema_corporal_actual"] = id_sistema_corporal_actual
 
 	return render_to_response('medico/solicitud_quirofano.html', datos,  context_instance=RequestContext(request))
 
