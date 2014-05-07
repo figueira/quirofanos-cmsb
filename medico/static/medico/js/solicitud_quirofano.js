@@ -18,9 +18,15 @@ var mostrarRazonRiesgo = function() {
 	$("#razon-riesgo").removeClass("hidden");
 };
 
+// Mostrar datos de quirofano en formulario
+var mostrarInfoQuirofano = function() {
+	$("#ver-info-quirofano").trigger("click");
+};
+
 // Mostrar modal de agregar procedimiento quirurgico
 var mostrarModalAgregarProcedimientoQuirurgico = function() {
-	$("#accion-formulario").val("procedimiento_quirurgico")
+	mostrarInfoQuirofano();
+	$("#accion-formulario").val("procedimiento_quirurgico");
 	$("#agregar-procedimiento-quirurgico-modal").modal();
 };
 
@@ -216,6 +222,87 @@ var mostrarErroresMaterialesQuirurgicosRequeridos = function() {
 	$("#materiales-quirurgicos-requeridos-error-help").removeClass("hidden");
 };
 
+// Mostrar errores honorarios cirujano principal
+var mostrarErroresHonorariosCirujanoPrincipal = function() {
+	$("#honorarios-cirujano-principal").parent("div").parent("div").addClass("has-error");
+	$("#honorarios-cirujano-principal-form-group").addClass("has-feedback");
+	$("#honorarios-cirujano-principal-error-help").removeClass("hidden");
+};
+
+// Mostrar errores anestesiologo
+var mostrarErroresAnestesiologo = function() {
+	$("#anestesiologo").parent("div").addClass("has-error");
+	$("#anestesiologo-form-group").addClass("has-feedback");
+	$("#anestesiologo-error-help").removeClass("hidden");
+};
+
+// Mostrar errores primer ayudante
+var mostrarErroresPrimerAyudante = function() {
+	$("#primer-ayudante").parent("div").addClass("has-error");
+	$("#primer-ayudante-form-group").addClass("has-feedback");
+	$("#primer-ayudante-error-help").removeClass("hidden");
+};
+
+// Mostrar errores segundo ayudante
+var mostrarErroresSegundoAyudante = function() {
+	$("#segundo-ayudante").parent("div").addClass("has-error");
+	$("#segundo-ayudante-form-group").addClass("has-feedback");
+	$("#segundo-ayudante-error-help").removeClass("hidden");
+};
+
+// Mostrar errores tercer ayudante
+var mostrarErroresTercerAyudante = function() {
+	$("#tercer-ayudante").parent("div").addClass("has-error");
+	$("#tercer-ayudante-form-group").addClass("has-feedback");
+	$("#tercer-ayudante-error-help").removeClass("hidden");
+};
+
+// Mostrar errores honorarios tercer ayudante
+var mostrarErroresHonorariosTercerAyudante = function() {
+	$("#honorarios-tercer-ayudante").parent("div").parent("div").addClass("has-error");
+	$("#tercer-ayudante-form-group").addClass("has-feedback");
+	$("#honorarios-tercer-ayudante-error-help").removeClass("hidden");
+};
+
+var sistemasCorporales;
+var sistemaCorporalActual;
+var organoCorporalActual;
+
+// Mostrar las opciones del select de sistemas corporales
+var mostrarOpcionesSistemasCorporales = function() {
+	$.each(sistemasCorporales, function(indice, valor) {
+		$("#sistemas-corporales").append("<option value=\"" + valor.id + "\">" + valor.nombre + "</option>");
+	});
+}
+
+// Mostrar las opciones del select de organos corporales segun el sistema corporal seleccionado
+var mostrarOpcionesOrganosCorporales = function(id_sistema_corporal) {
+	var sistemaCorporal = $.grep(sistemasCorporales, function(valor, indice) {
+		return valor.id == id_sistema_corporal
+	});
+	sistemaCorporalActual = sistemaCorporal[0]
+	$("#organos-corporales").html("");
+	$.each(sistemaCorporalActual.organos_corporales, function(indice, valor) {
+		$("#organos-corporales").append("<option value=\"" + valor.id + "\">" + valor.nombre + "</option>");
+	});
+	mostrarOpcionesTiposProcedimientos(sistemaCorporalActual.organos_corporales[0].id);
+	$("#id-organo-corporal").val(sistemaCorporalActual.organos_corporales[0].id);
+	$("#id-tipo-procedimiento-quirurgico").val(sistemaCorporalActual.organos_corporales[0].tipos_procedimientos_permitidos[0].id);
+}
+
+// Mostrar las opciones de tipos de procedimientos permitidos segun el organo corporal seleccionado
+var mostrarOpcionesTiposProcedimientos = function(id_organo_corporal) {
+	var organoCorporal = $.grep(sistemaCorporalActual.organos_corporales, function(valor, indice) {
+		return valor.id == id_organo_corporal
+	});
+	organoCorporalActual = organoCorporal[0]
+	$("#tipos-procedimientos").html("");
+	$.each(organoCorporalActual.tipos_procedimientos_permitidos, function(indice, valor) {
+		$("#tipos-procedimientos").append("<option value=\"" + valor.id + "\">" + valor.nombre + "</option>");
+	});
+	$("#id-tipo-procedimiento-quirurgico").val(organoCorporalActual.tipos_procedimientos_permitidos[0].id);
+}
+
 $(document).ready(function() {
 	// Ir a formulario de paciente
 	$("#ver-info-paciente").click(function() {
@@ -293,5 +380,41 @@ $(document).ready(function() {
 			$("#cedula-paciente-nacionalidad-texto").html("V-");
 			$("#cedula-paciente-nacionalidad-input").val("V-");
 		}
+	});
+
+	// Actualizar select de organos corporales cuando cambia el sistema corporal
+	$("#sistemas-corporales").change(function() {
+		idSistemaCorporal = $("#sistemas-corporales>option:selected").val();
+		mostrarOpcionesOrganosCorporales(idSistemaCorporal);
+	});
+
+	// Actualizar select de tipos procedimientos cuando cambia el organo corporal. Ademas de actualizar el valor escondido del id-organo-corporal seleccionado.
+	$("#organos-corporales").change(function() {
+		idOrganoCorporal = $("#organos-corporales>option:selected").val();
+		$("#id-organo-corporal").val(idOrganoCorporal)
+		mostrarOpcionesTiposProcedimientos(idOrganoCorporal);
+	});
+
+	// Actualizar el valor escondido del id-tipo-procedimiento-quirurgico seleccionado.
+	$("#tipos-procedimientos").change(function() {
+		idTipoProcedimiento = $("#tipos-procedimientos>option:selected").val();
+		$("#id-tipo-procedimiento-quirurgico").val(idTipoProcedimiento);
+	});
+
+	// Actualizar montos honorarios segun el monto honorario del cirujano principal
+	$("#honorarios-cirujano-principal").change(function() {
+		montoHonorarios = $("#honorarios-cirujano-principal").val();
+		montoHonorariosAnestesiologo = (0.4*montoHonorarios).toFixed(2);
+		montoHonorariosSegundoAyudante = (0.3*montoHonorarios).toFixed(2);
+		$("#honorarios-anestesiologo").val(montoHonorariosAnestesiologo);
+		$("#honorarios-primer-ayudante").val(montoHonorariosAnestesiologo);
+		$("#honorarios-segundo-ayudante").val(montoHonorariosSegundoAyudante);
+	});
+
+	// Eliminar procedimiento quirurgico
+	$(".eliminar-procedimiento-quirurgico").click(function() {
+		$("#accion-formulario").val("eliminar_procedimiento_quirurgico");
+		$("#id-procedimiento-quirurgico").val($(this).prev("input").val());
+		$("#formulario-solicitud-quirofano").submit();
 	});
 });
