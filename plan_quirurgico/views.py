@@ -235,5 +235,36 @@ def plan_dia_obs(request, area, ano, mes, dia):
 	ano -> Ano a consultar
 	mes -> Mes a consultar
 	dia -> Dia a consultar '''
+	ano = int(ano)
+	mes = int(mes)
+	dia = int(dia)
+	areas_valores = Quirofano.objects.distinct('area').values_list('area', flat=True)
+	quirofanos_area = Quirofano.objects.filter(area=area)
+	if mes < 1 or mes > 12:
+		raise Http404
+	if ano < 1:
+		raise Http404
+	if area not in areas_valores:
+		raise Http404
+	if dia < 1 or dia > calendar.monthrange(ano, mes)[1]:
+		raise Http404
 
-	return render_to_response('plan_quirurgico/plan_dia_obs.html', context_instance=RequestContext(request))
+	intervenciones = {}
+	lista_intervenciones_area = []
+	for quirofano in quirofanos_area:
+		intervenciones_quirofano = quirofano.obtener_intervenciones_por_dia(ano, mes, dia)
+		for intervencion in intervenciones_quirofano:
+			if len(intervenciones) > 0:
+				lista_intervenciones_area.append(intervenciones)
+
+	print[lista_intervenciones_area]
+	datos = {}
+	datos['area_nombre'] = quirofanos_area[0].get_area_display()
+	datos['ano'] = ano
+	datos['mes'] = mes
+	datos['dia'] = dia
+	datos['area_actual'] = area
+	datos['quirofanos_area'] = quirofanos_area
+	datos['intervenciones'] = lista_intervenciones_area.sort(key=lambda x: x.hora_inicio, reverse=True)
+
+	return render_to_response('plan_quirurgico/plan_dia_obs.html', datos, context_instance=RequestContext(request))
