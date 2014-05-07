@@ -12,6 +12,7 @@ class MensajeTemporalExito():
     SOLICITUD_USUARIO_APROBADA = _(u'La solicitud de registro de usuario ha sido aprobada.')
     SOLICITUD_USUARIO_RECHAZADA = _(u'La solicitud de registro de usuario ha sido rechazada.')
     ACTUALIZACION_EMAIL_EXITOSO = _(u'Su correo electrónico ha sido actualizado exitosamente.')
+    SOLICITUD_QUIROFANO_ENVIADA = _(u'Su solicitud de quirofano ha sido enviada. Se le notificará cuando ésta haya sido aprobada o, en su defecto, rechazada.')
 
 class MensajeTemporalError():
     ''' Clase que contiene constantes para ser utilizadas como mensajes temporales (flash messages) de errores '''
@@ -29,3 +30,4 @@ class MensajeTemporalError():
     TIPO_PROCEDIMIENTO_QUIRURGICO_INVALIDO = _(u'Se intentó agregar un procedimiento quirúrgico inválido.')
     NO_SE_AGREGO_PROCEDIMIENTO_QUIRURGICO = _(u'Debe agregar al menos un (1) procedimiento quirúrgico.')
     RECUPERAR_CONTRASENA_SIN_EMAIL = _(u'No posee un correo electrónico asociado a esta cuenta. Por Favor comuníquese con el administrador del sistema para la recuperación de su clave de acceso.')
+    ELIMINAR_PROCEDIMIENTO_QUIRURGICO_INVALIDO = _(u'Se intentó eliminar un procedimiento quirúrgico inválido.')

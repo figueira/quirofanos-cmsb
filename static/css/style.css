@@ -11,7 +11,8 @@ $gris-no-disponible-oscuro: rgba(196, 196, 196, 1)
 $negro-opaco: rgba(0, 0, 0, 0.7)
 $rojo-transparente: rgba(255, 0, 0, 0.1)
 $amarillo-claro: #FDF6A4 0
-$amarillo-mas-claro: #FCFCB6 100% */
+$amarillo-mas-claro: #FCFCB6 100%
+$azul-celeste: #d9edf7 */
 
 /* body padding top para evadir la superposicion del navbar de bootstrap por encima del contenido */
 body
@@ -317,10 +318,23 @@ a:hover
 	background-image:linear-gradient(to bottom,#FDF6A4 0,#FCFCB6 100%)!important
 }
 
+/* estilo de well informacion */
+.well-info
+{
+	background-image:linear-gradient(to bottom,#d9edf7 0,#d9edf7 100%)!important;
+	margin: 5px
+}
+
 /* estilo de turnos que pueden ser seleccionados */
 .available-select
 {
 	outline:solid #87A1B9 thin;
 	vertical-align:middle!important;
+	text-align:center
+}
+
+/* texto centrado */
+.texto-centrado
+{
 	text-align:center
 }

@@ -80,6 +80,10 @@ class ProcedimientoQuirurgicoForm(BaseForm):
     tercer_ayudante = forms.ModelChoiceField(queryset=Medico.objects.all())
     monto_honorarios_tercer_ayudante = forms.DecimalField(min_value=0.00, max_digits=15, decimal_places=2, required=False)
 
+class EliminarProcedimientoQuirurgicoForm(BaseForm):
+    ''' Formulario para eliminar un procedimiento quirurgico durante el proceso de solicitud de quirofano '''
+    id_procedimiento_quirurgico = forms.IntegerField(min_value=1, widget=forms.HiddenInput, required=False)
+
 
 
 
