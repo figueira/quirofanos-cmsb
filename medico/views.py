@@ -18,7 +18,7 @@ from quirofanos_cmsb.helpers.user_tests import es_medico
 from quirofanos_cmsb.helpers import utils
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
 from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito
-from quirofanos_cmsb.models import Quirofano, SistemaCorporal, OrganoCorporal, TipoProcedimientoQuirurgico, Participacion, ProcedimientoQuirurgico, Reservacion, IntervencionQuirurgica, Paciente
+from quirofanos_cmsb.models import User, Cuenta, Quirofano, SistemaCorporal, OrganoCorporal, TipoProcedimientoQuirurgico, Participacion, ProcedimientoQuirurgico, Reservacion, IntervencionQuirurgica, Paciente
 from medico.forms import SolicitudQuirofanoForm, ProcedimientoQuirurgicoForm, EliminarProcedimientoQuirurgicoForm
 
 @require_http_methods(["GET", "POST"])
@@ -295,7 +295,19 @@ def mis_solicitudes(request):
 	 Parametros:
 	 request -> Solicitud HTTP '''
 
-	 return render_to_response('medico/mis_solicitudes.html', context_instance=RequestContext(request))
+	 nombre_usuario = request.session['nombre_usuario']
+	 usuario = User.objects.get(username = nombre_usuario)
+	 cuenta = Cuenta.objects.get(usuario = usuario)
+	 reservaciones_aprobadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='A')	 	 
+	 reservaciones_pendientes = Reservacion.objects.filter(medico = cuenta.medico, estado ='P')	 	 
+	 reservaciones_rechazadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='R')	 	 	 	 
+
+	 datos = {}
+	 datos['reservaciones_aprobadas'] = reservaciones_aprobadas
+	 datos['reservaciones_pendientes'] = reservaciones_pendientes
+	 datos['reservaciones_rechazadas'] = reservaciones_rechazadas
+	 
+	 return render_to_response('medico/mis_solicitudes.html', datos, context_instance=RequestContext(request))
 
 @require_GET
 @login_required
