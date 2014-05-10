@@ -301,12 +301,17 @@ def mis_solicitudes(request):
 	 reservaciones_aprobadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='A')	 	 
 	 reservaciones_pendientes = Reservacion.objects.filter(medico = cuenta.medico, estado ='P')	 	 
 	 reservaciones_rechazadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='R')	 	 	 	 
+	 
+	 fsq = SolicitudQuirofanoForm()
+	 fsq.nombre_paciente = 'Daniel'
 
 	 datos = {}
 	 datos['reservaciones_aprobadas'] = reservaciones_aprobadas
 	 datos['reservaciones_pendientes'] = reservaciones_pendientes
 	 datos['reservaciones_rechazadas'] = reservaciones_rechazadas
-	 
+	 datos['formulario_solicitud_quirofano'] = fsq
+
+
 	 return render_to_response('medico/mis_solicitudes.html', datos, context_instance=RequestContext(request))
 
 @require_GET
