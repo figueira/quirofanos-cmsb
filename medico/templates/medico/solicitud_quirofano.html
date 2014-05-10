@@ -41,24 +41,23 @@
 			<!-- Formulario Solicitud Quirofano -->
 			<form class="form-horizontal" id="formulario-solicitud-quirofano" role="form" action="{% url 'solicitud_quirofano' ano mes dia id_quirofano hora_inicio duracion_en_medias_horas %}" method="POST" novalidate>
 				{% csrf_token %}
-				{% if agregando_procedimiento_quirurgico %}
+				{% if agregando_procedimiento %}
 				<script type="text/javascript">
 				$(function() {
 					mostrarModalAgregarProcedimientoQuirurgico();
 				});
 				</script>
 				{% endif %}
+				{% if not errores_primera_pagina %}
+				<script type="text/javascript">
+				$(function() {
+					mostrarInfoQuirofano();
+				});
+				</script>
+				{% endif %}
 				<input type="hidden" name="accion" id="accion-formulario" value="{{ accion }}">
 				<div id="datos-paciente">
 					<div class="panel-body">
-						{% if formulario_solicitud_quirofano.non_field_errors %}
-						<div class="alert alert-danger fade in">
-							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-							{% for error in formulario_solicitud_quirofano.non_field_errors %}
-							<strong>{{ error }}</strong>
-							{% endfor %}
-						</div>
-						{% endif %}
 						<div class="form-group" id="nombre-apellido-paciente-form-group">
 							<label class="col-lg-2 control-label" for="nombre-paciente">
 								{{ LABEL_NOMBRE }}
@@ -158,7 +157,6 @@
 							</label>
 							<div class="col-lg-3">
 								{% render_field formulario_solicitud_quirofano.fecha_nacimiento_paciente class="form-control" id="fecha-nacimiento-paciente" type="date" %}
-								<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="fecha-nacimiento-paciente-error-feedback-icon"></span>
 								<span class="help-block hidden" id="fecha-nacimiento-paciente-error-help">{{ formulario_solicitud_quirofano.fecha_nacimiento_paciente.errors }}</span>
 							</div>
 							{% if not agregando_procedimiento and not procedimiento_agregado and not procedimiento_eliminado and formulario_solicitud_quirofano.fecha_nacimiento_paciente.errors %}
@@ -384,6 +382,19 @@
 
 				<div class="hidden" id="datos-quirofano">
 					<div class="panel-body">
+						{% if not errores_primera_pagina and formulario_solicitud_quirofano.non_field_errors %}
+						<div class="alert alert-danger fade in">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+							{% for error in formulario_solicitud_quirofano.non_field_errors %}
+							<strong>{{ error }}</strong>
+							{% endfor %}
+						</div>
+						<script type="text/javascript">
+						$(function() {
+							mostrarInfoQuirofano();
+						});
+						</script>
+						{% endif %}
 						{% if procedimiento_agregado %}
 						<div class="alert alert-success fade in">
 							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -668,7 +679,7 @@
 								</h4>
 							</div>
 							<div class="modal-body">
-								{% if agregando_procedimiento_quirurgico and formulario_procedimiento_quirurgico.non_field_errors %}
+								{% if agregando_procedimiento and formulario_procedimiento_quirurgico.non_field_errors %}
 								<div class="alert alert-danger fade in">
 									<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 									{% for error in formulario_procedimiento_quirurgico.non_field_errors %}
@@ -716,6 +727,13 @@
 										</select>
 									</div>
 								</div>
+								{% if agregando_procedimiento and not formulario_procedimiento_quirurgico.non_field_errors %}
+								<script type="text/javascript">
+								$(function() {
+									seleccionarSistemaCorporal('{{ id_sistema_corporal_actual }}', '{{ formulario_procedimiento_quirurgico.id_organo_corporal.value }}', '{{ formulario_procedimiento_quirurgico.id_tipo_procedimiento_quirurgico.value }}');
+								});
+								</script>
+								{% endif %}
 								<div class="form-group" id="honorarios-cirujano-principal-form-group">
 									<label class="col-lg-2 control-label" for="nombre-cirujano-principal">
 										{{ LABEL_CIRUJANO_PRINCIPAL }}
@@ -735,7 +753,7 @@
 										</div>
 										<span class="help-block hidden" id="honorarios-cirujano-principal-error-help">{{ formulario_procedimiento_quirurgico.monto_honorarios_cirujano_principal.errors }}</span>
 									</div>
-									{% if formulario_procedimiento_quirurgico.monto_honorarios_cirujano_principal.errors %}
+									{% if agregando_procedimiento and formulario_procedimiento_quirurgico.monto_honorarios_cirujano_principal.errors %}
 									<script type="text/javascript">
 									$(function() {
 										mostrarErroresHonorariosCirujanoPrincipal();
@@ -751,7 +769,7 @@
 										{% render_field formulario_procedimiento_quirurgico.anestesiologo class="form-control" id="anestesiologo" %}
 										<span class="help-block hidden" id="anestesiologo-error-help">{{ formulario_procedimiento_quirurgico.anestesiologo.errors }}</span>
 									</div>
-									{% if formulario_procedimiento_quirurgico.anestesiologo.errors %}
+									{% if agregando_procedimiento and formulario_procedimiento_quirurgico.anestesiologo.errors %}
 									<script type="text/javascript">
 									$(function() {
 										mostrarErroresAnestesiologo();
@@ -775,7 +793,7 @@
 										{% render_field formulario_procedimiento_quirurgico.primer_ayudante class="form-control" id="primer-ayudante" %}
 										<span class="help-block hidden" id="primer-ayudante-error-help">{{ formulario_procedimiento_quirurgico.primer_ayudante.errors }}</span>
 									</div>
-									{% if formulario_procedimiento_quirurgico.primer_ayudante.errors %}
+									{% if agregando_procedimiento and formulario_procedimiento_quirurgico.primer_ayudante.errors %}
 									<script type="text/javascript">
 									$(function() {
 										mostrarErroresPrimerAyudante();
@@ -799,7 +817,7 @@
 										{% render_field formulario_procedimiento_quirurgico.segundo_ayudante class="form-control" id="segundo-ayudante" %}
 										<span class="help-block hidden" id="segundo-ayudante-error-help">{{ formulario_procedimiento_quirurgico.segundo_ayudante.errors }}</span>
 									</div>
-									{% if formulario_procedimiento_quirurgico.segundo_ayudante.errors %}
+									{% if agregando_procedimiento and formulario_procedimiento_quirurgico.segundo_ayudante.errors %}
 									<script type="text/javascript">
 									$(function() {
 										mostrarErroresSegundoAyudante();
@@ -823,7 +841,7 @@
 										{% render_field formulario_procedimiento_quirurgico.tercer_ayudante class="form-control" id="tercer-ayudante" %}
 										<span class="help-block hidden" id="tercer-ayudante-error-help">{{ formulario_procedimiento_quirurgico.tercer_ayudante.errors }}</span>
 									</div>
-									{% if formulario_procedimiento_quirurgico.tercer_ayudante.errors %}
+									{% if agregando_procedimiento and formulario_procedimiento_quirurgico.tercer_ayudante.errors %}
 									<script type="text/javascript">
 									$(function() {
 										mostrarErroresTercerAyudante();
@@ -839,7 +857,7 @@
 										</div>
 										<span class="help-block hidden" id="honorarios-tercer-ayudante-error-help">{{ formulario_procedimiento_quirurgico.monto_honorarios_tercer_ayudante.errors }}</span>
 									</div>
-									{% if formulario_procedimiento_quirurgico.monto_honorarios_tercer_ayudante.errors %}
+									{% if agregando_procedimiento and formulario_procedimiento_quirurgico.monto_honorarios_tercer_ayudante.errors %}
 									<script type="text/javascript">
 									$(function() {
 										mostrarErroresHonorariosTercerAyudante();

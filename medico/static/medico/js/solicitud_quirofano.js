@@ -81,8 +81,6 @@ var mostrarErroresGeneroPaciente = function() {
 // Mostrar errores fecha de nacimiento paciente
 var mostrarErroresFechaNacimientoPaciente = function() {
 	$("#fecha-nacimiento-paciente").parent("div").addClass("has-error");
-	$("#fecha-nacimiento-telefono-paciente-form-group").addClass("has-feedback");
-	$("#fecha-nacimiento-paciente-error-feedback-icon").removeClass("hidden");
 	$("#fecha-nacimiento-paciente-error-help").removeClass("hidden");
 };
 
@@ -225,42 +223,36 @@ var mostrarErroresMaterialesQuirurgicosRequeridos = function() {
 // Mostrar errores honorarios cirujano principal
 var mostrarErroresHonorariosCirujanoPrincipal = function() {
 	$("#honorarios-cirujano-principal").parent("div").parent("div").addClass("has-error");
-	$("#honorarios-cirujano-principal-form-group").addClass("has-feedback");
 	$("#honorarios-cirujano-principal-error-help").removeClass("hidden");
 };
 
 // Mostrar errores anestesiologo
 var mostrarErroresAnestesiologo = function() {
 	$("#anestesiologo").parent("div").addClass("has-error");
-	$("#anestesiologo-form-group").addClass("has-feedback");
 	$("#anestesiologo-error-help").removeClass("hidden");
 };
 
 // Mostrar errores primer ayudante
 var mostrarErroresPrimerAyudante = function() {
 	$("#primer-ayudante").parent("div").addClass("has-error");
-	$("#primer-ayudante-form-group").addClass("has-feedback");
 	$("#primer-ayudante-error-help").removeClass("hidden");
 };
 
 // Mostrar errores segundo ayudante
 var mostrarErroresSegundoAyudante = function() {
 	$("#segundo-ayudante").parent("div").addClass("has-error");
-	$("#segundo-ayudante-form-group").addClass("has-feedback");
 	$("#segundo-ayudante-error-help").removeClass("hidden");
 };
 
 // Mostrar errores tercer ayudante
 var mostrarErroresTercerAyudante = function() {
 	$("#tercer-ayudante").parent("div").addClass("has-error");
-	$("#tercer-ayudante-form-group").addClass("has-feedback");
 	$("#tercer-ayudante-error-help").removeClass("hidden");
 };
 
 // Mostrar errores honorarios tercer ayudante
 var mostrarErroresHonorariosTercerAyudante = function() {
 	$("#honorarios-tercer-ayudante").parent("div").parent("div").addClass("has-error");
-	$("#tercer-ayudante-form-group").addClass("has-feedback");
 	$("#honorarios-tercer-ayudante-error-help").removeClass("hidden");
 };
 
@@ -273,7 +265,7 @@ var mostrarOpcionesSistemasCorporales = function() {
 	$.each(sistemasCorporales, function(indice, valor) {
 		$("#sistemas-corporales").append("<option value=\"" + valor.id + "\">" + valor.nombre + "</option>");
 	});
-}
+};
 
 // Mostrar las opciones del select de organos corporales segun el sistema corporal seleccionado
 var mostrarOpcionesOrganosCorporales = function(id_sistema_corporal) {
@@ -288,7 +280,7 @@ var mostrarOpcionesOrganosCorporales = function(id_sistema_corporal) {
 	mostrarOpcionesTiposProcedimientos(sistemaCorporalActual.organos_corporales[0].id);
 	$("#id-organo-corporal").val(sistemaCorporalActual.organos_corporales[0].id);
 	$("#id-tipo-procedimiento-quirurgico").val(sistemaCorporalActual.organos_corporales[0].tipos_procedimientos_permitidos[0].id);
-}
+};
 
 // Mostrar las opciones de tipos de procedimientos permitidos segun el organo corporal seleccionado
 var mostrarOpcionesTiposProcedimientos = function(id_organo_corporal) {
@@ -301,6 +293,19 @@ var mostrarOpcionesTiposProcedimientos = function(id_organo_corporal) {
 		$("#tipos-procedimientos").append("<option value=\"" + valor.id + "\">" + valor.nombre + "</option>");
 	});
 	$("#id-tipo-procedimiento-quirurgico").val(organoCorporalActual.tipos_procedimientos_permitidos[0].id);
+};
+
+// Seleccionar organo corporal que fue seleccionado anteriormente
+var seleccionarSistemaCorporal = function(id_sistema_corporal_actual, id_organo_corporal, id_tipo_procedimiento) {
+	var sistemaCorporal = $.grep(sistemasCorporales, function(valor, indice) {
+		return valor.id == id_sistema_corporal_actual
+	});
+	sistemaCorporalActual = sistemaCorporal[0]
+	$("#sistemas-corporales>option[value=" + id_sistema_corporal_actual + "]").attr("selected", "selected");
+	mostrarOpcionesOrganosCorporales(id_sistema_corporal_actual);
+	$("#organos-corporales>option[value=" + id_organo_corporal + "]").attr("selected", "selected");
+	mostrarOpcionesTiposProcedimientos(id_organo_corporal);
+	$("#tipos-procedimientos>option[value=" + id_tipo_procedimiento + "]").attr("selected", "selected");
 }
 
 $(document).ready(function() {
