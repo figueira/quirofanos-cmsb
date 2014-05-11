@@ -418,19 +418,19 @@
 									{{ LABEL_AREA }}
 								</label>
 								<div class="col-lg-2">
-									<input class="form-control" type="text" value="{{ area_legible }}" disabled>
+									<input class="form-control" type="text" value="{{ r.intervencion_quirurgica.quirofano.area }}" disabled>
 								</div>
 								<label class="col-lg-2 control-label">
 									{{ LABEL_QUIROFANO }}
 								</label>
 								<div class="col-lg-2">
-									<input class="form-control" type="text" value="{{ quirofano_legible }}" disabled>
+									<input class="form-control" type="text" value="{{ r.intervencion_quirurgica.quirofano.numero }}" disabled>
 								</div>
 								<label class="col-lg-1 control-label">
 									{{ LABEL_FECHA }}
 								</label>
 								<div class="col-lg-2">
-									<input class="form-control" type="text" value="{{ fecha_intervencion_legible }}" disabled>
+									<input class="form-control" type="text" value="{{ r.intervencion_quirurgica.fecha_intervencion }}" disabled>
 								</div>
 							</div>
 							<div class="form-group">
@@ -438,13 +438,13 @@
 									{{ LABEL_HORA_INICIO }}
 								</label>
 								<div class="col-lg-2">
-									<input class="form-control" type="text" value="{{ hora_inicio_legible }}" disabled>
+									<input class="form-control" type="text" value="{{ r.intervencion_quirurgica.hora_inicio }}" disabled>
 								</div>
 								<label class="col-lg-2 control-label">
 									{{ LABEL_HORA_FIN }}
 								</label>
 								<div class="col-lg-2">
-									<input class="form-control" type="text" value="{{ hora_fin_legible }}" disabled>
+									<input class="form-control" type="text" value="{{ r.intervencion_quirurgica.hora_fin }}" disabled>
 								</div>
 							</div>
 							<div class="form-group" id="preferencia-anestesica-form-group">
@@ -532,7 +532,7 @@
 									{{ LABEL_DIAS_HOSPITALIZACION }}
 								</label>
 								<div class="col-lg-2">
-									{% render_field formulario_solicitud_quirofano.dias_hospitalizacion class="form-control" id="dias-hospitalizacion" %}
+									{% render_field formulario_solicitud_quirofano.dias_hospitalizacion class="form-control" id="dias-hospitalizacion" value=r.dias_hospitalizacion %}
 									<span class="help-block hidden" id="dias-hospitalizacion-error-help">{{ formulario_solicitud_quirofano.dias_hospitalizacion.errors }}</span>
 								</div>
 								{% if not agregando_procedimiento and not procedimiento_agregado and not procedimiento_eliminado and formulario_solicitud_quirofano.dias_hospitalizacion.errors %}
@@ -612,7 +612,7 @@
 							</div>
 							<div class="form-group">
 								{% render_field formulario_eliminar_procedimiento_quirurgico.id_procedimiento_quirurgico id="id-procedimiento-quirurgico" %}
-								{% for procedimiento_quirurgico in procedimientos_quirurgicos %}
+								{% for procedimiento_quirurgico in r.intervencion_quirurgica.procedimientoquirurgico_set.all %}
 								{% if forloop.first %}
 								<div class="col-lg-offset-2 col-lg-8 row">
 									{% endif %}
