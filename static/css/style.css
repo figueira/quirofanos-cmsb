@@ -338,3 +338,42 @@ a:hover
 {
 	text-align:center
 }
+
+/* estilo tabla plan quirurgico observadores */
+#table-intervenciones>tbody>tr>td
+{
+	vertical-align:middle!important;
+	text-align:center
+}
+
+/* estilo etiquetas de quirofanos */
+
+.label-quirofano-0
+{
+	background-color:#4D704D !important
+}
+
+.label-quirofano-1
+{
+	background-color:#994E36 !important
+}
+
+.label-quirofano-2
+{
+	background-color:#4D4D94 !important
+}
+
+.label-quirofano-3
+{
+	background-color:#5E345E !important
+}
+
+.label-quirofano-4
+{
+	background-color:#8A7430 !important
+}
+
+.label-quirofano-5
+{
+	background-color:#993333 !important
+}

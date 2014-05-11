@@ -13,12 +13,12 @@ import calendar
 import math
 
 from quirofanos_cmsb.helpers import utils
-from quirofanos_cmsb.models import Quirofano
+from quirofanos_cmsb.models import Quirofano, IntervencionQuirurgica
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
 from plan_quirurgico.forms import DuracionIntervencionQuirurgicaForm
 from autenticacion.forms import CambiarContrasenaForm, ActualizarEmailForm
 from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito
-from quirofanos_cmsb.helpers.utils import obtener_tipo_usuario
+from quirofanos_cmsb.helpers.utils import obtener_tipo_usuario, obtener_total_horas, obtener_representacion_media_hora
 
 @require_http_methods(["GET", "POST"])
 @login_required
@@ -249,15 +249,17 @@ def plan_dia_obs(request, area, ano, mes, dia):
 	if dia < 1 or dia > calendar.monthrange(ano, mes)[1]:
 		raise Http404
 
-	intervenciones = {}
-	lista_intervenciones_area = []
-	for quirofano in quirofanos_area:
-		intervenciones_quirofano = quirofano.obtener_intervenciones_por_dia(ano, mes, dia)
-		for intervencion in intervenciones_quirofano:
-			if len(intervenciones) > 0:
-				lista_intervenciones_area.append(intervenciones)
+	intervenciones = []
+	lista_intervenciones_area = IntervencionQuirurgica.objects.filter(fecha_intervencion__year=ano, fecha_intervencion__month=mes, fecha_intervencion__day=dia, reservacion__estado='A', quirofano__area=area).order_by('hora_fin','hora_inicio')
 
-	print[lista_intervenciones_area]
+	for intervencion in lista_intervenciones_area:
+		intervencion_diccionario = {}
+		intervencion_diccionario['objeto'] = intervencion
+		intervencion_diccionario['procedimientos'] = intervencion.procedimientoquirurgico_set.all()
+		intervencion_diccionario['hora_inicio'] = obtener_representacion_media_hora(obtener_total_horas(intervencion.hora_inicio))
+		intervencion_diccionario['hora_fin'] = obtener_representacion_media_hora(obtener_total_horas(intervencion.hora_fin))
+		intervenciones.append(intervencion_diccionario)
+
 	datos = {}
 	datos['area_nombre'] = quirofanos_area[0].get_area_display()
 	datos['ano'] = ano
@@ -265,6 +267,6 @@ def plan_dia_obs(request, area, ano, mes, dia):
 	datos['dia'] = dia
 	datos['area_actual'] = area
 	datos['quirofanos_area'] = quirofanos_area
-	datos['intervenciones'] = lista_intervenciones_area.sort(key=lambda x: x.hora_inicio, reverse=True)
+	datos['intervenciones'] = intervenciones
 
 	return render_to_response('plan_quirurgico/plan_dia_obs.html', datos, context_instance=RequestContext(request))

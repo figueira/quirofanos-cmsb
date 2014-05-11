@@ -37,13 +37,13 @@
 <div class="row">
 	<div class="col-lg-offset-1 col-lg-10">
 		{% if intervenciones %}
-		<table class="table table-bordered table-responsive table-hover">
+		<table class="table table-bordered table-responsive table-hover" id='table-intervenciones'>
 			<thead>
 				<tr>
 					<th class="col-lg-1">Quirófano</th>
 					<th class="col-lg-1">Hora</th>
 					<th class="col-lg-1">Paciente</th>
-					<th class="col-lg-1">Intervención Quirúrgica</th>
+					<th class="col-lg-1">Procedimientos Quirúrgicos</th>
 					<th class="col-lg-1">Médico</th>
 					<th class="col-lg-1">Anestesia</th>
 					<th class="col-lg-1">Observaciones</th>
@@ -52,46 +52,63 @@
 			</thead>
 			<tbody>
 				{% for intervencion in intervenciones %}
-					<tr>
-						<td>
-							{{ intervencion.quirofano_id }}
-						</td>
-						<td>
-							{{ intervencion.hora_inicio }} - {{ intervencion.hora_fin }}
-						</td>
-						<td>
-							{{ intervencion.paciente_id }}
-						</td>
-						<td>
-							{{ intervencion.procedimientoquirurgico }}
-						</td>
-						<td>
-							{{ intervencion.medico }}
-						</td>
-						<td>
-							{{ intervencion.preferencia_anestesica}}
-						</td>
-						<td>
-							{{ intervencion.observaciones}}
-						</td>
-						<td>
-							{% if intervencion.estado == '0' %}
-								<h3><span class="label label-warning">En Espera</span></h3>
-							{% elif intervencion.estado == '1' %}
-								<h3><span class="label label-success">En Curso</span></h3>
-							{% elif intervencion.estado == '2' %}
-								<h3><span class="label label-info">En Recuperación</span></h3>
-							{% elif intervencion.estado == '3' %}
-								<h3><span class="label label-primary">En Habitación</span></h3>
+				<tr>
+					<td>
+						<h3><span class="label label-info label-quirofano-{{ intervencion.objeto.quirofano.numero }}">
+							{% if intervencion.objeto.quirofano.numero == 0 %}
+								<abbr title='Sala de Recuperación'>SR</abbr>
+							{% else %}
+								{{ intervencion.objeto.quirofano.numero }}
 							{% endif %}
-						</td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-			{% else %}
-			<strong>No existen Intervenciones Quirúrgicas programadas para este día.</strong>
-			{% endif %}
+						</span></h3>
+					</td>
+					<td>
+						<h4>{{ intervencion.hora_inicio }}</h4>
+						<h4>a</h4>
+						<h4>{{ intervencion.hora_fin }}</h4>
+					</td>
+					<td>
+						<h4>{{ intervencion.objeto.paciente.nombre }} {{ intervencion.objeto.paciente.apellido }}</h4>
+					</td>
+					<td>
+						{% for proc in intervencion.procedimientos %}
+						<h3><span class="label label-info">
+							{{ proc.tipo_procedimiento_quirurgico.nombre }} -
+							{{ proc.organo_corporal.nombre }}
+						</h3>
+						{% endfor %}
+					</td>
+					<td>
+						<h4>{{ intervencion.objeto.reservacion.medico }}</h4>
+					</td>
+					<td>
+						<h3><span class="label label-default">{{ intervencion.objeto.preferencia_anestesica}}</span></h3>
+					</td>
+					<td>
+						{% if intervencion.objeto.observaciones %}
+							<h4>{{ intervencion.objeto.observaciones}}</h4>
+						{% else %}
+							<h4>Sin observaciones</h4>
+						{% endif %}
+					</td>
+					<td>
+						{% if intervencion.objeto.estado == '0' %}
+						<h3><span class="label label-danger">En Espera</span></h3>
+						{% elif intervencion.objeto.estado == '1' %}
+						<h3><span class="label label-success">En Curso</span></h3>
+						{% elif intervencion.objeto.estado == '2' %}
+						<h3><span class="label label-warning">En Recuperación</span></h3>
+						{% elif intervencion.objeto.estado == '3' %}
+						<h3><span class="label label-primary">En Habitación</span></h3>
+						{% endif %}
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{% else %}
+		<strong>No existen Intervenciones Quirúrgicas programadas para este día.</strong>
+		{% endif %}
 	</div>
 </div>
 {% endblock content %}

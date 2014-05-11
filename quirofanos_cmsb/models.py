@@ -236,9 +236,7 @@ class Quirofano(models.Model):
         dia -> Dia de la fecha a consultar '''
         try:
             intervenciones = self.intervencionquirurgica_set.filter(fecha_intervencion__year=ano, fecha_intervencion__month=mes, fecha_intervencion__day=dia, reservacion__estado='A').order_by('hora_inicio')
-            datos = {}
-            datos['intervenciones'] = intervenciones
-            return datos
+            return intervenciones
         except AttributeError:
             return None
 
