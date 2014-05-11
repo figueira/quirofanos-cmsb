@@ -314,6 +314,8 @@ def mis_solicitudes(request, estado="pendientes"):
 
 		reservacion_diccionario["quirofano_legible"] = quirofano_legible
 		reservacion_diccionario["area_legible"] = reservacion.intervencion_quirurgica.quirofano.get_area_display()
+		reservacion_diccionario["hora_inicio_legible"] = utils.obtener_representacion_media_hora(utils.obtener_total_horas(reservacion.intervencion_quirurgica.hora_inicio))
+		reservacion_diccionario["hora_fin_legible"] = utils.obtener_representacion_media_hora(utils.obtener_total_horas(reservacion.intervencion_quirurgica.hora_fin))
 		datos_formulario = {}
 		datos_formulario["nombre_paciente"] = reservacion.intervencion_quirurgica.paciente.nombre
 		datos_formulario["apellido_paciente"] = reservacion.intervencion_quirurgica.paciente.apellido
@@ -370,6 +372,8 @@ def mis_solicitudes(request, estado="pendientes"):
 
 		reservacion_diccionario["quirofano_legible"] = quirofano_legible
 		reservacion_diccionario["area_legible"] = reservacion.intervencion_quirurgica.quirofano.get_area_display()
+		reservacion_diccionario["hora_inicio_legible"] = utils.obtener_representacion_media_hora(utils.obtener_total_horas(reservacion.intervencion_quirurgica.hora_inicio))
+		reservacion_diccionario["hora_fin_legible"] = utils.obtener_representacion_media_hora(utils.obtener_total_horas(reservacion.intervencion_quirurgica.hora_fin))
 		datos_formulario = {}
 		datos_formulario["nombre_paciente"] = reservacion.intervencion_quirurgica.paciente.nombre
 		datos_formulario["apellido_paciente"] = reservacion.intervencion_quirurgica.paciente.apellido
@@ -426,6 +430,8 @@ def mis_solicitudes(request, estado="pendientes"):
 
 		reservacion_diccionario["quirofano_legible"] = quirofano_legible
 		reservacion_diccionario["area_legible"] = reservacion.intervencion_quirurgica.quirofano.get_area_display()
+		reservacion_diccionario["hora_inicio_legible"] = utils.obtener_representacion_media_hora(utils.obtener_total_horas(reservacion.intervencion_quirurgica.hora_inicio))
+		reservacion_diccionario["hora_fin_legible"] = utils.obtener_representacion_media_hora(utils.obtener_total_horas(reservacion.intervencion_quirurgica.hora_fin))
 		datos_formulario = {}
 		datos_formulario["nombre_paciente"] = reservacion.intervencion_quirurgica.paciente.nombre
 		datos_formulario["apellido_paciente"] = reservacion.intervencion_quirurgica.paciente.apellido

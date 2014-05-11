@@ -1,26 +1,33 @@
 // Mostrar numero habitacion paciente
-var mostrarNumeroHabitacionPaciente = function() {
-  $("#habitacion").removeClass("hidden")
+var mostrarNumeroHabitacionPaciente = function(id_reservacion) {
+  $("#habitacion-" + id_reservacion).removeClass("hidden")
 };
 
 // Mostrar campos expediente paciente
-var mostrarCamposExpedientePaciente = function() {
-  $("#area-ingreso-numero-expediente").removeClass("hidden")
+var mostrarCamposExpedientePaciente = function(id_reservacion) {
+  $("#area-ingreso-numero-expediente-" + id_reservacion).removeClass("hidden")
 };
 
 // Mostrar compania aseguradora paciente
-var mostrarCompaniaAseguradoraPaciente = function() {
-  $("#seguros").removeClass("hidden")
+var mostrarCompaniaAseguradoraPaciente = function(id_reservacion) {
+  $("#seguros-" + id_reservacion).removeClass("hidden")
 };
 
 // Mostrar razon riesgo
-var mostrarRazonRiesgo = function() {
-  $("#razon-riesgo").removeClass("hidden");
+var mostrarRazonRiesgo = function(id_reservacion) {
+  $("#razon-riesgo-" + id_reservacion).removeClass("hidden");
 };
 
 // Mostrar datos de quirofano en formulario
-var mostrarInfoQuirofano = function() {
-  $("#ver-info-quirofano").trigger("click");
+var mostrarInfoQuirofano = function(id_reservacion) {
+  $("#datos-quirofano-" + id_reservacion).removeClass("hidden");
+  $("#datos-paciente-" + id_reservacion).addClass("hidden");
+};
+
+// Mostrar datos de paciente en formulario
+var mostrarInfoPaciente = function(id_reservacion) {
+  $("#datos-paciente-" + id_reservacion).removeClass("hidden");
+  $("#datos-quirofano-" + id_reservacion).addClass("hidden");
 };
 
 // Mostrar errores nombre paciente
@@ -40,10 +47,23 @@ var mostrarErroresApellidoPaciente = function() {
 };
 
 // Inicializar nacionalidad de cedula paciente
-var inicializarNacionalidadCedulaPaciente = function() {
-  $("#cedula-paciente-nacionalidad-texto").html($("#cedula-paciente-nacionalidad-input").val());
-  if ($("#cedula-paciente-nacionalidad-input").val() == "E-") {
-    $("#cedula-paciente-nacionalidad-cambiar").html("V-");
+var inicializarNacionalidadCedulaPaciente = function(id_reservacion) {
+  $("#cedula-paciente-nacionalidad-texto-" + id_reservacion).html($("#cedula-paciente-nacionalidad-input-" + id_reservacion).val());
+  if ($("#cedula-paciente-nacionalidad-input-" + id_reservacion).val() == "E-") {
+    $("#cedula-paciente-nacionalidad-cambiar-" + id_reservacion).html("V-");
+  }
+};
+
+// Cambiar nacionalidad de cedula paciente
+var cambiarNacionalidadCedulaPaciente = function(id_reservacion) {
+  if ($("#cedula-paciente-nacionalidad-cambiar-" + id_reservacion).html() == "E-") {
+    $("#cedula-paciente-nacionalidad-cambiar-" + id_reservacion).html("V-");
+    $("#cedula-paciente-nacionalidad-texto-" + id_reservacion).html("E-");
+    $("#cedula-paciente-nacionalidad-input-" + id_reservacion).val("E-");
+  }else {
+    $(this).html("E-");
+    $("#cedula-paciente-nacionalidad-texto-" + id_reservacion).html("V-");
+    $("#cedula-paciente-nacionalidad-input-" + id_reservacion).val("V-");
   }
 };
 
@@ -250,28 +270,28 @@ var mostrarErroresHonorariosTercerAyudante = function() {
 };
 
 var seleccionarPestana = function(estado){
-    if (estado == 'pendientes'){
-        $('#li-en-espera').addClass('active');
-        $('#li-aprobadas').removeClass('active');
-        $('#li-rechazadas').removeClass('active');
-        $("#contenido-pendientes").removeClass('hidden');
-        $("#contenido-aprobadas").addClass('hidden');
-        $("#contenido-rechazadas").addClass('hidden');
-    } else if (estado == 'aprobadas'){
-        $('#li-aprobadas').addClass('active');
-        $('#li-en-espera').removeClass('active');
-        $('#li-rechazadas').removeClass('active');
-        $("#contenido-aprobadas").removeClass('hidden');
-        $("#contenido-pendientes").addClass('hidden');
-        $("#contenido-rechazadas").addClass('hidden');
-    } else if (estado == 'rechazadas'){
-        $('#li-rechazadas').addClass('active');
-        $('#li-en-espera').removeClass('active');
-        $('#li-aprobadas').removeClass('active');
-        $("#contenido-rechazadas").removeClass('hidden');
-        $("#contenido-aprobadas").addClass('hidden');
-        $("#contenido-pendientes").addClass('hidden');
-    };
+  if (estado == 'pendientes'){
+    $('#li-en-espera').addClass('active');
+    $('#li-aprobadas').removeClass('active');
+    $('#li-rechazadas').removeClass('active');
+    $("#contenido-pendientes").removeClass('hidden');
+    $("#contenido-aprobadas").addClass('hidden');
+    $("#contenido-rechazadas").addClass('hidden');
+  } else if (estado == 'aprobadas'){
+    $('#li-aprobadas').addClass('active');
+    $('#li-en-espera').removeClass('active');
+    $('#li-rechazadas').removeClass('active');
+    $("#contenido-aprobadas").removeClass('hidden');
+    $("#contenido-pendientes").addClass('hidden');
+    $("#contenido-rechazadas").addClass('hidden');
+  } else if (estado == 'rechazadas'){
+    $('#li-rechazadas').addClass('active');
+    $('#li-en-espera').removeClass('active');
+    $('#li-aprobadas').removeClass('active');
+    $("#contenido-rechazadas").removeClass('hidden');
+    $("#contenido-aprobadas").addClass('hidden');
+    $("#contenido-pendientes").addClass('hidden');
+  };
 };
 
 $(document).ready(function() {
@@ -280,51 +300,35 @@ $(document).ready(function() {
   $("#seccion-mis-solicitudes").addClass("active");
 
   // Desplegar Solicitudes En Espera
-    $("#li-aprobadas").click(function() {
-      $("#en-espera").addClass("hidden");
-      $("#rechazadas").addClass("hidden");
-      $("#aprobadas").removeClass("hidden");
+  $("#li-aprobadas").click(function() {
+    $("#en-espera").addClass("hidden");
+    $("#rechazadas").addClass("hidden");
+    $("#aprobadas").removeClass("hidden");
 
     $("#li-aprobadas").addClass("active");
     $("#li-en-espera").removeClass("active");
-      $("#li-rechazadas").removeClass("active");
+    $("#li-rechazadas").removeClass("active");
   });
 
-    $("#li-en-espera").click(function() {
-      $("#aprobadas").addClass("hidden");
-      $("#rechazadas").addClass("hidden");
-      $("#en-espera").removeClass("hidden");
+  $("#li-en-espera").click(function() {
+    $("#aprobadas").addClass("hidden");
+    $("#rechazadas").addClass("hidden");
+    $("#en-espera").removeClass("hidden");
 
     $("#li-en-espera").addClass("active");
     $("#li-aprobadas").removeClass("active");
-      $("#li-rechazadas").removeClass("active");
+    $("#li-rechazadas").removeClass("active");
   });
 
-    $("#li-rechazadas").click(function() {
-      $("#aprobadas").addClass("hidden");
-      $("#en-espera").addClass("hidden");
-      $("#rechazadas").removeClass("hidden");
+  $("#li-rechazadas").click(function() {
+    $("#aprobadas").addClass("hidden");
+    $("#en-espera").addClass("hidden");
+    $("#rechazadas").removeClass("hidden");
 
     $("#li-rechazadas").addClass("active");
     $("#li-aprobadas").removeClass("active");
     $("#li-en-espera").removeClass("active");
   });
-
-// Ir a formulario de paciente
-  $("#ver-info-paciente").click(function() {
-    $("#datos-quirofano").addClass("hidden");
-    $("#datos-paciente").removeClass("hidden");
-    $("#titulo-detalles-solicitud").html("Detalles de Solicitud - Paciente");
-  });
-
-  // Ir formulario de quirofano
-
-  $("#ver-quirofano").click(function() {
-    $("#datos-paciente").addClass("hidden");
-    $("#datos-quirofano").removeClass("hidden");
-    $("#titulo-detalles-solicitud").html("Detalles de Solicitud - Quirófano");
-  });
-
 
   // Mostrar o no mostrar razon de riesgo
   var nivel = $("input[name=solicitud_quirofano-riesgo]");
@@ -364,19 +368,6 @@ $(document).ready(function() {
     $("#area-ingreso-numero-expediente").toggleClass("hidden");
     if ($("#area-ingreso-numero-expediente").hasClass("hidden")) {
       $("#numero-expediente-paciente").val("")
-    }
-  });
-
-  // Cambiar nacionalidad de cedula paciente
-  $("#cedula-paciente-nacionalidad-cambiar").click(function() {
-    if ($(this).html() == "E-") {
-      $(this).html("V-");
-      $("#cedula-paciente-nacionalidad-texto").html("E-");
-      $("#cedula-paciente-nacionalidad-input").val("E-");
-    }else {
-      $(this).html("E-");
-      $("#cedula-paciente-nacionalidad-texto").html("V-");
-      $("#cedula-paciente-nacionalidad-input").val("V-");
     }
   });
 });
