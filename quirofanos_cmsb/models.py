@@ -120,6 +120,9 @@ class Cuenta (models.Model):
 
 class Medico (models.Model):
     ''' Clase que representa un Medico '''
+    class Meta:
+        ordering = ["nombre"]
+
     cuenta = models.OneToOneField(Cuenta, blank=True, null=True)
     nombre = models.CharField(max_length=100, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
@@ -152,6 +155,9 @@ class Medico (models.Model):
 
 class Departamento (models.Model):
     ''' Clase que representa un Departamento '''
+    class Meta:
+        ordering = ["nombre"]
+
     cuenta = models.OneToOneField(Cuenta, blank=True, null=True)
     nombre = models.CharField(max_length=100, unique=True, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
@@ -178,6 +184,9 @@ class Departamento (models.Model):
 
 class Quirofano(models.Model):
     ''' Clase que representa un Quirofano '''
+    class Meta:
+        ordering = ["numero"]
+
     numero = models.IntegerField(validators=[MinValueValidator(0)])
     area = models.CharField(max_length=3, choices=NOMBRE_AREA)
 
@@ -234,6 +243,9 @@ class Quirofano(models.Model):
 
 class MaterialQuirurgico(models.Model):
     ''' Clase que representa un Material Quirurgico '''
+    class Meta:
+        ordering = ["nombre"]
+
     nombre = models.CharField(max_length=100, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
 
@@ -254,6 +266,9 @@ class MaterialQuirurgico(models.Model):
 
 class ServicioOperatorio(models.Model):
     ''' Clase que representa un Servicio Operatorio '''
+    class Meta:
+        ordering = ["nombre"]
+
     nombre = models.CharField(max_length=100, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
 
@@ -274,6 +289,9 @@ class ServicioOperatorio(models.Model):
 
 class EquipoEspecial(models.Model):
     ''' Clase que representa un Equipo Especial '''
+    class Meta:
+        ordering = ["nombre"]
+
     nombre = models.CharField(max_length=100, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
 
@@ -294,6 +312,9 @@ class EquipoEspecial(models.Model):
 
 class SistemaCorporal(models.Model):
     ''' Clase que representa un Sistema Corporal segun el estandar ICD-10-PCS '''
+    class Meta:
+        ordering = ["nombre"]
+
     codigo_icd_10_pcs = models.CharField(
         max_length=2, unique=True, validators=[MinLengthValidator(2)])
     nombre = models.CharField(max_length=100, unique=True, validators=[
@@ -317,6 +338,9 @@ class SistemaCorporal(models.Model):
 
 class TipoProcedimientoQuirurgico(models.Model):
     ''' Clase que representa un Tipo Procedimiento Quirurgico segun el estandar ICD-10-PCS '''
+    class Meta:
+        ordering = ["nombre"]
+
     codigo_icd_10_pcs = models.CharField(max_length=1, unique=True)
     nombre = models.CharField(max_length=100, unique=True, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
@@ -339,6 +363,9 @@ class TipoProcedimientoQuirurgico(models.Model):
 
 class OrganoCorporal(models.Model):
     ''' Clase que representa un Organo Corporal segun el estandar ICD-10-PCS '''
+    class Meta:
+        ordering = ["nombre"]
+
     codigo_icd_10_pcs = models.CharField(max_length=1)
     nombre = models.CharField(max_length=100, unique=True, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
@@ -361,6 +388,10 @@ class OrganoCorporal(models.Model):
         return self.nombre + " [" + self.codigo_icd_10_pcs + "]"
 
 class CompaniaAseguradora(models.Model):
+    ''' Clase que representa una Compania Aseguradora '''
+    class Meta:
+        ordering = ["nombre"]
+
     nombre = models.CharField(max_length=100, validators=[RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
 
     def clean(self):
@@ -379,6 +410,9 @@ class CompaniaAseguradora(models.Model):
 
 class Paciente(models.Model):
     ''' Clase que representa un Paciente '''
+    class Meta:
+        ordering = ["nombre"]
+
     nombre = models.CharField(max_length=100, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
     apellido = models.CharField(max_length=100, validators=[

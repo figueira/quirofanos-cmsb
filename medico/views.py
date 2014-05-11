@@ -298,10 +298,10 @@ def mis_solicitudes(request):
 	 nombre_usuario = request.session['nombre_usuario']
 	 usuario = User.objects.get(username = nombre_usuario)
 	 cuenta = Cuenta.objects.get(usuario = usuario)
-	 reservaciones_aprobadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='A')	 	 
-	 reservaciones_pendientes = Reservacion.objects.filter(medico = cuenta.medico, estado ='P')	 	 
-	 reservaciones_rechazadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='R')	 	 	 	 
-	 
+	 reservaciones_aprobadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='A')
+	 reservaciones_pendientes = Reservacion.objects.filter(medico = cuenta.medico, estado ='P')
+	 reservaciones_rechazadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='R')
+
 	 fsq = SolicitudQuirofanoForm()
 	 fsq.nombre_paciente = 'Daniel'
 

@@ -5,7 +5,7 @@
 {% block navbar-nav %}
 {{ block.super }}
 <li class="navegacion" id="seccion-mis-solicitudes">
-	<a href="#">
+	<a href="{% url 'mis_solicitudes' %}">
 		Mis Solicitudes de Quirófano
 		<span class="glyphicon glyphicon-list">
 		</span>
