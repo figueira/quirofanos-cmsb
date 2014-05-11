@@ -289,38 +289,203 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 @require_GET
 @login_required
 @user_passes_test(es_medico)
-def mis_solicitudes(request):
-	 ''' Controlador correspondiente a la pagina del listado de solicitudes realizadas por el medico
+def mis_solicitudes(request, estado="pendientes"):
+	''' Controlador correspondiente a la pagina del listado de solicitudes realizadas por el medico
 
-	 Parametros:
-	 request -> Solicitud HTTP '''
+	Parametros:
+	request -> Solicitud HTTP '''
 
-	 nombre_usuario = request.session['nombre_usuario']
-	 usuario = User.objects.get(username = nombre_usuario)
-	 cuenta = Cuenta.objects.get(usuario = usuario)
-	 reservaciones_aprobadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='A')
-	 reservaciones_pendientes = Reservacion.objects.filter(medico = cuenta.medico, estado ='P')
-	 reservaciones_rechazadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='R')
+	if estado not in ("pendientes", "aprobadas", "rechazadas"):
+	 	raise Http404
 
-	 fsq = SolicitudQuirofanoForm()
-	 fsq.nombre_paciente = 'Daniel'
+	cuenta = Cuenta.objects.get(usuario = request.user)
+	reservaciones_aprobadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='A')
+	reservaciones_pendientes = Reservacion.objects.filter(medico = cuenta.medico, estado ='P')
+	reservaciones_rechazadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='R')
 
-	 datos = {}
-	 datos['reservaciones_aprobadas'] = reservaciones_aprobadas
-	 datos['reservaciones_pendientes'] = reservaciones_pendientes
-	 datos['reservaciones_rechazadas'] = reservaciones_rechazadas
-	 datos['formulario_solicitud_quirofano'] = fsq
+	reservaciones_aprobadas_diccionarios = []
+	for reservacion in reservaciones_aprobadas:
+		reservacion_diccionario = {}
+		reservacion_diccionario["objeto"] = reservacion
+		if reservacion.intervencion_quirurgica.quirofano.numero == 0:
+			quirofano_legible = TextoMostrable.SALA_RECUPERACION
+		else:
+			quirofano_legible = TextoMostrable.QUIROFANO + ' ' + str(reservacion.intervencion_quirurgica.quirofano.numero)
 
+		reservacion_diccionario["quirofano_legible"] = quirofano_legible
+		reservacion_diccionario["area_legible"] = reservacion.intervencion_quirurgica.quirofano.get_area_display()
+		datos_formulario = {}
+		datos_formulario["nombre_paciente"] = reservacion.intervencion_quirurgica.paciente.nombre
+		datos_formulario["apellido_paciente"] = reservacion.intervencion_quirurgica.paciente.apellido
+		datos_formulario["nacionalidad_paciente"] = reservacion.intervencion_quirurgica.paciente.cedula[:2]
+		datos_formulario["cedula_paciente"] = reservacion.intervencion_quirurgica.paciente.cedula[2:]
+		datos_formulario["fecha_nacimiento_paciente"] = reservacion.intervencion_quirurgica.paciente.fecha_nacimiento
+		datos_formulario["codigo_telefono_paciente"] = reservacion.intervencion_quirurgica.paciente.telefono[:4]
+		datos_formulario["numero_telefono_paciente"] = reservacion.intervencion_quirurgica.paciente.telefono[5:]
+		datos_formulario["genero_paciente"] = reservacion.intervencion_quirurgica.paciente.genero
+		if reservacion.intervencion_quirurgica.paciente.compania_aseguradora:
+			datos_formulario["tipo_pago_paciente"] = "S"
+			datos_formulario["compania_aseguradora_paciente"] = reservacion.intervencion_quirurgica.paciente.compania_aseguradora
+		else:
+			datos_formulario["tipo_pago_paciente"] = "P"
 
-	 return render_to_response('medico/mis_solicitudes.html', datos, context_instance=RequestContext(request))
+		if reservacion.intervencion_quirurgica.paciente.numero_expediente:
+			datos_formulario["paciente_con_expediente"] = True
+			datos_formulario["area_ingreso_paciente"] = reservacion.intervencion_quirurgica.paciente.area_ingreso
+			datos_formulario["numero_expediente_paciente"] = reservacion.intervencion_quirurgica.paciente.numero_expediente
+		else:
+			datos_formulario["paciente_con_expediente"] = False
+
+		if reservacion.intervencion_quirurgica.paciente.numero_habitacion:
+			datos_formulario["paciente_hospitalizado"] = True
+			datos_formulario["numero_habitacion_paciente"] = reservacion.intervencion_quirurgica.paciente.numero_habitacion
+		else:
+			datos_formulario["paciente_hospitalizado"] = False
+
+		datos_formulario["diagnostico_ingreso_paciente"] = reservacion.intervencion_quirurgica.paciente.diagnostico_ingreso
+		datos_formulario["servicios_operatorios_paciente"] = reservacion.intervencion_quirurgica.paciente.servicios_operatorios_requeridos.all()
+		datos_formulario["preferencia_anestesica"] = reservacion.intervencion_quirurgica.preferencia_anestesica
+		if reservacion.intervencion_quirurgica.observaciones:
+			datos_formulario["observaciones"] = reservacion.intervencion_quirurgica.observaciones
+
+		datos_formulario["riesgo"] = reservacion.intervencion_quirurgica.riesgo
+		if reservacion.intervencion_quirurgica.riesgo == "M":
+			datos_formulario["razon_riesgo"] = reservacion.intervencion_quirurgica.razon_riesgo
+
+		datos_formulario["materiales_quirurgicos_requeridos"] = reservacion.intervencion_quirurgica.materiales_quirurgicos_requeridos.all()
+		datos_formulario["equipos_especiales_requeridos"] = reservacion.intervencion_quirurgica.equipos_especiales_requeridos.all()
+		datos_formulario["dias_hospitalizacion"] = reservacion.dias_hospitalizacion
+
+		reservacion_diccionario["formulario"] = SolicitudQuirofanoForm(datos_formulario)
+		reservaciones_aprobadas_diccionarios.append(reservacion_diccionario)
+
+	reservaciones_pendientes_diccionarios = []
+	for reservacion in reservaciones_pendientes:
+		reservacion_diccionario = {}
+		reservacion_diccionario["objeto"] = reservacion
+		if reservacion.intervencion_quirurgica.quirofano.numero == 0:
+			quirofano_legible = TextoMostrable.SALA_RECUPERACION
+		else:
+			quirofano_legible = TextoMostrable.QUIROFANO + ' ' + str(reservacion.intervencion_quirurgica.quirofano.numero)
+
+		reservacion_diccionario["quirofano_legible"] = quirofano_legible
+		reservacion_diccionario["area_legible"] = reservacion.intervencion_quirurgica.quirofano.get_area_display()
+		datos_formulario = {}
+		datos_formulario["nombre_paciente"] = reservacion.intervencion_quirurgica.paciente.nombre
+		datos_formulario["apellido_paciente"] = reservacion.intervencion_quirurgica.paciente.apellido
+		datos_formulario["nacionalidad_paciente"] = reservacion.intervencion_quirurgica.paciente.cedula[:2]
+		datos_formulario["cedula_paciente"] = reservacion.intervencion_quirurgica.paciente.cedula[2:]
+		datos_formulario["fecha_nacimiento_paciente"] = reservacion.intervencion_quirurgica.paciente.fecha_nacimiento
+		datos_formulario["codigo_telefono_paciente"] = reservacion.intervencion_quirurgica.paciente.telefono[:4]
+		datos_formulario["numero_telefono_paciente"] = reservacion.intervencion_quirurgica.paciente.telefono[5:]
+		datos_formulario["genero_paciente"] = reservacion.intervencion_quirurgica.paciente.genero
+		if reservacion.intervencion_quirurgica.paciente.compania_aseguradora:
+			datos_formulario["tipo_pago_paciente"] = "S"
+			datos_formulario["compania_aseguradora_paciente"] = reservacion.intervencion_quirurgica.paciente.compania_aseguradora
+		else:
+			datos_formulario["tipo_pago_paciente"] = "P"
+
+		if reservacion.intervencion_quirurgica.paciente.numero_expediente:
+			datos_formulario["paciente_con_expediente"] = True
+			datos_formulario["area_ingreso_paciente"] = reservacion.intervencion_quirurgica.paciente.area_ingreso
+			datos_formulario["numero_expediente_paciente"] = reservacion.intervencion_quirurgica.paciente.numero_expediente
+		else:
+			datos_formulario["paciente_con_expediente"] = False
+
+		if reservacion.intervencion_quirurgica.paciente.numero_habitacion:
+			datos_formulario["paciente_hospitalizado"] = True
+			datos_formulario["numero_habitacion_paciente"] = reservacion.intervencion_quirurgica.paciente.numero_habitacion
+		else:
+			datos_formulario["paciente_hospitalizado"] = False
+
+		datos_formulario["diagnostico_ingreso_paciente"] = reservacion.intervencion_quirurgica.paciente.diagnostico_ingreso
+		datos_formulario["servicios_operatorios_paciente"] = reservacion.intervencion_quirurgica.paciente.servicios_operatorios_requeridos.all()
+		datos_formulario["preferencia_anestesica"] = reservacion.intervencion_quirurgica.preferencia_anestesica
+		if reservacion.intervencion_quirurgica.observaciones:
+			datos_formulario["observaciones"] = reservacion.intervencion_quirurgica.observaciones
+
+		datos_formulario["riesgo"] = reservacion.intervencion_quirurgica.riesgo
+		if reservacion.intervencion_quirurgica.riesgo == "M":
+			datos_formulario["razon_riesgo"] = reservacion.intervencion_quirurgica.razon_riesgo
+
+		datos_formulario["materiales_quirurgicos_requeridos"] = reservacion.intervencion_quirurgica.materiales_quirurgicos_requeridos.all()
+		datos_formulario["equipos_especiales_requeridos"] = reservacion.intervencion_quirurgica.equipos_especiales_requeridos.all()
+		datos_formulario["dias_hospitalizacion"] = reservacion.dias_hospitalizacion
+
+		reservacion_diccionario["formulario"] = SolicitudQuirofanoForm(datos_formulario)
+		reservaciones_pendientes_diccionarios.append(reservacion_diccionario)
+
+	reservaciones_rechazadas_diccionarios = []
+	for reservacion in reservaciones_rechazadas:
+		reservacion_diccionario = {}
+		reservacion_diccionario["objeto"] = reservacion
+		if reservacion.intervencion_quirurgica.quirofano.numero == 0:
+			quirofano_legible = TextoMostrable.SALA_RECUPERACION
+		else:
+			quirofano_legible = TextoMostrable.QUIROFANO + ' ' + str(reservacion.intervencion_quirurgica.quirofano.numero)
+
+		reservacion_diccionario["quirofano_legible"] = quirofano_legible
+		reservacion_diccionario["area_legible"] = reservacion.intervencion_quirurgica.quirofano.get_area_display()
+		datos_formulario = {}
+		datos_formulario["nombre_paciente"] = reservacion.intervencion_quirurgica.paciente.nombre
+		datos_formulario["apellido_paciente"] = reservacion.intervencion_quirurgica.paciente.apellido
+		datos_formulario["nacionalidad_paciente"] = reservacion.intervencion_quirurgica.paciente.cedula[:2]
+		datos_formulario["cedula_paciente"] = reservacion.intervencion_quirurgica.paciente.cedula[2:]
+		datos_formulario["fecha_nacimiento_paciente"] = reservacion.intervencion_quirurgica.paciente.fecha_nacimiento
+		datos_formulario["codigo_telefono_paciente"] = reservacion.intervencion_quirurgica.paciente.telefono[:4]
+		datos_formulario["numero_telefono_paciente"] = reservacion.intervencion_quirurgica.paciente.telefono[5:]
+		datos_formulario["genero_paciente"] = reservacion.intervencion_quirurgica.paciente.genero
+		if reservacion.intervencion_quirurgica.paciente.compania_aseguradora:
+			datos_formulario["tipo_pago_paciente"] = "S"
+			datos_formulario["compania_aseguradora_paciente"] = reservacion.intervencion_quirurgica.paciente.compania_aseguradora
+		else:
+			datos_formulario["tipo_pago_paciente"] = "P"
+
+		if reservacion.intervencion_quirurgica.paciente.numero_expediente:
+			datos_formulario["paciente_con_expediente"] = True
+			datos_formulario["area_ingreso_paciente"] = reservacion.intervencion_quirurgica.paciente.area_ingreso
+			datos_formulario["numero_expediente_paciente"] = reservacion.intervencion_quirurgica.paciente.numero_expediente
+		else:
+			datos_formulario["paciente_con_expediente"] = False
+
+		if reservacion.intervencion_quirurgica.paciente.numero_habitacion:
+			datos_formulario["paciente_hospitalizado"] = True
+			datos_formulario["numero_habitacion_paciente"] = reservacion.intervencion_quirurgica.paciente.numero_habitacion
+		else:
+			datos_formulario["paciente_hospitalizado"] = False
+
+		datos_formulario["diagnostico_ingreso_paciente"] = reservacion.intervencion_quirurgica.paciente.diagnostico_ingreso
+		datos_formulario["servicios_operatorios_paciente"] = reservacion.intervencion_quirurgica.paciente.servicios_operatorios_requeridos.all()
+		datos_formulario["preferencia_anestesica"] = reservacion.intervencion_quirurgica.preferencia_anestesica
+		if reservacion.intervencion_quirurgica.observaciones:
+			datos_formulario["observaciones"] = reservacion.intervencion_quirurgica.observaciones
+
+		datos_formulario["riesgo"] = reservacion.intervencion_quirurgica.riesgo
+		if reservacion.intervencion_quirurgica.riesgo == "M":
+			datos_formulario["razon_riesgo"] = reservacion.intervencion_quirurgica.razon_riesgo
+
+		datos_formulario["materiales_quirurgicos_requeridos"] = reservacion.intervencion_quirurgica.materiales_quirurgicos_requeridos.all()
+		datos_formulario["equipos_especiales_requeridos"] = reservacion.intervencion_quirurgica.equipos_especiales_requeridos.all()
+		datos_formulario["dias_hospitalizacion"] = reservacion.dias_hospitalizacion
+
+		reservacion_diccionario["formulario"] = SolicitudQuirofanoForm(datos_formulario)
+		reservaciones_rechazadas_diccionarios.append(reservacion_diccionario)
+
+	datos = {}
+	datos['reservaciones_aprobadas'] = reservaciones_aprobadas_diccionarios
+	datos['reservaciones_pendientes'] = reservaciones_pendientes_diccionarios
+	datos['reservaciones_rechazadas'] = reservaciones_rechazadas_diccionarios
+	datos['estado_solicitud'] = estado
+
+	return render_to_response('medico/mis_solicitudes.html', datos, context_instance=RequestContext(request))
 
 @require_GET
 @login_required
 @user_passes_test(es_medico)
 def proximas_intervenciones_quirurgicas(request):
-	 ''' Controlador correspondiente a la pagina del listado de las proximas intervenciones quirurgicas del medico
+	''' Controlador correspondiente a la pagina del listado de las proximas intervenciones quirurgicas del medico
 
-	 Parametros:
-	 request -> Solicitud HTTP '''
+	Parametros:
+	request -> Solicitud HTTP '''
 
-	 return render_to_response('medico/proximas_intervenciones_quirurgicas.html', context_instance=RequestContext(request))
+	return render_to_response('medico/proximas_intervenciones_quirurgicas.html', context_instance=RequestContext(request))

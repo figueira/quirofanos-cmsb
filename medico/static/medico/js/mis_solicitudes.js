@@ -23,13 +23,6 @@ var mostrarInfoQuirofano = function() {
   $("#ver-info-quirofano").trigger("click");
 };
 
-// Mostrar modal de agregar procedimiento quirurgico
-var mostrarModalAgregarProcedimientoQuirurgico = function() {
-  mostrarInfoQuirofano();
-  $("#accion-formulario").val("procedimiento_quirurgico");
-  $("#agregar-procedimiento-quirurgico-modal").modal();
-};
-
 // Mostrar errores nombre paciente
 var mostrarErroresNombrePaciente = function() {
   $("#nombre-paciente").parent("div").addClass("has-error");
@@ -256,57 +249,30 @@ var mostrarErroresHonorariosTercerAyudante = function() {
   $("#honorarios-tercer-ayudante-error-help").removeClass("hidden");
 };
 
-var sistemasCorporales;
-var sistemaCorporalActual;
-var organoCorporalActual;
-
-// Mostrar las opciones del select de sistemas corporales
-var mostrarOpcionesSistemasCorporales = function() {
-  $.each(sistemasCorporales, function(indice, valor) {
-    $("#sistemas-corporales").append("<option value=\"" + valor.id + "\">" + valor.nombre + "</option>");
-  });
+var seleccionarPestana = function(estado){
+    if (estado == 'pendientes'){
+        $('#li-en-espera').addClass('active');
+        $('#li-aprobadas').removeClass('active');
+        $('#li-rechazadas').removeClass('active');
+        $("#contenido-pendientes").removeClass('hidden');
+        $("#contenido-aprobadas").addClass('hidden');
+        $("#contenido-rechazadas").addClass('hidden');
+    } else if (estado == 'aprobadas'){
+        $('#li-aprobadas').addClass('active');
+        $('#li-en-espera').removeClass('active');
+        $('#li-rechazadas').removeClass('active');
+        $("#contenido-aprobadas").removeClass('hidden');
+        $("#contenido-pendientes").addClass('hidden');
+        $("#contenido-rechazadas").addClass('hidden');
+    } else if (estado == 'rechazadas'){
+        $('#li-rechazadas').addClass('active');
+        $('#li-en-espera').removeClass('active');
+        $('#li-aprobadas').removeClass('active');
+        $("#contenido-rechazadas").removeClass('hidden');
+        $("#contenido-aprobadas").addClass('hidden');
+        $("#contenido-pendientes").addClass('hidden');
+    };
 };
-
-// Mostrar las opciones del select de organos corporales segun el sistema corporal seleccionado
-var mostrarOpcionesOrganosCorporales = function(id_sistema_corporal) {
-  var sistemaCorporal = $.grep(sistemasCorporales, function(valor, indice) {
-    return valor.id == id_sistema_corporal
-  });
-  sistemaCorporalActual = sistemaCorporal[0]
-  $("#organos-corporales").html("");
-  $.each(sistemaCorporalActual.organos_corporales, function(indice, valor) {
-    $("#organos-corporales").append("<option value=\"" + valor.id + "\">" + valor.nombre + "</option>");
-  });
-  mostrarOpcionesTiposProcedimientos(sistemaCorporalActual.organos_corporales[0].id);
-  $("#id-organo-corporal").val(sistemaCorporalActual.organos_corporales[0].id);
-  $("#id-tipo-procedimiento-quirurgico").val(sistemaCorporalActual.organos_corporales[0].tipos_procedimientos_permitidos[0].id);
-};
-
-// Mostrar las opciones de tipos de procedimientos permitidos segun el organo corporal seleccionado
-var mostrarOpcionesTiposProcedimientos = function(id_organo_corporal) {
-  var organoCorporal = $.grep(sistemaCorporalActual.organos_corporales, function(valor, indice) {
-    return valor.id == id_organo_corporal
-  });
-  organoCorporalActual = organoCorporal[0]
-  $("#tipos-procedimientos").html("");
-  $.each(organoCorporalActual.tipos_procedimientos_permitidos, function(indice, valor) {
-    $("#tipos-procedimientos").append("<option value=\"" + valor.id + "\">" + valor.nombre + "</option>");
-  });
-  $("#id-tipo-procedimiento-quirurgico").val(organoCorporalActual.tipos_procedimientos_permitidos[0].id);
-};
-
-// Seleccionar organo corporal que fue seleccionado anteriormente
-var seleccionarSistemaCorporal = function(id_sistema_corporal_actual, id_organo_corporal, id_tipo_procedimiento) {
-  var sistemaCorporal = $.grep(sistemasCorporales, function(valor, indice) {
-    return valor.id == id_sistema_corporal_actual
-  });
-  sistemaCorporalActual = sistemaCorporal[0]
-  $("#sistemas-corporales>option[value=" + id_sistema_corporal_actual + "]").attr("selected", "selected");
-  mostrarOpcionesOrganosCorporales(id_sistema_corporal_actual);
-  $("#organos-corporales>option[value=" + id_organo_corporal + "]").attr("selected", "selected");
-  mostrarOpcionesTiposProcedimientos(id_organo_corporal);
-  $("#tipos-procedimientos>option[value=" + id_tipo_procedimiento + "]").attr("selected", "selected");
-}
 
 $(document).ready(function() {
   // Seleccionar seccion en menu de navegacion
@@ -314,35 +280,35 @@ $(document).ready(function() {
   $("#seccion-mis-solicitudes").addClass("active");
 
   // Desplegar Solicitudes En Espera
-    $("#li-aprobadas").click(function() {       
-      $("#en-espera").addClass("hidden"); 
-      $("#rechazadas").addClass("hidden");      
+    $("#li-aprobadas").click(function() {
+      $("#en-espera").addClass("hidden");
+      $("#rechazadas").addClass("hidden");
       $("#aprobadas").removeClass("hidden");
 
-    $("#li-aprobadas").addClass("active");    
+    $("#li-aprobadas").addClass("active");
     $("#li-en-espera").removeClass("active");
-      $("#li-rechazadas").removeClass("active");      
+      $("#li-rechazadas").removeClass("active");
   });
 
     $("#li-en-espera").click(function() {
-      $("#aprobadas").addClass("hidden"); 
-      $("#rechazadas").addClass("hidden");      
+      $("#aprobadas").addClass("hidden");
+      $("#rechazadas").addClass("hidden");
       $("#en-espera").removeClass("hidden");
-    
-    $("#li-en-espera").addClass("active");    
+
+    $("#li-en-espera").addClass("active");
     $("#li-aprobadas").removeClass("active");
-      $("#li-rechazadas").removeClass("active");      
-  }); 
+      $("#li-rechazadas").removeClass("active");
+  });
 
     $("#li-rechazadas").click(function() {
-      $("#aprobadas").addClass("hidden"); 
-      $("#en-espera").addClass("hidden");     
+      $("#aprobadas").addClass("hidden");
+      $("#en-espera").addClass("hidden");
       $("#rechazadas").removeClass("hidden");
 
-    $("#li-rechazadas").addClass("active");   
-    $("#li-aprobadas").removeClass("active");     
-    $("#li-en-espera").removeClass("active");     
-  });   
+    $("#li-rechazadas").addClass("active");
+    $("#li-aprobadas").removeClass("active");
+    $("#li-en-espera").removeClass("active");
+  });
 
 // Ir a formulario de paciente
   $("#ver-info-paciente").click(function() {
@@ -352,7 +318,7 @@ $(document).ready(function() {
   });
 
   // Ir formulario de quirofano
-  
+
   $("#ver-quirofano").click(function() {
     $("#datos-paciente").addClass("hidden");
     $("#datos-quirofano").removeClass("hidden");
@@ -401,17 +367,7 @@ $(document).ready(function() {
     }
   });
 
-  // Cambiar la accion en formulario para que demuestre que se esta agregando un procedimiento quirurgico
-  $("#agregar-procedimiento-quirurgico-btn").click(function() {
-    $("#accion-formulario").val("procedimiento_quirurgico")
-  });
-
-  // Cambiar la accion en formulario para que demuestre que NO se esta agregando un procedimiento quirurgico
-  $("#cancelar-agregar-procedimiento-quirurgico").click(function() {
-    $("#accion-formulario").val("solicitud_quirofano")
-  });
-
-  // Cambiar nacionalidad de cedula pacie te
+  // Cambiar nacionalidad de cedula paciente
   $("#cedula-paciente-nacionalidad-cambiar").click(function() {
     if ($(this).html() == "E-") {
       $(this).html("V-");
@@ -423,41 +379,4 @@ $(document).ready(function() {
       $("#cedula-paciente-nacionalidad-input").val("V-");
     }
   });
-
-  // Actualizar select de organos corporales cuando cambia el sistema corporal
-  $("#sistemas-corporales").change(function() {
-    idSistemaCorporal = $("#sistemas-corporales>option:selected").val();
-    mostrarOpcionesOrganosCorporales(idSistemaCorporal);
-  });
-
-  // Actualizar select de tipos procedimientos cuando cambia el organo corporal. Ademas de actualizar el valor escondido del id-organo-corporal seleccionado.
-  $("#organos-corporales").change(function() {
-    idOrganoCorporal = $("#organos-corporales>option:selected").val();
-    $("#id-organo-corporal").val(idOrganoCorporal)
-    mostrarOpcionesTiposProcedimientos(idOrganoCorporal);
-  });
-
-  // Actualizar el valor escondido del id-tipo-procedimiento-quirurgico seleccionado.
-  $("#tipos-procedimientos").change(function() {
-    idTipoProcedimiento = $("#tipos-procedimientos>option:selected").val();
-    $("#id-tipo-procedimiento-quirurgico").val(idTipoProcedimiento);
-  });
-
-  // Actualizar montos honorarios segun el monto honorario del cirujano principal
-  $("#honorarios-cirujano-principal").change(function() {
-    montoHonorarios = $("#honorarios-cirujano-principal").val();
-    montoHonorariosAnestesiologo = (0.4*montoHonorarios).toFixed(2);
-    montoHonorariosSegundoAyudante = (0.3*montoHonorarios).toFixed(2);
-    $("#honorarios-anestesiologo").val(montoHonorariosAnestesiologo);
-    $("#honorarios-primer-ayudante").val(montoHonorariosAnestesiologo);
-    $("#honorarios-segundo-ayudante").val(montoHonorariosSegundoAyudante);
-  });
-
-  // Eliminar procedimiento quirurgico
-  $(".eliminar-procedimiento-quirurgico").click(function() {
-    $("#accion-formulario").val("eliminar_procedimiento_quirurgico");
-    $("#id-procedimiento-quirurgico").val($(this).prev("input").val());
-    $("#formulario-solicitud-quirofano").submit();
-  });    
-
 });

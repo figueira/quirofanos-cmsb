@@ -184,9 +184,6 @@ class Departamento (models.Model):
 
 class Quirofano(models.Model):
     ''' Clase que representa un Quirofano '''
-    class Meta:
-        ordering = ["numero"]
-
     numero = models.IntegerField(validators=[MinValueValidator(0)])
     area = models.CharField(max_length=3, choices=NOMBRE_AREA)
 

@@ -109,7 +109,7 @@ class TextoMostrable():
     LABEL_PROCEDIMIENTOS_QUIRURGICOS = _(u'Procedimientos Quirúrgicos:')
     LABEL_SISTEMA_CORPORAL = _(u'Sistema Corporal:')
     LABEL_ORGANO_CORPORAL = _(u'Órgano Corporal:')
-    LABEL_PROCEDIMIENTO = _(u'Procedimiento')
+    LABEL_PROCEDIMIENTO = _(u'Procedimiento:')
     LABEL_PROCEDIMIENTO_ABREVIADO = _(u'Proc.:')
     MENSAJE_PROCEDIMIENTO_QUIRURGICO_AGREGADO = _(u'Procedimiento quirúrgico agregado.')
     MENSAJE_PROCEDIMIENTO_QUIRURGICO_ELIMINADO = _(u'Procedimiento quirúrgico eliminado.')
