@@ -216,7 +216,7 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 							procedimiento_quirurgico.save()
 
 					messages.add_message(request, messages.SUCCESS, MensajeTemporalExito.SOLICITUD_QUIROFANO_ENVIADA)
-					return redirect('mis_solicitudes')
+					return render_to_response('medico/mis_solicitudes.html',  context_instance=RequestContext(request))
 
 			else:
 				errores_primera_pagina = formulario_solicitud_quirofano["nombre_paciente"].errors or formulario_solicitud_quirofano["apellido_paciente"].errors or formulario_solicitud_quirofano["cedula_paciente"].errors or formulario_solicitud_quirofano["genero_paciente"].errors or formulario_solicitud_quirofano["fecha_nacimiento_paciente"].errors or formulario_solicitud_quirofano["codigo_telefono_paciente"].errors or formulario_solicitud_quirofano["numero_telefono_paciente"].errors or formulario_solicitud_quirofano["diagnostico_ingreso_paciente"].errors or formulario_solicitud_quirofano["servicios_operatorios_paciente"].errors or formulario_solicitud_quirofano["paciente_hospitalizado"].errors or formulario_solicitud_quirofano["numero_habitacion_paciente"].errors or formulario_solicitud_quirofano["paciente_con_expediente"].errors or formulario_solicitud_quirofano["area_ingreso_paciente"].errors or formulario_solicitud_quirofano["numero_expediente_paciente"].errors or formulario_solicitud_quirofano["tipo_pago_paciente"].errors or formulario_solicitud_quirofano["compania_aseguradora_paciente"].errors
@@ -488,19 +488,45 @@ def mis_solicitudes(request, estado="pendientes"):
 @require_GET
 @login_required
 @user_passes_test(es_medico)
-def cancelar_solicitud(request):
+def cancelar_solicitud(request, pk):
 	''' Controlador correspondiente a la eliminacion de solicitudes realizadas por el medico
 
 	Parametros:
 	request -> Solicitud HTTP '''
 
-	formulario_cancelar_solicitud = SolicitudQuirofanoForm(request.POST)
-	nombre = formulario_cancelar_solicitud.cleaned_data['nombre_paciente']
-	reserva_pk = formulario_cancelar_solicitud.cleaned_data['reservacion-pk']
+	try:			
+		reservacion = Reservacion.objects.get(pk=pk)
+	except ObjectDoesNotExist:
+   		messages.add_message(request, messages.ERROR, MensajeTemporalError. CANCELACION_SOLICITUD_FALLIDA)
+	
+	with transaction.atomic():
+   		intervencion = reservacion.intervencion_quirurgica
+		lista_procedimientos=intervencion.procedimientoquirurgico_set.all()
+		for procedimiento in lista_procedimientos:
+			participacion = Participacion.objects.filter(procedimiento_quirurgico=procedimiento)
+			# Elimina las Participaciones Asociadas
+			participacion.all().delete()
 
-	reserva = Reservacion.objects.get(pk = reservacion-pk)
+		# Elimina todos los Procedimientos Asociados
+		lista_procedimientos.all().delete()
 
-	return render_to_response('medico/mis_solicitudes.html', datos, context_instance=RequestContext(request))
+		# Elimina todos los Equipos Asociados
+		intervencion.equipos_especiales_requeridos.all().delete()
+
+		# Elimina todos los Materiales Asociados
+		intervencion.materiales_quirurgicos_requeridos.all().delete()
+
+		# Elimina todos los Servicios del paciente
+		intervencion.paciente.servicios_operatorios_requeridos.all().delete()
+
+		# Elimina la Reservacion
+		reservacion.delete()
+
+		# Elimina la Intervencion
+		intervencion.delete()
+
+
+	return redirect('mis_solicitudes', estado='pendientes')
 
 
 @require_GET

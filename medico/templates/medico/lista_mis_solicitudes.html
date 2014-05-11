@@ -700,8 +700,8 @@
 				</div>
 				{% if tipo == "pendiente" %}
 				<div class="modal-footer">
-					<a href="{% url 'cancelar_solicitud' %} ">
-					<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">
+					<a href="{% url 'cancelar_solicitud' reservacion.objeto.pk %}">
+					<button type="button" class="btn btn-danger pull-left">
 						<span class="glyphicon glyphicon-trash">
 						</span>
 						Cancelar Solicitud

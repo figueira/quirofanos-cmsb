@@ -294,6 +294,7 @@ var seleccionarPestana = function(estado){
   };
 };
 
+
 $(document).ready(function() {
   // Seleccionar seccion en menu de navegacion
   $(".navegacion").removeClass("active");
