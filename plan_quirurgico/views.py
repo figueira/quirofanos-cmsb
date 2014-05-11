@@ -13,12 +13,12 @@ import calendar
 import math
 
 from quirofanos_cmsb.helpers import utils
-from quirofanos_cmsb.models import Quirofano
+from quirofanos_cmsb.models import Quirofano, IntervencionQuirurgica
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
 from plan_quirurgico.forms import DuracionIntervencionQuirurgicaForm
 from autenticacion.forms import CambiarContrasenaForm, ActualizarEmailForm
 from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito
-from quirofanos_cmsb.helpers.utils import obtener_tipo_usuario
+from quirofanos_cmsb.helpers.utils import obtener_tipo_usuario, obtener_total_horas, obtener_representacion_media_hora
 
 @require_http_methods(["GET", "POST"])
 @login_required
@@ -235,5 +235,38 @@ def plan_dia_obs(request, area, ano, mes, dia):
 	ano -> Ano a consultar
 	mes -> Mes a consultar
 	dia -> Dia a consultar '''
+	ano = int(ano)
+	mes = int(mes)
+	dia = int(dia)
+	areas_valores = Quirofano.objects.distinct('area').values_list('area', flat=True)
+	quirofanos_area = Quirofano.objects.filter(area=area)
+	if mes < 1 or mes > 12:
+		raise Http404
+	if ano < 1:
+		raise Http404
+	if area not in areas_valores:
+		raise Http404
+	if dia < 1 or dia > calendar.monthrange(ano, mes)[1]:
+		raise Http404
 
-	return render_to_response('plan_quirurgico/plan_dia_obs.html', context_instance=RequestContext(request))
+	intervenciones = []
+	lista_intervenciones_area = IntervencionQuirurgica.objects.filter(fecha_intervencion__year=ano, fecha_intervencion__month=mes, fecha_intervencion__day=dia, reservacion__estado='A', quirofano__area=area).order_by('hora_fin','hora_inicio')
+
+	for intervencion in lista_intervenciones_area:
+		intervencion_diccionario = {}
+		intervencion_diccionario['objeto'] = intervencion
+		intervencion_diccionario['procedimientos'] = intervencion.procedimientoquirurgico_set.all()
+		intervencion_diccionario['hora_inicio'] = obtener_representacion_media_hora(obtener_total_horas(intervencion.hora_inicio))
+		intervencion_diccionario['hora_fin'] = obtener_representacion_media_hora(obtener_total_horas(intervencion.hora_fin))
+		intervenciones.append(intervencion_diccionario)
+
+	datos = {}
+	datos['area_nombre'] = quirofanos_area[0].get_area_display()
+	datos['ano'] = ano
+	datos['mes'] = mes
+	datos['dia'] = dia
+	datos['area_actual'] = area
+	datos['quirofanos_area'] = quirofanos_area
+	datos['intervenciones'] = intervenciones
+
+	return render_to_response('plan_quirurgico/plan_dia_obs.html', datos, context_instance=RequestContext(request))

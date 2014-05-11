@@ -233,6 +233,19 @@ class Quirofano(models.Model):
         except AttributeError:
             return None
 
+    def obtener_intervenciones_por_dia(self, ano, mes, dia):
+        ''' Devuelve un diccionario en donde se tiene para un dia, las intervenciones quirurgicas
+
+        Parametros:
+        ano -> Ano de la fecha a consultar
+        mes -> Mes de la fecha a consultar
+        dia -> Dia de la fecha a consultar '''
+        try:
+            intervenciones = self.intervencionquirurgica_set.filter(fecha_intervencion__year=ano, fecha_intervencion__month=mes, fecha_intervencion__day=dia, reservacion__estado='A').order_by('hora_inicio')
+            return intervenciones
+        except AttributeError:
+            return None
+
     def __unicode__(self):
         ''' Representacion unicode '''
         return str(self.numero) + ', ' + self.get_area_display()

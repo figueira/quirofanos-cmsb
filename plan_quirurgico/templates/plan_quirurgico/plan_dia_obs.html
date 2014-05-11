@@ -21,830 +21,94 @@
 
 {% block content %}
 <div class="page-header">
-	<h1>Plan Quirúrgico
-		<small> - Área 1 - dd/mm/aaaa</small>
+	<h1>
+		<a href="{% url 'calendario' area_actual ano mes %}">
+			<span class="glyphicon glyphicon-chevron-left">
+			</span>
+			Plan Quirúrgico
+		</a>
+		<small> - {{ area_nombre }} - {{ dia }}/{{ mes }}/{{ ano }}</small>
 	</h1>
 </div><br>
 
-<!-- Modal del detalle de la operacion-->
-<div class="modal fade" id="detalle-operacion" tabindex="-1" role="dialog" aria-labelledby="titulo-detalles-operacion" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="titulo-detalles-operacion">Detalles de Operación - Quirófano</h4>
-			</div>
-			<div class="modal-body">
-				<form class="form-horizontal" role="form" id="formulario-solicitud-quirofano">
-					<div class="form-group">
-						<label class="col-lg-2 control-label">
-							Área:
-						</label>
-						<div class="col-lg-2">
-							<input class="form-control" type="text" value="Quirúrgica" disabled>
-						</div>
-						<label class="col-lg-2 control-label">
-							Quirófano:
-						</label>
-						<div class="col-lg-2">
-							<input class="form-control" type="text" value="Quirófano 4" disabled>
-						</div>
-						<label class="col-lg-2 control-label">
-							Fecha:
-						</label>
-						<div class="col-lg-2">
-							<input class="form-control" type="text" value="14/03/2014" disabled>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label">
-							Hora Inicio:
-						</label>
-						<div class="col-lg-2">
-							<input class="form-control" type="text" value="8:30am" disabled>
-						</div>
-						<label class="col-lg-2 control-label">
-							Hora Fin:
-						</label>
-						<div class="col-lg-2">
-							<input class="form-control" type="text" value="10:30am" disabled>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="tipo-solicitud">
-							Tipo:
-						</label>
-						<div class="col-lg-10">
-							<div class="radio-inline">
-								<label>
-									<input type="radio" name="tipo-solicitud" value="emergencia" disabled>
-									Emergencia
-								</label>
-							</div>
-							<div class="radio-inline">
-								<label>
-									<input type="radio" name="tipo-solicitud" value="electiva" checked disabled>
-									Electiva
-								</label>
-							</div>
-							<div class="radio-inline">
-								<label>
-									<input type="radio" name="tipo-solicitud" value="paliativa" disabled>
-									Paliativa
-								</label>
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="tipo-operacion">
-							Operación:
-						</label>
-						<div class="col-lg-10">
-							<select class="form-control" name="tipo-operacion" disabled>
-								<option>
-									Reducción Gastrica
-								</option>
-								<option>
-									Liposucción
-								</option>
-								<option>
-									Intervención Cardíaca
-								</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="tipo-anestesia">
-							Anestesia:
-						</label>
-						<div class="col-lg-10">
-							<select class="form-control" name="tipo-anestesia" disabled>
-								<option>
-									General
-								</option>
-								<option>
-									Local
-								</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="observaciones">
-							Observaciones:
-						</label>
-						<div class="col-lg-10">
-							<textarea class="form-control" name="observaciones" rows="3" disabled></textarea>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="riesgo">
-							Nivel de Riesgo:
-						</label>
-						<div class="col-lg-10">
-							<div class="radio-inline">
-								<label>
-									<input type="radio" name="riesgo" value="bueno" disabled>
-									Bueno
-								</label>
-							</div>
-							<div class="radio-inline">
-								<label>
-									<input type="radio" name="riesgo" value="regular" checked disabled>
-									Regular
-								</label>
-							</div>
-							<div class="radio-inline">
-								<label>
-									<input type="radio" name="riesgo" value="malo" disabled>
-									Malo
-								</label>
-							</div>
-						</div>
-					</div>
-					<div class="form-group hidden" id="razon-riesgo">
-						<div class="col-lg-offset-2 col-lg-10">
-							<textarea class="form-control" id="razon-riesgo-input" name="razon" rows="3" placeholder="Indique razón del riesgo" disabled></textarea>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="equipo-especial-requerido">
-							Equipos
-							<abbr title="Especiales">
-								Esp.
-							</abbr>:
-						</label>
-						<div class="col-lg-10">
-							<select multiple class="form-control" name="equipo-especial-requerido" disabled>
-								<option>
-									1
-								</option>
-								<option>
-									2
-								</option>
-								<option>
-									3
-								</option>
-								<option>
-									4
-								</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="material-quirurgico">
-							Material
-							<abbr title="Quirúrgico">
-								Quir.
-							</abbr>:
-						</label>
-						<div class="col-lg-10">
-							<label class="checkbox-inline">
-								<input type="checkbox" name="material-quirurgico" disabled>
-								Sutura Especial
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="material-quirurgico" disabled>
-								Protack
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="material-quirurgico" disabled>
-								Malla Polipropileno
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="material-quirurgico" disabled>
-								Malla Dual Mesh
-							</label>
-							<label class="checkbox-inline">
-								<input type="checkbox" name="material-quirurgico" disabled>
-								Máquina de Autosutura
-							</label>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-lg-offset-10">							<a href="javascript:void(0);" class="btn btn-default" id="ver-info-paciente">
-							Paciente
-							<span class="glyphicon glyphicon-chevron-right">
-							</span>
-						</a>
-					</div>
-				</div>
-			</form><!-- Formulario Solicitud Quirofano -->
-
-			<form class="form-horizontal hidden" role="form" id="formulario-solicitud-paciente">
-				<div class="form-group">
-					<label class="col-lg-2 control-label" for="nombre-paciente">
-						Nombre:
-					</label>
-					<div class="col-lg-4">
-						<input type="text" class="form-control" name="nombre-paciente" value="Enrique" disabled>
-					</div>
-					<label class="col-lg-2 control-label" for="apellido-paciente">
-						Apellido:
-					</label>
-					<div class="col-lg-4">
-						<input type="text" class="form-control" name="apellido-paciente" value="Mata" disabled>
-					</div>
-				</div><!-- Nombre y Apellido -->
-				<div class="form-group">
-					<label class="col-lg-2 control-label" for="cedula-paciente">
-						Cedula:
-					</label>
-					<div class="col-lg-4">
-						<input type="text" class="form-control" name="cedula-paciente" value="19803052" disabled>
-					</div>
-					<label class="col-lg-2 control-label" for="fecha-nacimiento-paciente">
-						Fecha
-						<abbr title="Nacimiento">
-							Nac.
-						</abbr>:
-					</label>
-					<div class="col-lg-4">
-						<input type="date" class="form-control" name="fecha-nacimiento-paciente" disabled>
-					</div>
-				</div><!-- Cedula y Fecha de Nacimiento -->
-				<div clas="form-group">
-					<label class="col-lg-2 control-label" for="sexo-paciente">
-						Sexo:
-					</label>
-					<div class="col-lg-10">
-						<div class="radio-inline">
-							<label>
-								<input type="radio" name="sexo-paciente" value="M" checked disabled>
-								Masculino
-							</label>
-						</div>
-						<div class="radio-inline">
-							<label>
-								<input type="radio" name="sexo-paciente" value="F" disabled>
-								Femenino
-							</label>
-						</div>
-					</div>
-				</div><!-- Sexo -->
-				<div class="form-group">
-					<label class="col-lg-2 control-label" for="telefono-paciente">
-						Teléfono:
-					</label>
-					<div class="col-lg-2">
-						<input type="text" class="form-control" value="424" disabled>
-					</div>
-					<div class="col-lg-3">
-						<input type="text" class="form-control" name="telefono-paciente" value="1587765" disabled>
-					</div>
-				</div><!-- Telefono -->
-				<div class="form-group">
-					<label class="col-lg-2 control-label" for="diagnostico-ingreso-paciente">
-						Diagnóstico:
-					</label>
-					<div class="col-lg-10">
-						<textarea class="form-control" name="diagnostico-ingreso-paciente" rows="3" disabled>Obesidad</textarea>
-					</div>
-				</div><!-- Diagnostico -->
-				<div clas="form-group">
-					<label class="col-lg-2 control-label" for="forma-pago">
-						Forma de Pago:
-					</label>
-					<div class="col-lg-10">
-						<div class="radio-inline">
-							<label>
-								<input type="radio" name="forma-pago" value="particular" checked disabled>
-								Particular
-							</label>
-						</div>
-						<div class="radio-inline">
-							<label>
-								<input type="radio" name="forma-pago" value="seguro" disabled>
-								Seguro
-							</label>
-						</div>
-					</div>
-				</div><!-- Forma de Pago -->
-				<div class="form-group hidden" id="seguros">
-					<label class="col-lg-2 control-label" for="compania-aseguradora">
-						Aseguradora:
-					</label>
-					<div class="col-lg-10">
-						<select class="form-control" name="compania-aseguradora" disabled>
-							<option>
-								Seguros Altamira
-							</option>
-							<option>
-								Seguros Mercantil
-							</option>
-						</select>
-					</div>
-				</div><!-- Seguros -->
-				<div class="form-group">
-					<div class="col-lg-offset-2 col-lg-4">
-						<label class="checkbox-inline">
-							<input type="checkbox" name="paciente-hospitalizado" disabled>
-							Paciente Hospitalizado
-						</label>
-					</div>
-					<div class="hidden" id="habitacion">
-						<label class="col-lg-2 control-label" for="paciente-hospitalizado-habitacion">
-							Habitación:
-						</label>
-						<div class="col-lg-4">
-							<select class="form-control" name="paciente-hospitalizado-habitacion" disabled>
-								<option>
-									hab1
-								</option>
-								<option>
-									hab2
-								</option>
-								<option>
-									hab3
-								</option>
-							</select>
-						</div>
-					</div>
-				</div><!-- Paciente Hospitalizado -->
-				<div class="form-group">
-					<div class="col-lg-offset-2 col-lg-4">
-						<label class="checkbox-inline control-label">
-							<input type="checkbox" name="paciente-impres" disabled>
-							Paciente Suscrito a Impres
-						</label>
-					</div>
-					<div class="col-lg-6 hidden" id="carnet-impres">
-						<input type="text" class="form-control" name="carnet-impres" placeholder="Indique carnet impres" disabled>
-					</div>
-				</div><!-- Paciente Impres -->
-				<div class="form-group">
-					<div class="col-lg-offset-2 col-lg-4">
-						<label class="checkbox-inline control-label">
-							<input type="checkbox" name="paciente-medico" disabled>
-							Paciente Médico
-						</label>
-					</div>
-					<div class="col-lg-6 hidden" id="numero-inscripcion-medico">
-						<input type="text" class="form-control" name="numero-inscripcion-medico" placeholder="Indique numero de inscripcion" disabled>
-					</div>
-				</div><!-- Paciente Medico -->
-				<div class="form-group">
-					<div class="col-lg-offset-2 col-lg-10">
-						<label class="checkbox-inline control-label">
-							<input type="checkbox" name="paciente-pariente-medico" disabled>
-							Paciente Pariente de Médico
-						</label>
-					</div>
-				</div><!-- Paciente Pariente Medico -->
-				<div class="form-group hidden" id="medico-pariente">
-					<label class="col-lg-offset-2 col-lg-2 control-label" for="nombre-medico-pariente">
-						Indique Médico:
-					</label>
-					<div class="col-lg-3">
-						<input type="text" class="form-control input-medico-pariente" name="nombre-medico-pariente" placeholder="Nombre" disabled>
-					</div>
-					<div class="col-lg-3">
-						<input type="text" class="form-control input-medico-pariente" name="apellido-medico-pariente" placeholder="Apellido" disabled>
-					</div>
-					<div class="col-lg-2">
-						<input type="text" class="form-control input-medico-pariente" name="cedula-medico-pariente" placeholder="Cédula" disabled>
-					</div>
-				</div><!-- Paciente Pariente de Medico -->
-				<div class="form-group">
-					<div class="col-lg-2">
-						<a href="javascript:void(0);" class="btn btn-default" id="volver-info-quirofano">
-							<span class="glyphicon glyphicon-chevron-left">
-							</span>
-							Quirófano
-						</a>
-					</div>
-					<div class="col-lg-offset-10">
-						<a href="javascript:void(0);" class="btn btn-default" id="ver-info-honorarios">
-							Honorarios
-							<span class="glyphicon glyphicon-chevron-right">
-							</span>
-						</a>
-					</div>
-				</div>
-			</form><!-- Formulario Solicitud Paciente -->
-
-			<form class="form-horizontal hidden" role="form" id="formulario-solicitud-honorarios">
-				<div class="form-group">
-					<label class="col-lg-2 control-label" for="nombre-anestesiologo">
-						Anestesiólogo:
-					</label>
-					<div class="col-lg-3">
-						<input type="text" class="form-control" name="nombre-anestesiologo" value="Juan" disabled>
-					</div>
-					<div class="col-lg-3">
-						<input type="text" class="form-control" name="apellido-anestesiologo" value="Requesens" disabled>
-					</div>
-					<div class="col-lg-4">
-						<div class="input-group">
-							<span class="input-group-addon">
-								Bs.
-							</span>
-							<input type="text" class="form-control" name="honorario-anestesiologo" value="10.000" disabled>
-						</div>
-					</div>
-				</div><!-- Anestesiologo -->
-				<div class="form-group">
-					<label class="col-lg-2 control-label" for="nombre-ayudante-1">
-						Primer Ayudante:
-					</label>
-					<div class="col-lg-3">
-						<input type="text" class="form-control" name="nombre-ayudante-1" value="Juan" disabled>
-					</div>
-					<div class="col-lg-3">
-						<input type="text" class="form-control" name="apellido-ayudante-1" value="Pirela" disabled>
-					</div>
-					<div class="col-lg-4">
-						<div class="input-group">
-							<span class="input-group-addon">
-								Bs.
-							</span>
-							<input type="text" class="form-control" name="honorario-ayudante-1" value="10.000" disabled>
-						</div>
-					</div>
-				</div><!-- Primer Ayudante -->
-				<div class="form-group">
-					<label class="col-lg-2 control-label" for="nombre-ayudante-2">
-						Segundo Ayudante:
-					</label>
-					<div class="col-lg-3">
-						<input type="text" class="form-control" name="nombre-ayudante-2" value="Juan" disabled>
-					</div>
-					<div class="col-lg-3">
-						<input type="text" class="form-control" name="apellido-ayudante-2" value="Ramos" disabled>
-					</div>
-					<div class="col-lg-4">
-						<div class="input-group">
-							<span class="input-group-addon">
-								Bs.
-							</span>
-							<input type="text" class="form-control" name="honorario-ayudante-2" value="10.000" disabled>
-						</div>
-					</div>
-				</div><!-- Segundo Ayudante -->
-				<div class="form-group">
-					<label class="col-lg-2 control-label" for="nombre-ayudante-3">
-						Tercer Ayudante:
-					</label>
-					<div class="col-lg-3">
-						<input type="text" class="form-control" name="nombre-ayudante-3" value="Armando" disabled>
-					</div>
-					<div class="col-lg-3">
-						<input type="text" class="form-control" name="apellido-ayudante-3" value="Casas" disabled>
-					</div>
-					<div class="col-lg-4">
-						<div class="input-group">
-							<span class="input-group-addon">
-								Bs.
-							</span>
-							<input type="text" class="form-control" name="honorario-ayudante-3" value="10.000" disabled>
-						</div>
-					</div>
-				</div><!-- Tercer Ayudante -->
-				<div class="form-group">
-					<div class="col-lg-2">
-						<a href="javascript:void(0);" class="btn btn-default" id="volver-info-paciente">
-							<span class="glyphicon glyphicon-chevron-left">
-							</span>
-							Paciente
-						</a>
-					</div>
-				</div>
-			</form><!-- Formulario Solicitud Honorarios -->
-		</div>
-		<div class="modal-footer">
-			<div class="row">
-				<h4 class="col-lg-3">Cambiar Estado:</h4>
-			</div>
-			<div class="row">
-				<div class="col-lg-offset-1 col-lg-7 pull-left">
-					<button type="button" class="btn btn-danger btn-estado-operacion">En Espera</button>
-					<button type="button" class="btn btn-warning btn-estado-operacion">En Curso</button>
-					<button type="button" class="btn btn-success btn-estado-operacion">En Recuperación</button>
-					<button type="button" class="btn btn-success btn-estado-operacion" id="btn-en-habitacion">En Habitación</button>
-				</div>
-				<label class="col-lg-2 control-label select-en-habitacion hidden">Habitación:</label>
-				<div class="col-lg-2 select-en-habitacion hidden">
-					<select class="form-control">
-						<option>hab1</option>
-						<option>hab2</option>
-						<option>hab3</option>
-					</select>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-</div>
 
 
 <!-- Plan Quirurgico por dia -->
 <div class="row">
-	<div class="col-lg-3">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<small><b>Quirófano 1 / 7:30 am - 9:30 am</b></small>
-			</div>
-			<div class="panel-body">
-				<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle-operacion">
-					<span class="glyphicon glyphicon-fullscreen"></span>
-				</a>
-				<p class="label label-info">
-					Paciente: Pérez Romero, José
-				</p><br>
-				<p class="label label-default">
-					<abbr title="Intervención">Int.</abbr> Quirúrgica: Colocación de Cateter
-				</p><br>
-				<p class="label label-default">
-					Cirujano Dr(a): Lairet Hernández, Andrés E
-				</p><br>
-				<p class="label label-default">
-					<abbr title="Anestesiólogo">Anest.</abbr>
-					Dr(a): Machado Fernandez, Antonio M
-				</p><br>
-				<p class="label label-success">
-					En Habitación: 705
-				</p>
-			</div>
-		</div>
-	</div>
-	<div class="col-lg-3">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<small><b>Quirófano 2 / 7:30 am - 8:30 am</small></b>
-			</div>
-			<div class="panel-body">
-				<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle-operacion">
-					<span class="glyphicon glyphicon-fullscreen"></span>
-				</a>
-				<p class="label label-info">
-					Paciente: Pérez Romero, José
-				</p><br>
-				<p class="label label-default">
-					<abbr title="Intervención">Int.</abbr> Quirúrgica: Colocación de Cateter
-				</p><br>
-				<p class="label label-default">
-					Cirujano Dr(a): Lairet Hernández, Andrés E
-				</p><br>
-				<p class="label label-default">
-					<abbr title="Anestesiólogo">Anest.</abbr>
-					Dr(a): Machado Fernandez, Antonio M
-				</p><br>
-				<p class="label label-success">
-					En Recuperación
-				</p>
-			</div>
-		</div>
-	</div>
-	<div class="col-lg-3">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<small><b>Quirófano 3 / 7:30 am - 10:30 am</small></b>
-			</div>
-			<div class="panel-body">
-				<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle-operacion">
-					<span class="glyphicon glyphicon-fullscreen"></span>
-				</a>
-				<p class="label label-info">
-					Paciente: Pérez Romero, José
-				</p><br>
-				<p class="label label-default">
-					<abbr title="Intervención">Int.</abbr> Quirúrgica: Colocación de Cateter
-				</p><br>
-				<p class="label label-default">
-					Cirujano Dr(a): Lairet Hernández, Andrés E
-				</p><br>
-				<p class="label label-default">
-					<abbr title="Anestesiólogo">Anest.</abbr>
-					Dr(a): Machado Fernandez, Antonio M
-				</p><br>
-				<p class="label label-warning">
-					En Curso
-				</p>
-			</div>
-		</div>
-	</div>
-	<div class="col-lg-3">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<small><b>Quirófano 1 / 8:30 am - 9:30 am</small></b>
-			</div>
-			<div class="panel-body">
-				<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle-operacion">
-					<span class="glyphicon glyphicon-fullscreen"></span>
-				</a>
-				<p class="label label-info">
-					Paciente: Pérez Romero, José
-				</p><br>
-				<p class="label label-default">
-					<abbr title="Intervención">Int.</abbr> Quirúrgica: Colocación de Cateter
-				</p><br>
-				<p class="label label-default">
-					Cirujano Dr(a): Lairet Hernández, Andrés E
-				</p><br>
-				<p class="label label-default">
-					<abbr title="Anestesiólogo">Anest.</abbr>
-					Dr(a): Machado Fernandez, Antonio M
-				</p><br>
-				<p class="label label-success">
-					En Habitación: 520
-				</p>
-			</div>
-		</div>
-	</div>
-	<div class="col-lg-3">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<small><b>Quirófano 2 / 10:30 am - 11:30 am</small></b>
-			</div>
-			<div class="panel-body">
-				<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle-operacion">
-					<span class="glyphicon glyphicon-fullscreen"></span>
-				</a>
-				<p class="label label-info">
-					Paciente: Pérez Romero, José
-				</p><br>
-				<p class="label label-default">
-					<abbr title="Intervención">Int.</abbr> Quirúrgica: Colocación de Cateter
-				</p><br>
-				<p class="label label-default">
-					Cirujano Dr(a): Lairet Hernández, Andrés E
-				</p><br>
-				<p class="label label-default">
-					<abbr title="Anestesiólogo">Anest.</abbr>
-					Dr(a): Machado Fernandez, Antonio M
-				</p><br>
-				<p class="label label-danger">
-					En Espera
-				</p>
-			</div>
-		</div>
-	</div>
-	<div class="col-lg-3">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<small><b>Quirófano 3 / 11:30 am - 12:30 pm</small></b>
-			</div>
-			<div class="panel-body">
-				<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle-operacion">
-					<span class="glyphicon glyphicon-fullscreen"></span>
-				</a>
-				<p class="label label-info">
-					Paciente: Pérez Romero, José
-				</p><br>
-				<p class="label label-default">
-					<abbr title="Intervención">Int.</abbr> Quirúrgica: Colocación de Cateter
-				</p><br>
-				<p class="label label-default">
-					Cirujano Dr(a): Lairet Hernández, Andrés E
-				</p><br>
-				<p class="label label-default">
-					<abbr title="Anestesiólogo">Anest.</abbr>
-					Dr(a): Machado Fernandez, Antonio M
-				</p><br>
-				<p class="label label-danger">
-					En Espera
-				</p>
-			</div>
-		</div>
-	</div>
-	<div class="col-lg-3">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<small><b>Quirófano 1 / 2:30 pm - 3:00 pm</small></b>
-			</div>
-			<div class="panel-body">
-				<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle-operacion">
-					<span class="glyphicon glyphicon-fullscreen"></span>
-				</a>
-				<p class="label label-info">
-					Paciente: Pérez Romero, José
-				</p><br>
-				<p class="label label-default">
-					<abbr title="Intervención">Int.</abbr> Quirúrgica: Colocación de Cateter
-				</p><br>
-				<p class="label label-default">
-					Cirujano Dr(a): Lairet Hernández, Andrés E
-				</p><br>
-				<p class="label label-default">
-					<abbr title="Anestesiólogo">Anest.</abbr>
-					Dr(a): Machado Fernandez, Antonio M
-				</p><br>
-				<p class="label label-danger">
-					En Espera
-				</p>
-			</div>
-		</div>
-	</div>
-	<div class="col-lg-3">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<small><b>Quirófano 2 / 1:30 pm - 3:30 pm</small></b>
-			</div>
-			<div class="panel-body">
-				<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle-operacion">
-					<span class="glyphicon glyphicon-fullscreen"></span>
-				</a>
-				<p class="label label-info">
-					Paciente: Pérez Romero, José
-				</p><br>
-				<p class="label label-default">
-					<abbr title="Intervención">Int.</abbr> Quirúrgica: Colocación de Cateter
-				</p><br>
-				<p class="label label-default">
-					Cirujano Dr(a): Lairet Hernández, Andrés E
-				</p><br>
-				<p class="label label-default">
-					<abbr title="Anestesiólogo">Anest.</abbr>
-					Dr(a): Machado Fernandez, Antonio M
-				</p><br>
-				<p class="label label-danger">
-					En Espera
-				</p>
-			</div>
-		</div>
-	</div>
-	<div class="col-lg-3">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<small><b>Quirófano 4 / 12:30 pm - 1:30 pm</small></b>
-			</div>
-			<div class="panel-body">
-				<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle-operacion">
-					<span class="glyphicon glyphicon-fullscreen"></span>
-				</a>
-				<p class="label label-info">
-					Paciente: Pérez Romero, José
-				</p><br>
-				<p class="label label-default">
-					<abbr title="Intervención">Int.</abbr> Quirúrgica: Colocación de Cateter
-				</p><br>
-				<p class="label label-default">
-					Cirujano Dr(a): Lairet Hernández, Andrés E
-				</p><br>
-				<p class="label label-default">
-					<abbr title="Anestesiólogo">Anest.</abbr>
-					Dr(a): Machado Fernandez, Antonio M
-				</p><br>
-				<p class="label label-danger">
-					En Espera
-				</p>
-			</div>
-		</div>
-	</div>
-	<div class="col-lg-3">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<small><b>Quirófano 4 / 3:30 pm - 4:00 pm</small></b>
-			</div>
-			<div class="panel-body">
-				<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle-operacion">
-					<span class="glyphicon glyphicon-fullscreen"></span>
-				</a>
-				<p class="label label-info">
-					Paciente: Pérez Romero, José
-				</p><br>
-				<p class="label label-default">
-					<abbr title="Intervención">Int.</abbr> Quirúrgica: Colocación de Cateter
-				</p><br>
-				<p class="label label-default">
-					Cirujano Dr(a): Lairet Hernández, Andrés E
-				</p><br>
-				<p class="label label-default">
-					<abbr title="Anestesiólogo">Anest.</abbr>
-					Dr(a): Machado Fernandez, Antonio M
-				</p><br>
-				<p class="label label-success">
-					En Habitación: 705
-				</p>
-			</div>
-		</div>
-	</div>
-	<div class="col-lg-3">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<small><b>Quirófano 3 / 1:00 pm - 2:30 pm</small></b>
-			</div>
-			<div class="panel-body">
-				<a href="#" class="pull-right" data-toggle="modal" data-target="#detalle-operacion">
-					<span class="glyphicon glyphicon-fullscreen"></span>
-				</a>
-				<p class="label label-info">
-					Paciente: Pérez Romero, José
-				</p><br>
-				<p class="label label-default">
-					<abbr title="Intervención">Int.</abbr> Quirúrgica: Colocación de Cateter
-				</p><br>
-				<p class="label label-default">
-					Cirujano Dr(a): Lairet Hernández, Andrés E
-				</p><br>
-				<p class="label label-default">
-					<abbr title="Anestesiólogo">Anest.</abbr>
-					Dr(a): Machado Fernandez, Antonio M
-				</p><br>
-				<p class="label label-success">
-					En Habitación: 705
-				</p>
-			</div>
-		</div>
+	<div class="col-lg-offset-1 col-lg-10">
+		{% if intervenciones %}
+		<table class="table table-bordered table-responsive table-hover" id='table-intervenciones'>
+			<thead>
+				<tr>
+					<th class="col-lg-1">Quirófano</th>
+					<th class="col-lg-1">Hora</th>
+					<th class="col-lg-1">Paciente</th>
+					<th class="col-lg-1">Procedimientos Quirúrgicos</th>
+					<th class="col-lg-1">Médico</th>
+					<th class="col-lg-1">Anestesia</th>
+					<th class="col-lg-1">Observaciones</th>
+					<th class="col-lg-1">Estatus</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for intervencion in intervenciones %}
+				<tr>
+					<td>
+						<h3><span class="label label-info label-quirofano-{{ intervencion.objeto.quirofano.numero }}">
+							{% if intervencion.objeto.quirofano.numero == 0 %}
+								<abbr title='Sala de Recuperación'>SR</abbr>
+							{% else %}
+								{{ intervencion.objeto.quirofano.numero }}
+							{% endif %}
+						</span></h3>
+					</td>
+					<td>
+						<h4>{{ intervencion.hora_inicio }}</h4>
+						<h4>a</h4>
+						<h4>{{ intervencion.hora_fin }}</h4>
+					</td>
+					<td>
+						<h4>{{ intervencion.objeto.paciente.nombre }} {{ intervencion.objeto.paciente.apellido }}</h4>
+					</td>
+					<td>
+						{% for proc in intervencion.procedimientos %}
+						<h3><span class="label label-info">
+							{{ proc.tipo_procedimiento_quirurgico.nombre }} -
+							{{ proc.organo_corporal.nombre }}
+						</h3>
+						{% endfor %}
+					</td>
+					<td>
+						<h4>{{ intervencion.objeto.reservacion.medico }}</h4>
+					</td>
+					<td>
+						<h3><span class="label label-default">{{ intervencion.objeto.preferencia_anestesica}}</span></h3>
+					</td>
+					<td>
+						{% if intervencion.objeto.observaciones %}
+							<h4>{{ intervencion.objeto.observaciones}}</h4>
+						{% else %}
+							<h4>Sin observaciones</h4>
+						{% endif %}
+					</td>
+					<td>
+						{% if intervencion.objeto.estado == '0' %}
+						<h3><span class="label label-danger">En Espera</span></h3>
+						{% elif intervencion.objeto.estado == '1' %}
+						<h3><span class="label label-success">En Curso</span></h3>
+						{% elif intervencion.objeto.estado == '2' %}
+						<h3><span class="label label-warning">En Recuperación</span></h3>
+						{% elif intervencion.objeto.estado == '3' %}
+						<h3><span class="label label-primary">En Habitación</span></h3>
+						{% endif %}
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{% else %}
+		<strong>No existen Intervenciones Quirúrgicas programadas para este día.</strong>
+		{% endif %}
 	</div>
 </div>
 {% endblock content %}

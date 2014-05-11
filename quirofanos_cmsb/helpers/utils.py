@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
+import datetime
 
 def obtener_nombre_mes(mes):
     ''' Devuelve el nombre de un mes expresado como numero
@@ -40,6 +41,9 @@ def obtener_hora(hora_en_float):
     if parte_decimal == 0.5:
         minutos = 30
     return (horas, minutos)
+
+def obtener_total_horas(hora):
+    return round((datetime.timedelta(hours=hora.hour, minutes=hora.minute).total_seconds() / 3600), 1)
 
 def obtener_representacion_media_hora(media_hora):
     ''' Devuelve una representacion legible de una media hora del dia
