@@ -13,10 +13,11 @@ import calendar
 import math
 
 from quirofanos_cmsb.helpers import utils
-from quirofanos_cmsb.models import Quirofano, IntervencionQuirurgica
+from quirofanos_cmsb.models import Quirofano, IntervencionQuirurgica, Reservacion
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
 from plan_quirurgico.forms import DuracionIntervencionQuirurgicaForm
 from autenticacion.forms import CambiarContrasenaForm, ActualizarEmailForm
+from medico.forms import SolicitudQuirofanoForm
 from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito
 from quirofanos_cmsb.helpers.utils import obtener_tipo_usuario, obtener_total_horas, obtener_representacion_media_hora
 
@@ -208,6 +209,66 @@ def plan_dia(request, area, ano, mes, dia):
 			quirofano_diccionario['medias_horas_disponibles_atravesadas'] = medias_horas_disponibles_atravesadas
 		quirofanos_area_intervenciones.append(quirofano_diccionario)
 
+	reservaciones_aprobadas = Reservacion.objects.filter(estado ='A', intervencion_quirurgica__fecha_intervencion__year=ano, intervencion_quirurgica__fecha_intervencion__month=mes, intervencion_quirurgica__fecha_intervencion__day=dia, intervencion_quirurgica__quirofano__area=area)
+
+	reservaciones_aprobadas_diccionarios = []
+	for reservacion in reservaciones_aprobadas:
+		reservacion_diccionario = {}
+		reservacion_diccionario["objeto"] = reservacion
+		if reservacion.intervencion_quirurgica.quirofano.numero == 0:
+			quirofano_legible = TextoMostrable.SALA_RECUPERACION
+		else:
+			quirofano_legible = TextoMostrable.QUIROFANO + ' ' + str(reservacion.intervencion_quirurgica.quirofano.numero)
+
+		reservacion_diccionario["quirofano_legible"] = quirofano_legible
+		reservacion_diccionario["area_legible"] = reservacion.intervencion_quirurgica.quirofano.get_area_display()
+		reservacion_diccionario["hora_inicio_legible"] = utils.obtener_representacion_media_hora(utils.obtener_total_horas(reservacion.intervencion_quirurgica.hora_inicio))
+		reservacion_diccionario["hora_fin_legible"] = utils.obtener_representacion_media_hora(utils.obtener_total_horas(reservacion.intervencion_quirurgica.hora_fin))
+		datos_formulario = {}
+		datos_formulario["nombre_paciente"] = reservacion.intervencion_quirurgica.paciente.nombre
+		datos_formulario["apellido_paciente"] = reservacion.intervencion_quirurgica.paciente.apellido
+		datos_formulario["nacionalidad_paciente"] = reservacion.intervencion_quirurgica.paciente.cedula[:2]
+		datos_formulario["cedula_paciente"] = reservacion.intervencion_quirurgica.paciente.cedula[2:]
+		datos_formulario["fecha_nacimiento_paciente"] = reservacion.intervencion_quirurgica.paciente.fecha_nacimiento
+		datos_formulario["codigo_telefono_paciente"] = reservacion.intervencion_quirurgica.paciente.telefono[:4]
+		datos_formulario["numero_telefono_paciente"] = reservacion.intervencion_quirurgica.paciente.telefono[5:]
+		datos_formulario["genero_paciente"] = reservacion.intervencion_quirurgica.paciente.genero
+		if reservacion.intervencion_quirurgica.paciente.compania_aseguradora:
+			datos_formulario["tipo_pago_paciente"] = "S"
+			datos_formulario["compania_aseguradora_paciente"] = reservacion.intervencion_quirurgica.paciente.compania_aseguradora
+		else:
+			datos_formulario["tipo_pago_paciente"] = "P"
+
+		if reservacion.intervencion_quirurgica.paciente.numero_expediente:
+			datos_formulario["paciente_con_expediente"] = True
+			datos_formulario["area_ingreso_paciente"] = reservacion.intervencion_quirurgica.paciente.area_ingreso
+			datos_formulario["numero_expediente_paciente"] = reservacion.intervencion_quirurgica.paciente.numero_expediente
+		else:
+			datos_formulario["paciente_con_expediente"] = False
+
+		if reservacion.intervencion_quirurgica.paciente.numero_habitacion:
+			datos_formulario["paciente_hospitalizado"] = True
+			datos_formulario["numero_habitacion_paciente"] = reservacion.intervencion_quirurgica.paciente.numero_habitacion
+		else:
+			datos_formulario["paciente_hospitalizado"] = False
+
+		datos_formulario["diagnostico_ingreso_paciente"] = reservacion.intervencion_quirurgica.paciente.diagnostico_ingreso
+		datos_formulario["servicios_operatorios_paciente"] = reservacion.intervencion_quirurgica.paciente.servicios_operatorios_requeridos.all()
+		datos_formulario["preferencia_anestesica"] = reservacion.intervencion_quirurgica.preferencia_anestesica
+		if reservacion.intervencion_quirurgica.observaciones:
+			datos_formulario["observaciones"] = reservacion.intervencion_quirurgica.observaciones
+
+		datos_formulario["riesgo"] = reservacion.intervencion_quirurgica.riesgo
+		if reservacion.intervencion_quirurgica.riesgo == "M":
+			datos_formulario["razon_riesgo"] = reservacion.intervencion_quirurgica.razon_riesgo
+
+		datos_formulario["materiales_quirurgicos_requeridos"] = reservacion.intervencion_quirurgica.materiales_quirurgicos_requeridos.all()
+		datos_formulario["equipos_especiales_requeridos"] = reservacion.intervencion_quirurgica.equipos_especiales_requeridos.all()
+		datos_formulario["dias_hospitalizacion"] = reservacion.dias_hospitalizacion
+
+		reservacion_diccionario["formulario"] = SolicitudQuirofanoForm(datos_formulario)
+		reservaciones_aprobadas_diccionarios.append(reservacion_diccionario)
+
 	datos = {}
 	datos['area_nombre'] = quirofanos_area[0].get_area_display()
 	datos['ano'] = ano
@@ -222,6 +283,8 @@ def plan_dia(request, area, ano, mes, dia):
 	datos['horas_intervencion'] = horas_intervencion
 	datos['minutos_intervencion'] = minutos_intervencion
 	datos['cantidad_medias_horas_intervencion'] = cantidad_medias_horas_intervencion
+	datos["reservaciones"] = reservaciones_aprobadas_diccionarios
+
 	return render_to_response('plan_quirurgico/plan_dia.html', datos, context_instance=RequestContext(request))
 
 @require_GET
