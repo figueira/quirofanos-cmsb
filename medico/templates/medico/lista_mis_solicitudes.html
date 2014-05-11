@@ -30,6 +30,7 @@
 				<div class="modal-body">
 					<form class="form-horizontal" id="formulario-solicitud-quirofano-{{ reservacion.objeto.pk }}" role="form" action="#" method="POST" novalidate>
 						{% csrf_token %}
+						<input type="hidden" name="reservacion-pk" value="{{reservacion.objeto.pk}}" />
 						<div id="datos-paciente-{{ reservacion.objeto.pk }}">
 							<div class="form-group" id="nombre-apellido-paciente-form-group">
 								<label class="col-lg-2 control-label" for="nombre-paciente">
@@ -699,11 +700,12 @@
 				</div>
 				{% if tipo == "pendiente" %}
 				<div class="modal-footer">
+					<a href="{% url 'cancelar_solicitud' %} ">
 					<button type="button" class="btn btn-danger pull-left" data-dismiss="modal">
 						<span class="glyphicon glyphicon-trash">
 						</span>
 						Cancelar Solicitud
-					</button>
+					</button></a>
 					<button type="submit" class="btn btn-primary" data-dismiss="modal">
 						Guardar Cambios
 					</button>

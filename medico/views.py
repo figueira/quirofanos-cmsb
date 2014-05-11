@@ -488,6 +488,24 @@ def mis_solicitudes(request, estado="pendientes"):
 @require_GET
 @login_required
 @user_passes_test(es_medico)
+def cancelar_solicitud(request):
+	''' Controlador correspondiente a la eliminacion de solicitudes realizadas por el medico
+
+	Parametros:
+	request -> Solicitud HTTP '''
+
+	formulario_cancelar_solicitud = SolicitudQuirofanoForm(request.POST)
+	nombre = formulario_cancelar_solicitud.cleaned_data['nombre_paciente']
+	reserva_pk = formulario_cancelar_solicitud.cleaned_data['reservacion-pk']
+
+	reserva = Reservacion.objects.get(pk = reservacion-pk)
+
+	return render_to_response('medico/mis_solicitudes.html', datos, context_instance=RequestContext(request))
+
+
+@require_GET
+@login_required
+@user_passes_test(es_medico)
 def proximas_intervenciones_quirurgicas(request):
 	''' Controlador correspondiente a la pagina del listado de las proximas intervenciones quirurgicas del medico
 
