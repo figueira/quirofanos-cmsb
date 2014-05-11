@@ -289,26 +289,29 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 @require_GET
 @login_required
 @user_passes_test(es_medico)
-def mis_solicitudes(request):
+def mis_solicitudes(request, estado="pendientes"):
 	 ''' Controlador correspondiente a la pagina del listado de solicitudes realizadas por el medico
 
 	 Parametros:
 	 request -> Solicitud HTTP '''
 
-	 nombre_usuario = request.session['nombre_usuario']
+	 if estado not in ("pendientes", "aprobadas", "rechazadas"):
+	 	raise Http404
+
+	 nombre_usuario = request.session['nombre_usuario']	 	
 	 usuario = User.objects.get(username = nombre_usuario)
 	 cuenta = Cuenta.objects.get(usuario = usuario)
 	 reservaciones_aprobadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='A')	 	 
 	 reservaciones_pendientes = Reservacion.objects.filter(medico = cuenta.medico, estado ='P')	 	 
 	 reservaciones_rechazadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='R')	 	 	 	 
 	 
-	 fsq = SolicitudQuirofanoForm()
-	 fsq.nombre_paciente = 'Daniel'
+	 fsq = SolicitudQuirofanoForm()	 
 
 	 datos = {}
 	 datos['reservaciones_aprobadas'] = reservaciones_aprobadas
 	 datos['reservaciones_pendientes'] = reservaciones_pendientes
 	 datos['reservaciones_rechazadas'] = reservaciones_rechazadas
+	 datos['estado_solicitud'] = estado
 	 datos['formulario_solicitud_quirofano'] = fsq
 
 
