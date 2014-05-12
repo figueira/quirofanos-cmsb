@@ -148,16 +148,16 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 				if formulario_solicitud_quirofano_valido:
 					with transaction.atomic():
 						cedula_paciente = formulario_solicitud_quirofano.cleaned_data["nacionalidad_paciente"] + formulario_solicitud_quirofano.cleaned_data["cedula_paciente"]
-						paciente = Paciente()
 						if not Paciente.objects.filter(cedula=cedula_paciente):
-							paciente.nombre = formulario_solicitud_quirofano.cleaned_data["nombre_paciente"]
-							paciente.apellido = formulario_solicitud_quirofano.cleaned_data["apellido_paciente"]
+							paciente = Paciente()
 							paciente.cedula = cedula_paciente
-							paciente.fecha_nacimiento = formulario_solicitud_quirofano.cleaned_data["fecha_nacimiento_paciente"]
-							paciente.genero = formulario_solicitud_quirofano.cleaned_data["genero_paciente"]
 						else:
 							paciente = Paciente.objects.get(cedula=cedula_paciente)
 
+						paciente.nombre = formulario_solicitud_quirofano.cleaned_data["nombre_paciente"]
+						paciente.apellido = formulario_solicitud_quirofano.cleaned_data["apellido_paciente"]
+						paciente.fecha_nacimiento = formulario_solicitud_quirofano.cleaned_data["fecha_nacimiento_paciente"]
+						paciente.genero = formulario_solicitud_quirofano.cleaned_data["genero_paciente"]
 						paciente.telefono = formulario_solicitud_quirofano.cleaned_data["codigo_telefono_paciente"] + "-" + formulario_solicitud_quirofano.cleaned_data["numero_telefono_paciente"]
 						paciente.diagnostico_ingreso = formulario_solicitud_quirofano.cleaned_data["diagnostico_ingreso_paciente"]
 						if formulario_solicitud_quirofano.cleaned_data["paciente_con_expediente"]:
@@ -217,7 +217,7 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 							procedimiento_quirurgico.save()
 
 					messages.add_message(request, messages.SUCCESS, MensajeTemporalExito.SOLICITUD_QUIROFANO_ENVIADA)
-					return render_to_response('medico/mis_solicitudes.html',  context_instance=RequestContext(request))
+					return redirect('mis_solicitudes', 'pendientes')
 
 			else:
 				errores_primera_pagina = formulario_solicitud_quirofano["nombre_paciente"].errors or formulario_solicitud_quirofano["apellido_paciente"].errors or formulario_solicitud_quirofano["cedula_paciente"].errors or formulario_solicitud_quirofano["genero_paciente"].errors or formulario_solicitud_quirofano["fecha_nacimiento_paciente"].errors or formulario_solicitud_quirofano["codigo_telefono_paciente"].errors or formulario_solicitud_quirofano["numero_telefono_paciente"].errors or formulario_solicitud_quirofano["diagnostico_ingreso_paciente"].errors or formulario_solicitud_quirofano["servicios_operatorios_paciente"].errors or formulario_solicitud_quirofano["paciente_hospitalizado"].errors or formulario_solicitud_quirofano["numero_habitacion_paciente"].errors or formulario_solicitud_quirofano["paciente_con_expediente"].errors or formulario_solicitud_quirofano["area_ingreso_paciente"].errors or formulario_solicitud_quirofano["numero_expediente_paciente"].errors or formulario_solicitud_quirofano["tipo_pago_paciente"].errors or formulario_solicitud_quirofano["compania_aseguradora_paciente"].errors
@@ -510,6 +510,8 @@ def cancelar_solicitud(request, pk):
 
 		# Elimina todos los Servicios del paciente
 		intervencion.paciente.servicios_operatorios_requeridos.clear()
+		intervencion.paciente.compania_aseguradora = None
+		intervencion_quirurgica.paciente.save()
 
 		# Elimina la Reservacion
 		reservacion.delete()

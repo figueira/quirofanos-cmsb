@@ -479,7 +479,7 @@ class IntervencionQuirurgica(models.Model):
     observaciones = models.TextField(blank=True, null=True)
     riesgo = models.CharField(max_length=1, choices=TIPO_RIESGO)
     razon_riesgo = models.TextField(blank=True, null=True)
-    paciente = models.OneToOneField(Paciente)
+    paciente = models.ForeignKey(Paciente)
     materiales_quirurgicos_requeridos = models.ManyToManyField(
         MaterialQuirurgico, blank=True, null=True)
     equipos_especiales_requeridos = models.ManyToManyField(
