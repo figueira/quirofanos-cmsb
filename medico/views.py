@@ -121,6 +121,7 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 						Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=tercer_ayudante, rol='3', monto_honorarios=monto_honorarios_tercer_ayudante)
 					agregando_procedimiento = False
 					procedimiento_agregado = True
+					formulario_procedimiento_quirurgico = ProcedimientoQuirurgicoForm(prefix="procedimiento_quirurgico")
 
 			except ObjectDoesNotExist:
 				lista_errores = formulario_procedimiento_quirurgico.error_class([MensajeTemporalError.TIPO_PROCEDIMIENTO_QUIRURGICO_INVALIDO])
@@ -504,21 +505,11 @@ def cancelar_solicitud(request, pk):
 		intervencion = reservacion.intervencion_quirurgica
 		lista_procedimientos=intervencion.procedimientoquirurgico_set.all()
 		for procedimiento in lista_procedimientos:
-			participacion = Participacion.objects.filter(procedimiento_quirurgico=procedimiento)
-			# Elimina las Participaciones Asociadas
-			participacion.all().delete()
-
-		# Elimina todos los Procedimientos Asociados
-		lista_procedimientos.all().delete()
-
-		# Elimina todos los Equipos Asociados
-		intervencion.equipos_especiales_requeridos.all().delete()
-
-		# Elimina todos los Materiales Asociados
-		intervencion.materiales_quirurgicos_requeridos.all().delete()
+			Participacion.objects.filter(procedimiento_quirurgico=procedimiento).delete()
+			procedimiento.delete()
 
 		# Elimina todos los Servicios del paciente
-		intervencion.paciente.servicios_operatorios_requeridos.all().delete()
+		intervencion.paciente.servicios_operatorios_requeridos.clear()
 
 		# Elimina la Reservacion
 		reservacion.delete()
