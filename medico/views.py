@@ -163,12 +163,19 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 						if formulario_solicitud_quirofano.cleaned_data["paciente_con_expediente"]:
 							paciente.area_ingreso = formulario_solicitud_quirofano.cleaned_data["area_ingreso_paciente"]
 							paciente.numero_expediente =  formulario_solicitud_quirofano.cleaned_data["numero_expediente_paciente"]
+						else:
+							paciente.area_ingreso = None
+							paciente.numero_expediente = None
 
 						if formulario_solicitud_quirofano.cleaned_data["paciente_hospitalizado"]:
 							paciente.numero_habitacion = formulario_solicitud_quirofano.cleaned_data["numero_habitacion_paciente"]
+						else:
+							paciente.numero_habitacion = None
 
 						if formulario_solicitud_quirofano.cleaned_data["tipo_pago_paciente"] == "S":
 							paciente.compania_aseguradora = formulario_solicitud_quirofano.cleaned_data["compania_aseguradora_paciente"]
+						else:
+							paciente.compania_aseguradora = None
 
 						paciente.save()
 
@@ -511,7 +518,7 @@ def cancelar_solicitud(request, pk):
 		# Elimina todos los Servicios del paciente
 		intervencion.paciente.servicios_operatorios_requeridos.clear()
 		intervencion.paciente.compania_aseguradora = None
-		intervencion_quirurgica.paciente.save()
+		intervencion.paciente.save()
 
 		# Elimina la Reservacion
 		reservacion.delete()
