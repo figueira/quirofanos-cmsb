@@ -354,6 +354,18 @@
                     </div>
                 </form>
             </div>
+            {% if agregar_boton_cancelar_solicitud %}
+            <div class="modal-footer">
+                <form action="{% url 'cancelar_solicitud' reservacion.objeto.pk %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger pull-left">
+                        <span class="glyphicon glyphicon-trash">
+                        </span>
+                        Cancelar Solicitud
+                    </button>
+                </form>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div><!-- Modal de Detalles de Intervencion -->

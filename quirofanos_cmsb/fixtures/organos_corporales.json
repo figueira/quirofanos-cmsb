@@ -6018,7 +6018,7 @@
     {
         "fields": {
             "codigo_icd_10_pcs": "A",
-            "nombre": "AOs\u00edculo Auditivo, Izquierdo",
+            "nombre": "Os\u00edculo Auditivo, Izquierdo",
             "sistema_corporal": "10",
             "tipos_procedimientos_permitidos": [
                 "6",

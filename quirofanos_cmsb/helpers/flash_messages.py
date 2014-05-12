@@ -26,9 +26,13 @@ class MensajeTemporalError():
     REGISTRO_MEDICO_CUENTA_EXISTE = _(u'Se intentó solicitar una cuenta para un médico que ya ha solicitado su cuenta.')
     REGISTRO_DEPARTAMENTO_CUENTA_EXISTE = _(u'Se intentó solicitar una cuenta para un departamento que ya ha solicitado su cuenta.')
     APROBACION_USUARIO_FALLIDA = _(u'Se intentó aprobar una cuenta de usuario no existente.')
-    CANCELACION_SOLICITUD_FALLIDA = _(u'Se intentó cancelar una solicitud que no existente.')    
+    CANCELACION_SOLICITUD_FALLIDA = _(u'Se intentó cancelar una solicitud que no existe.')
     RECHAZO_USUARIO_FALLIDO = _(u'Se intentó rechazar una cuenta de usuario no existente.')
     TIPO_PROCEDIMIENTO_QUIRURGICO_INVALIDO = _(u'Se intentó agregar un procedimiento quirúrgico inválido.')
     NO_SE_AGREGO_PROCEDIMIENTO_QUIRURGICO = _(u'Debe agregar al menos un (1) procedimiento quirúrgico.')
     RECUPERAR_CONTRASENA_SIN_EMAIL = _(u'No posee un correo electrónico asociado a esta cuenta. Por Favor comuníquese con el administrador del sistema para la recuperación de su clave de acceso.')
     ELIMINAR_PROCEDIMIENTO_QUIRURGICO_INVALIDO = _(u'Se intentó eliminar un procedimiento quirúrgico inválido.')
+
+class MensajeTemporalAviso():
+    ''' Clase que contiene constantes para ser utilizadas como mensajes temporales (flash messages) de avisos (warnings) '''
+    SOLICITUD_QUIROFANO_CANCELADA = _(u'La solicitud de quirófano ha sido cancelada.')

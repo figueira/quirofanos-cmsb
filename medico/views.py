@@ -17,7 +17,7 @@ from datetime import time
 from quirofanos_cmsb.helpers.user_tests import es_medico
 from quirofanos_cmsb.helpers import utils
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
-from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito
+from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito, MensajeTemporalAviso
 from quirofanos_cmsb.models import User, Cuenta, Quirofano, SistemaCorporal, OrganoCorporal, TipoProcedimientoQuirurgico, Participacion, ProcedimientoQuirurgico, Reservacion, IntervencionQuirurgica, Paciente
 from medico.forms import SolicitudQuirofanoForm, ProcedimientoQuirurgicoForm, EliminarProcedimientoQuirurgicoForm
 
@@ -485,7 +485,7 @@ def mis_solicitudes(request, estado="pendientes"):
 
 	return render_to_response('medico/mis_solicitudes.html', datos, context_instance=RequestContext(request))
 
-@require_GET
+@require_POST
 @login_required
 @user_passes_test(es_medico)
 def cancelar_solicitud(request, pk):
@@ -494,13 +494,14 @@ def cancelar_solicitud(request, pk):
 	Parametros:
 	request -> Solicitud HTTP '''
 
-	try:			
+	try:
 		reservacion = Reservacion.objects.get(pk=pk)
 	except ObjectDoesNotExist:
    		messages.add_message(request, messages.ERROR, MensajeTemporalError. CANCELACION_SOLICITUD_FALLIDA)
-	
-	with transaction.atomic():
-   		intervencion = reservacion.intervencion_quirurgica
+   		return redirect('mis_solicitudes', estado='pendientes')
+
+   	with transaction.atomic():
+		intervencion = reservacion.intervencion_quirurgica
 		lista_procedimientos=intervencion.procedimientoquirurgico_set.all()
 		for procedimiento in lista_procedimientos:
 			participacion = Participacion.objects.filter(procedimiento_quirurgico=procedimiento)
@@ -525,9 +526,8 @@ def cancelar_solicitud(request, pk):
 		# Elimina la Intervencion
 		intervencion.delete()
 
-
+	messages.add_message(request, messages.WARNING, MensajeTemporalAviso.SOLICITUD_QUIROFANO_CANCELADA)
 	return redirect('mis_solicitudes', estado='pendientes')
-
 
 @require_GET
 @login_required
