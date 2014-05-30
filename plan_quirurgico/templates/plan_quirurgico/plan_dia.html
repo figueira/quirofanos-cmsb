@@ -52,6 +52,15 @@
 		</p>
 		<a href="{% url 'plan_dia' area_actual ano mes dia %}" class="btn btn-default pull-right">{{ CANCELAR }}</a>
 	</div>
+	<div class="col-lg-1 col-lg-offset-11 col-centered">
+		<h1 class="text-center">
+			<small>
+				<a href="{% url 'plan_dia_obs' area_actual ano mes dia %}">
+					<span class="glyphicon glyphicon-th-list" data-toggle="tooltip" data-placement="left" title="Ver Plan Quirúrgico de Observadores" ></span>
+				</a>
+			</small>
+		</h1>
+	</div>
 </div><br><!-- Aviso Seleccionar Turno Intervencion -->
 
 {% if seleccionar_turno %}
@@ -194,9 +203,9 @@ $(function(){
 					{% if seleccionar_turno %}
 					{% if media_hora in quirofano.turnos_disponibles %}
 					<td class="available available-select" data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}" rowspan="{{ cantidad_medias_horas_intervencion }}">
-							<a class="btn btn-primary" href="{% url 'solicitud_quirofano' ano mes dia quirofano.clave_primaria media_hora cantidad_medias_horas_intervencion %}">
-								{{ SELECCIONAR_TURNO }}
-							</a>
+						<a class="btn btn-primary" href="{% url 'solicitud_quirofano' ano mes dia quirofano.clave_primaria media_hora cantidad_medias_horas_intervencion %}">
+							{{ SELECCIONAR_TURNO }}
+						</a>
 					</td>
 					{% elif media_hora in quirofano.medias_horas_disponibles_atravesadas %}
 					<td data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}">
@@ -211,9 +220,9 @@ $(function(){
 					{% if seleccionar_turno %}
 					{% if media_hora in quirofano.turnos_disponibles %}
 					<td class="available available-select" data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}" rowspan="{{ cantidad_medias_horas_intervencion }}">
-							<a class="btn btn-primary" href="{% url 'solicitud_quirofano' ano mes dia quirofano.clave_primaria media_hora cantidad_medias_horas_intervencion %}">
-								{{ SELECCIONAR_TURNO }}
-							</a>
+						<a class="btn btn-primary" href="{% url 'solicitud_quirofano' ano mes dia quirofano.clave_primaria media_hora cantidad_medias_horas_intervencion %}">
+							{{ SELECCIONAR_TURNO }}
+						</a>
 					</td>
 					{% elif media_hora in quirofano.medias_horas_disponibles_atravesadas %}
 					<td data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}">

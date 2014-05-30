@@ -1,0 +1,100 @@
+<html>
+<head>
+	<title>
+		Plan Quirúrgico
+	</title>
+	<style type="text/css">
+	@page {
+		size: {{ pagesize }};
+		margin: 1cm;
+		@frame footer {
+			-pdf-frame-content: footerContent;
+			bottom: 0cm;
+			margin-left: 9cm;
+			margin-right: 9cm;
+			height: 1cm;
+		}
+	}
+	</style>
+</head>
+<body>
+	<div class="page-header">
+		<img src="{{ img_path }}" style="zoom: 80%;" />
+		<h1>Centro Médico de Caracas</h1>
+		<h2>
+			<center>
+				<p>Plan Quirúrgico</p>
+				<p>{{ area_nombre }} - {{ dia }}/{{ mes }}/{{ ano }}</p>
+			</center>
+		</h2>
+	</div><br>
+
+	<div>
+		{% if intervenciones %}
+		<table>
+			<tr>
+				<th class="col-lg-1">Quirófano</th>
+				<th class="col-lg-1">Hora</th>
+				<th class="col-lg-1">Paciente</th>
+				<th class="col-lg-1">Procedimientos Quirúrgicos</th>
+				<th class="col-lg-1">Médico</th>
+				<th class="col-lg-1">Anestesiólogo</th>
+				<th class="col-lg-1">Observaciones</th>
+			</tr>
+		</table>
+		<table>
+			<hr width=50% align="center">
+			{% for intervencion in intervenciones %}
+			<tr>
+				<th>
+					<h3>
+						{% if intervencion.objeto.quirofano.numero == 0 %}
+						<abbr title='Sala de Recuperación'>SR</abbr>
+						{% else %}
+						{{ intervencion.objeto.quirofano.numero }}
+						{% endif %}
+					</h3>
+				</th>
+				<th>
+					<h4>{{ intervencion.hora_inicio }} - {{ intervencion.hora_fin }}</h4>
+				</th>
+				<th>
+					<h4>{{ intervencion.objeto.paciente.nombre }} {{ intervencion.objeto.paciente.apellido }}</h4>
+				</th>
+				<th>
+					{% for proc in intervencion.procedimientos %}
+					<h3>
+						{{ proc.tipo_procedimiento_quirurgico.nombre }} -
+						{{ proc.organo_corporal.nombre }}
+					</h3>
+					{% endfor %}
+				</th>
+				<th>
+					<h4>{{ intervencion.objeto.reservacion.medico }}</h4>
+				</th>
+				<th>
+					<h4>{{ intervencion.anestesiologo }}</h4>
+				</th>
+				<th>
+					{% if intervencion.objeto.observaciones %}
+					<h4>{{ intervencion.objeto.observaciones}}</h4>
+					{% else %}
+					<h4>Sin observaciones</h4>
+					{% endif %}
+				</th>
+			</tr>
+			{% endfor %}
+		</table>
+		{% else %}
+		<strong>No existen Intervenciones Quirúrgicas programadas para este día.</strong>
+		{% endif %}
+	</div>
+
+
+	<div id="footerContent">
+		{%block page_foot%}
+		Página <pdf:pagenumber>
+		{%endblock%}
+	</div>
+</body>
+</html>
