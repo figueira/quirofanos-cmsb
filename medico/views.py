@@ -114,12 +114,17 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 						procedimiento_quirurgico.save()
 						Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=cirujano_principal, rol='4', monto_honorarios=monto_honorarios_cirujano_principal)
 						Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=anestesiologo, rol='0', monto_honorarios=utils.obtener_cuarenta_porciento(monto_honorarios_cirujano_principal))
-						Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=primer_ayudante, rol='1', monto_honorarios=utils.obtener_cuarenta_porciento(monto_honorarios_cirujano_principal))
-						Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=segundo_ayudante, rol='2', monto_honorarios=utils.obtener_treinta_porciento(monto_honorarios_cirujano_principal))
+						if primer_ayudante:
+							Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=primer_ayudante, rol='1', monto_honorarios=utils.obtener_cuarenta_porciento(monto_honorarios_cirujano_principal))
+
+						if segundo_ayudante:
+							Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=segundo_ayudante, rol='2', monto_honorarios=utils.obtener_treinta_porciento(monto_honorarios_cirujano_principal))
+
 						if not monto_honorarios_tercer_ayudante:
 							monto_honorarios_tercer_ayudante = 0.00
 
-						Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=tercer_ayudante, rol='3', monto_honorarios=monto_honorarios_tercer_ayudante)
+						if tercer_ayudante:
+							Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=tercer_ayudante, rol='3', monto_honorarios=monto_honorarios_tercer_ayudante)
 					agregando_procedimiento = False
 					procedimiento_agregado = True
 					formulario_procedimiento_quirurgico = ProcedimientoQuirurgicoForm(prefix="procedimiento_quirurgico")
@@ -161,22 +166,22 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 						paciente.genero = formulario_solicitud_quirofano.cleaned_data["genero_paciente"]
 						paciente.telefono = formulario_solicitud_quirofano.cleaned_data["codigo_telefono_paciente"] + "-" + formulario_solicitud_quirofano.cleaned_data["numero_telefono_paciente"]
 						paciente.diagnostico_ingreso = formulario_solicitud_quirofano.cleaned_data["diagnostico_ingreso_paciente"]
-						if formulario_solicitud_quirofano.cleaned_data["paciente_con_expediente"]:
-							paciente.area_ingreso = formulario_solicitud_quirofano.cleaned_data["area_ingreso_paciente"]
-							paciente.numero_expediente =  formulario_solicitud_quirofano.cleaned_data["numero_expediente_paciente"]
-						else:
-							paciente.area_ingreso = None
-							paciente.numero_expediente = None
+						# if formulario_solicitud_quirofano.cleaned_data["paciente_con_expediente"]:
+						# 	paciente.area_ingreso = formulario_solicitud_quirofano.cleaned_data["area_ingreso_paciente"]
+						# 	paciente.numero_expediente =  formulario_solicitud_quirofano.cleaned_data["numero_expediente_paciente"]
+						# else:
+						# 	paciente.area_ingreso = None
+						# 	paciente.numero_expediente = None
 
 						if formulario_solicitud_quirofano.cleaned_data["paciente_hospitalizado"]:
 							paciente.numero_habitacion = formulario_solicitud_quirofano.cleaned_data["numero_habitacion_paciente"]
 						else:
 							paciente.numero_habitacion = None
 
-						if formulario_solicitud_quirofano.cleaned_data["tipo_pago_paciente"] == "S":
-							paciente.compania_aseguradora = formulario_solicitud_quirofano.cleaned_data["compania_aseguradora_paciente"]
-						else:
-							paciente.compania_aseguradora = None
+						# if formulario_solicitud_quirofano.cleaned_data["tipo_pago_paciente"] == "S":
+						# 	paciente.compania_aseguradora = formulario_solicitud_quirofano.cleaned_data["compania_aseguradora_paciente"]
+						# else:
+						# 	paciente.compania_aseguradora = None
 
 						paciente.save()
 
