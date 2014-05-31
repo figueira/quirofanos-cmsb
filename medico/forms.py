@@ -54,7 +54,6 @@ class SolicitudQuirofanoForm(BaseForm):
         #if paciente_con_expediente and numero_expediente_paciente == "":
             #self._errors["numero_expediente_paciente"] = self.error_class([MensajeError.PACIENTE_CON_EXPEDIENTE_SIN_ESPECIFICACION])
             #del cleaned_data["numero_expediente_paciente"]
-
         paciente_hospitalizado = cleaned_data.get("paciente_hospitalizado")
         numero_habitacion_paciente = cleaned_data.get("numero_habitacion_paciente")
         if paciente_hospitalizado and numero_habitacion_paciente == "":
@@ -74,11 +73,11 @@ class ProcedimientoQuirurgicoForm(BaseForm):
     id_organo_corporal = forms.IntegerField(min_value=1, widget=forms.HiddenInput, required=False)
     id_tipo_procedimiento_quirurgico = forms.IntegerField(min_value=1, widget=forms.HiddenInput, required=False)
     monto_honorarios_cirujano_principal = forms.DecimalField(min_value=0.00, max_digits=15, decimal_places=2)
-    cirujano_principal = forms.ModelChoiceField(queryset=Medico.objects.all())
-    anestesiologo = forms.ModelChoiceField(queryset=Medico.objects.all())
-    primer_ayudante = forms.ModelChoiceField(queryset=Medico.objects.all())
-    segundo_ayudante = forms.ModelChoiceField(queryset=Medico.objects.all())
-    tercer_ayudante = forms.ModelChoiceField(queryset=Medico.objects.all())
+    cirujano_principal = forms.ModelChoiceField(queryset=Medico.objects.all().order_by('apellido'))
+    anestesiologo = forms.ModelChoiceField(queryset=Medico.objects.filter(especializacion='Anestesiologia').order_by('apellido'))
+    primer_ayudante = forms.ModelChoiceField(queryset=Medico.objects.all().order_by('apellido'), required=False)
+    segundo_ayudante = forms.ModelChoiceField(queryset=Medico.objects.all().order_by('apellido'), required=False)
+    tercer_ayudante = forms.ModelChoiceField(queryset=Medico.objects.all().order_by('apellido'), required=False)
     monto_honorarios_tercer_ayudante = forms.DecimalField(min_value=0.00, max_digits=15, decimal_places=2, required=False)
 
 class EliminarProcedimientoQuirurgicoForm(BaseForm):

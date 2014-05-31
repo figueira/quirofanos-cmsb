@@ -28,6 +28,17 @@
 			Plan Quirúrgico
 		</a>
 		<small> - {{ area_nombre }} - {{ dia }}/{{ mes }}/{{ ano }}</small>
+		<small class="pull-right">
+			<a href="{% url 'plan_dia_pdf' area_actual ano mes dia %}">
+				<img src="{% static 'img/pdf.png' %}" height="24" width="24" data-toggle="tooltip" data-placement="left" title="Generar Plan Quirúrgico en PDF"/>
+			</a>
+			{% if  request.user.cuenta.privilegio == "4" %}
+			<a href="{% url 'plan_dia' area_actual ano mes dia %}">
+				<span class="glyphicon glyphicon-th" data-toggle="tooltip" data-placement="left" title="Ver Plan Quirúrgico de Médicos"></span>
+			</a>
+			{% endif %}
+		</small>
+
 	</h1>
 </div><br>
 
@@ -45,7 +56,7 @@
 					<th class="col-lg-1">Paciente</th>
 					<th class="col-lg-1">Procedimientos Quirúrgicos</th>
 					<th class="col-lg-1">Médico</th>
-					<th class="col-lg-1">Anestesia</th>
+					<th class="col-lg-1">Anestesiólogo</th>
 					<th class="col-lg-1">Observaciones</th>
 					<th class="col-lg-1">Estatus</th>
 				</tr>
@@ -56,9 +67,9 @@
 					<td>
 						<h3><span class="label label-info label-quirofano-{{ intervencion.objeto.quirofano.numero }}">
 							{% if intervencion.objeto.quirofano.numero == 0 %}
-								<abbr title='Sala de Recuperación'>SR</abbr>
+							<abbr title='Sala de Recuperación'>SR</abbr>
 							{% else %}
-								{{ intervencion.objeto.quirofano.numero }}
+							{{ intervencion.objeto.quirofano.numero }}
 							{% endif %}
 						</span></h3>
 					</td>
@@ -82,13 +93,13 @@
 						<h4>{{ intervencion.objeto.reservacion.medico }}</h4>
 					</td>
 					<td>
-						<h3><span class="label label-default">{{ intervencion.objeto.preferencia_anestesica}}</span></h3>
+						<h4>{{ intervencion.anestesiologo }}</h4>
 					</td>
 					<td>
 						{% if intervencion.objeto.observaciones %}
-							<h4>{{ intervencion.objeto.observaciones}}</h4>
+						<h4>{{ intervencion.objeto.observaciones}}</h4>
 						{% else %}
-							<h4>Sin observaciones</h4>
+						<h4>Sin observaciones</h4>
 						{% endif %}
 					</td>
 					<td>

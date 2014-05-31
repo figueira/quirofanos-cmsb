@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, redirect
-from django.http import Http404
-from django.template import RequestContext
+from django.http import Http404, HttpResponse
+from django.template import RequestContext, Context
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods, require_GET, require_POST
 from django.contrib import messages
@@ -11,9 +11,13 @@ from django.db import transaction
 from datetime import date, timedelta
 import calendar
 import math
+import cStringIO as StringIO
+import ho.pisa as pisa
+from django.template.loader import get_template
+from cgi import escape
 
 from quirofanos_cmsb.helpers import utils
-from quirofanos_cmsb.models import Quirofano, IntervencionQuirurgica, Reservacion
+from quirofanos_cmsb.models import Quirofano, IntervencionQuirurgica, Reservacion, Participacion, Medico
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
 from plan_quirurgico.forms import DuracionIntervencionQuirurgicaForm
 from autenticacion.forms import CambiarContrasenaForm, ActualizarEmailForm
@@ -209,6 +213,10 @@ def plan_dia(request, area, ano, mes, dia):
 			quirofano_diccionario['medias_horas_disponibles_atravesadas'] = medias_horas_disponibles_atravesadas
 		quirofanos_area_intervenciones.append(quirofano_diccionario)
 
+	if quirofanos_area_intervenciones[0]['nombre'] == TextoMostrable.SALA_RECUPERACION:
+		quirofanos_area_sr = quirofanos_area_intervenciones.pop(0)
+		quirofanos_area_intervenciones.append(quirofanos_area_sr)
+
 	reservaciones_aprobadas = Reservacion.objects.filter(estado ='A', intervencion_quirurgica__fecha_intervencion__year=ano, intervencion_quirurgica__fecha_intervencion__month=mes, intervencion_quirurgica__fecha_intervencion__day=dia, intervencion_quirurgica__quirofano__area=area)
 
 	reservaciones_aprobadas_diccionarios = []
@@ -313,14 +321,17 @@ def plan_dia_obs(request, area, ano, mes, dia):
 		raise Http404
 
 	intervenciones = []
-	lista_intervenciones_area = IntervencionQuirurgica.objects.filter(fecha_intervencion__year=ano, fecha_intervencion__month=mes, fecha_intervencion__day=dia, reservacion__estado='A', quirofano__area=area).order_by('hora_fin','hora_inicio')
+	lista_intervenciones_area = IntervencionQuirurgica.objects.filter(fecha_intervencion__year=ano, fecha_intervencion__month=mes, fecha_intervencion__day=dia, reservacion__estado='A', quirofano__area=area).order_by('quirofano','hora_fin','hora_inicio')
 
 	for intervencion in lista_intervenciones_area:
 		intervencion_diccionario = {}
 		intervencion_diccionario['objeto'] = intervencion
-		intervencion_diccionario['procedimientos'] = intervencion.procedimientoquirurgico_set.all()
+		procedimientos = intervencion.procedimientoquirurgico_set.all()
+		intervencion_diccionario['procedimientos'] = procedimientos
 		intervencion_diccionario['hora_inicio'] = obtener_representacion_media_hora(obtener_total_horas(intervencion.hora_inicio))
 		intervencion_diccionario['hora_fin'] = obtener_representacion_media_hora(obtener_total_horas(intervencion.hora_fin))
+		anestesiologo_id = Participacion.objects.get(procedimiento_quirurgico_id=procedimientos.first().id, rol=0).medico_id
+		intervencion_diccionario['anestesiologo'] = Medico.objects.get(id=anestesiologo_id)
 		intervenciones.append(intervencion_diccionario)
 
 	datos = {}
@@ -333,3 +344,60 @@ def plan_dia_obs(request, area, ano, mes, dia):
 	datos['intervenciones'] = intervenciones
 
 	return render_to_response('plan_quirurgico/plan_dia_obs.html', datos, context_instance=RequestContext(request))
+
+@require_GET
+@login_required
+def plan_dia_pdf(request, area, ano, mes, dia):
+	''' Controlador correspondiente a la generacion del plan quirurgico en PDF
+
+	Parametros:
+	request -> Solucitud HTTP
+	area -> Area de quirofanos a consultar
+	ano -> Ano a consultar
+	mes -> Mes a consultar
+	dia -> Dia a consultar '''
+	ano = int(ano)
+	mes = int(mes)
+	dia = int(dia)
+	areas_valores = Quirofano.objects.distinct('area').values_list('area', flat=True)
+	quirofanos_area = Quirofano.objects.filter(area=area)
+
+	intervenciones = []
+	lista_intervenciones_area = IntervencionQuirurgica.objects.filter(fecha_intervencion__year=ano, fecha_intervencion__month=mes, fecha_intervencion__day=dia, reservacion__estado='A', quirofano__area=area).order_by('quirofano','hora_fin','hora_inicio')
+
+	for intervencion in lista_intervenciones_area:
+		intervencion_diccionario = {}
+		intervencion_diccionario['objeto'] = intervencion
+		procedimientos = intervencion.procedimientoquirurgico_set.all()
+		intervencion_diccionario['procedimientos'] = procedimientos
+		intervencion_diccionario['hora_inicio'] = obtener_representacion_media_hora(obtener_total_horas(intervencion.hora_inicio))
+		intervencion_diccionario['hora_fin'] = obtener_representacion_media_hora(obtener_total_horas(intervencion.hora_fin))
+		anestesiologo_id = Participacion.objects.get(procedimiento_quirurgico_id=procedimientos.first().id, rol=0).medico_id
+		intervencion_diccionario['anestesiologo'] = Medico.objects.get(id=anestesiologo_id)
+		intervenciones.append(intervencion_diccionario)
+
+	return render_to_pdf('plan_dia_pdf.html',
+		{
+		'area_nombre': quirofanos_area[0].get_area_display(),
+		'ano' : ano,
+		'mes': mes,
+		'dia' : dia,
+		'quirofanos_area': quirofanos_area,
+		'intervenciones': intervenciones,
+		'img_path': '/static/img/logo_centro_medico.png',
+		'pagesize':'A4',
+		})
+
+
+def render_to_pdf(template_src, context_dict):
+	template = get_template(template_src)
+	context = Context(context_dict)
+	html  = template.render(context)
+	result = StringIO.StringIO()
+
+	pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("ISO-8859-1")), result)
+	if not pdf.err:
+		response = HttpResponse(result.getvalue(), mimetype='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename=plan_quirurgico.pdf'
+        return response
+	return HttpResponse('ERROR<pre>%s</pre>' % escape(html))

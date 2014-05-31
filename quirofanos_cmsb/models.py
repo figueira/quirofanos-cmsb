@@ -119,7 +119,7 @@ class Cuenta (models.Model):
 class Medico (models.Model):
     ''' Clase que representa un Medico '''
     class Meta:
-        ordering = ["nombre"]
+        ordering = ["apellido"]
 
     cuenta = models.OneToOneField(Cuenta, blank=True, null=True)
     nombre = models.CharField(max_length=100, validators=[
@@ -149,7 +149,7 @@ class Medico (models.Model):
 
     def __unicode__(self):
         ''' Representacion unicode '''
-        return self.nombre + ' ' + self.apellido
+        return self.apellido + ' ' + self.nombre
 
 class Departamento (models.Model):
     ''' Clase que representa un Departamento '''

@@ -281,56 +281,6 @@
 							</script>
 							{% endif %}
 						</div>
-						<div class="form-group" id="area-ingreso-numero-expediente-form-group">
-							<label class="col-lg-2 control-label">
-								{% render_field formulario_solicitud_quirofano.paciente_con_expediente id="paciente-con-expediente" %}
-								{{ LABEL_PACIENTE_CON_EXPEDIENTE }}
-							</label>
-							<div class="hidden" id="area-ingreso-numero-expediente">
-								<label class="col-lg-2 control-label" for="area-ingreso-paciente">
-									{{ LABEL_AREA_INGRESO }}
-								</label>
-								<div class="col-lg-4">
-									{% render_field formulario_solicitud_quirofano.area_ingreso_paciente class="form-control" id="area-ingreso-paciente" %}
-									<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="area-ingreso-paciente-error-feedback-icon"></span>
-									<span class="help-block hidden" id="area-ingreso-paciente-error-help">{{ formulario_solicitud_quirofano.area_ingreso_paciente.errors }}</span>
-								</div>
-								{% if not agregando_procedimiento and not procedimiento_agregado and not procedimiento_eliminado and formulario_solicitud_quirofano.area_ingreso_paciente.errors %}
-								<script type="text/javascript">
-								$(function() {
-									mostrarErroresAreaIngresoPaciente();
-								});
-								</script>
-								{% endif %}
-								<div class="col-lg-3">
-									{% render_field formulario_solicitud_quirofano.numero_expediente_paciente class="form-control" id="numero-expediente-paciente" placeholder=LABEL_NUMERO_EXPEDIENTE %}
-									<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="numero-expediente-paciente-error-feedback-icon"></span>
-									<span class="help-block hidden" id="numero-expediente-paciente-error-help">{{ formulario_solicitud_quirofano.numero_expediente_paciente.errors }}</span>
-									<span class="help-block hidden" id="paciente-con-expediente-error-help">{{ formulario_solicitud_quirofano.paciente_con_expediente.errors }}</span>
-								</div>
-								{% if not agregando_procedimiento and not procedimiento_agregado and not procedimiento_eliminado and formulario_solicitud_quirofano.numero_expediente_paciente.errors %}
-								<script type="text/javascript">
-								$(function() {
-									mostrarErroresNumeroExpedientePaciente();
-								});
-								</script>
-								{% endif %}
-								{% if not agregando_procedimiento and not procedimiento_agregado and not procedimiento_eliminado and formulario_solicitud_quirofano.paciente_con_expediente.errors %}
-								<script type="text/javascript">
-								$(function() {
-									mostrarErroresPacienteConExpediente();
-								});
-								</script>
-								{% endif %}
-							</div>
-							{% if formulario_solicitud_quirofano.paciente_con_expediente.value %}
-							<script type="text/javascript">
-							$(function() {
-								mostrarCamposExpedientePaciente();
-							});
-							</script>
-							{% endif %}
-						</div>
 					</div>
 					<div class="panel-footer">
 						<div class="form-group">
