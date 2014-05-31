@@ -87,6 +87,7 @@ ROL_PARTICIPACION = (
     ('1', u'Primer Ayudante'),
     ('2', u'Segundo Ayudante'),
     ('3', u'Tercer Ayudante'),
+    ('4', u'Cirujano Principal'),
 )
 
 # Areas de ingreso asociadas al numero de expediente de un paciente
@@ -98,9 +99,6 @@ AREA_INGRESO = (
     ('AL', u'Admisión por Laboratorio'),
     ('AX', u'Registro de Red Modificado'),
     )
-
-# Constante para truncar a dos decimales
-TWO_PLACES = decimal.Decimal('0.01')
 
 class Cuenta (models.Model):
     ''' Clase que representa una Cuenta de Usuario '''
@@ -547,7 +545,6 @@ class ProcedimientoQuirurgico(models.Model):
     intervencion_quirurgica = models.ForeignKey(IntervencionQuirurgica, blank=True, null=True)
     tipo_procedimiento_quirurgico = models.ForeignKey(TipoProcedimientoQuirurgico)
     organo_corporal = models.ForeignKey(OrganoCorporal)
-    monto_honorarios_cirujano_principal = models.DecimalField(max_digits=15, decimal_places=2)
     medicos_participantes = models.ManyToManyField(Medico, through='Participacion')
 
     def save(self, **kwargs):
@@ -555,24 +552,9 @@ class ProcedimientoQuirurgico(models.Model):
         self.full_clean()
         super(ProcedimientoQuirurgico, self).save()
 
-    def obtener_monto_honorarios_anestesiologo(self):
-        ''' Devuelve el monto correspondiente a los honorarios del anestesiologo segun los honorarios del medico '''
-        cuarenta_porciento = decimal.Decimal('0.4') * self.monto_honorarios_cirujano_principal
-        return cuarenta_porciento.quantize(TWO_PLACES)
-
-    def obtener_monto_honorarios_primer_ayudante(self):
-        ''' Devuelve el monto correspondiente a los honorarios del primer ayudante segun los honorarios del medico '''
-        cuarenta_porciento = decimal.Decimal('0.4') * self.monto_honorarios_cirujano_principal
-        return cuarenta_porciento.quantize(TWO_PLACES)
-
-    def obtener_monto_honorarios_segundo_ayudante(self):
-        ''' Devuelve el monto correspondiente a los honorarios del segundo ayudante segun los honorarios del medico '''
-        treinta_porciento = decimal.Decimal('0.3') * self.monto_honorarios_cirujano_principal
-        return treinta_porciento.quantize(TWO_PLACES)
-
     def obtener_monto_honorarios_total(self):
         ''' Devuelve el monto total de honorarios del procedimiento quirurgico '''
-        monto_honorarios_total = monto_honorarios_cirujano_principal
+        monto_honorarios_total = 0.00
         for medico in self.medicos_participantes.all():
             participacion = Participacion.get(procedimiento_quirurgico=self, medico=medico)
             monto_honorarios_total = monto_honorarios_total + participacion.monto_honorarios

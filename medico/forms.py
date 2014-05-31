@@ -27,11 +27,11 @@ class SolicitudQuirofanoForm(BaseForm):
     codigo_telefono_paciente = forms.CharField(validators=[RegexValidator(ExpresionRegular.CODIGO_TELEFONO, MensajeError.CODIGO_TELEFONO_INVALIDO, CodigoError.CODIGO_TELEFONO_INVALIDO)])
     numero_telefono_paciente = forms.CharField(validators=[RegexValidator(ExpresionRegular.NUMERO_TELEFONO, MensajeError.NUMERO_TELEFONO_INVALIDO, CodigoError.NUMERO_TELEFONO_INVALIDO)])
     genero_paciente = forms.ChoiceField(choices=GENERO, widget=forms.RadioSelect)
-    tipo_pago_paciente = forms.ChoiceField(choices=TIPO_PAGO, widget=forms.RadioSelect)
-    compania_aseguradora_paciente = forms.ModelChoiceField(queryset=CompaniaAseguradora.objects.all(), required=False)
+    #tipo_pago_paciente = forms.ChoiceField(choices=TIPO_PAGO, widget=forms.RadioSelect)
+    #compania_aseguradora_paciente = forms.ModelChoiceField(queryset=CompaniaAseguradora.objects.all(), required=False)
     paciente_con_expediente = forms.BooleanField(required=False)
-    area_ingreso_paciente = forms.ChoiceField(choices=AREA_INGRESO, required=False)
-    numero_expediente_paciente = forms.CharField(validators=[RegexValidator(ExpresionRegular.NUMERO_EXPEDIENTE, MensajeError.NUMERO_EXPEDIENTE_INVALIDO, CodigoError.NUMERO_EXPEDIENTE_INVALIDO)], required=False)
+    #area_ingreso_paciente = forms.ChoiceField(choices=AREA_INGRESO, required=False)
+    #numero_expediente_paciente = forms.CharField(validators=[RegexValidator(ExpresionRegular.NUMERO_EXPEDIENTE, MensajeError.NUMERO_EXPEDIENTE_INVALIDO, CodigoError.NUMERO_EXPEDIENTE_INVALIDO)], required=False)
     paciente_hospitalizado = forms.BooleanField(required=False)
     numero_habitacion_paciente = forms.CharField(validators=[RegexValidator(ExpresionRegular.NUMERO_HABITACION, MensajeError.NUMERO_HABITACION_INVALIDO, CodigoError.NUMERO_HABITACION_INVALIDO)], required=False)
     diagnostico_ingreso_paciente = forms.CharField(widget=forms.Textarea)
@@ -49,11 +49,11 @@ class SolicitudQuirofanoForm(BaseForm):
     def clean(self):
         ''' Sobreescribe el clean(), asegurandose de que si este campo es True se debe haber indicado numero de expediente. Ademas, asegurandose de que si este campo es True se debe haber indicado el numero de habitacion. Ademas, asegurandose de que si el riesgo es malo entonces debe haberse indicado la razon del riesgo. '''
         cleaned_data = super(SolicitudQuirofanoForm, self).clean()
-        paciente_con_expediente = cleaned_data.get("paciente_con_expediente")
-        numero_expediente_paciente = cleaned_data.get("numero_expediente_paciente")
-        if paciente_con_expediente and numero_expediente_paciente == "":
-            self._errors["numero_expediente_paciente"] = self.error_class([MensajeError.PACIENTE_CON_EXPEDIENTE_SIN_ESPECIFICACION])
-            del cleaned_data["numero_expediente_paciente"]
+        #paciente_con_expediente = cleaned_data.get("paciente_con_expediente")
+        #numero_expediente_paciente = cleaned_data.get("numero_expediente_paciente")
+        #if paciente_con_expediente and numero_expediente_paciente == "":
+            #self._errors["numero_expediente_paciente"] = self.error_class([MensajeError.PACIENTE_CON_EXPEDIENTE_SIN_ESPECIFICACION])
+            #del cleaned_data["numero_expediente_paciente"]
 
         paciente_hospitalizado = cleaned_data.get("paciente_hospitalizado")
         numero_habitacion_paciente = cleaned_data.get("numero_habitacion_paciente")
@@ -74,6 +74,7 @@ class ProcedimientoQuirurgicoForm(BaseForm):
     id_organo_corporal = forms.IntegerField(min_value=1, widget=forms.HiddenInput, required=False)
     id_tipo_procedimiento_quirurgico = forms.IntegerField(min_value=1, widget=forms.HiddenInput, required=False)
     monto_honorarios_cirujano_principal = forms.DecimalField(min_value=0.00, max_digits=15, decimal_places=2)
+    cirujano_principal = forms.ModelChoiceField(queryset=Medico.objects.all())
     anestesiologo = forms.ModelChoiceField(queryset=Medico.objects.all())
     primer_ayudante = forms.ModelChoiceField(queryset=Medico.objects.all())
     segundo_ayudante = forms.ModelChoiceField(queryset=Medico.objects.all())

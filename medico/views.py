@@ -100,6 +100,7 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 				id_sistema_corporal_actual = organo_corporal.sistema_corporal_id
 
 				if formulario_procedimiento_quirurgico_valido:
+					cirujano_principal = formulario_procedimiento_quirurgico.cleaned_data["cirujano_principal"]
 					monto_honorarios_cirujano_principal = formulario_procedimiento_quirurgico.cleaned_data["monto_honorarios_cirujano_principal"]
 					anestesiologo = formulario_procedimiento_quirurgico.cleaned_data["anestesiologo"]
 					primer_ayudante = formulario_procedimiento_quirurgico.cleaned_data["primer_ayudante"]
@@ -110,11 +111,11 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 						procedimiento_quirurgico = ProcedimientoQuirurgico()
 						procedimiento_quirurgico.organo_corporal = organo_corporal
 						procedimiento_quirurgico.tipo_procedimiento_quirurgico = tipo_procedimiento_quirurgico
-						procedimiento_quirurgico.monto_honorarios_cirujano_principal = monto_honorarios_cirujano_principal
 						procedimiento_quirurgico.save()
-						Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=anestesiologo, rol='0', monto_honorarios=procedimiento_quirurgico.obtener_monto_honorarios_anestesiologo())
-						Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=primer_ayudante, rol='1', monto_honorarios=procedimiento_quirurgico.obtener_monto_honorarios_primer_ayudante())
-						Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=segundo_ayudante, rol='2', monto_honorarios=procedimiento_quirurgico.obtener_monto_honorarios_segundo_ayudante())
+						Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=cirujano_principal, rol='4', monto_honorarios=monto_honorarios_cirujano_principal)
+						Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=anestesiologo, rol='0', monto_honorarios=utils.obtener_cuarenta_porciento(monto_honorarios_cirujano_principal))
+						Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=primer_ayudante, rol='1', monto_honorarios=utils.obtener_cuarenta_porciento(monto_honorarios_cirujano_principal))
+						Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=segundo_ayudante, rol='2', monto_honorarios=utils.obtener_treinta_porciento(monto_honorarios_cirujano_principal))
 						if not monto_honorarios_tercer_ayudante:
 							monto_honorarios_tercer_ayudante = 0.00
 
@@ -287,8 +288,6 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 	datos["fecha_intervencion_legible"] = fecha_intervencion_legible
 	datos["json_sistemas_corporales"] = json.dumps(sistemas_corporales_diccionarios, sort_keys=True, indent=4, separators=(',', ': '))
 	datos["procedimientos_quirurgicos"] = procedimientos_quirurgicos
-	datos["nombre_cirujano_principal"] = request.user.cuenta.medico.nombre
-	datos["apellido_cirujano_principal"] = request.user.cuenta.medico.apellido
 	datos["errores_primera_pagina"] = errores_primera_pagina
 	datos["id_sistema_corporal_actual"] = id_sistema_corporal_actual
 

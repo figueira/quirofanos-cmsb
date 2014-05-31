@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
-from quirofanos_cmsb.helpers.template_text import TextoMostrable
 import datetime
+import decimal
+
+from quirofanos_cmsb.helpers.template_text import TextoMostrable
+
+# Constante para truncar a dos decimales
+TWO_PLACES = decimal.Decimal('0.01')
 
 def obtener_nombre_mes(mes):
     ''' Devuelve el nombre de un mes expresado como numero
@@ -127,3 +132,19 @@ def obtener_tipo_usuario(cuenta):
         tipo_usuario = 'departamento'
 
     return tipo_usuario
+
+def obtener_cuarenta_porciento(monto):
+    ''' Devuelve el cuarenta porciento del monto recibido
+
+    Parametros:
+    monto -> monto total '''
+    cuarenta_porciento = decimal.Decimal('0.4') * monto
+    return cuarenta_porciento.quantize(TWO_PLACES)
+
+def obtener_treinta_porciento(monto):
+    ''' Devuelve el treinta porciento del monto recibido
+
+    Parametros:
+    monto -> monto total '''
+    treinta_porciento = decimal.Decimal('0.3') * monto
+    return treinta_porciento.quantize(TWO_PLACES)

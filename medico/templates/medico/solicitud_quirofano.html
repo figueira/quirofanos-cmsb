@@ -331,43 +331,6 @@
 							</script>
 							{% endif %}
 						</div>
-						<div class="form-group" id="compania-aseguradora-paciente-form-group">
-							<label class="col-lg-2 control-label">
-								{{ LABEL_FORMA_PAGO }}
-							</label>
-							<div class="col-lg-4" id="radios-tipo-pago-paciente">
-								{% for radio in formulario_solicitud_quirofano.tipo_pago_paciente %}
-								<label class="radio-inline">
-									{% render_field radio %}
-								</label>
-								{% endfor %}
-								<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="tipo-pago-paciente-error-feedback-icon"></span>
-								<span class="help-block hidden" id="tipo-pago-paciente-error-help">{{ formulario_solicitud_quirofano.tipo_pago_paciente.errors }}</span>
-							</div>
-							<div class="hidden" id="seguros">
-								<label class="col-lg-2 control-label" for="compania-aseguradora-paciente">
-									{{ LABEL_ASEGURADORA }}
-								</label>
-								<div class="col-lg-4">
-									{% render_field formulario_solicitud_quirofano.compania_aseguradora_paciente class="form-control" id="compania-aseguradora-paciente" %}
-									<span class="help-block hidden" id="compania-aseguradora-paciente-error-help">{{ formulario_solicitud_quirofano.compania_aseguradora_paciente.errors }}</span>
-								</div>
-								{% if not agregando_procedimiento and not procedimiento_agregado and not procedimiento_eliminado and formulario_solicitud_quirofano.compania_aseguradora_paciente.errors %}
-								<script type="text/javascript">
-								$(function() {
-									mostrarErroresCompaniaAseguradoraPaciente();
-								});
-								</script>
-								{% endif %}
-							</div>
-							{% if formulario_solicitud_quirofano.tipo_pago_paciente.value == "S" %}
-							<script type="text/javascript">
-							$(function() {
-								mostrarCompaniaAseguradoraPaciente();
-							});
-							</script>
-							{% endif %}
-						</div>
 					</div>
 					<div class="panel-footer">
 						<div class="form-group">
@@ -738,11 +701,9 @@
 									<label class="col-lg-2 control-label" for="nombre-cirujano-principal">
 										{{ LABEL_CIRUJANO_PRINCIPAL }}
 									</label>
-									<div class="col-lg-3">
-										<input type="text" class="form-control" id="nombre-cirujano-principal" disabled value="{{ nombre_cirujano_principal }}">
-									</div>
-									<div class="col-lg-3">
-										<input type="text" class="form-control" id="apellido-cirujano-principal" disabled value="{{ apellido_cirujano_principal }}">
+									<div class="col-lg-6">
+										{% render_field formulario_procedimiento_quirurgico.cirujano_principal class="form-control" id="cirujano-principal" %}
+										<span class="help-block hidden" id="anestesiologo-error-help">{{ formulario_procedimiento_quirurgico.cirujano_principal.errors }}</span>
 									</div>
 									<div class="col-lg-4">
 										<div class="input-group">
