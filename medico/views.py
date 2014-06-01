@@ -12,8 +12,7 @@ from django.contrib import messages
 
 import calendar
 import json
-from datetime import date
-from datetime import time
+from datetime import date, time, timedelta
 
 from quirofanos_cmsb.helpers.user_tests import es_medico, es_medico_o_coordinador
 from quirofanos_cmsb.helpers import utils
@@ -321,7 +320,7 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 @require_GET
 @login_required
 @user_passes_test(es_medico)
-def mis_solicitudes(request, estado="pendientes", periodo=0):
+def mis_solicitudes(request, estado="pendientes", periodo= None):
 	''' Controlador correspondiente a la pagina del listado de solicitudes realizadas por el medico
 
 	Parametros:
@@ -329,15 +328,33 @@ def mis_solicitudes(request, estado="pendientes", periodo=0):
 	estado  -> estado de las solicitudes
 	periodo -> periodo para filtrar las solicitudes '''
 
-	
+	# periodo = 0 -> Ultima Semana
+	# periodo = 1 -> Ultimo Mes
+	# periodo = 2 -> Ultimos 3 Meses	
 
 	if estado not in ("pendientes", "aprobadas", "rechazadas"):
 	 	raise Http404
 
+	if periodo:
+		periodo = int(periodo)
+		if periodo not in (0, 1, 2):
+	 		raise Http404
+
+	 	if periodo == 0:
+	 		delay = timedelta(days=7)
+	 	elif periodo == 1:
+	 		delay = timedelta(days=31)
+	 	else:
+	 		delay = timedelta(days=31*6)
+	else:
+		delay = timedelta(days=7)
+
+	filter_date = date.today() - delay
+
 	cuenta = Cuenta.objects.get(usuario = request.user)
-	reservaciones_aprobadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='A')
-	reservaciones_pendientes = Reservacion.objects.filter(medico = cuenta.medico, estado ='P')
-	reservaciones_rechazadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='R')
+	reservaciones_aprobadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='A', fecha_reservacion__gte = filter_date)
+	reservaciones_pendientes = Reservacion.objects.filter(medico = cuenta.medico, estado ='P', fecha_reservacion__gte = filter_date)
+	reservaciones_rechazadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='R', fecha_reservacion__gte = filter_date)
 
 	reservaciones_aprobadas_diccionarios = []
 	for reservacion in reservaciones_aprobadas:

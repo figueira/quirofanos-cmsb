@@ -78,6 +78,7 @@ def calendario(request, area_actual='QG', ano=date.today().year, mes=date.today(
 	datos['ano'] = ano
 	datos['mes'] = mes
 	datos['dia_actual'] = date.today().day
+	datos['mes_actual'] = date.today().month
 	if not mes - 1 < 1:
 		datos['mes_anterior'] = mes - 1
 	else:
