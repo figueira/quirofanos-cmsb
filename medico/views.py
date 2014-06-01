@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, redirect
 from django.views.decorators.http import require_http_methods, require_GET, require_POST
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import Http404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.template import RequestContext
@@ -488,6 +489,33 @@ def mis_solicitudes(request, estado="pendientes"):
 
 		reservacion_diccionario["formulario"] = SolicitudQuirofanoForm(datos_formulario)
 		reservaciones_rechazadas_diccionarios.append(reservacion_diccionario)
+
+	paginator_pendientes = Paginator(reservaciones_pendientes_diccionarios, 10)
+	page = request.GET.get('page')
+	try:
+	    reservaciones_pendientes_diccionarios = paginator_pendientes.page(page)
+	except PageNotAnInteger:
+	    reservaciones_pendientes_diccionarios = paginator_pendientes.page(1)
+	except EmptyPage:
+	    reservaciones_pendientes_diccionarios = paginator_pendientes.page(paginator_pendientes.num_pages)
+
+	paginator_aprobadas = Paginator(reservaciones_aprobadas_diccionarios, 10)
+	page = request.GET.get('page')
+	try:
+	    reservaciones_aprobadas_diccionarios = paginator_aprobadas.page(page)
+	except PageNotAnInteger:
+	    reservaciones_aprobadas_diccionarios = paginator_aprobadas.page(1)
+	except EmptyPage:
+	    reservaciones_aprobadas_diccionarios = paginator_aprobadas.page(paginator_aprobadas.num_pages)
+
+	paginator_rechazadas = Paginator(reservaciones_rechazadas_diccionarios, 10)
+	page = request.GET.get('page')
+	try:
+	    reservaciones_rechazadas_diccionarios = paginator_rechazadas.page(page)
+	except PageNotAnInteger:
+	    reservaciones_rechazadas_diccionarios = paginator_rechazadas.page(1)
+	except EmptyPage:
+	    reservaciones_rechazadas_diccionarios = paginator_rechazadas.page(paginator_rechazadas.num_pages)		
 
 	datos = {}
 	datos['reservaciones_aprobadas'] = reservaciones_aprobadas_diccionarios
