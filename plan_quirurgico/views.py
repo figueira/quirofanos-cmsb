@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 import calendar
 import math
 import cStringIO as StringIO
@@ -77,6 +77,7 @@ def calendario(request, area_actual='QG', ano=date.today().year, mes=date.today(
 	datos  = {}
 	datos['ano'] = ano
 	datos['mes'] = mes
+	datos['dia_actual'] = date.today().day
 	if not mes - 1 < 1:
 		datos['mes_anterior'] = mes - 1
 	else:
@@ -276,12 +277,20 @@ def plan_dia(request, area, ano, mes, dia):
 
 		reservacion_diccionario["formulario"] = SolicitudQuirofanoForm(datos_formulario)
 		reservaciones_aprobadas_diccionarios.append(reservacion_diccionario)
+	
+	allowed_day = True
+	date = datetime.strptime(str(dia)+' '+str(mes)+' '+str(ano), '%d %m %Y')
+	current_date = datetime.now().date()
+	if date.date() < current_date:
+		allowed_day = False
+
 
 	datos = {}
 	datos['area_nombre'] = quirofanos_area[0].get_area_display()
 	datos['ano'] = ano
 	datos['mes'] = mes
 	datos['dia'] = dia
+	datos['dia_permitido'] = allowed_day
 	datos['area_actual'] = area
 	datos['quirofanos'] = quirofanos_area_intervenciones
 	datos['medias_horas'] = medias_horas
