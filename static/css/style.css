@@ -339,6 +339,21 @@ a:hover
 	text-align:center
 }
 
+/* alineamiento vertical en el fondo */
+.cell-bottom-left {
+	position: absolute;
+	bottom: 5px;
+	left: 5px;
+	text-align: left;
+	z-index: 10;
+	vertical-align: bottom;
+}
+
+/* posicion relativa */
+.position-relative {
+	position: relative;
+}
+
 /* estilo tabla plan quirurgico observadores */
 #table-intervenciones>tbody>tr>td
 {

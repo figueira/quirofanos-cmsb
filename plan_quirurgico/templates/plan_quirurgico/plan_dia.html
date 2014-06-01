@@ -205,7 +205,7 @@ $(function(){
 					{% with quirofano.intervenciones|valor_clave:media_hora as intervencion %}
 					{% with quirofano.intervenciones.values|ocurrencias:intervencion as duracion %}
 					{% if intervencion.obtener_hora_inicio_horas == media_hora %}
-					<td class="unavailable" data-togle="tooltip" data-placement="right" title="{{ quirofano.nombre }}" rowspan="{{ duracion }}">
+					<td class="unavailable position-relative" data-togle="tooltip" data-placement="right" title="{{ quirofano.nombre }}" rowspan="{{ duracion }}">
 						<a href="#" class="pull-right" data-toggle="modal" data-target="#modal-reservacion-{{ intervencion.reservacion.pk }}">
 							<span class="glyphicon glyphicon-fullscreen"></span>
 						</a>
@@ -215,6 +215,14 @@ $(function(){
 						<p class="label label-default">
 							{{ LABEL_MEDICO }} {{ intervencion.reservacion.medico }}
 						</p>
+						{% if es_coordinador %}
+						<form class="cell-bottom-left" role="form" action="{% url 'eliminar_intervencion_quirurgica' area_actual ano mes dia intervencion.id %}" method="POST" novalidate>
+							{% csrf_token %}
+							<button type="submit" class="btn btn-danger btn-sm">
+								<span class="glyphicon glyphicon-trash"></span>
+							</button>
+						</form>
+						{% endif %}
 					</td>
 					{% endif %}
 					{% endwith %}

@@ -8,19 +8,18 @@
 	<title>
 		Plan Quirúrgico
 	</title>
-	<style type="text/css">
-	@page {
-		size: {{ pagesize }};
-		margin: 1cm;
-		@frame footer {
-			-pdf-frame-content: footerContent;
-			bottom: 0cm;
-			margin-left: 9cm;
-			margin-right: 9cm;
-			height: 1cm;
-		}
-	}
-	</style>
+	<style>
+    @page {
+        size: letter portrait;
+        @frame content_frame {
+            left: 50pt;
+            width: 512pt;
+            top: 50pt;
+            height: 692pt;
+            -pdf-frame-border: 1;    /* for debugging the layout */
+        }
+    }
+</style>
 </head>
 <body>
 	<div class="page-header">

@@ -2,19 +2,18 @@
 from django.shortcuts import render_to_response, redirect
 from django.http import Http404, HttpResponse
 from django.template import RequestContext, Context
+from django.template.loader import get_template
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods, require_GET, require_POST
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
+from django.conf import settings
 
 from datetime import date, timedelta, datetime
 import calendar
 import math
-import cStringIO as StringIO
-import ho.pisa as pisa
-from django.template.loader import get_template
-from cgi import escape
+from xhtml2pdf import pisa
 
 from quirofanos_cmsb.helpers import utils
 from quirofanos_cmsb.models import Quirofano, IntervencionQuirurgica, Reservacion, Participacion, Medico
@@ -181,6 +180,10 @@ def plan_dia(request, area, ano, mes, dia):
 	if request.user.cuenta.privilegio != '4' and request.user.cuenta.privilegio != '1' and request.user.cuenta.privilegio != '0':
 		return redirect('plan_dia_obs', area, ano, mes, dia)
 
+	es_coordinador = False
+	if request.user.cuenta.privilegio != '4':
+		es_coordinador = True
+
 	seleccionar_turno = False
 	horas_intervencion = 0
 	minutos_intervencion = 0
@@ -276,7 +279,7 @@ def plan_dia(request, area, ano, mes, dia):
 
 		reservacion_diccionario["formulario"] = SolicitudQuirofanoForm(datos_formulario)
 		reservaciones_aprobadas_diccionarios.append(reservacion_diccionario)
-	
+
 	allowed_day = True
 	date = datetime.strptime(str(dia)+' '+str(mes)+' '+str(ano), '%d %m %Y')
 	current_date = datetime.now().date()
@@ -300,6 +303,7 @@ def plan_dia(request, area, ano, mes, dia):
 	datos['minutos_intervencion'] = minutos_intervencion
 	datos['cantidad_medias_horas_intervencion'] = cantidad_medias_horas_intervencion
 	datos["reservaciones"] = reservaciones_aprobadas_diccionarios
+	datos["es_coordinador"] = es_coordinador
 
 	return render_to_response('plan_quirurgico/plan_dia.html', datos, context_instance=RequestContext(request))
 
@@ -385,31 +389,26 @@ def plan_dia_pdf(request, area, ano, mes, dia):
 		intervencion_diccionario['anestesiologo'] = Medico.objects.get(id=anestesiologo_id)
 		intervenciones.append(intervencion_diccionario)
 
-	return render_to_pdf('plan_dia_pdf.html',
-		{
-		'area_nombre': quirofanos_area[0].get_area_display(),
-		'ano' : ano,
-		'mes': mes,
-		'dia' : dia,
-		'quirofanos_area': quirofanos_area,
-		'intervenciones': intervenciones,
-		'pagesize':'A4',
-		'img_path': '/static/img/logo_centro_medico.png',
-		})
+	datos = {}
+	datos['area_nombre'] = quirofanos_area[0].get_area_display()
+	datos['ano'] = ano
+	datos['mes'] = mes
+	datos['dia'] = dia
+	datos['area_actual'] = area
+	datos['quirofanos_area'] = quirofanos_area
+	datos['intervenciones'] = intervenciones
 
+	template = get_template('plan_quirurgico/plan_dia_pdf.html')
+    html  = template.render(Context(data))
 
-def render_to_pdf(template_src, context_dict):
-	template = get_template(template_src)
-	context = Context(context_dict)
-	html  = template.render(context)
-	result = StringIO.StringIO()
+    file = open(os.join(settings.MEDIA_ROOT, 'plan_quirurgico.pdf'), "w+b")
+    pisaStatus = pisa.CreatePDF(html, dest=file,
+            link_callback = link_callback)
 
-	pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("ISO-8859-1")), result)
-	if not pdf.err:
-		response = HttpResponse(result.getvalue(), mimetype='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename=PlanQuirurgico.pdf'
-        return response
-	return HttpResponse('ERROR<pre>%s</pre>' % escape(html))
+    file.seek(0)
+    pdf = file.read()
+    file.close()
+    return HttpResponse(pdf, mimetype='application/pdf')
 
 @require_POST
 @login_required

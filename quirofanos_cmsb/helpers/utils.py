@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from django.conf import settings
+
 import datetime
 import decimal
 
@@ -157,3 +159,26 @@ def obtener_treinta_porciento(monto):
     monto -> monto total '''
     treinta_porciento = decimal.Decimal('0.3') * monto
     return treinta_porciento.quantize(TWO_PLACES)
+
+# Convert HTML URIs to absolute system paths so xhtml2pdf can access those resources
+def link_callback(uri, rel):
+    ''' Convierte los URI's de HTML a rutas absolutas del sistema
+
+    Parametros:
+    uri
+    rel '''
+    sUrl = settings.STATIC_URL
+    sRoot = settings.STATIC_ROOT
+    mUrl = settings.MEDIA_URL
+    mRoot = settings.MEDIA_ROOT
+
+    if uri.startswith(mUrl):
+        path = os.path.join(mRoot, uri.replace(mUrl, ""))
+    elif uri.startswith(sUrl):
+        path = os.path.join(sRoot, uri.replace(sUrl, ""))
+
+    if not os.path.isfile(path):
+            raise Exception(
+                    'media URI must start with %s or %s' % \
+                    (sUrl, mUrl))
+    return path
