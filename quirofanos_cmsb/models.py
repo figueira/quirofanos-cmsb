@@ -437,9 +437,6 @@ class Paciente(models.Model):
         max_length=6, blank=True, null=True, validators=[RegexValidator(ExpresionRegular.NUMERO_EXPEDIENTE, MensajeError.NUMERO_EXPEDIENTE_INVALIDO, CodigoError.NUMERO_EXPEDIENTE_INVALIDO)])
     numero_habitacion = models.CharField(
         max_length=3, blank=True, null=True, validators=[RegexValidator(ExpresionRegular.NUMERO_HABITACION, MensajeError.NUMERO_HABITACION_INVALIDO, CodigoError.NUMERO_HABITACION_INVALIDO)])
-    diagnostico_ingreso = models.TextField()
-    servicios_operatorios_requeridos = models.ManyToManyField(
-        ServicioOperatorio, blank=True, null=True)
 
     def clean(self):
         ''' Sobreescribe el clean(), colocando nombre y apellido capitalizados '''
@@ -480,6 +477,7 @@ class IntervencionQuirurgica(models.Model):
     paciente = models.ForeignKey(Paciente)
     materiales_quirurgicos_requeridos = models.ManyToManyField(
         MaterialQuirurgico, blank=True, null=True)
+    otros_materiales_quirurgicos = models.CharField(max_length=100, validators=[RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)], blank=True, null=True)
     equipos_especiales_requeridos = models.ManyToManyField(
         EquipoEspecial, blank=True, null=True)
     quirofano = models.ForeignKey(Quirofano)
@@ -543,9 +541,19 @@ class IntervencionQuirurgica(models.Model):
 class ProcedimientoQuirurgico(models.Model):
     ''' Clase que representa un Procedimiento Quirurgico '''
     intervencion_quirurgica = models.ForeignKey(IntervencionQuirurgica, blank=True, null=True)
-    tipo_procedimiento_quirurgico = models.ForeignKey(TipoProcedimientoQuirurgico)
-    organo_corporal = models.ForeignKey(OrganoCorporal)
+    tipo_procedimiento_quirurgico = models.ForeignKey(TipoProcedimientoQuirurgico, blank=True, null=True)
+    organo_corporal = models.ForeignKey(OrganoCorporal, blank=True, null=True)
+    nombre_procedimiento = models.CharField(max_length=100, validators=[
+                              RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
+    diagnostico_ingreso_paciente = models.TextField()
+    servicios_operatorios_requeridos = models.ManyToManyField(
+        ServicioOperatorio, blank=True, null=True)
     medicos_participantes = models.ManyToManyField(Medico, through='Participacion')
+
+    def clean(self):
+        ''' Sobreescribe el clean(), colocando nombre del procedimiento capitalizado '''
+        self.nombre_procedimiento = self.nombre_procedimiento.title()
+        super(ProcedimientoQuirurgico, self).clean()
 
     def save(self, **kwargs):
         ''' Sobreescribe el save() '''

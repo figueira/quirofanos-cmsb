@@ -32,7 +32,7 @@
 			<a href="{% url 'plan_dia_pdf' area_actual ano mes dia %}">
 				<img src="{% static 'img/pdf.png' %}" height="24" width="24" data-toggle="tooltip" data-placement="left" title="Generar Plan Quirúrgico en PDF"/>
 			</a>
-			{% if  request.user.cuenta.privilegio == "4" %}
+			{% if  request.user.cuenta.privilegio == "4" or request.user.cuenta.privilegio == "1" or request.user.cuenta.privilegio == "0" %}
 			<a href="{% url 'plan_dia' area_actual ano mes dia %}">
 				<span class="glyphicon glyphicon-th" data-toggle="tooltip" data-placement="left" title="Ver Plan Quirúrgico de Médicos"></span>
 			</a>

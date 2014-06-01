@@ -15,10 +15,13 @@ TIPO_PAGO = (
 
 class SolicitudQuirofanoForm(BaseForm):
     ''' Formulario de solicitud de quirofano '''
+    # Medico
+    medico_solicitante = forms.ModelChoiceField(queryset=Medico.objects.all().order_by('apellido'), required=False)
+
     # Paciente
-    nombre_paciente = forms.CharField(max_length=50, validators=[
+    nombre_paciente = forms.CharField(max_length=100, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
-    apellido_paciente = forms.CharField(max_length=50, validators=[
+    apellido_paciente = forms.CharField(max_length=100, validators=[
                               RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
     nacionalidad_paciente = forms.ChoiceField(widget=forms.HiddenInput, choices=NACIONALIDAD, initial='V-')
     cedula_paciente = forms.CharField(max_length=12, validators=[
@@ -34,8 +37,6 @@ class SolicitudQuirofanoForm(BaseForm):
     #numero_expediente_paciente = forms.CharField(validators=[RegexValidator(ExpresionRegular.NUMERO_EXPEDIENTE, MensajeError.NUMERO_EXPEDIENTE_INVALIDO, CodigoError.NUMERO_EXPEDIENTE_INVALIDO)], required=False)
     paciente_hospitalizado = forms.BooleanField(required=False)
     numero_habitacion_paciente = forms.CharField(validators=[RegexValidator(ExpresionRegular.NUMERO_HABITACION, MensajeError.NUMERO_HABITACION_INVALIDO, CodigoError.NUMERO_HABITACION_INVALIDO)], required=False)
-    diagnostico_ingreso_paciente = forms.CharField(widget=forms.Textarea)
-    servicios_operatorios_paciente = forms.ModelMultipleChoiceField(queryset=ServicioOperatorio.objects.all(), widget=forms.CheckboxSelectMultiple, required=False)
 
     # Intervencion Quirurgica
     preferencia_anestesica = forms.ChoiceField(choices=TIPO_ANESTESIA, widget=forms.RadioSelect)
@@ -43,6 +44,8 @@ class SolicitudQuirofanoForm(BaseForm):
     riesgo = forms.ChoiceField(choices=TIPO_RIESGO, widget=forms.RadioSelect)
     razon_riesgo = forms.CharField(widget=forms.Textarea, required=False)
     materiales_quirurgicos_requeridos = forms.ModelMultipleChoiceField(queryset=MaterialQuirurgico.objects.all(), widget=forms.CheckboxSelectMultiple, required=False)
+    otros_materiales_quirurgicos = forms.CharField(max_length=100, validators=[
+                              RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)], required=False)
     equipos_especiales_requeridos = forms.ModelMultipleChoiceField(queryset=EquipoEspecial.objects.all(), widget=forms.CheckboxSelectMultiple, required=False)
     dias_hospitalizacion = forms.IntegerField(min_value=0, initial='0')
 
@@ -70,15 +73,19 @@ class SolicitudQuirofanoForm(BaseForm):
 
 class ProcedimientoQuirurgicoForm(BaseForm):
     ''' Formulario para agregar un procedimiento quirurgico a una solicitud de quirofano '''
-    id_organo_corporal = forms.IntegerField(min_value=1, widget=forms.HiddenInput, required=False)
-    id_tipo_procedimiento_quirurgico = forms.IntegerField(min_value=1, widget=forms.HiddenInput, required=False)
-    monto_honorarios_cirujano_principal = forms.DecimalField(min_value=0.00, max_digits=15, decimal_places=2)
+    #id_organo_corporal = forms.IntegerField(min_value=1, widget=forms.HiddenInput, required=False)
+    #id_tipo_procedimiento_quirurgico = forms.IntegerField(min_value=1, widget=forms.HiddenInput, required=False)
+    nombre_procedimiento = forms.CharField(max_length=100, validators=[
+                              RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
+    #monto_honorarios_cirujano_principal = forms.DecimalField(min_value=0.00, max_digits=15, decimal_places=2)
     cirujano_principal = forms.ModelChoiceField(queryset=Medico.objects.all().order_by('apellido'))
     anestesiologo = forms.ModelChoiceField(queryset=Medico.objects.filter(especializacion='Anestesiologia').order_by('apellido'))
     primer_ayudante = forms.ModelChoiceField(queryset=Medico.objects.all().order_by('apellido'), required=False)
     segundo_ayudante = forms.ModelChoiceField(queryset=Medico.objects.all().order_by('apellido'), required=False)
     tercer_ayudante = forms.ModelChoiceField(queryset=Medico.objects.all().order_by('apellido'), required=False)
-    monto_honorarios_tercer_ayudante = forms.DecimalField(min_value=0.00, max_digits=15, decimal_places=2, required=False)
+    #monto_honorarios_tercer_ayudante = forms.DecimalField(min_value=0.00, max_digits=15, decimal_places=2, required=False)
+    diagnostico_ingreso_paciente = forms.CharField(widget=forms.Textarea)
+    servicios_operatorios_paciente = forms.ModelMultipleChoiceField(queryset=ServicioOperatorio.objects.all(), widget=forms.CheckboxSelectMultiple, required=False)
 
 class EliminarProcedimientoQuirurgicoForm(BaseForm):
     ''' Formulario para eliminar un procedimiento quirurgico durante el proceso de solicitud de quirofano '''

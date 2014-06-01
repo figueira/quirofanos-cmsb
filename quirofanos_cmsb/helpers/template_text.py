@@ -2,6 +2,7 @@
 from django.utils.translation import ugettext as _
 
 class TextoMostrable():
+    ''' Constantes de texto para ser usadas en los templates de la aplicacion '''
     NO_POSEE = _(u'No posee')
     ULTIMA_SEMANA = _(u'Última Semana')
     ULTIMO_MES = _(u'Último Mes')
@@ -84,7 +85,7 @@ class TextoMostrable():
     LABEL_EQUIPOS_ESPECIALES = _(u'Equipos Especiales:')
     LABEL_MATERIAL_QUIRURGICO = _(u'Material Quirúrgico:')
     LABEL_FECHA_NACIMIENTO = _(u'Fecha de Nacimiento:')
-    LABEL_DIAGNOSTICO = _(u'Diagnóstico:')
+    LABEL_DIAGNOSTICO = _(u'Diagnóstico Ingreso del Paciente:')
     LABEL_FORMA_PAGO = _(u'Forma de Pago:')
     LABEL_ASEGURADORA = _(u'Aseguradora:')
     LABEL_HABITACION = _(u'Habitación:')
@@ -114,3 +115,5 @@ class TextoMostrable():
     MENSAJE_PROCEDIMIENTO_QUIRURGICO_AGREGADO = _(u'Procedimiento quirúrgico agregado.')
     MENSAJE_PROCEDIMIENTO_QUIRURGICO_ELIMINADO = _(u'Procedimiento quirúrgico eliminado.')
     MENSAJE_NO_HAY_PROCEDIMIENTOS_QUIRURGICOS = _(u'No se ha agregado ningún procedimiento quirúrgico.')
+    LABEL_OTROS = _(u'Otro(s):')
+    LABEL_MEDICO_SOLICITANTE = _(u'Medico Solicitante:')

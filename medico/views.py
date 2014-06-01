@@ -14,7 +14,7 @@ import json
 from datetime import date
 from datetime import time
 
-from quirofanos_cmsb.helpers.user_tests import es_medico
+from quirofanos_cmsb.helpers.user_tests import es_medico, es_medico_o_coordinador
 from quirofanos_cmsb.helpers import utils
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
 from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito, MensajeTemporalAviso
@@ -23,7 +23,7 @@ from medico.forms import SolicitudQuirofanoForm, ProcedimientoQuirurgicoForm, El
 
 @require_http_methods(["GET", "POST"])
 @login_required
-@user_passes_test(es_medico)
+@user_passes_test(es_medico_o_coordinador)
 def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, duracion_en_medias_horas):
 	''' Controlador correspondiente a la pagina del formulario de una nueva solicitud de quirofano
 
@@ -80,7 +80,10 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 	procedimiento_eliminado = False
 	procedimientos_quirurgicos = ProcedimientoQuirurgico.objects.filter(intervencion_quirurgica=None)
 	errores_primera_pagina = True
-	id_sistema_corporal_actual = None
+	es_coordinador = False
+	if request.user.cuenta.privilegio != '4':
+		es_coordinador = True
+	#id_sistema_corporal_actual = None
 
 	if request.method == 'POST':
 		formulario_solicitud_quirofano = SolicitudQuirofanoForm(prefix="solicitud_quirofano", data=request.POST)
@@ -90,41 +93,50 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 			agregando_procedimiento = True
 			try:
 				formulario_procedimiento_quirurgico_valido = formulario_procedimiento_quirurgico.is_valid()
-				id_organo_corporal = formulario_procedimiento_quirurgico.cleaned_data["id_organo_corporal"]
-				id_tipo_procedimiento_quirurgico = formulario_procedimiento_quirurgico.cleaned_data["id_tipo_procedimiento_quirurgico"]
-				organo_corporal = OrganoCorporal.objects.get(pk=id_organo_corporal)
-				tipo_procedimiento_quirurgico = TipoProcedimientoQuirurgico.objects.get(pk=id_tipo_procedimiento_quirurgico)
-				if tipo_procedimiento_quirurgico not in organo_corporal.tipos_procedimientos_permitidos.all():
-					raise ObjectDoesNotExist
+				#id_organo_corporal = formulario_procedimiento_quirurgico.cleaned_data["id_organo_corporal"]
+				#id_tipo_procedimiento_quirurgico = formulario_procedimiento_quirurgico.cleaned_data["id_tipo_procedimiento_quirurgico"]
+				#organo_corporal = OrganoCorporal.objects.get(pk=id_organo_corporal)
+				#tipo_procedimiento_quirurgico = TipoProcedimientoQuirurgico.objects.get(pk=id_tipo_procedimiento_quirurgico)
+				#if tipo_procedimiento_quirurgico not in organo_corporal.tipos_procedimientos_permitidos.all():
+					#raise ObjectDoesNotExist
 
-				id_sistema_corporal_actual = organo_corporal.sistema_corporal_id
+				#id_sistema_corporal_actual = organo_corporal.sistema_corporal_id
 
 				if formulario_procedimiento_quirurgico_valido:
+					nombre_procedimiento = formulario_procedimiento_quirurgico.cleaned_data["nombre_procedimiento"]
 					cirujano_principal = formulario_procedimiento_quirurgico.cleaned_data["cirujano_principal"]
-					monto_honorarios_cirujano_principal = formulario_procedimiento_quirurgico.cleaned_data["monto_honorarios_cirujano_principal"]
+					#monto_honorarios_cirujano_principal = formulario_procedimiento_quirurgico.cleaned_data["monto_honorarios_cirujano_principal"]
 					anestesiologo = formulario_procedimiento_quirurgico.cleaned_data["anestesiologo"]
 					primer_ayudante = formulario_procedimiento_quirurgico.cleaned_data["primer_ayudante"]
 					segundo_ayudante = formulario_procedimiento_quirurgico.cleaned_data["segundo_ayudante"]
 					tercer_ayudante = formulario_procedimiento_quirurgico.cleaned_data["tercer_ayudante"]
-					monto_honorarios_tercer_ayudante = formulario_procedimiento_quirurgico.cleaned_data["monto_honorarios_tercer_ayudante"]
+					#monto_honorarios_tercer_ayudante = formulario_procedimiento_quirurgico.cleaned_data["monto_honorarios_tercer_ayudante"]
 					with transaction.atomic():
 						procedimiento_quirurgico = ProcedimientoQuirurgico()
-						procedimiento_quirurgico.organo_corporal = organo_corporal
-						procedimiento_quirurgico.tipo_procedimiento_quirurgico = tipo_procedimiento_quirurgico
+						procedimiento_quirurgico.nombre_procedimiento = nombre_procedimiento
+						#procedimiento_quirurgico.organo_corporal = organo_corporal
+						#procedimiento_quirurgico.tipo_procedimiento_quirurgico = tipo_procedimiento_quirurgico
+						procedimiento_quirurgico.diagnostico_ingreso_paciente = formulario_procedimiento_quirurgico.cleaned_data["diagnostico_ingreso_paciente"]
 						procedimiento_quirurgico.save()
-						Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=cirujano_principal, rol='4', monto_honorarios=monto_honorarios_cirujano_principal)
-						Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=anestesiologo, rol='0', monto_honorarios=utils.obtener_cuarenta_porciento(monto_honorarios_cirujano_principal))
+						Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=cirujano_principal, rol='4')
+						Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=anestesiologo, rol='0')
 						if primer_ayudante:
-							Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=primer_ayudante, rol='1', monto_honorarios=utils.obtener_cuarenta_porciento(monto_honorarios_cirujano_principal))
+							Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=primer_ayudante, rol='1')
 
 						if segundo_ayudante:
-							Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=segundo_ayudante, rol='2', monto_honorarios=utils.obtener_treinta_porciento(monto_honorarios_cirujano_principal))
+							Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=segundo_ayudante, rol='2')
 
-						if not monto_honorarios_tercer_ayudante:
-							monto_honorarios_tercer_ayudante = 0.00
+						#if not monto_honorarios_tercer_ayudante:
+							#monto_honorarios_tercer_ayudante = 0.00
 
 						if tercer_ayudante:
-							Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=tercer_ayudante, rol='3', monto_honorarios=monto_honorarios_tercer_ayudante)
+							Participacion.objects.create(procedimiento_quirurgico=procedimiento_quirurgico, medico=tercer_ayudante, rol='3')
+
+						servicios_operatorios_paciente = formulario_procedimiento_quirurgico.cleaned_data.get("servicios_operatorios_paciente")
+						if servicios_operatorios_paciente is not []:
+							procedimiento_quirurgico.servicios_operatorios_requeridos = servicios_operatorios_paciente
+
+						procedimiento_quirurgico.save()
 					agregando_procedimiento = False
 					procedimiento_agregado = True
 					formulario_procedimiento_quirurgico = ProcedimientoQuirurgicoForm(prefix="procedimiento_quirurgico")
@@ -165,7 +177,6 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 						paciente.fecha_nacimiento = formulario_solicitud_quirofano.cleaned_data["fecha_nacimiento_paciente"]
 						paciente.genero = formulario_solicitud_quirofano.cleaned_data["genero_paciente"]
 						paciente.telefono = formulario_solicitud_quirofano.cleaned_data["codigo_telefono_paciente"] + "-" + formulario_solicitud_quirofano.cleaned_data["numero_telefono_paciente"]
-						paciente.diagnostico_ingreso = formulario_solicitud_quirofano.cleaned_data["diagnostico_ingreso_paciente"]
 						# if formulario_solicitud_quirofano.cleaned_data["paciente_con_expediente"]:
 						# 	paciente.area_ingreso = formulario_solicitud_quirofano.cleaned_data["area_ingreso_paciente"]
 						# 	paciente.numero_expediente =  formulario_solicitud_quirofano.cleaned_data["numero_expediente_paciente"]
@@ -185,11 +196,6 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 
 						paciente.save()
 
-						servicios_operatorios_paciente = formulario_solicitud_quirofano.cleaned_data.get("servicios_operatorios_paciente")
-						if servicios_operatorios_paciente is not []:
-							paciente.servicios_operatorios_requeridos = servicios_operatorios_paciente
-						paciente.save()
-
 						intervencion_quirurgica = IntervencionQuirurgica()
 						intervencion_quirurgica.paciente = paciente
 						intervencion_quirurgica.estado = "0"
@@ -205,6 +211,9 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 						if intervencion_quirurgica.riesgo == "M":
 							intervencion_quirurgica.razon_riesgo = formulario_solicitud_quirofano.cleaned_data["razon_riesgo"]
 
+						otros_materiales_quirurgicos = formulario_solicitud_quirofano.cleaned_data["otros_materiales_quirurgicos"]
+						if otros_materiales_quirurgicos:
+							intervencion_quirurgica.otros_materiales_quirurgicos = otros_materiales_quirurgicos
 						intervencion_quirurgica.save()
 
 						materiales_quirurgicos_requeridos = formulario_solicitud_quirofano.cleaned_data.get("materiales_quirurgicos_requeridos")
@@ -220,20 +229,29 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 						reservacion = Reservacion()
 						reservacion.intervencion_quirurgica = intervencion_quirurgica
 						reservacion.dias_hospitalizacion = formulario_solicitud_quirofano.cleaned_data["dias_hospitalizacion"]
-						reservacion.estado = "P"
 						reservacion.tipo_solicitud = "1"
-						reservacion.medico = request.user.cuenta.medico
+						if not es_coordinador:
+							reservacion.estado = "P"
+							reservacion.medico = request.user.cuenta.medico
+						else:
+							reservacion.estado = "A"
+							reservacion.medico = formulario_solicitud_quirofano.cleaned_data["medico_solicitante"]
+
 						reservacion.save()
 
 						for procedimiento_quirurgico in procedimientos_quirurgicos:
 							procedimiento_quirurgico.intervencion_quirurgica = intervencion_quirurgica
 							procedimiento_quirurgico.save()
 
-					messages.add_message(request, messages.SUCCESS, MensajeTemporalExito.SOLICITUD_QUIROFANO_ENVIADA)
-					return redirect('mis_solicitudes', 'pendientes')
+					if not es_coordinador:
+						messages.add_message(request, messages.SUCCESS, MensajeTemporalExito.SOLICITUD_QUIROFANO_ENVIADA)
+						return redirect('mis_solicitudes', 'pendientes')
+					else:
+						messages.add_message(request, messages.SUCCESS, MensajeTemporalExito.INTERVENCION_QUIRURGICA_AGREGADA)
+						return redirect('plan_dia', quirofano.area, ano, mes, dia)
 
 			else:
-				errores_primera_pagina = formulario_solicitud_quirofano["nombre_paciente"].errors or formulario_solicitud_quirofano["apellido_paciente"].errors or formulario_solicitud_quirofano["cedula_paciente"].errors or formulario_solicitud_quirofano["genero_paciente"].errors or formulario_solicitud_quirofano["fecha_nacimiento_paciente"].errors or formulario_solicitud_quirofano["codigo_telefono_paciente"].errors or formulario_solicitud_quirofano["numero_telefono_paciente"].errors or formulario_solicitud_quirofano["diagnostico_ingreso_paciente"].errors or formulario_solicitud_quirofano["servicios_operatorios_paciente"].errors or formulario_solicitud_quirofano["paciente_hospitalizado"].errors or formulario_solicitud_quirofano["numero_habitacion_paciente"].errors or formulario_solicitud_quirofano["paciente_con_expediente"].errors or formulario_solicitud_quirofano["area_ingreso_paciente"].errors or formulario_solicitud_quirofano["numero_expediente_paciente"].errors or formulario_solicitud_quirofano["tipo_pago_paciente"].errors or formulario_solicitud_quirofano["compania_aseguradora_paciente"].errors
+				errores_primera_pagina = formulario_solicitud_quirofano["nombre_paciente"].errors or formulario_solicitud_quirofano["apellido_paciente"].errors or formulario_solicitud_quirofano["cedula_paciente"].errors or formulario_solicitud_quirofano["genero_paciente"].errors or formulario_solicitud_quirofano["fecha_nacimiento_paciente"].errors or formulario_solicitud_quirofano["codigo_telefono_paciente"].errors or formulario_solicitud_quirofano["numero_telefono_paciente"].errors   or formulario_solicitud_quirofano["paciente_hospitalizado"].errors or formulario_solicitud_quirofano["numero_habitacion_paciente"].errors
 
 				lista_errores = formulario_solicitud_quirofano.error_class([MensajeTemporalError.NO_SE_AGREGO_PROCEDIMIENTO_QUIRURGICO])
 				formulario_solicitud_quirofano._errors[NON_FIELD_ERRORS] = lista_errores
@@ -241,36 +259,36 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 	elif request.method == 'GET':
 		procedimientos_quirurgicos.delete()
 
-	sistemas_corporales = SistemaCorporal.objects.all()
-	sistemas_corporales_diccionarios = []
-	for sistema_corporal in sistemas_corporales:
-		sistema_corporal_diccionario = {}
-		sistema_corporal_diccionario["id"] = sistema_corporal.id
-		sistema_corporal_diccionario["codigo_icd_10_pcs"] = sistema_corporal.codigo_icd_10_pcs
-		sistema_corporal_diccionario["nombre"] = sistema_corporal.nombre
+	# sistemas_corporales = SistemaCorporal.objects.all()
+	# sistemas_corporales_diccionarios = []
+	# for sistema_corporal in sistemas_corporales:
+	# 	sistema_corporal_diccionario = {}
+	# 	sistema_corporal_diccionario["id"] = sistema_corporal.id
+	# 	sistema_corporal_diccionario["codigo_icd_10_pcs"] = sistema_corporal.codigo_icd_10_pcs
+	# 	sistema_corporal_diccionario["nombre"] = sistema_corporal.nombre
 
-		organos_corporales_asociados = sistema_corporal.organocorporal_set.all()
-		organos_corporales_asociados_diccionarios = []
-		for organo_corporal_asociado in organos_corporales_asociados:
-			organo_corporal_asociado_diccionario = {}
-			organo_corporal_asociado_diccionario["id"] = organo_corporal_asociado.id
-			organo_corporal_asociado_diccionario["codigo_icd_10_pcs"] = organo_corporal_asociado.codigo_icd_10_pcs
-			organo_corporal_asociado_diccionario["nombre"] = organo_corporal_asociado.nombre
+	# 	organos_corporales_asociados = sistema_corporal.organocorporal_set.all()
+	# 	organos_corporales_asociados_diccionarios = []
+	# 	for organo_corporal_asociado in organos_corporales_asociados:
+	# 		organo_corporal_asociado_diccionario = {}
+	# 		organo_corporal_asociado_diccionario["id"] = organo_corporal_asociado.id
+	# 		organo_corporal_asociado_diccionario["codigo_icd_10_pcs"] = organo_corporal_asociado.codigo_icd_10_pcs
+	# 		organo_corporal_asociado_diccionario["nombre"] = organo_corporal_asociado.nombre
 
-			tipos_procedimientos_permitidos = organo_corporal_asociado.tipos_procedimientos_permitidos.all()
-			tipos_procedimientos_permitidos_diccionarios = []
-			for tipo_procedimiento_permitido in tipos_procedimientos_permitidos:
-				tipo_procedimiento_permitido_diccionario = {}
-				tipo_procedimiento_permitido_diccionario["id"] = tipo_procedimiento_permitido.id
-				tipo_procedimiento_permitido_diccionario["codigo_icd_10_pcs"] = tipo_procedimiento_permitido.codigo_icd_10_pcs
-				tipo_procedimiento_permitido_diccionario["nombre"] = tipo_procedimiento_permitido.nombre
-				tipos_procedimientos_permitidos_diccionarios.append(tipo_procedimiento_permitido_diccionario)
+	# 		tipos_procedimientos_permitidos = organo_corporal_asociado.tipos_procedimientos_permitidos.all()
+	# 		tipos_procedimientos_permitidos_diccionarios = []
+	# 		for tipo_procedimiento_permitido in tipos_procedimientos_permitidos:
+	# 			tipo_procedimiento_permitido_diccionario = {}
+	# 			tipo_procedimiento_permitido_diccionario["id"] = tipo_procedimiento_permitido.id
+	# 			tipo_procedimiento_permitido_diccionario["codigo_icd_10_pcs"] = tipo_procedimiento_permitido.codigo_icd_10_pcs
+	# 			tipo_procedimiento_permitido_diccionario["nombre"] = tipo_procedimiento_permitido.nombre
+	# 			tipos_procedimientos_permitidos_diccionarios.append(tipo_procedimiento_permitido_diccionario)
 
-			organo_corporal_asociado_diccionario["tipos_procedimientos_permitidos"] = tipos_procedimientos_permitidos_diccionarios
-			organos_corporales_asociados_diccionarios.append(organo_corporal_asociado_diccionario)
+	# 		organo_corporal_asociado_diccionario["tipos_procedimientos_permitidos"] = tipos_procedimientos_permitidos_diccionarios
+	# 		organos_corporales_asociados_diccionarios.append(organo_corporal_asociado_diccionario)
 
-		sistema_corporal_diccionario["organos_corporales"] = organos_corporales_asociados_diccionarios
-		sistemas_corporales_diccionarios.append(sistema_corporal_diccionario)
+	# 	sistema_corporal_diccionario["organos_corporales"] = organos_corporales_asociados_diccionarios
+	# 	sistemas_corporales_diccionarios.append(sistema_corporal_diccionario)
 
 	datos = {}
 	datos["dia"] = dia
@@ -291,10 +309,11 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 	datos["hora_inicio_legible"] = hora_inicio_legible
 	datos["hora_fin_legible"] = hora_fin_legible
 	datos["fecha_intervencion_legible"] = fecha_intervencion_legible
-	datos["json_sistemas_corporales"] = json.dumps(sistemas_corporales_diccionarios, sort_keys=True, indent=4, separators=(',', ': '))
+	#datos["json_sistemas_corporales"] = json.dumps(sistemas_corporales_diccionarios, sort_keys=True, indent=4, separators=(',', ': '))
 	datos["procedimientos_quirurgicos"] = procedimientos_quirurgicos
 	datos["errores_primera_pagina"] = errores_primera_pagina
-	datos["id_sistema_corporal_actual"] = id_sistema_corporal_actual
+	datos["es_coordinador"] = es_coordinador
+	#datos["id_sistema_corporal_actual"] = id_sistema_corporal_actual
 
 	return render_to_response('medico/solicitud_quirofano.html', datos,  context_instance=RequestContext(request))
 
@@ -356,8 +375,6 @@ def mis_solicitudes(request, estado="pendientes"):
 		else:
 			datos_formulario["paciente_hospitalizado"] = False
 
-		datos_formulario["diagnostico_ingreso_paciente"] = reservacion.intervencion_quirurgica.paciente.diagnostico_ingreso
-		datos_formulario["servicios_operatorios_paciente"] = reservacion.intervencion_quirurgica.paciente.servicios_operatorios_requeridos.all()
 		datos_formulario["preferencia_anestesica"] = reservacion.intervencion_quirurgica.preferencia_anestesica
 		if reservacion.intervencion_quirurgica.observaciones:
 			datos_formulario["observaciones"] = reservacion.intervencion_quirurgica.observaciones
@@ -414,8 +431,6 @@ def mis_solicitudes(request, estado="pendientes"):
 		else:
 			datos_formulario["paciente_hospitalizado"] = False
 
-		datos_formulario["diagnostico_ingreso_paciente"] = reservacion.intervencion_quirurgica.paciente.diagnostico_ingreso
-		datos_formulario["servicios_operatorios_paciente"] = reservacion.intervencion_quirurgica.paciente.servicios_operatorios_requeridos.all()
 		datos_formulario["preferencia_anestesica"] = reservacion.intervencion_quirurgica.preferencia_anestesica
 		if reservacion.intervencion_quirurgica.observaciones:
 			datos_formulario["observaciones"] = reservacion.intervencion_quirurgica.observaciones
@@ -472,8 +487,6 @@ def mis_solicitudes(request, estado="pendientes"):
 		else:
 			datos_formulario["paciente_hospitalizado"] = False
 
-		datos_formulario["diagnostico_ingreso_paciente"] = reservacion.intervencion_quirurgica.paciente.diagnostico_ingreso
-		datos_formulario["servicios_operatorios_paciente"] = reservacion.intervencion_quirurgica.paciente.servicios_operatorios_requeridos.all()
 		datos_formulario["preferencia_anestesica"] = reservacion.intervencion_quirurgica.preferencia_anestesica
 		if reservacion.intervencion_quirurgica.observaciones:
 			datos_formulario["observaciones"] = reservacion.intervencion_quirurgica.observaciones
@@ -518,11 +531,6 @@ def cancelar_solicitud(request, pk):
 		for procedimiento in lista_procedimientos:
 			Participacion.objects.filter(procedimiento_quirurgico=procedimiento).delete()
 			procedimiento.delete()
-
-		# Elimina todos los Servicios del paciente
-		intervencion.paciente.servicios_operatorios_requeridos.clear()
-		intervencion.paciente.compania_aseguradora = None
-		intervencion.paciente.save()
 
 		# Elimina la Reservacion
 		reservacion.delete()

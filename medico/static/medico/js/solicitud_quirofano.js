@@ -3,16 +3,6 @@ var mostrarNumeroHabitacionPaciente = function() {
 	$("#habitacion").removeClass("hidden")
 };
 
-// Mostrar campos expediente paciente
-var mostrarCamposExpedientePaciente = function() {
-	$("#area-ingreso-numero-expediente").removeClass("hidden")
-};
-
-// Mostrar compania aseguradora paciente
-var mostrarCompaniaAseguradoraPaciente = function() {
-	$("#seguros").removeClass("hidden")
-};
-
 // Mostrar razon riesgo
 var mostrarRazonRiesgo = function() {
 	$("#razon-riesgo").removeClass("hidden");
@@ -28,6 +18,12 @@ var mostrarModalAgregarProcedimientoQuirurgico = function() {
 	mostrarInfoQuirofano();
 	$("#accion-formulario").val("procedimiento_quirurgico");
 	$("#agregar-procedimiento-quirurgico-modal").modal();
+};
+
+// Mostrar errores medico solicitante
+var mostrarErroresMedicoSolicitante = function() {
+	$("#medico-solicitante").parent("div").addClass("has-error");
+	$("#medico-solicitante-error-help").removeClass("hidden");
 };
 
 // Mostrar errores nombre paciente
@@ -132,38 +128,6 @@ var mostrarErroresNumeroHabitacionPaciente = function() {
 	$("#numero-habitacion-paciente-error-help").removeClass("hidden");
 };
 
-// Mostrar errores paciente con expediente
-var mostrarErroresPacienteConExpediente = function() {
-	$("#area-ingreso-numero-expediente-form-group").addClass("has-error")
-	$("#area-ingreso-numero-expediente").removeClass("hidden");
-	$("#paciente-con-expediente-error-help").removeClass("hidden");
-}
-
-// Mostrar errores area ingreso paciente
-var mostrarErroresAreaIngresoPaciente = function() {
-	$("#area-ingreso-numero-expediente").removeClass("hidden");
-	$("#area-ingreso-paciente").parent("div").addClass("has-error");
-	$("#area-ingreso-numero-expediente-form-group").addClass("has-feedback");
-	$("#area-ingreso-paciente-error-feedback-icon").removeClass("hidden");
-	$("#area-ingreso-paciente-error-help").removeClass("hidden");
-};
-
-// Mostrar errores numero expediente paciente
-var mostrarErroresNumeroExpedientePaciente = function() {
-	$("#area-ingreso-numero-expediente").removeClass("hidden");
-	$("#numero-expediente-paciente").parent("div").addClass("has-error");
-	$("#area-ingreso-numero-expediente-form-group").addClass("has-feedback");
-	$("#numero-expediente-paciente-error-feedback-icon").removeClass("hidden");
-	$("#numero-expediente-paciente-error-help").removeClass("hidden");
-};
-
-// Mostrar errores compania aseguradora paciente
-var mostrarErroresCompaniaAseguradoraPaciente = function() {
-	$("#seguros").removeClass("hidden");
-	$("#compania-aseguradora-paciente").parent("div").addClass("has-error");
-	$("#compania-aseguradora-paciente-error-help").removeClass("hidden");
-};
-
 // Mostrar errores preferencia anestesica
 var mostrarErroresPreferenciaAnestesica = function() {
 	$("#radios-preferencia-anestesica").addClass("has-error");
@@ -220,10 +184,18 @@ var mostrarErroresMaterialesQuirurgicosRequeridos = function() {
 	$("#materiales-quirurgicos-requeridos-error-help").removeClass("hidden");
 };
 
+// Mostrar errores otros materiales quirurgicos
+var mostrarErroresOtrosMaterialesQuirurgicos = function() {
+	$("#otros-materiales-quirurgicos").parent("div").addClass("has-error");
+	$("#otros-materiales-quirurgicos-form-group").addClass("has-feedback");
+	$("#otros-materiales-quirurgicos-error-feedback-icon").removeClass("hidden");
+	$("#otros-materiales-quirurgicos-error-help").removeClass("hidden");
+};
+
 // Mostrar errores honorarios cirujano principal
-var mostrarErroresHonorariosCirujanoPrincipal = function() {
-	$("#honorarios-cirujano-principal").parent("div").parent("div").addClass("has-error");
-	$("#honorarios-cirujano-principal-error-help").removeClass("hidden");
+var mostrarErroresCirujanoPrincipal = function() {
+	$("#cirujano-principal").parent("div").addClass("has-error");
+	$("#cirujano-principal-error-help").removeClass("hidden");
 };
 
 // Mostrar errores anestesiologo
@@ -250,10 +222,12 @@ var mostrarErroresTercerAyudante = function() {
 	$("#tercer-ayudante-error-help").removeClass("hidden");
 };
 
-// Mostrar errores honorarios tercer ayudante
-var mostrarErroresHonorariosTercerAyudante = function() {
-	$("#honorarios-tercer-ayudante").parent("div").parent("div").addClass("has-error");
-	$("#honorarios-tercer-ayudante-error-help").removeClass("hidden");
+// Mostrar errores nombre procedimiento
+var mostrarErroresNombreProcedimiento = function() {
+	$("#nombre-procedimiento").parent("div").addClass("has-error");
+	$("#nombre-procedimiento-form-group").addClass("has-feedback");
+	$("#nombre-procedimiento-error-feedback-icon").removeClass("hidden")
+	$("#nombre-procedimiento-error-help").removeClass("hidden")
 };
 
 var sistemasCorporales;
@@ -316,7 +290,7 @@ $(document).ready(function() {
 		$("#titulo-detalles-solicitud").html("Detalles de Solicitud - Paciente");
 	});
 
-	// Ir formulario de quirofano
+	// Ir a formulario de quirofano
 	$("#ver-info-quirofano").click(function() {
 		$("#datos-paciente").addClass("hidden");
 		$("#datos-quirofano").removeClass("hidden");
@@ -335,32 +309,12 @@ $(document).ready(function() {
 		}
 	});
 
-	// Mostrar o no mostrar aseguradoras
-	var forma_pago = $("input[name=solicitud_quirofano-tipo_pago_paciente]");
-	forma_pago.change(function(){
-		seguro = $("input[name=solicitud_quirofano-tipo_pago_paciente]:checked");
-		if (seguro.val() == "S")
-			$("#seguros").removeClass("hidden");
-		else {
-			$("#seguros").addClass("hidden");
-		}
-	});
-
 	// Mostrar o no mostrar habitacion de paciente
 	var hospitalizado = $("input[name=solicitud_quirofano-paciente_hospitalizado]");
 	hospitalizado.change(function(){
 		$("#habitacion").toggleClass("hidden");
 		if ($("#habitacion").hasClass("hidden")) {
 			$("#numero-habitacion-paciente").val("");
-		}
-	});
-
-	// Mostrar o no mostrar numero de expediente paciente
-	var expediente = $("input[name=solicitud_quirofano-paciente_con_expediente]");
-	expediente.change(function(){
-		$("#area-ingreso-numero-expediente").toggleClass("hidden");
-		if ($("#area-ingreso-numero-expediente").hasClass("hidden")) {
-			$("#numero-expediente-paciente").val("")
 		}
 	});
 
@@ -404,16 +358,6 @@ $(document).ready(function() {
 	$("#tipos-procedimientos").change(function() {
 		idTipoProcedimiento = $("#tipos-procedimientos>option:selected").val();
 		$("#id-tipo-procedimiento-quirurgico").val(idTipoProcedimiento);
-	});
-
-	// Actualizar montos honorarios segun el monto honorario del cirujano principal
-	$("#honorarios-cirujano-principal").change(function() {
-		montoHonorarios = $("#honorarios-cirujano-principal").val();
-		montoHonorariosAnestesiologo = (0.4*montoHonorarios).toFixed(2);
-		montoHonorariosSegundoAyudante = (0.3*montoHonorarios).toFixed(2);
-		$("#honorarios-anestesiologo").val(montoHonorariosAnestesiologo);
-		$("#honorarios-primer-ayudante").val(montoHonorariosAnestesiologo);
-		$("#honorarios-segundo-ayudante").val(montoHonorariosSegundoAyudante);
 	});
 
 	// Eliminar procedimiento quirurgico

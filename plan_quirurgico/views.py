@@ -177,7 +177,7 @@ def plan_dia(request, area, ano, mes, dia):
 		raise Http404
 	if dia < 1 or dia > calendar.monthrange(ano, mes)[1]:
 		raise Http404
-	if request.user.cuenta.privilegio != '4':
+	if request.user.cuenta.privilegio != '4' and request.user.cuenta.privilegio != '1' and request.user.cuenta.privilegio != '0':
 		return redirect('plan_dia_obs', area, ano, mes, dia)
 
 	seleccionar_turno = False
@@ -241,18 +241,18 @@ def plan_dia(request, area, ano, mes, dia):
 		datos_formulario["codigo_telefono_paciente"] = reservacion.intervencion_quirurgica.paciente.telefono[:4]
 		datos_formulario["numero_telefono_paciente"] = reservacion.intervencion_quirurgica.paciente.telefono[5:]
 		datos_formulario["genero_paciente"] = reservacion.intervencion_quirurgica.paciente.genero
-		if reservacion.intervencion_quirurgica.paciente.compania_aseguradora:
-			datos_formulario["tipo_pago_paciente"] = "S"
-			datos_formulario["compania_aseguradora_paciente"] = reservacion.intervencion_quirurgica.paciente.compania_aseguradora
-		else:
-			datos_formulario["tipo_pago_paciente"] = "P"
+		#if reservacion.intervencion_quirurgica.paciente.compania_aseguradora:
+		#	datos_formulario["tipo_pago_paciente"] = "S"
+		#	datos_formulario["compania_aseguradora_paciente"] = reservacion.intervencion_quirurgica.paciente.compania_aseguradora
+		#else:
+			#datos_formulario["tipo_pago_paciente"] = "P"
 
-		if reservacion.intervencion_quirurgica.paciente.numero_expediente:
-			datos_formulario["paciente_con_expediente"] = True
-			datos_formulario["area_ingreso_paciente"] = reservacion.intervencion_quirurgica.paciente.area_ingreso
-			datos_formulario["numero_expediente_paciente"] = reservacion.intervencion_quirurgica.paciente.numero_expediente
-		else:
-			datos_formulario["paciente_con_expediente"] = False
+		#if reservacion.intervencion_quirurgica.paciente.numero_expediente:
+		#	datos_formulario["paciente_con_expediente"] = True
+		#	datos_formulario["area_ingreso_paciente"] = reservacion.intervencion_quirurgica.paciente.area_ingreso
+		#	datos_formulario["numero_expediente_paciente"] = reservacion.intervencion_quirurgica.paciente.numero_expediente
+		#else:
+		#	datos_formulario["paciente_con_expediente"] = False
 
 		if reservacion.intervencion_quirurgica.paciente.numero_habitacion:
 			datos_formulario["paciente_hospitalizado"] = True
@@ -260,8 +260,6 @@ def plan_dia(request, area, ano, mes, dia):
 		else:
 			datos_formulario["paciente_hospitalizado"] = False
 
-		datos_formulario["diagnostico_ingreso_paciente"] = reservacion.intervencion_quirurgica.paciente.diagnostico_ingreso
-		datos_formulario["servicios_operatorios_paciente"] = reservacion.intervencion_quirurgica.paciente.servicios_operatorios_requeridos.all()
 		datos_formulario["preferencia_anestesica"] = reservacion.intervencion_quirurgica.preferencia_anestesica
 		if reservacion.intervencion_quirurgica.observaciones:
 			datos_formulario["observaciones"] = reservacion.intervencion_quirurgica.observaciones
@@ -272,6 +270,7 @@ def plan_dia(request, area, ano, mes, dia):
 
 		datos_formulario["materiales_quirurgicos_requeridos"] = reservacion.intervencion_quirurgica.materiales_quirurgicos_requeridos.all()
 		datos_formulario["equipos_especiales_requeridos"] = reservacion.intervencion_quirurgica.equipos_especiales_requeridos.all()
+		datos_formulario["otros_materiales_quirurgicos"] = reservacion.intervencion_quirurgica.otros_materiales_quirurgicos
 		datos_formulario["dias_hospitalizacion"] = reservacion.dias_hospitalizacion
 
 		reservacion_diccionario["formulario"] = SolicitudQuirofanoForm(datos_formulario)

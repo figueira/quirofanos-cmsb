@@ -18,3 +18,10 @@ def es_medico(user):
     Parametros:
     user -> usuario que hace la solicitud http '''
     return user.cuenta.privilegio == '4'
+
+def es_medico_o_coordinador(user):
+    ''' Devuelve un booleano que indica si el usuario tiene privilegio de COORDINADOR o MEDICO
+
+    Parametros
+    user -> usuario que hace la solicitud http '''
+    return es_medico(user) or es_coordinador(user)
