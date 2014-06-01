@@ -133,6 +133,12 @@ a:hover
 	cursor:pointer
 }
 
+.table>thead>tr>td.actual,.table>tbody>tr>td.actual,.table>tfoot>tr>td.actual,.table>thead>tr>th.actual,.table>tbody>tr>th.actual,.table>tfoot>tr>th.actual,.table>thead>tr.actual>td,.table>tbody>tr.actual>td,.table>tfoot>tr.actual>td,.table>thead>tr.actual>th,.table>tbody>tr.actual>th,.table>tfoot>tr.actual>th
+{
+	background-color:rgba(182,79,79,0.5)!important;
+}
+
+
 .table>thead>tr>td.unavailable,.table>tbody>tr>td.unavailable,.table>tfoot>tr>td.unavailable,.table>thead>tr>th.unavailable,.table>tbody>tr>th.unavailable,.table>tfoot>tr>th.unavailable,.table>thead>tr.unavailable>td,.table>tbody>tr.unavailable>td,.table>tfoot>tr.unavailable>td,.table>thead>tr.unavailable>th,.table>tbody>tr.unavailable>th,.table>tfoot>tr.unavailable>th
 {
 	background-color:rgba(196,196,196,0.3)!important
@@ -142,6 +148,11 @@ a:hover
 {
 	background-color:#87A1B9!important;
 	cursor:pointer
+}
+
+.table-hover>tbody>tr>td.actual:hover,.table-hover>tbody>tr>th.actual:hover,.table-hover>tbody>tr.actual:hover>td,.table-hover>tbody>tr.actual:hover>th
+{
+	background-color:rgba(172, 66, 66, 1)!important;	
 }
 
 .table-hover>tbody>tr>td.unavailable:hover,.table-hover>tbody>tr>th.unavailable:hover,.table-hover>tbody>tr.unavailable:hover>td,.table-hover>tbody>tr.unavailable:hover>th
