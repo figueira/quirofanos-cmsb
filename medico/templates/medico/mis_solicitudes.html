@@ -8,6 +8,8 @@
 {% block scripts %}
 <script type="text/javascript" src="{% static 'medico/js/mis_solicitudes.js' %}">
 </script>
+<script type="text/javascript" src="{% static 'medico/js/solicitudes_quirofanos.js' %}">
+</script>
 {% endblock scripts %}
 
 {% block flash-messages %}
@@ -109,40 +111,6 @@
 	</div>
 </div>
 
-<!-- Paginacion de Solicitudes -->
-<div class="row">
-	<div class="col-lg-10 col-lg-offset-1">
-		<ul class="pagination">
-			<li class="disabled">
-				<a href="#">
-					&laquo;
-				</a>
-			</li>
-			<li class="active">
-				<a href="#">
-					1
-					<span class="sr-only">
-						(current)
-					</span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					2
-					<span class="sr-only">
-						(current)
-					</span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					&raquo;
-				</a>
-			</li>
-		</ul>
-	</div>
-</div><!-- Paginacion de Solicitudes -->
-
 <!-- Modal de Seleccion de Periodo a Mostrar -->
 <div class="modal fade" id="seleccionar-periodo" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-sm">
@@ -184,7 +152,23 @@
 	</div>
 </div><!-- Modal de Seleccion de Periodo a Mostrar -->
 
+
+<!-- Paginacion de Solicitudes -->
+<div class="row">
+	<div class="col-lg-6 col-lg-offset-1">
+		<div id="paginacion-pendientes"></div>
+		<div id="paginacion-aprobadas"></div>
+		<div id="paginacion-rechazadas"></div>
+	</div>
+</div>
 <script type="text/javascript">
+	{% if estado_solicitud == 'pendientes' %}
+		inicializarPaginacion({{ reservaciones_pendientes.number }}, {{ reservaciones_pendientes.paginator.num_pages }}, 'pendientes' )
+	{% elif estado_solicitud == 'aprobadas' %}
+		inicializarPaginacion({{ reservaciones_aprobadas.number }}, {{ reservaciones_aprobadas.paginator.num_pages }}, 'aprobadas' );
+	{% elif estado_solicitud == 'rechazadas' %}
+		inicializarPaginacion({{ reservaciones_rechazadas.number }}, {{ reservaciones_rechazadas.paginator.num_pages }}, 'rechazadas' );
+	{% endif %}
 	seleccionarPestana("{{ estado_solicitud }}");
 </script>
 {% endblock content %}

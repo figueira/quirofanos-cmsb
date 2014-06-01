@@ -44,11 +44,13 @@
 			Plan Quirúrgico
 		</a>
 		<small> - {{ area_nombre }} - {{ dia }}/{{ mes }}/{{ ano }}</small>
+		{% if dia_permitido %}
 		<small class="pull-right">
 			<button class="btn btn-primary" id="btn-solicitar-quirofano" data-toggle="modal" data-target="#solicitar-quirofano">
 				{{ SOLICITAR_QUIROFANO }}
 			</button>
-		</small>
+		</small>			
+		{% endif %}
 	</h1>
 </div>
 

@@ -99,6 +99,18 @@
 					</td>
 					{% else %}
 					{% if dia.disponibilidad %}
+					{% if dia.dia_mes == dia_actual %}
+					<td class="danger calendario-dia-disponible" href="{% url 'plan_dia' area_actual ano mes dia.dia_mes %}">
+						<span class="pull-right">
+							<strong>{{ dia.dia_mes }}</strong>
+						</span>
+						<br>
+						<p class="label label-default">
+							<abbr title="{{ LABEL_INTERVENCION_PLURAL }}">{{ LABEL_INTERVENCION_ABREVIADO }}</abbr>
+							{{ LABEL_QUIRURGICA_PLURAL }} {{ dia.numero_intervenciones }}
+						</p>
+					</td>						
+					{% else %}
 					<td class="available calendario-dia-disponible" href="{% url 'plan_dia' area_actual ano mes dia.dia_mes %}">
 						<span class="pull-right">
 							<strong>{{ dia.dia_mes }}</strong>
@@ -109,6 +121,7 @@
 							{{ LABEL_QUIRURGICA_PLURAL }} {{ dia.numero_intervenciones }}
 						</p>
 					</td>
+					{% endif %}
 					{% else %}
 					<td class="unavailable">
 						<span class="pull-right">{{ dia.dia_mes }}</span>
