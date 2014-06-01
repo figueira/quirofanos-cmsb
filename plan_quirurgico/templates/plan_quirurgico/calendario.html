@@ -100,7 +100,7 @@
 					{% else %}
 					{% if dia.disponibilidad %}
 					{% if dia.dia_mes == dia_actual %}
-					<td class="danger calendario-dia-disponible" href="{% url 'plan_dia' area_actual ano mes dia.dia_mes %}">
+					<td class="available actual calendario-dia-disponible" href="{% url 'plan_dia' area_actual ano mes dia.dia_mes %}">
 						<span class="pull-right">
 							<strong>{{ dia.dia_mes }}</strong>
 						</span>

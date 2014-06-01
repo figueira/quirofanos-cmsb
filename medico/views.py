@@ -302,11 +302,15 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 @require_GET
 @login_required
 @user_passes_test(es_medico)
-def mis_solicitudes(request, estado="pendientes"):
+def mis_solicitudes(request, estado="pendientes", periodo=0):
 	''' Controlador correspondiente a la pagina del listado de solicitudes realizadas por el medico
 
 	Parametros:
-	request -> Solicitud HTTP '''
+	request -> Solicitud HTTP
+	estado  -> estado de las solicitudes
+	periodo -> periodo para filtrar las solicitudes '''
+
+	
 
 	if estado not in ("pendientes", "aprobadas", "rechazadas"):
 	 	raise Http404
