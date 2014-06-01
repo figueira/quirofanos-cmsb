@@ -65,16 +65,23 @@
 		</p>
 		<a href="{% url 'plan_dia' area_actual ano mes dia %}" class="btn btn-default pull-right">{{ CANCELAR }}</a>
 	</div>
-	<div class="col-lg-1 col-lg-offset-11 col-centered">
-		<h1 class="text-center">
-			<small>
-				<a href="{% url 'plan_dia_obs' area_actual ano mes dia %}">
-					<span class="glyphicon glyphicon-th-list" data-toggle="tooltip" data-placement="left" title="Ver Plan Quirúrgico de Observadores" ></span>
-				</a>
-			</small>
-		</h1>
-	</div>
 </div><br><!-- Aviso Seleccionar Turno Intervencion -->
+
+<div class="row">
+	<div class="col-lg-1 col-lg-offset-10 col-centered">
+		<small class="pull-right">
+			<div class="btn-group">
+				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+					Ver <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="{% url 'plan_dia_obs' area_actual ano mes dia %}">Listado Intervenciones</a></li>
+					<li><a href="{% url 'plan_dia_presentacion' area_actual ano mes dia %}">Presentación</a></li>
+				</ul>
+			</div>
+		</small>
+	</div>
+</div><br>
 
 {% if seleccionar_turno %}
 <script type="text/javascript">
