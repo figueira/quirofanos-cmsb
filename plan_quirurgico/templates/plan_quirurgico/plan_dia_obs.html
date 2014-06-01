@@ -1,6 +1,7 @@
 {% extends request.session.template_base %}
 
 {% load staticfiles %}
+{% load widget_tweaks %}
 
 {% block title %}{{ block.super }} | Plan Diario {% endblock title %}
 
@@ -28,17 +29,21 @@
 			Plan Quirúrgico
 		</a>
 		<small> - {{ area_nombre }} - {{ dia }}/{{ mes }}/{{ ano }}</small>
-		<small class="pull-right">
-			<a href="{% url 'plan_dia_pdf' area_actual ano mes dia %}">
-				<img src="{% static 'img/pdf.png' %}" height="24" width="24" data-toggle="tooltip" data-placement="left" title="Generar Plan Quirúrgico en PDF"/>
-			</a>
-			{% if  request.user.cuenta.privilegio == "4" %}
-			<a href="{% url 'plan_dia' area_actual ano mes dia %}">
-				<span class="glyphicon glyphicon-th" data-toggle="tooltip" data-placement="left" title="Ver Plan Quirúrgico de Médicos"></span>
-			</a>
-			{% endif %}
+		<small class="col-lg-offset-6">
+			<div class="btn-group">
+				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+					Ver <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					{% if  request.user.cuenta.privilegio == "4" or request.user.cuenta.privilegio == "1" or request.user.cuenta.privilegio == "0" %}
+					<li><a href="{% url 'plan_dia' area_actual ano mes dia %}">
+					Horarios Disponibles</a>
+					{% endif %}
+					<li><a href="{% url 'plan_dia_presentacion' area_actual ano mes dia %}">Presentación</a></li>
+					<li><a href="{% url 'plan_dia_pdf' area_actual ano mes dia %}">Generar PDF</a></li>
+				</ul>
+			</div>
 		</small>
-
 	</h1>
 </div><br>
 
@@ -104,13 +109,41 @@
 					</td>
 					<td>
 						{% if intervencion.objeto.estado == '0' %}
-						<h3><span class="label label-danger">En Espera</span></h3>
+						<h3>
+							<span class="label label-danger">En Espera</span>
+						</h3>
+						{% if request.user.cuenta.privilegio == "3" %}
+						<button class="btn btn-default btn-cambio-estado" data-toggle="modal" data-target="#cambiar-estado-modal" value='{{ intervencion.objeto.id }}'>
+							<span class="glyphicon glyphicon-edit"></span>
+						</button>
+						{% endif %}
 						{% elif intervencion.objeto.estado == '1' %}
-						<h3><span class="label label-success">En Curso</span></h3>
+						<h3>
+							<span class="label label-success">En Curso</span>
+						</h3>
+						{% if request.user.cuenta.privilegio == "3" %}
+						<button class="btn btn-default btn-cambio-estado" data-toggle="modal" data-target="#cambiar-estado-modal" value='{{ intervencion.objeto.id }}'>
+							<span class="glyphicon glyphicon-edit"></span>
+						</button>
+						{% endif %}
 						{% elif intervencion.objeto.estado == '2' %}
-						<h3><span class="label label-warning">En Recuperación</span></h3>
+						<h3>
+							<span class="label label-warning">En Recuperación</span>
+						</h3>
+						{% if request.user.cuenta.privilegio == "3" %}
+						<button class="btn btn-default btn-cambio-estado" data-toggle="modal" data-target="#cambiar-estado-modal" value='{{ intervencion.objeto.id }}'>
+							<span class="glyphicon glyphicon-edit"></span>
+						</button>
+						{% endif %}
 						{% elif intervencion.objeto.estado == '3' %}
-						<h3><span class="label label-primary">En Habitación</span></h3>
+						<h3>
+							<span class="label label-primary">En Habitación</span>
+						</h3>
+						{% if request.user.cuenta.privilegio == "3" %}
+						<button class="btn btn-default btn-cambio-estado" data-toggle="modal" data-target="#cambiar-estado-modal" value='{{ intervencion.objeto.id }}'>
+							<span class="glyphicon glyphicon-edit"></span>
+						</button>
+						{% endif %}
 						{% endif %}
 					</td>
 				</tr>
@@ -120,6 +153,31 @@
 		{% else %}
 		<strong>No existen Intervenciones Quirúrgicas programadas para este día.</strong>
 		{% endif %}
+	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="cambiar-estado-modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title"><strong>Cambiar Estado de Intervención Quirúrgica</strong></h4>
+			</div>
+			<div class="modal-body">
+				<div class="col-lg-offset-1">
+					<form class="form-horizontal" id="formulario-cambio-estado-intervencion" role="form" action="{% url 'cambiar_estado' area_actual ano mes dia %}" method="POST" novalidate>
+						{% csrf_token %}
+						<button type="button" class="btn btn-danger btn-estado" value="0">En Espera</button>
+						<button type="button" class="btn btn-success btn-estado" value="1">En Curso</button>
+						<button type="button" class="btn btn-warning btn-estado" value="2">En Recuperación</button>
+						<button type="button" class="btn btn-info btn-estado" value="3">En Habitación</button>
+						{% render_field formulario_cambio_estado_intervencion.id_intervencion class="form-control" id="id-intervencion" %}
+						{% render_field formulario_cambio_estado_intervencion.estado_intervencion class="form-control" id="estado-intervencion" %}
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 {% endblock content %}
