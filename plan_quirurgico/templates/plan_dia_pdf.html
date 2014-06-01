@@ -1,5 +1,10 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-theme.min.css' %}" />
 	<title>
 		Plan Quirúrgico
 	</title>
@@ -31,15 +36,15 @@
 
 	<div>
 		{% if intervenciones %}
-		<table>
+		<table class="table table-bordered table-responsive table-hover">
 			<tr>
-				<th class="col-lg-1">Quirófano</th>
-				<th class="col-lg-1">Hora</th>
-				<th class="col-lg-1">Paciente</th>
-				<th class="col-lg-1">Procedimientos Quirúrgicos</th>
-				<th class="col-lg-1">Médico</th>
-				<th class="col-lg-1">Anestesiólogo</th>
-				<th class="col-lg-1">Observaciones</th>
+				<th>Quirófano</th>
+				<th>Hora</th>
+				<th>Paciente</th>
+				<th>Procedimientos Quirúrgicos</th>
+				<th>Médico</th>
+				<th>Anestesiólogo</th>
+				<th>Observaciones</th>
 			</tr>
 		</table>
 		<table>

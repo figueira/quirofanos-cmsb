@@ -40,6 +40,10 @@ def rango_decimal(comienzo, final, paso):
         r = r + paso
 
 def obtener_hora(hora_en_float):
+    ''' Devuelve una tupla de horas y minutos para la hora recibida como parametro
+
+    Parametros:
+    hora_en_float -> hora expresada en float '''
     horas = int(hora_en_float)
     parte_decimal = hora_en_float - int(hora_en_float)
     minutos = 0
@@ -48,6 +52,11 @@ def obtener_hora(hora_en_float):
     return (horas, minutos)
 
 def obtener_total_horas(hora):
+    ''' Devuelve el total de horas para la hora recibida como parametro
+
+    Parametros:
+    hora -> hora expresada como time
+    '''
     return round((datetime.timedelta(hours=hora.hour, minutes=hora.minute).total_seconds() / 3600), 1)
 
 def obtener_representacion_media_hora(media_hora):

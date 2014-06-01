@@ -1,4 +1,4 @@
-{% extends "medico/contexto.html" %}
+{% extends request.session.template_base %}
 
 {% load staticfiles %}
 {% load widget_tweaks %}
@@ -33,11 +33,11 @@
 				</div>
 			</div>
 
-			<script type="text/javascript">
+			<!--<script type="text/javascript">
 			$(function() {
 				sistemasCorporales = {{ json_sistemas_corporales|safe }};
 			});
-			</script>
+			</script>-->
 			<!-- Formulario Solicitud Quirofano -->
 			<form class="form-horizontal" id="formulario-solicitud-quirofano" role="form" action="{% url 'solicitud_quirofano' ano mes dia id_quirofano hora_inicio duracion_en_medias_horas %}" method="POST" novalidate>
 				{% csrf_token %}
@@ -194,55 +194,6 @@
 							</script>
 							{% endif %}
 						</div>
-						<div class="form-group" id="diagnostico-ingreso-paciente-form-group">
-							<label class="col-lg-2 control-label" for="diagnostico-ingreso-paciente">
-								{{ LABEL_DIAGNOSTICO }}
-							</label>
-							<div class="col-lg-10">
-								{% render_field formulario_solicitud_quirofano.diagnostico_ingreso_paciente class="form-control" id="diagnostico-ingreso-paciente" %}
-								<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="diagnostico-ingreso-paciente-error-feedback-icon"></span>
-								<span class="help-block hidden" id="diagnostico-ingreso-paciente-error-help">{{ formulario_solicitud_quirofano.diagnostico_ingreso_paciente.errors }}</span>
-							</div>
-							{% if not agregando_procedimiento and not procedimiento_agregado and not procedimiento_eliminado and formulario_solicitud_quirofano.diagnostico_ingreso_paciente.errors %}
-							<script type="text/javascript">
-							$(function() {
-								mostrarErroresDiagnosticoIngresoPaciente();
-							});
-							</script>
-							{% endif %}
-						</div>
-						<div class="form-group" id="servicios-operatorios-paciente-form-group">
-							<label class="col-lg-2 control-label" for="servicios_operatorios_paciente">
-								{{ LABEL_SERVICIOS_OPERATORIOS }}
-							</label>
-							<div class="col-lg-10" id="checkboxes-servicios-operatorios-paciente">
-								<div class="row">
-									{% for checkbox in formulario_solicitud_quirofano.servicios_operatorios_paciente %}
-									{% if forloop.first %}
-									<div class="col-lg-2">
-										{% endif %}
-										<div class="checkbox">
-											{% render_field checkbox %}
-										</div>
-										{% if forloop.counter|divisibleby:1 and not forloop.last %}
-									</div>
-									<div class="col-lg-2">
-										{% elif forloop.last %}
-									</div>
-									{% endif %}
-									{% endfor %}
-								</div>
-								<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="servicios-operatorios-paciente-error-feedback-icon"></span>
-								<span class="help-block hidden" id="servicios-operatorios-paciente-error-help">{{ formulario_solicitud_quirofano.servicios_operatorios_paciente.errors }}</span>
-							</div>
-							{% if not agregando_procedimiento and not procedimiento_agregado and not procedimiento_eliminado and formulario_solicitud_quirofano.servicios_operatorios_paciente.errors %}
-							<script type="text/javascript">
-							$(function() {
-								mostrarErroresServiciosOperatoriosPaciente();
-							});
-							</script>
-							{% endif %}
-						</div>
 						<div class="form-group" id="numero-habitacion-paciente-form-group">
 							<label class="col-lg-2 control-label">
 								{% render_field formulario_solicitud_quirofano.paciente_hospitalizado %}
@@ -364,6 +315,24 @@
 								<input class="form-control" type="text" value="{{ hora_fin_legible }}" disabled>
 							</div>
 						</div>
+						{% if es_coordinador %}
+						<div class="form-group" id="medico-solicitante-form-group">
+							<label class="col-lg-2 control-label" for="medico-solicitante">
+								{{ LABEL_MEDICO_SOLICITANTE }}
+							</label>
+							<div class="col-lg-10">
+								{% render_field formulario_solicitud_quirofano.medico_solicitante class="form-control" id="medico-solicitante" %}
+								<span class="help-block hidden" id="medico-solicitante-error-help">{{ formulario_solicitud_quirofano.medico_solicitante.errors }}</span>
+							</div>
+							{% if not agregando_procedimiento and not procedimiento_agregado and not procedimiento_eliminado and formulario_solicitud_quirofano.medico_solicitante.errors %}
+							<script type="text/javascript">
+							$(function() {
+								mostrarErroresMedicoSolicitante();
+							});
+							</script>
+							{% endif %}
+						</div>
+						{% endif %}
 						<div class="form-group" id="preferencia-anestesica-form-group">
 							<label class="col-lg-2 control-label" for="preferencia-anestesica">
 								{{ LABEL_ANESTESIA }}
@@ -524,6 +493,23 @@
 							</script>
 							{% endif %}
 						</div>
+						<div class="form-group" id="otros-materiales-quirurgicos-form-group">
+							<label class="col-lg-offset-2 col-lg-2 control-label" for="otros-materiales-quirurgicos">
+								{{ LABEL_OTROS }}
+							</label>
+							<div class="col-lg-6">
+								{% render_field formulario_solicitud_quirofano.otros_materiales_quirurgicos class="form-control" id="otros-materiales-quirurgicos" %}
+								<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="otros-materiales-quirurgicos-error-feedback-icon"></span>
+								<span class="help-block hidden" id="otros-materiales-quirurgicos-error-help">{{ formulario_solicitud_quirofano.otros_materiales_quirurgicos.errors }}</span>
+							</div>
+							{% if not agregando_procedimiento and not procedimiento_agregado and not procedimiento_eliminado and formulario_solicitud_quirofano.otros_materiales_quirurgicos.errors %}
+							<script type="text/javascript">
+							$(function() {
+								mostrarErroresOtrosMaterialesQuirurgicos();
+							});
+							</script>
+							{% endif %}
+						</div>
 						<div class="form-group">
 							<label class="col-lg-2 control-label">{{ LABEL_PROCEDIMIENTOS_QUIRURGICOS }}</label>
 						</div>
@@ -536,17 +522,17 @@
 								<div class="col-lg-3 well well-sm well-info">
 									<input type="hidden" value="{{ procedimiento_quirurgico.id }}">
 									<button class="close eliminar-procedimiento-quirurgico" aria-hidden="true">×</button>
-									<p>
+									<!--<p>
 										<strong>{{ LABEL_SISTEMA_CORPORAL }}</strong>
 										{{ procedimiento_quirurgico.organo_corporal.sistema_corporal }}
 									</p>
 									<p>
 										<strong>{{ LABEL_ORGANO_CORPORAL }}</strong>
 										{{ procedimiento_quirurgico.organo_corporal }}
-									</p>
+									</p>-->
 									<p>
 										<strong>{{ LABEL_PROCEDIMIENTO }}</strong>
-										{{ procedimiento_quirurgico.tipo_procedimiento_quirurgico }}
+										{{ procedimiento_quirurgico.nombre_procedimiento }}
 									</p>
 								</div>
 								{% if forloop.last %}
@@ -584,7 +570,7 @@
 
 				<!-- _Modal Agregar Intervencion Quirurgica -->
 				<div class="modal fade" id="agregar-procedimiento-quirurgico-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-					<div class="modal-dialog">
+					<div class="modal-dialog modal-lg">
 						<div class="modal-content">
 							<div class="modal-header">
 								<h4 class="modal-title" id="myModalLabel">
@@ -600,7 +586,7 @@
 									{% endfor %}
 								</div>
 								{% endif %}
-								{% render_field formulario_procedimiento_quirurgico.id_organo_corporal id="id-organo-corporal" %}
+								<!-- {% render_field formulario_procedimiento_quirurgico.id_organo_corporal id="id-organo-corporal" %}
 								{% render_field formulario_procedimiento_quirurgico.id_tipo_procedimiento_quirurgico id="id-tipo-procedimiento-quirurgico" %}
 								<div class="form-group">
 									<label class="col-lg-2 control-label">{{ LABEL_SISTEMA_CORPORAL }}</label>
@@ -646,28 +632,36 @@
 									seleccionarSistemaCorporal('{{ id_sistema_corporal_actual }}', '{{ formulario_procedimiento_quirurgico.id_organo_corporal.value }}', '{{ formulario_procedimiento_quirurgico.id_tipo_procedimiento_quirurgico.value }}');
 								});
 								</script>
-								{% endif %}
-								<div class="form-group" id="honorarios-cirujano-principal-form-group">
+								{% endif %} -->
+								<div class="form-group" id="nombre-procedimiento-form-group">
+									<label class="col-lg-2 control-label">
+										<abbr title="{{ LABEL_PROCEDIMIENTO }}">{{ LABEL_PROCEDIMIENTO_ABREVIADO }}</abbr>
+									</label>
+									<div class="col-lg-10">
+										{% render_field formulario_procedimiento_quirurgico.nombre_procedimiento class="form-control" id="nombre-procedimiento" %}
+										<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="nombre-procedimiento-error-feedback-icon"></span>
+										<span class="help-block hidden" id="nombre-procedimiento-error-help">{{ formulario_procedimiento_quirurgico.nombre_procedimiento.errors }}</span>
+									</div>
+									{% if agregando_procedimiento and formulario_procedimiento_quirurgico.nombre_procedimiento.errors %}
+									<script type="text/javascript">
+									$(function() {
+										mostrarErroresNombreProcedimiento();
+									});
+									</script>
+									{% endif %}
+								</div>
+								<div class="form-group" id="cirujano-principal-form-group">
 									<label class="col-lg-2 control-label" for="nombre-cirujano-principal">
 										{{ LABEL_CIRUJANO_PRINCIPAL }}
 									</label>
 									<div class="col-lg-6">
 										{% render_field formulario_procedimiento_quirurgico.cirujano_principal class="form-control" id="cirujano-principal" %}
-										<span class="help-block hidden" id="anestesiologo-error-help">{{ formulario_procedimiento_quirurgico.cirujano_principal.errors }}</span>
+										<span class="help-block hidden" id="cirujano-principal-error-help">{{ formulario_procedimiento_quirurgico.cirujano_principal.errors }}</span>
 									</div>
-									<div class="col-lg-4">
-										<div class="input-group">
-											<span class="input-group-addon">
-												{{ LABEL_BOLIVARES }}
-											</span>
-											{% render_field formulario_procedimiento_quirurgico.monto_honorarios_cirujano_principal class="form-control" id="honorarios-cirujano-principal" placeholder=LABEL_HONORARIOS %}
-										</div>
-										<span class="help-block hidden" id="honorarios-cirujano-principal-error-help">{{ formulario_procedimiento_quirurgico.monto_honorarios_cirujano_principal.errors }}</span>
-									</div>
-									{% if agregando_procedimiento and formulario_procedimiento_quirurgico.monto_honorarios_cirujano_principal.errors %}
+									{% if agregando_procedimiento and formulario_procedimiento_quirurgico.cirujano_principal.errors %}
 									<script type="text/javascript">
 									$(function() {
-										mostrarErroresHonorariosCirujanoPrincipal();
+										mostrarErroresCirujanoPrincipal();
 									});
 									</script>
 									{% endif %}
@@ -687,14 +681,6 @@
 									});
 									</script>
 									{% endif %}
-									<div class="col-lg-4">
-										<div class="input-group">
-											<span class="input-group-addon">
-												{{ LABEL_BOLIVARES }}
-											</span>
-											<input type="text" class="form-control" id="honorarios-anestesiologo" placeholder="{{ LABEL_HONORARIOS }}" disabled>
-										</div>
-									</div>
 								</div>
 								<div class="form-group" id="primer-ayudante-form-group">
 									<label class="col-lg-2 control-label" for="primer-ayudante">
@@ -711,14 +697,6 @@
 									});
 									</script>
 									{% endif %}
-									<div class="col-lg-4">
-										<div class="input-group">
-											<span class="input-group-addon">
-												{{ LABEL_BOLIVARES }}
-											</span>
-											<input type="text" class="form-control" id="honorarios-primer-ayudante" placeholder="{{ LABEL_HONORARIOS }}" disabled>
-										</div>
-									</div>
 								</div>
 								<div class="form-group" id="segundo-ayudante-form-group">
 									<label class="col-lg-2 control-label" for="segundo-ayudante">
@@ -735,14 +713,6 @@
 									});
 									</script>
 									{% endif %}
-									<div class="col-lg-4">
-										<div class="input-group">
-											<span class="input-group-addon">
-												{{ LABEL_BOLIVARES }}
-											</span>
-											<input type="text" class="form-control" id="honorarios-segundo-ayudante" placeholder="{{ LABEL_HONORARIOS }}" disabled>
-										</div>
-									</div>
 								</div>
 								<div class="form-group" id="tercer-ayudante-form-group">
 									<label class="col-lg-2 control-label" for="tercer-ayudante">
@@ -759,19 +729,52 @@
 									});
 									</script>
 									{% endif %}
-									<div class="col-lg-4">
-										<div class="input-group">
-											<span class="input-group-addon">
-												{{ LABEL_BOLIVARES }}
-											</span>
-											{% render_field formulario_procedimiento_quirurgico.monto_honorarios_tercer_ayudante class="form-control" id="honorarios-tercer-ayudante" placeholder=LABEL_HONORARIOS %}
-										</div>
-										<span class="help-block hidden" id="honorarios-tercer-ayudante-error-help">{{ formulario_procedimiento_quirurgico.monto_honorarios_tercer_ayudante.errors }}</span>
+								</div>
+								<div class="form-group" id="diagnostico-ingreso-paciente-form-group">
+									<label class="col-lg-2 control-label" for="diagnostico-ingreso-paciente">
+										{{ LABEL_DIAGNOSTICO }}
+									</label>
+									<div class="col-lg-10">
+										{% render_field formulario_procedimiento_quirurgico.diagnostico_ingreso_paciente class="form-control" id="diagnostico-ingreso-paciente" %}
+										<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="diagnostico-ingreso-paciente-error-feedback-icon"></span>
+										<span class="help-block hidden" id="diagnostico-ingreso-paciente-error-help">{{ formulario_procedimiento_quirurgico.diagnostico_ingreso_paciente.errors }}</span>
 									</div>
-									{% if agregando_procedimiento and formulario_procedimiento_quirurgico.monto_honorarios_tercer_ayudante.errors %}
+									{% if agregando_procedimiento and formulario_procedimiento_quirurgico.diagnostico_ingreso_paciente.errors %}
 									<script type="text/javascript">
 									$(function() {
-										mostrarErroresHonorariosTercerAyudante();
+										mostrarErroresDiagnosticoIngresoPaciente();
+									});
+									</script>
+									{% endif %}
+								</div>
+								<div class="form-group" id="servicios-operatorios-paciente-form-group">
+									<label class="col-lg-2 control-label" for="servicios_operatorios_paciente">
+										{{ LABEL_SERVICIOS_OPERATORIOS }}
+									</label>
+									<div class="col-lg-10" id="checkboxes-servicios-operatorios-paciente">
+										<div class="row">
+											{% for checkbox in formulario_procedimiento_quirurgico.servicios_operatorios_paciente %}
+											{% if forloop.first %}
+											<div class="col-lg-2">
+												{% endif %}
+												<div class="checkbox">
+													{% render_field checkbox %}
+												</div>
+												{% if forloop.counter|divisibleby:1 and not forloop.last %}
+											</div>
+											<div class="col-lg-2">
+												{% elif forloop.last %}
+											</div>
+											{% endif %}
+											{% endfor %}
+										</div>
+										<span class="glyphicon glyphicon-remove form-control-feedback hidden" id="servicios-operatorios-paciente-error-feedback-icon"></span>
+										<span class="help-block hidden" id="servicios-operatorios-paciente-error-help">{{ formulario_procedimiento_quirurgico.servicios_operatorios_paciente.errors }}</span>
+									</div>
+									{% if agregando_procedimiento and formulario_procedimiento_quirurgico.servicios_operatorios_paciente.errors %}
+									<script type="text/javascript">
+									$(function() {
+										mostrarErroresServiciosOperatoriosPaciente();
 									});
 									</script>
 									{% endif %}

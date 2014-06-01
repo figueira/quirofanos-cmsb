@@ -1,0 +1,146 @@
+{% extends request.session.template_base %}
+
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+{% block title %}{{ block.super }} | Plan Diario {% endblock title %}
+
+{% block scripts %}
+<script type="text/javascript" src="{% static 'plan_quirurgico/js/plan_dia_obs.js' %}">
+</script>
+<script type="text/javascript" src="{% static 'medico/js/detalles_operacion.js' %}">
+</script>
+{% endblock scripts %}
+
+{% block nombre-usuario %}
+{{ request.session.nombre }}
+{% endblock nombre-usuario %}
+
+{% block numero-mensajes %}
+3
+{% endblock numero-mensajes %}
+
+{% block content %}
+<div class="page-header">
+    <h1>
+        <a href="{% url 'calendario' area_actual ano mes %}">
+            <span class="glyphicon glyphicon-chevron-left">
+            </span>
+            Plan Quirúrgico
+        </a>
+        <small> - {{ area_nombre }} - {{ dia }}/{{ mes }}/{{ ano }}</small>
+        <small class="col-lg-offset-6">
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    Ver <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    {% if  request.user.cuenta.privilegio == "4" or request.user.cuenta.privilegio == "1" or request.user.cuenta.privilegio == "0" %}
+                    <li><a href="{% url 'plan_dia' area_actual ano mes dia %}">
+                        Horarios Disponibles</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'plan_dia_obs' area_actual ano mes dia %}">Listado Intervenciones</a></li>
+                        <li><a href="{% url 'plan_dia_pdf' area_actual ano mes dia %}">Generar PDF</a></li>
+                    </ul>
+                </div>
+            </small>
+        </h1>
+    </div>
+    <br>
+
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            {% for quirofano in quirofanos_area %}
+            {% if forloop.first %}
+            <div class="item active">
+                {% else %}
+                <div class="item">
+                    {% endif %}
+                    <h2 class="texto-centrado">{{ quirofano.nombre }} </h2><br>
+                    {% if quirofano.intervenciones %}
+                    <div class="col-lg-10 col-lg-offset-1">
+                        <table class="table table-bordered table-responsive table-hover" id='table-intervenciones'>
+                            <thead>
+                                <tr>
+                                    <th class="col-lg-1">Hora</th>
+                                    <th class="col-lg-1">Paciente</th>
+                                    <th class="col-lg-1">Procedimientos Quirúrgicos</th>
+                                    <th class="col-lg-1">Médico</th>
+                                    <th class="col-lg-1">Anestesiólogo</th>
+                                    <th class="col-lg-1">Observaciones</th>
+                                    <th class="col-lg-1">Estatus</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for intervencion in quirofano.intervenciones %}
+                                <tr>
+                                    <td>
+                                        <h4>{{ intervencion.hora_inicio }}</h4>
+                                        <h4>a</h4>
+                                        <h4>{{ intervencion.hora_fin }}</h4>
+                                    </td>
+                                    <td>
+                                        <h4>{{ intervencion.objeto.paciente.nombre }} {{ intervencion.objeto.paciente.apellido }}</h4>
+                                    </td>
+                                    <td>
+                                        {% for proc in intervencion.procedimientos %}
+                                        <h3><span class="label label-info">
+                                            {{ proc.nombre_procedimiento }}
+                                        </h3>
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        <h4>{{ intervencion.objeto.reservacion.medico }}</h4>
+                                    </td>
+                                    <td>
+                                        <h4>{{ intervencion.anestesiologo }}</h4>
+                                    </td>
+                                    <td>
+                                        {% if intervencion.objeto.observaciones %}
+                                        <h4>{{ intervencion.objeto.observaciones}}</h4>
+                                        {% else %}
+                                        <h4>Sin observaciones</h4>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if intervencion.objeto.estado == '0' %}
+                                        <h3>
+                                            <span class="label label-danger">En Espera</span>
+                                        </h3>
+                                        {% elif intervencion.objeto.estado == '1' %}
+                                        <h3>
+                                            <span class="label label-success">En Curso</span>
+                                        </h3>
+                                        {% elif intervencion.objeto.estado == '2' %}
+                                        <h3>
+                                            <span class="label label-warning">En Recuperación</span>
+                                        </h3>
+                                        {% elif intervencion.objeto.estado == '3' %}
+                                        <h3>
+                                            <span class="label label-primary">En Habitación</span>
+                                        </h3>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p  class="texto-centrado"><strong>No existen Intervenciones Quirúrgicas programadas para este día.</strong></p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div>
+    </div>
+    {% endblock content %}

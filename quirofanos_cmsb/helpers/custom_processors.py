@@ -4,6 +4,7 @@ from django.utils.translation import ugettext as _
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
 
 def constantes_texto(request):
+    ''' Constantes de texto para ser usadas en los templates de la aplicacion '''
     datos = {}
     datos['NO_POSEE'] = TextoMostrable.NO_POSEE
     datos['ULTIMA_SEMANA'] = TextoMostrable.ULTIMA_SEMANA
@@ -91,6 +92,8 @@ def constantes_texto(request):
     datos['MENSAJE_PROCEDIMIENTO_QUIRURGICO_AGREGADO'] = TextoMostrable.MENSAJE_PROCEDIMIENTO_QUIRURGICO_AGREGADO
     datos['MENSAJE_PROCEDIMIENTO_QUIRURGICO_ELIMINADO'] = TextoMostrable.MENSAJE_PROCEDIMIENTO_QUIRURGICO_ELIMINADO
     datos['MENSAJE_NO_HAY_PROCEDIMIENTOS_QUIRURGICOS'] = TextoMostrable.MENSAJE_NO_HAY_PROCEDIMIENTOS_QUIRURGICOS
+    datos['LABEL_OTROS'] = TextoMostrable.LABEL_OTROS
+    datos['LABEL_MEDICO_SOLICITANTE'] = TextoMostrable.LABEL_MEDICO_SOLICITANTE
     return datos
 
 

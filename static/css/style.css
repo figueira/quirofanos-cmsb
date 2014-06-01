@@ -388,3 +388,12 @@ a:hover
 {
 	background-color:#993333 !important
 }
+
+#cambiar-estado-modal {
+    position: absolute;
+    top: 35%;
+    left: 20%;
+    margin-top: -25px;
+    margin-left: -250px;
+    padding: 20px;
+}

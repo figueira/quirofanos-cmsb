@@ -67,37 +67,6 @@
                         </div>
                         <div class="form-group">
                             <label class="col-lg-2 control-label">
-                                {{ LABEL_DIAGNOSTICO }}
-                            </label>
-                            <div class="col-lg-10">
-                                {% render_field reservacion.formulario.diagnostico_ingreso_paciente class="form-control"  disabled="disabled" %}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">
-                                {{ LABEL_SERVICIOS_OPERATORIOS }}
-                            </label>
-                            <div class="col-lg-10">
-                                <div class="row">
-                                    {% for checkbox in reservacion.formulario.servicios_operatorios_paciente %}
-                                    {% if forloop.first %}
-                                    <div class="col-lg-2">
-                                        {% endif %}
-                                        <div class="checkbox">
-                                            {% render_field checkbox %}
-                                        </div>
-                                        {% if forloop.counter|divisibleby:1 and not forloop.last %}
-                                    </div>
-                                    <div class="col-lg-2">
-                                        {% elif forloop.last %}
-                                    </div>
-                                    {% endif %}
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">
                                 {% render_field reservacion.formulario.paciente_hospitalizado disabled="disabled" %}
                                 {{ LABEL_PACIENTE_HOSPITALIZADO }}
                             </label>
@@ -113,57 +82,6 @@
                             <script type="text/javascript">
                             $(function() {
                                 mostrarNumeroHabitacionPaciente({{ reservacion.objeto.pk }});
-                            });
-                            </script>
-                            {% endif %}
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">
-                                {% render_field reservacion.formulario.paciente_con_expediente disabled="disabled" %}
-                                {{ LABEL_PACIENTE_CON_EXPEDIENTE }}
-                            </label>
-                            <div class="hidden" id="area-ingreso-numero-expediente-{{ reservacion.objeto.pk }}">
-                                <label class="col-lg-2 control-label">
-                                    {{ LABEL_AREA_INGRESO }}
-                                </label>
-                                <div class="col-lg-4">
-                                    {% render_field reservacion.formulario.area_ingreso_paciente class="form-control" disabled="disabled" %}
-                                </div>
-                                <div class="col-lg-3">
-                                    {% render_field reservacion.formulario.numero_expediente_paciente class="form-control" placeholder=LABEL_NUMERO_EXPEDIENTE disabled="disabled" %}
-                                </div>
-                            </div>
-                            {% if reservacion.formulario.paciente_con_expediente.value %}
-                            <script type="text/javascript">
-                            $(function() {
-                                mostrarCamposExpedientePaciente({{ reservacion.objeto.pk }});
-                            });
-                            </script>
-                            {% endif %}
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">
-                                {{ LABEL_FORMA_PAGO }}
-                            </label>
-                            <div class="col-lg-4">
-                                {% for radio in reservacion.formulario.tipo_pago_paciente %}
-                                <label class="radio-inline">
-                                    {% render_field radio %}
-                                </label>
-                                {% endfor %}
-                            </div>
-                            <div class="hidden" id="seguros-{{ reservacion.objeto.pk }}">
-                                <label class="col-lg-2 control-label">
-                                    {{ LABEL_ASEGURADORA }}
-                                </label>
-                                <div class="col-lg-4">>
-                                    {% render_field reservacion.formulario.compania_aseguradora_paciente class="form-control" disabled="disabled" %}
-                                </div>
-                            </div>
-                            {% if reservacion.formulario.tipo_pago_paciente.value == "S" %}
-                            <script type="text/javascript">
-                            $(function() {
-                                mostrarCompaniaAseguradoraPaciente({{ reservacion.objeto.pk }});
                             });
                             </script>
                             {% endif %}
@@ -311,6 +229,16 @@
                                 </div>
                             </div>
                         </div>
+                        {% if reservacion.formulario.otros_materiales_quirurgicos %}
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">
+                                {{ LABEL_OTROS }}
+                            </label>
+                            <div class="col-lg-10">
+                                {% render_field reservacion.formulario.otros_materiales_quirurgicos class="form-control" disabled="disabled" %}
+                            </div>
+                        </div>
+                        {% endif %}
                         <div class="form-group">
                             <label class="col-lg-2 control-label">{{ LABEL_PROCEDIMIENTOS_QUIRURGICOS }}</label>
                         </div>
@@ -320,17 +248,17 @@
                             <div class="col-lg-offset-2 col-lg-8 row">
                                 {% endif %}
                                 <div class="col-lg-3 well well-sm well-info">
-                                    <p>
+                                    <!--<p>
                                         <strong>{{ LABEL_SISTEMA_CORPORAL }}</strong>
                                         {{ procedimiento_quirurgico.organo_corporal.sistema_corporal }}
                                     </p>
                                     <p>
                                         <strong>{{ LABEL_ORGANO_CORPORAL }}</strong>
                                         {{ procedimiento_quirurgico.organo_corporal }}
-                                    </p>
+                                    </p>-->
                                     <p>
                                         <strong>{{ LABEL_PROCEDIMIENTO }}</strong>
-                                        {{ procedimiento_quirurgico.tipo_procedimiento_quirurgico }}
+                                        {{ procedimiento_quirurgico.nombre_procedimiento }}
                                     </p>
                                 </div>
                                 {% if forloop.last %}
