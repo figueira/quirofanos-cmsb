@@ -89,6 +89,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = '/home/luisincrespo/usb/taller_desarrollo_software/quirofanos_cmsb/static/collecstatic/'
+
+MEDIA_ROOT = '/home/luisincrespo/usb/taller_desarrollo_software/quirofanos_cmsb/static/media/'
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
     )

@@ -14,6 +14,8 @@ from datetime import date, timedelta, datetime
 import calendar
 import math
 from xhtml2pdf import pisa
+import os
+import StringIO
 
 from quirofanos_cmsb.helpers import utils
 from quirofanos_cmsb.models import Quirofano, IntervencionQuirurgica, Reservacion, Participacion, Medico
@@ -399,17 +401,19 @@ def plan_dia_pdf(request, area, ano, mes, dia):
 	datos['quirofanos_area'] = quirofanos_area
 	datos['intervenciones'] = intervenciones
 
-	template = get_template('plan_quirurgico/plan_dia_pdf.html')
-    html  = template.render(Context(data))
+	template = get_template("plan_quirurgico/plan_dia_pdf.html")
+	context  = Context(datos)
+	html = template.render(context)
+	result = StringIO.StringIO()
 
-    file = open(os.join(settings.MEDIA_ROOT, 'plan_quirurgico.pdf'), "w+b")
-    pisaStatus = pisa.CreatePDF(html, dest=file,
-            link_callback = link_callback)
+	pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), dest=result, encoding='UTF-8', link_callback=utils.link_callback)
 
-    file.seek(0)
-    pdf = file.read()
-    file.close()
-    return HttpResponse(pdf, mimetype='application/pdf')
+	if not pdf.err:
+		response = HttpResponse(result.getvalue(), mimetype='application/pdf')
+		return response
+
+	messages.add_message(request, messages.ERROR, MensajeTemporalError.PROBLEMA_GENERANDO_PDF)
+	return redirect('plan_dia_obs', area, ano, mes, dia)
 
 @require_POST
 @login_required

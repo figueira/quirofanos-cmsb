@@ -3,6 +3,7 @@ from django.conf import settings
 
 import datetime
 import decimal
+import os
 
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
 
@@ -160,25 +161,19 @@ def obtener_treinta_porciento(monto):
     treinta_porciento = decimal.Decimal('0.3') * monto
     return treinta_porciento.quantize(TWO_PLACES)
 
-# Convert HTML URIs to absolute system paths so xhtml2pdf can access those resources
 def link_callback(uri, rel):
     ''' Convierte los URI's de HTML a rutas absolutas del sistema
 
     Parametros:
-    uri
-    rel '''
-    sUrl = settings.STATIC_URL
-    sRoot = settings.STATIC_ROOT
-    mUrl = settings.MEDIA_URL
-    mRoot = settings.MEDIA_ROOT
+    uri -> atributo href del elemento link del html
+    rel -> ruta relativa (no se usa) '''
+    if settings.MEDIA_URL and uri.startswith(settings.MEDIA_URL):
+        path = os.path.join(settings.MEDIA_ROOT, uri.replace(settings.MEDIA_URL, ""))
+    elif settings.STATIC_URL and uri.startswith(settings.STATIC_URL):
+        path = os.path.join(settings.STATIC_ROOT, uri.replace(settings.STATIC_URL, ""))
+    elif uri.startswith("http://") or uri.startswith("https://"):
+        path = uri
+    else:
+        raise UnsupportedMediaPathException('media urls must start with %s or %s' % (settings.MEDIA_URL, settings.STATIC_URL))
 
-    if uri.startswith(mUrl):
-        path = os.path.join(mRoot, uri.replace(mUrl, ""))
-    elif uri.startswith(sUrl):
-        path = os.path.join(sRoot, uri.replace(sUrl, ""))
-
-    if not os.path.isfile(path):
-            raise Exception(
-                    'media URI must start with %s or %s' % \
-                    (sUrl, mUrl))
     return path

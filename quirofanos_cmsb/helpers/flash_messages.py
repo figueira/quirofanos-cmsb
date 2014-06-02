@@ -34,6 +34,7 @@ class MensajeTemporalError():
     RECUPERAR_CONTRASENA_SIN_EMAIL = _(u'No posee un correo electrónico asociado a esta cuenta. Por Favor comuníquese con el administrador del sistema para la recuperación de su clave de acceso.')
     ELIMINAR_PROCEDIMIENTO_QUIRURGICO_INVALIDO = _(u'Se intentó eliminar un procedimiento quirúrgico inválido.')
     ELIMINAR_INTERVENCION_QUIRURGICA_INVALIDA = _(u'Se intentó eliminar una intervencion quirúrgica inválida.')
+    PROBLEMA_GENERANDO_PDF = _(u'Se ha producido un error al generar el archivo PDF.')
 
 class MensajeTemporalAviso():
     ''' Clase que contiene constantes para ser utilizadas como mensajes temporales (flash messages) de avisos (warnings) '''

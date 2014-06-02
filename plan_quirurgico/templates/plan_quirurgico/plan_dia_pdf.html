@@ -3,27 +3,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
-	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-theme.min.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'css/pdf_style.css' %}" />
 	<title>
 		Plan Quirúrgico
 	</title>
-	<style>
-    @page {
-        size: letter portrait;
-        @frame content_frame {
-            left: 50pt;
-            width: 512pt;
-            top: 50pt;
-            height: 692pt;
-            -pdf-frame-border: 1;    /* for debugging the layout */
-        }
-    }
-</style>
 </head>
 <body>
 	<div class="page-header">
-		<img src="{{ img_path }}" style="zoom: 80%;" />
 		<h1>Centro Médico de Caracas</h1>
 		<h2>
 			<center>
@@ -35,7 +21,7 @@
 
 	<div>
 		{% if intervenciones %}
-		<table class="table table-bordered table-responsive table-hover">
+		<table class="table table-bordered">
 			<tr>
 				<th>Quirófano</th>
 				<th>Hora</th>
@@ -47,7 +33,6 @@
 			</tr>
 		</table>
 		<table>
-			<hr width=50% align="center">
 			{% for intervencion in intervenciones %}
 			<tr>
 				<th>
@@ -92,13 +77,6 @@
 		{% else %}
 		<strong>No existen Intervenciones Quirúrgicas programadas para este día.</strong>
 		{% endif %}
-	</div>
-
-
-	<div id="footerContent">
-		{%block page_foot%}
-		Página <pdf:pagenumber>
-		{%endblock%}
 	</div>
 </body>
 </html>
