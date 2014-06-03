@@ -35,9 +35,11 @@
                     Ver <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    {% if  request.user.cuenta.privilegio == "4" or request.user.cuenta.privilegio == "1" or request.user.cuenta.privilegio == "0" %}
+                    {% if dia_permitido %}
+                    {% if request.user.cuenta.privilegio == "4" or request.user.cuenta.privilegio == "1" or request.user.cuenta.privilegio == "0" %}
                     <li><a href="{% url 'plan_dia' area_actual ano mes dia %}">
                         Horarios Disponibles</a></li>
+                        {% endif %}
                         {% endif %}
                         <li><a href="{% url 'plan_dia_obs' area_actual ano mes dia %}">Listado Intervenciones</a></li>
                         <li><a href="{% url 'plan_dia_pdf' area_actual ano mes dia %}">Generar PDF</a></li>
@@ -48,7 +50,7 @@
     </div>
     <br>
 
-    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="15000">
         <!-- Wrapper for slides -->
         <div class="carousel-inner">
             {% for quirofano in quirofanos_area %}

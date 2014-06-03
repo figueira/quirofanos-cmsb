@@ -35,9 +35,11 @@
 					Ver <span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu" role="menu">
-					{% if  request.user.cuenta.privilegio == "4" or request.user.cuenta.privilegio == "1" or request.user.cuenta.privilegio == "0" %}
+					{% if dia_permitido %}
+					{% if request.user.cuenta.privilegio == "4" or request.user.cuenta.privilegio == "1" or request.user.cuenta.privilegio == "0"%}
 					<li><a href="{% url 'plan_dia' area_actual ano mes dia %}">
-					Horarios Disponibles</a>
+					Horarios Disponibles</a></li>
+					{% endif %}
 					{% endif %}
 					<li><a href="{% url 'plan_dia_presentacion' area_actual ano mes dia %}">Presentación</a></li>
 					<li><a href="{% url 'plan_dia_pdf' area_actual ano mes dia %}">Generar PDF</a></li>

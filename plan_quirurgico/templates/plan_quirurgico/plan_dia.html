@@ -44,13 +44,11 @@
 			Plan Quirúrgico
 		</a>
 		<small> - {{ area_nombre }} - {{ dia }}/{{ mes }}/{{ ano }}</small>
-		{% if dia_permitido %}
 		<small class="pull-right">
 			<button class="btn btn-primary" id="btn-solicitar-quirofano" data-toggle="modal" data-target="#solicitar-quirofano">
 				{{ SOLICITAR_QUIROFANO }}
 			</button>
 		</small>
-		{% endif %}
 	</h1>
 </div>
 
@@ -63,10 +61,11 @@
 		<p class="text-muted">
 			<strong>{{ MENSAJE_SELECCIONAR_TURNO_INTERVENCION }}</strong>
 		</p>
-		<a href="{% url 'plan_dia' area_actual ano mes dia %}" class="btn btn-default pull-right">{{ CANCELAR }}</a>
+		<a href="{% url 'plan_dia' area_actual ano mes dia %}" class="btn btn-default pull-right btn-loading" data-loading-text="{{ ESPERE }}">{{ CANCELAR }}</a>
 	</div>
 </div><br><!-- Aviso Seleccionar Turno Intervencion -->
 
+<!-- Ver Presentaciones Distintas del Plan -->
 <div class="row">
 	<div class="col-lg-1 col-lg-offset-10 col-centered">
 		<small class="pull-right">
@@ -81,7 +80,7 @@
 			</div>
 		</small>
 	</div>
-</div><br>
+</div><br><!-- Ver Presentaciones Distintas del Plan -->
 
 {% if seleccionar_turno %}
 <script type="text/javascript">
@@ -154,7 +153,7 @@ $(function(){
 					<button type="button" class="btn btn-default" data-dismiss="modal">
 						{{ CANCELAR }}
 					</button>
-					<button type="submit" id="aceptar-duracion" class="btn btn-primary">
+					<button type="submit" id="aceptar-duracion" class="btn btn-primary btn-loading" data-loading-text="{{ ESPERE }}">
 						{{ ACEPTAR }}
 					</button>
 				</div>
@@ -170,7 +169,7 @@ $(function(){
 <!-- Plan Quirurgico por Dia -->
 <div class="row">
 	<div class="col-lg-1 col-lg-offset-1">
-		<table class="table table-bordered table-responsive table-horas">
+		<table class="table table-bordered table-responsive table-horas less-zoom">
 			<thead>
 				<tr>
 					<th>
@@ -188,7 +187,7 @@ $(function(){
 	</div>
 
 	<div class="col-lg-9 scrollable-plan dragon">
-		<table class="table table-bordered table-hover table-responsive table-plan">
+		<table class="table table-bordered table-hover table-responsive table-plan less-zoom">
 			<thead>
 				<tr>
 					{% for quirofano in quirofanos %}
@@ -209,17 +208,12 @@ $(function(){
 						<a href="#" class="pull-right" data-toggle="modal" data-target="#modal-reservacion-{{ intervencion.reservacion.pk }}">
 							<span class="glyphicon glyphicon-fullscreen"></span>
 						</a>
-						<p class="label label-info">
-							{{ LABEL_PACIENTE }} {{ intervencion.paciente }}
-						</p><br>
-						<p class="label label-default">
-							{{ LABEL_MEDICO }} {{ intervencion.reservacion.medico }}
-						</p>
 						{% if es_coordinador %}
 						<form class="cell-bottom-left" role="form" action="{% url 'eliminar_intervencion_quirurgica' area_actual ano mes dia intervencion.id %}" method="POST" novalidate>
 							{% csrf_token %}
-							<button type="submit" class="btn btn-danger btn-sm">
+							<button type="submit" class="btn btn-danger btn-sm btn-loading" data-loading-text="{{ ELIMINANDO }}">
 								<span class="glyphicon glyphicon-trash"></span>
+								{{ ELIMINAR }}
 							</button>
 						</form>
 						{% endif %}
@@ -231,12 +225,12 @@ $(function(){
 					{% if seleccionar_turno %}
 					{% if media_hora in quirofano.turnos_disponibles %}
 					<td class="available available-select" data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}" rowspan="{{ cantidad_medias_horas_intervencion }}">
-						<a class="btn btn-primary" href="{% url 'solicitud_quirofano' ano mes dia quirofano.clave_primaria media_hora cantidad_medias_horas_intervencion %}">
+						<a class="btn btn-primary btn-loading" href="{% url 'solicitud_quirofano' ano mes dia quirofano.clave_primaria media_hora cantidad_medias_horas_intervencion %}" data-loading-text="{{ ESPERE }}">
 							{{ SELECCIONAR_TURNO }}
 						</a>
 					</td>
 					{% elif media_hora in quirofano.medias_horas_disponibles_atravesadas %}
-					<td data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}">
+					<td class="unavailable-striped" data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}">
 					</td>
 					{% endif %}
 					{% else %}
@@ -253,7 +247,7 @@ $(function(){
 						</a>
 					</td>
 					{% elif media_hora in quirofano.medias_horas_disponibles_atravesadas %}
-					<td data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}">
+					<td class="unavailable-striped" data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}">
 					</td>
 					{% endif %}
 					{% else %}

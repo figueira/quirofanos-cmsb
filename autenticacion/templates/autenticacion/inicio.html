@@ -28,13 +28,13 @@
     {% render_field formulario_inicio_sesion.nombre_usuario class="form-control" placeholder="Nombre de usuario" %}
     {% render_field formulario_inicio_sesion.contrasena class="form-control" placeholder="Contraseña" %}
     {{ formulario_inicio_sesion.nombre_usuario.errors }}
-    <button type="submit" class="btn btn-primary">
-      Iniciar Sesión
+    <button type="submit" class="btn btn-primary btn-loading" data-loading-text="{{ INICIANDO_SESION }}">
+      {{ INICIAR_SESION }}
     </button>
     <span class="help-block">
       <a href="{% url 'recuperar_contrasena' %}">
         <small>
-          Olvidó su contraseña?
+          {{ OLVIDO_CONTRASENA }}
         </small>
       </a>
     </span>
@@ -90,7 +90,7 @@
         <div class="panel-body">
           <div class="form-group" id="busqueda-cedula-medico-form-group">
             <label class="col-lg-offset-3 col-lg-3 control-label" for="busqueda-cedula-medico">
-              Ingrese su número de cédula:
+              {{ LABEL_BUSCAR_CEDULA }}
             </label>
             <div class="col-lg-3">
               <div class="input-group">
@@ -141,7 +141,7 @@
 
             <!-- Submit -->
             <div class="col-lg-offset-10">
-              <button type="submit" class="btn btn-primary btn-lg">
+              <button type="submit" class="btn btn-primary btn-lg btn-loading" data-loading-text="{{ BUSCANDO }}">
                 {{ BUSCAR }}
               </button>
             </div>
@@ -164,20 +164,17 @@
             {%if formulario_busqueda_departamento.nombre_departamento == None%}
             <div class="col-lg-12">
               <label class="col-lg-offset-3 col-lg-6 control-label" for="busqueda-nombre-departamento">
-                Todos los Departamentos ya poseen Cuenta.
+                Todos los departamentos poseen cuenta.
               </label>
             </div>
             {% else %}
             <label class="col-lg-offset-3 col-lg-3 control-label" for="busqueda-nombre-departamento">
-              Seleccione Departamento:
+              {{ LABEL_BUSCAR_DEPARTAMENTO }}
             </label>
             <div class="col-lg-3">
               {% render_field formulario_busqueda_departamento.nombre_departamento class="form-control" id="busqueda-nombre-departamento" %}
               <span class="help-block hidden" id="busqueda-nombre-departamento-error-help">{{ formulario_busqueda_departamento.nombre_departamento.errors }}</span>
             </div>
-
-
-
             {% endif %}
             {% if formulario_busqueda_departamento.nombre_departamento.errors %}
             <script type="text/javascript">
@@ -198,7 +195,7 @@
 
             <!-- Submit -->
             <div class="col-lg-offset-10">
-              <button type="submit" class="btn btn-primary btn-lg">
+              <button type="submit" class="btn btn-primary btn-lg btn-loading" data-loading-text="{{ BUSCANDO }}">
                 {{ BUSCAR }}
               </button>
             </div>
@@ -304,7 +301,7 @@
 
             <!-- Submit -->
             <div class="col-lg-offset-10">
-              <button type="submit" class="btn btn-primary btn-lg">
+              <button type="submit" class="btn btn-primary btn-lg btn-loading" data-loading-text="{{ ENVIANDO }}">
                 {{ ENVIAR }}
               </button>
             </div>
@@ -378,7 +375,7 @@
 
             <!-- Submit -->
             <div class="col-lg-offset-10">
-              <button type="submit" class="btn btn-primary btn-lg">
+              <button type="submit" class="btn btn-primary btn-lg btn-loading" data-loading-text="{{ ENVIANDO }}">
                 {{ ENVIAR }}
               </button>
             </div>

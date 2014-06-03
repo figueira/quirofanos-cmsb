@@ -70,8 +70,18 @@ def calendario(request, area_actual='QG', ano=date.today().year, mes=date.today(
 			for quirofano in quirofanos_area_actual:
 				numero_intervenciones = numero_intervenciones + quirofano.obtener_numero_intervenciones(ano=ano, mes=mes, dia=dia[0])
 				disponibilidad = quirofano.esta_disponible(ano=ano, mes=mes, dia=dia[0])
+
 			dia_diccionario['numero_intervenciones'] = numero_intervenciones
 			dia_diccionario['disponibilidad'] = disponibilidad
+
+			dia_permitido = True
+			if dia[0] != 0:
+				date = datetime.strptime(str(dia[0])+' '+str(mes)+' '+str(ano), '%d %m %Y')
+				current_date = datetime.now().date()
+				if date.date() < current_date:
+					dia_permitido = False
+
+			dia_diccionario['dia_permitido'] = dia_permitido
 			semana_diccionario.append(dia_diccionario)
 		semanas_diccionarios.append(semana_diccionario)
 
@@ -80,6 +90,7 @@ def calendario(request, area_actual='QG', ano=date.today().year, mes=date.today(
 	datos['mes'] = mes
 	datos['dia_actual'] = date.today().day
 	datos['mes_actual'] = date.today().month
+	datos['ano_actual'] = date.today().year
 	if not mes - 1 < 1:
 		datos['mes_anterior'] = mes - 1
 	else:
@@ -183,6 +194,11 @@ def plan_dia(request, area, ano, mes, dia):
 	if request.user.cuenta.privilegio != '4' and request.user.cuenta.privilegio != '1' and request.user.cuenta.privilegio != '0':
 		return redirect('plan_dia_obs', area, ano, mes, dia)
 
+	date = datetime.strptime(str(dia)+' '+str(mes)+' '+str(ano), '%d %m %Y')
+	current_date = datetime.now().date()
+	if date.date() < current_date:
+		raise Http404
+
 	es_coordinador = False
 	if request.user.cuenta.privilegio != '4':
 		es_coordinador = True
@@ -283,19 +299,11 @@ def plan_dia(request, area, ano, mes, dia):
 		reservacion_diccionario["formulario"] = SolicitudQuirofanoForm(datos_formulario)
 		reservaciones_aprobadas_diccionarios.append(reservacion_diccionario)
 
-	allowed_day = True
-	date = datetime.strptime(str(dia)+' '+str(mes)+' '+str(ano), '%d %m %Y')
-	current_date = datetime.now().date()
-	if date.date() < current_date:
-		allowed_day = False
-
-
 	datos = {}
 	datos['area_nombre'] = quirofanos_area[0].get_area_display()
 	datos['ano'] = ano
 	datos['mes'] = mes
 	datos['dia'] = dia
-	datos['dia_permitido'] = allowed_day
 	datos['area_actual'] = area
 	datos['quirofanos'] = quirofanos_area_intervenciones
 	datos['medias_horas'] = medias_horas
@@ -349,6 +357,12 @@ def plan_dia_obs(request, area, ano, mes, dia):
 		intervencion_diccionario['anestesiologo'] = Medico.objects.get(id=anestesiologo_id)
 		intervenciones.append(intervencion_diccionario)
 
+	dia_permitido = True
+	date = datetime.strptime(str(dia)+' '+str(mes)+' '+str(ano), '%d %m %Y')
+	current_date = datetime.now().date()
+	if date.date() < current_date:
+		dia_permitido = False
+
 	datos = {}
 	datos['area_nombre'] = quirofanos_area[0].get_area_display()
 	datos['ano'] = ano
@@ -358,6 +372,7 @@ def plan_dia_obs(request, area, ano, mes, dia):
 	datos['quirofanos_area'] = quirofanos_area
 	datos['intervenciones'] = intervenciones
 	datos['formulario_cambio_estado_intervencion'] = CambiarEstadoIntervencionQuirurgicaForm()
+	datos['dia_permitido'] = dia_permitido
 
 	return render_to_response('plan_quirurgico/plan_dia_obs.html', datos, context_instance=RequestContext(request))
 
@@ -487,6 +502,12 @@ def plan_dia_presentacion(request, area, ano, mes, dia):
 		intervenciones_quirofano_dicc['intervenciones'] = intervenciones
 		quirofanos_info.append(intervenciones_quirofano_dicc)
 
+	dia_permitido = True
+	date = datetime.strptime(str(dia)+' '+str(mes)+' '+str(ano), '%d %m %Y')
+	current_date = datetime.now().date()
+	if date.date() < current_date:
+		dia_permitido = False
+
 	datos = {}
 	datos['area_nombre'] = quirofanos_area[0].get_area_display()
 	datos['ano'] = ano
@@ -494,5 +515,6 @@ def plan_dia_presentacion(request, area, ano, mes, dia):
 	datos['dia'] = dia
 	datos['area_actual'] = area
 	datos['quirofanos_area'] = quirofanos_info
+	datos['dia_permitido'] = dia_permitido
 
 	return render_to_response('plan_quirurgico/plan_dia_presentacion.html', datos, context_instance=RequestContext(request))

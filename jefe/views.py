@@ -14,7 +14,7 @@ from hashids import Hashids
 import uuid
 
 from quirofanos_cmsb.models import Cuenta
-from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito, construir_mensaje
+from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito, MensajeTemporalAviso, construir_mensaje
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
 from quirofanos_cmsb.helpers.email import enviar_email
 from quirofanos_cmsb.helpers.user_tests import es_jefe
@@ -153,7 +153,7 @@ def rechazar_solicitud_usuario(request):
         cuenta_usuario.estado = 'R'
         cuenta_usuario.save()
 
-        messages.add_message(request, messages.SUCCESS, MensajeTemporalExito.SOLICITUD_USUARIO_RECHAZADA)
+        messages.add_message(request, messages.WARNING, MensajeTemporalAviso.SOLICITUD_USUARIO_RECHAZADA)
     else:
         messages.add_message(request, messages.ERROR, MensajeTemporalError. RECHAZO_USUARIO_FALLIDO)
 

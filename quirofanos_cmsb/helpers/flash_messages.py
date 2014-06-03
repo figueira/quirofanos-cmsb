@@ -10,7 +10,6 @@ class MensajeTemporalExito():
     CAMBIO_CONTRASENA_EXITOSO = _(u'Su contraseña ha sido actualizada exitosamente.')
     RECUPERAR_CONTRASENA_EXITOSO = _(u'Se le ha enviado un correo electrónico con instrucciones para recuperar sus credenciales.')
     SOLICITUD_USUARIO_APROBADA = _(u'La solicitud de registro de usuario ha sido aprobada.')
-    SOLICITUD_USUARIO_RECHAZADA = _(u'La solicitud de registro de usuario ha sido rechazada.')
     ACTUALIZACION_EMAIL_EXITOSO = _(u'Su correo electrónico ha sido actualizado exitosamente.')
     SOLICITUD_QUIROFANO_ENVIADA = _(u'Su solicitud de quirofano ha sido enviada. Se le notificará cuando ésta haya sido aprobada o, en su defecto, rechazada.')
     INTERVENCION_QUIRURGICA_AGREGADA = _(u'Intervención quirúrgica agregada exitosamente.')
@@ -40,3 +39,4 @@ class MensajeTemporalAviso():
     ''' Clase que contiene constantes para ser utilizadas como mensajes temporales (flash messages) de avisos (warnings) '''
     SOLICITUD_QUIROFANO_CANCELADA = _(u'La solicitud de quirófano ha sido cancelada.')
     INTERVENCION_QUIRURGICA_ELIMINADA = _(u'La intervención quirúrgica ha sido eliminada.')
+    SOLICITUD_USUARIO_RECHAZADA = _(u'La solicitud de registro de usuario ha sido rechazada.')

@@ -53,8 +53,7 @@
 				<th>
 					{% for proc in intervencion.procedimientos %}
 					<h3>
-						{{ proc.tipo_procedimiento_quirurgico.nombre }} -
-						{{ proc.organo_corporal.nombre }}
+						{{ proc.nombre_procedimiento }}
 					</h3>
 					{% endfor %}
 				</th>

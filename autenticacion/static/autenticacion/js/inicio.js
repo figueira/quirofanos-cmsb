@@ -123,4 +123,5 @@ $(document).ready(function() {
       $("#busqueda-cedula-medico-nacionalidad-input").val("V-");
     }
   });
+
 });

@@ -4,7 +4,7 @@ $(document).ready(function() {
 	$("#seccion-plan-quirurgico").addClass("active");
 
     // Hacer que celdas del calendario se comporten como links
-    $(".calendario-dia-disponible").click(function() {
+    $(".calendario-dia").click(function() {
         window.document.location = $(this).attr("href");
     });
 });

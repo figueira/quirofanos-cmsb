@@ -133,6 +133,14 @@
                         </div>
                         <div class="form-group">
                             <label class="col-lg-2 control-label">
+                                {{ LABEL_MEDICO_SOLICITANTE }}
+                            </label>
+                            <div class="col-lg-10">
+                                <input class="form-control" type="text" value="{{ reservacion.objeto.medico }}" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">
                                 {{ LABEL_ANESTESIA }}
                             </label>
                             <div class="col-lg-10">
@@ -286,10 +294,10 @@
             <div class="modal-footer">
                 <form action="{% url 'cancelar_solicitud' reservacion.objeto.pk %}" method="POST">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-danger pull-left">
+                    <button type="submit" class="btn btn-danger pull-left btn-loading" data-loading-text="{{ CANCELANDO }}">
                         <span class="glyphicon glyphicon-trash">
                         </span>
-                        Cancelar Solicitud
+                        {{ CANCELAR_SOLICITUD }}
                     </button>
                 </form>
             </div>
