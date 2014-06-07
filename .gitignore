@@ -7,7 +7,7 @@
 *.swp
 
 # Ignore migrations
-*/migrations/**
+*/migrations/
 
 # Ignore collectstatic
-static/collectstatic/**
+*/collectstatic/
