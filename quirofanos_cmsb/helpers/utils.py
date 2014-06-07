@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
+from django.conf import settings
+
 import datetime
 import decimal
+import os
 
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
 
@@ -157,3 +160,20 @@ def obtener_treinta_porciento(monto):
     monto -> monto total '''
     treinta_porciento = decimal.Decimal('0.3') * monto
     return treinta_porciento.quantize(TWO_PLACES)
+
+def link_callback(uri, rel):
+    ''' Convierte los URI's de HTML a rutas absolutas del sistema
+
+    Parametros:
+    uri -> atributo href del elemento link del html
+    rel -> ruta relativa (no se usa) '''
+    if settings.MEDIA_URL and uri.startswith(settings.MEDIA_URL):
+        path = os.path.join(settings.MEDIA_ROOT, uri.replace(settings.MEDIA_URL, ""))
+    elif settings.STATIC_URL and uri.startswith(settings.STATIC_URL):
+        path = os.path.join(settings.STATIC_ROOT, uri.replace(settings.STATIC_URL, ""))
+    elif uri.startswith("http://") or uri.startswith("https://"):
+        path = uri
+    else:
+        raise UnsupportedMediaPathException('media urls must start with %s or %s' % (settings.MEDIA_URL, settings.STATIC_URL))
+
+    return path

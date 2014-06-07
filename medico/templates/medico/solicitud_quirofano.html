@@ -562,7 +562,7 @@
 								</button>
 							</div>
 							<div class="col-lg-offset-10">
-								<button type="submit" class="btn btn-primary btn-lg">{{ ENVIAR }}</button>
+								<button type="submit" class="btn btn-primary btn-lg btn-loading" data-loading-text="{{ ENVIANDO }}">{{ ENVIAR }}</button>
 							</div>
 						</div>
 					</div>
@@ -784,8 +784,8 @@
 								<button type="button" class="btn btn-default" id="cancelar-agregar-procedimiento-quirurgico" data-dismiss="modal">
 									{{ CANCELAR }}
 								</button>
-								<button type="submit" class="btn btn-primary">
-									{{ ACEPTAR }}
+								<button type="submit" class="btn btn-primary btn-loading" data-loading-text="{{ AGREGANDO }}">
+									{{ AGREGAR }}
 								</button>
 							</div>
 						</form>

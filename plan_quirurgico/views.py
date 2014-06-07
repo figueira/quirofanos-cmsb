@@ -2,19 +2,20 @@
 from django.shortcuts import render_to_response, redirect
 from django.http import Http404, HttpResponse
 from django.template import RequestContext, Context
+from django.template.loader import get_template
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods, require_GET, require_POST
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
+from django.conf import settings
 
 from datetime import date, timedelta, datetime
 import calendar
 import math
-import cStringIO as StringIO
-import ho.pisa as pisa
-from django.template.loader import get_template
-from cgi import escape
+from xhtml2pdf import pisa
+import os
+import StringIO
 
 from quirofanos_cmsb.helpers import utils
 from quirofanos_cmsb.models import Quirofano, IntervencionQuirurgica, Reservacion, Participacion, Medico
@@ -69,8 +70,18 @@ def calendario(request, area_actual='QG', ano=date.today().year, mes=date.today(
 			for quirofano in quirofanos_area_actual:
 				numero_intervenciones = numero_intervenciones + quirofano.obtener_numero_intervenciones(ano=ano, mes=mes, dia=dia[0])
 				disponibilidad = quirofano.esta_disponible(ano=ano, mes=mes, dia=dia[0])
+
 			dia_diccionario['numero_intervenciones'] = numero_intervenciones
 			dia_diccionario['disponibilidad'] = disponibilidad
+
+			dia_permitido = True
+			if dia[0] != 0:
+				date = datetime.strptime(str(dia[0])+' '+str(mes)+' '+str(ano), '%d %m %Y')
+				current_date = datetime.now().date()
+				if date.date() < current_date:
+					dia_permitido = False
+
+			dia_diccionario['dia_permitido'] = dia_permitido
 			semana_diccionario.append(dia_diccionario)
 		semanas_diccionarios.append(semana_diccionario)
 
@@ -78,6 +89,8 @@ def calendario(request, area_actual='QG', ano=date.today().year, mes=date.today(
 	datos['ano'] = ano
 	datos['mes'] = mes
 	datos['dia_actual'] = date.today().day
+	datos['mes_actual'] = date.today().month
+	datos['ano_actual'] = date.today().year
 	if not mes - 1 < 1:
 		datos['mes_anterior'] = mes - 1
 	else:
@@ -181,7 +194,18 @@ def plan_dia(request, area, ano, mes, dia):
 	if request.user.cuenta.privilegio != '4' and request.user.cuenta.privilegio != '1' and request.user.cuenta.privilegio != '0':
 		return redirect('plan_dia_obs', area, ano, mes, dia)
 
+	date = datetime.strptime(str(dia)+' '+str(mes)+' '+str(ano), '%d %m %Y')
+	current_date = datetime.now().date()
+	if date.date() < current_date:
+		raise Http404
+
+	es_coordinador = False
+	if request.user.cuenta.privilegio != '4':
+		es_coordinador = True
+
 	seleccionar_turno = False
+	seleccionar_turno_cambio_horario = False
+	id_intervencion_cambiar_horario = None
 	horas_intervencion = 0
 	minutos_intervencion = 0
 	cantidad_medias_horas_intervencion = 0
@@ -189,6 +213,9 @@ def plan_dia(request, area, ano, mes, dia):
 	if request.POST:
 		formulario_duracion_intervencion_quirurgica = DuracionIntervencionQuirurgicaForm(request.POST)
 		if formulario_duracion_intervencion_quirurgica.is_valid():
+			id_intervencion_cambiar_horario = formulario_duracion_intervencion_quirurgica.cleaned_data.get("id_intervencion", None)
+			if id_intervencion_cambiar_horario:
+				seleccionar_turno_cambio_horario = True
 			seleccionar_turno = True
 			horas_intervencion = formulario_duracion_intervencion_quirurgica.cleaned_data['horas']
 			minutos_intervencion = formulario_duracion_intervencion_quirurgica.cleaned_data['minutos']
@@ -276,30 +303,25 @@ def plan_dia(request, area, ano, mes, dia):
 
 		reservacion_diccionario["formulario"] = SolicitudQuirofanoForm(datos_formulario)
 		reservaciones_aprobadas_diccionarios.append(reservacion_diccionario)
-	
-	allowed_day = True
-	date = datetime.strptime(str(dia)+' '+str(mes)+' '+str(ano), '%d %m %Y')
-	current_date = datetime.now().date()
-	if date.date() < current_date:
-		allowed_day = False
-
 
 	datos = {}
 	datos['area_nombre'] = quirofanos_area[0].get_area_display()
 	datos['ano'] = ano
 	datos['mes'] = mes
 	datos['dia'] = dia
-	datos['dia_permitido'] = allowed_day
 	datos['area_actual'] = area
 	datos['quirofanos'] = quirofanos_area_intervenciones
 	datos['medias_horas'] = medias_horas
 	datos['medias_horas_legibles'] = [utils.obtener_representacion_media_hora(x) for x in medias_horas]
 	datos['formulario_duracion_intervencion_quirurgica'] = formulario_duracion_intervencion_quirurgica
 	datos['seleccionar_turno'] = seleccionar_turno
+	datos['seleccionar_turno_cambio_horario'] = seleccionar_turno_cambio_horario
+	datos['id_intervencion_cambiar_horario'] = id_intervencion_cambiar_horario
 	datos['horas_intervencion'] = horas_intervencion
 	datos['minutos_intervencion'] = minutos_intervencion
 	datos['cantidad_medias_horas_intervencion'] = cantidad_medias_horas_intervencion
 	datos["reservaciones"] = reservaciones_aprobadas_diccionarios
+	datos["es_coordinador"] = es_coordinador
 
 	return render_to_response('plan_quirurgico/plan_dia.html', datos, context_instance=RequestContext(request))
 
@@ -342,6 +364,12 @@ def plan_dia_obs(request, area, ano, mes, dia):
 		intervencion_diccionario['anestesiologo'] = Medico.objects.get(id=anestesiologo_id)
 		intervenciones.append(intervencion_diccionario)
 
+	dia_permitido = True
+	date = datetime.strptime(str(dia)+' '+str(mes)+' '+str(ano), '%d %m %Y')
+	current_date = datetime.now().date()
+	if date.date() < current_date:
+		dia_permitido = False
+
 	datos = {}
 	datos['area_nombre'] = quirofanos_area[0].get_area_display()
 	datos['ano'] = ano
@@ -351,6 +379,7 @@ def plan_dia_obs(request, area, ano, mes, dia):
 	datos['quirofanos_area'] = quirofanos_area
 	datos['intervenciones'] = intervenciones
 	datos['formulario_cambio_estado_intervencion'] = CambiarEstadoIntervencionQuirurgicaForm()
+	datos['dia_permitido'] = dia_permitido
 
 	return render_to_response('plan_quirurgico/plan_dia_obs.html', datos, context_instance=RequestContext(request))
 
@@ -385,31 +414,28 @@ def plan_dia_pdf(request, area, ano, mes, dia):
 		intervencion_diccionario['anestesiologo'] = Medico.objects.get(id=anestesiologo_id)
 		intervenciones.append(intervencion_diccionario)
 
-	return render_to_pdf('plan_dia_pdf.html',
-		{
-		'area_nombre': quirofanos_area[0].get_area_display(),
-		'ano' : ano,
-		'mes': mes,
-		'dia' : dia,
-		'quirofanos_area': quirofanos_area,
-		'intervenciones': intervenciones,
-		'pagesize':'A4',
-		'img_path': '/static/img/logo_centro_medico.png',
-		})
+	datos = {}
+	datos['area_nombre'] = quirofanos_area[0].get_area_display()
+	datos['ano'] = ano
+	datos['mes'] = mes
+	datos['dia'] = dia
+	datos['area_actual'] = area
+	datos['quirofanos_area'] = quirofanos_area
+	datos['intervenciones'] = intervenciones
 
-
-def render_to_pdf(template_src, context_dict):
-	template = get_template(template_src)
-	context = Context(context_dict)
-	html  = template.render(context)
+	template = get_template("plan_quirurgico/plan_dia_pdf.html")
+	context  = Context(datos)
+	html = template.render(context)
 	result = StringIO.StringIO()
 
-	pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("ISO-8859-1")), result)
+	pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), dest=result, encoding='UTF-8', link_callback=utils.link_callback)
+
 	if not pdf.err:
 		response = HttpResponse(result.getvalue(), mimetype='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename=PlanQuirurgico.pdf'
-        return response
-	return HttpResponse('ERROR<pre>%s</pre>' % escape(html))
+		return response
+
+	messages.add_message(request, messages.ERROR, MensajeTemporalError.PROBLEMA_GENERANDO_PDF)
+	return redirect('plan_dia_obs', area, ano, mes, dia)
 
 @require_POST
 @login_required
@@ -483,6 +509,12 @@ def plan_dia_presentacion(request, area, ano, mes, dia):
 		intervenciones_quirofano_dicc['intervenciones'] = intervenciones
 		quirofanos_info.append(intervenciones_quirofano_dicc)
 
+	dia_permitido = True
+	date = datetime.strptime(str(dia)+' '+str(mes)+' '+str(ano), '%d %m %Y')
+	current_date = datetime.now().date()
+	if date.date() < current_date:
+		dia_permitido = False
+
 	datos = {}
 	datos['area_nombre'] = quirofanos_area[0].get_area_display()
 	datos['ano'] = ano
@@ -490,5 +522,6 @@ def plan_dia_presentacion(request, area, ano, mes, dia):
 	datos['dia'] = dia
 	datos['area_actual'] = area
 	datos['quirofanos_area'] = quirofanos_info
+	datos['dia_permitido'] = dia_permitido
 
 	return render_to_response('plan_quirurgico/plan_dia_presentacion.html', datos, context_instance=RequestContext(request))

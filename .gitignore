@@ -8,3 +8,6 @@
 
 # Ignore migrations
 */migrations/
+
+# Ignore collectstatic
+*/collectstatic/

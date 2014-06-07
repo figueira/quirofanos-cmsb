@@ -37,7 +37,7 @@
                 {% csrf_token %}
                 <div class="panel-body">
                     <div class="form-group" id="contrasena-actual-form-group">
-                        <label class="col-lg-4 control-label" for="contrasena-actual">Contraseña Actual:</label>
+                        <label class="col-lg-4 control-label" for="contrasena-actual">{{ LABEL_CONTRASENA_ACTUAL }}</label>
                         <div class="col-lg-8">
                             {% render_field formulario_cambio_contrasena.contrasena_actual class="form-control" id="contrasena-actual"%}
                             <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="contrasena-actual-error-feedback-icon"></span>
@@ -55,7 +55,7 @@
                         {% endif %}
                     </div>
                     <div class="form-group" id="contrasena-nueva-form-group">
-                        <label class="col-lg-4 control-label" for="contrasena-nueva">Nueva Contraseña:</label>
+                        <label class="col-lg-4 control-label" for="contrasena-nueva">{{ LABEL_CONTRASENA_NUEVA }}</label>
                         <div class="col-lg-8">
                             {% render_field formulario_cambio_contrasena.contrasena_nueva class="form-control" id="contrasena-nueva"%}
                             <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="contrasena-nueva-error-feedback-icon"></span>
@@ -73,7 +73,7 @@
                         {% endif %}
                     </div>
                     <div class="form-group" id="contrasena-nueva-confirmacion-form-group">
-                        <label class="col-lg-4 control-label" for="contrasena-confirmacion">Repita Nueva Contraseña:</label>
+                        <label class="col-lg-4 control-label" for="contrasena-confirmacion">{{ LABEL_CONTRASENA_NUEVA_REPETIDA }}</label>
                         <div class="col-lg-8">
                             {% render_field formulario_cambio_contrasena.contrasena_confirmacion class="form-control" id="contrasena-nueva-confirmacion"%}
                             <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="contrasena-nueva-confirmacion-error-feedback-icon"></span>
@@ -108,10 +108,10 @@
                 <div class="panel-footer">
                     <!-- Submit -->
                     <div class="col-lg-offset-10">
-                        <button type="submit" class="btn btn-primary btn-lg">
-                            Actualizar
+                        <button type="submit" class="btn btn-primary btn-lg btn-loading" data-loading-text="{{ ACTUALIZANDO }}">
+                            {{ ACTUALIZAR }}
                         </button>
-                    </div>
+                    </div><!-- Submit -->
                 </div>
             </form>
         </div>

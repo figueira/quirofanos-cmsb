@@ -10,10 +10,10 @@ class MensajeTemporalExito():
     CAMBIO_CONTRASENA_EXITOSO = _(u'Su contraseña ha sido actualizada exitosamente.')
     RECUPERAR_CONTRASENA_EXITOSO = _(u'Se le ha enviado un correo electrónico con instrucciones para recuperar sus credenciales.')
     SOLICITUD_USUARIO_APROBADA = _(u'La solicitud de registro de usuario ha sido aprobada.')
-    SOLICITUD_USUARIO_RECHAZADA = _(u'La solicitud de registro de usuario ha sido rechazada.')
     ACTUALIZACION_EMAIL_EXITOSO = _(u'Su correo electrónico ha sido actualizado exitosamente.')
     SOLICITUD_QUIROFANO_ENVIADA = _(u'Su solicitud de quirofano ha sido enviada. Se le notificará cuando ésta haya sido aprobada o, en su defecto, rechazada.')
     INTERVENCION_QUIRURGICA_AGREGADA = _(u'Intervención quirúrgica agregada exitosamente.')
+    INTERVENCION_QUIRURGICA_HORARIO_CAMBIADO = _(u'Se ha cambiado exitosamente el turno de la intervención quirúrgica.')
 
 class MensajeTemporalError():
     ''' Clase que contiene constantes para ser utilizadas como mensajes temporales (flash messages) de errores '''
@@ -33,7 +33,11 @@ class MensajeTemporalError():
     NO_SE_AGREGO_PROCEDIMIENTO_QUIRURGICO = _(u'Debe agregar al menos un (1) procedimiento quirúrgico.')
     RECUPERAR_CONTRASENA_SIN_EMAIL = _(u'No posee un correo electrónico asociado a esta cuenta. Por Favor comuníquese con el administrador del sistema para la recuperación de su clave de acceso.')
     ELIMINAR_PROCEDIMIENTO_QUIRURGICO_INVALIDO = _(u'Se intentó eliminar un procedimiento quirúrgico inválido.')
+    ELIMINAR_INTERVENCION_QUIRURGICA_INVALIDA = _(u'Se intentó eliminar una intervencion quirúrgica inválida.')
+    PROBLEMA_GENERANDO_PDF = _(u'Se ha producido un error al generar el archivo PDF.')
 
 class MensajeTemporalAviso():
     ''' Clase que contiene constantes para ser utilizadas como mensajes temporales (flash messages) de avisos (warnings) '''
     SOLICITUD_QUIROFANO_CANCELADA = _(u'La solicitud de quirófano ha sido cancelada.')
+    INTERVENCION_QUIRURGICA_ELIMINADA = _(u'La intervención quirúrgica ha sido eliminada.')
+    SOLICITUD_USUARIO_RECHAZADA = _(u'La solicitud de registro de usuario ha sido rechazada.')

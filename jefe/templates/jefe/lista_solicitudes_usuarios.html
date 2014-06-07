@@ -199,7 +199,7 @@
                             <form class="form-horizontal" role="form" id="formulario-gestionar-solicitud" action="{% url 'rechazar_solicitud_usuario' %}" method="POST">
                                 {% csrf_token %}
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-danger">
+                                    <button type="submit" class="btn btn-danger btn-loading" data-loading-text="{{ RECHAZANDO }}">
                                         <span class="glyphicon glyphicon-remove">
                                         </span>
                                         {{ RECHAZAR_SOLICITUD }}
@@ -212,7 +212,7 @@
                             <form class="form-horizontal" role="form" id="formulario-gestionar-solicitud"  action="{% url 'aceptar_solicitud_usuario' %}" method="POST">
                                 {% csrf_token %}
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-success">
+                                    <button type="submit" class="btn btn-success btn-loading" data-loading-text="{{ APROBANDO }}">
                                         <span class="glyphicon glyphicon-ok">
                                         </span>
                                         {{ APROBAR_SOLICITUD }}

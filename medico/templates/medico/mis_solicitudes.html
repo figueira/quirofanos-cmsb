@@ -69,17 +69,17 @@
 		</button>
 		<ul class="dropdown-menu" role="menu">
 			<li>
-				<a href="#">
+				<a href="{% url 'mis_solicitudes' 'pendientes' 0 %}">
 					Última semana
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="{% url 'mis_solicitudes' 'pendientes' 1 %}">
 					Último mes
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="{% url 'mis_solicitudes' 'pendientes' 2 %}">
 					Últimos 3 meses
 				</a>
 			</li>

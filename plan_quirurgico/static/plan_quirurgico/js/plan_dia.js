@@ -63,4 +63,11 @@ $(document).ready(function() {
 	// Seleccionar seccion en menu de navegacion
 	$(".navegacion").removeClass("active");
 	$("#seccion-plan-quirurgico").addClass("active");
+
+  // Mostrar modal de cambio de horario de intervencion
+  $(".btn-cambiar-horario-intervencion").click(function() {
+    $("#id-intervencion-cambiar-horario").val($(this).val());
+    $(this).closest(".modal").modal("hide");
+    $("#solicitar-quirofano").modal();
+  });
 });

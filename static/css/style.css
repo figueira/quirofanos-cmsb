@@ -133,15 +133,26 @@ a:hover
 	cursor:pointer
 }
 
+.table>thead>tr>td.actual,.table>tbody>tr>td.actual,.table>tfoot>tr>td.actual,.table>thead>tr>th.actual,.table>tbody>tr>th.actual,.table>tfoot>tr>th.actual,.table>thead>tr.actual>td,.table>tbody>tr.actual>td,.table>tfoot>tr.actual>td,.table>thead>tr.actual>th,.table>tbody>tr.actual>th,.table>tfoot>tr.actual>th
+{
+	background-color:rgba(182,79,79,0.5)!important
+}
+
 .table>thead>tr>td.unavailable,.table>tbody>tr>td.unavailable,.table>tfoot>tr>td.unavailable,.table>thead>tr>th.unavailable,.table>tbody>tr>th.unavailable,.table>tfoot>tr>th.unavailable,.table>thead>tr.unavailable>td,.table>tbody>tr.unavailable>td,.table>tfoot>tr.unavailable>td,.table>thead>tr.unavailable>th,.table>tbody>tr.unavailable>th,.table>tfoot>tr.unavailable>th
 {
-	background-color:rgba(196,196,196,0.3)!important
+	background-color:rgba(196,196,196,0.3)!important;
+	cursor:pointer
 }
 
 .table-hover>tbody>tr>td.available:hover,.table-hover>tbody>tr>th.available:hover,.table-hover>tbody>tr.available:hover>td,.table-hover>tbody>tr.available:hover>th
 {
 	background-color:#87A1B9!important;
 	cursor:pointer
+}
+
+.table-hover>tbody>tr>td.actual:hover,.table-hover>tbody>tr>th.actual:hover,.table-hover>tbody>tr.actual:hover>td,.table-hover>tbody>tr.actual:hover>th
+{
+	background-color:rgba(172,66,66,1)!important
 }
 
 .table-hover>tbody>tr>td.unavailable:hover,.table-hover>tbody>tr>th.unavailable:hover,.table-hover>tbody>tr.unavailable:hover>td,.table-hover>tbody>tr.unavailable:hover>th
@@ -191,21 +202,15 @@ a:hover
 	padding-right:0
 }
 
-/* estilo de las filas del plan quirurgico */
-.table-plan > tbody > tr,.table-horas > tbody > tr
+/* menos zoom */
+.less-zoom
 {
-	line-height:120px;
-	height:120px;
-	min-height:120px;
-	max-height:120px
+	zoom:30%
 }
 
-/* estilo de las columnas del plan quirurgico */
-.table-plan > tbody > tr> td,.table-plan > thead > tr > th
+.less-zoom *
 {
-	width:310px;
-	min-width:310px;
-	max-width:310px
+	font-size:28pt
 }
 
 /* scroll de la tabla de plan quirurgico */
@@ -223,6 +228,12 @@ a:hover
 .table-plan>thead>tr>td.unavailable,.table-plan>tbody>tr>td.unavailable,.table-plan>tfoot>tr>td.unavailable,.table-plan>thead>tr>th.unavailable,.table-plan>tbody>tr>th.unavailable,.table-plan>tfoot>tr>th.unavailable,.table-plan>thead>tr.unavailable>td,.table-plan>tbody>tr.unavailable>td,.table-plan>tfoot>tr.unavailable>td,.table-plan>thead>tr.unavailable>th,.table-plan>tbody>tr.unavailable>th,.table-plan>tfoot>tr.unavailable>th
 {
 	outline:solid rgba(172,66,66,1) thin
+}
+
+.table-plan>thead>tr>td.unavailable-striped,.table-plan>tbody>tr>td.unavailable-striped,.table-plan>tfoot>tr>td.unavailable-striped,.table-plan>thead>tr>th.unavailable-striped,.table-plan>tbody>tr>th.unavailable-striped,.table-plan>tfoot>tr>th.unavailable-striped,.table-plan>thead>tr.unavailable-striped>td,.table-plan>tbody>tr.unavailable-striped>td,.table-plan>tfoot>tr.unavailable-striped>td,.table-plan>thead>tr.unavailable-striped>th,.table-plan>tbody>tr.unavailable-striped>th,.table-plan>tfoot>tr.unavailable-striped>th
+{
+	background-color: gray;
+	background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.5) 35px, rgba(255,255,255,.5) 70px);
 }
 
 .table-plan>tbody>tr>td.unavailable:hover,.table-plan>tbody>tr>th.unavailable:hover,.table-plan>tbody>tr.unavailable:hover>td,.table-plan>tbody>tr.unavailable:hover>th
@@ -322,7 +333,7 @@ a:hover
 .well-info
 {
 	background-image:linear-gradient(to bottom,#d9edf7 0,#d9edf7 100%)!important;
-	margin: 5px
+	margin:5px
 }
 
 /* estilo de turnos que pueden ser seleccionados */
@@ -339,6 +350,23 @@ a:hover
 	text-align:center
 }
 
+/* alineamiento vertical en el fondo */
+.cell-bottom-left
+{
+	position:absolute;
+	bottom:5px;
+	left:5px;
+	text-align:left;
+	z-index:10;
+	vertical-align:bottom
+}
+
+/* posicion relativa */
+.position-relative
+{
+	position:relative
+}
+
 /* estilo tabla plan quirurgico observadores */
 #table-intervenciones>tbody>tr>td
 {
@@ -347,42 +375,42 @@ a:hover
 }
 
 /* estilo etiquetas de quirofanos */
-
 .label-quirofano-0
 {
-	background-color:#4D704D !important
+	background-color:#4D704D!important
 }
 
 .label-quirofano-1
 {
-	background-color:#994E36 !important
+	background-color:#994E36!important
 }
 
 .label-quirofano-2
 {
-	background-color:#4D4D94 !important
+	background-color:#4D4D94!important
 }
 
 .label-quirofano-3
 {
-	background-color:#5E345E !important
+	background-color:#5E345E!important
 }
 
 .label-quirofano-4
 {
-	background-color:#8A7430 !important
+	background-color:#8A7430!important
 }
 
 .label-quirofano-5
 {
-	background-color:#993333 !important
+	background-color:#933!important
 }
 
-#cambiar-estado-modal {
-    position: absolute;
-    top: 35%;
-    left: 20%;
-    margin-top: -25px;
-    margin-left: -250px;
-    padding: 20px;
+#cambiar-estado-modal
+{
+	position:absolute;
+	top:35%;
+	left:20%;
+	margin-top:-25px;
+	margin-left:-250px;
+	padding:20px
 }

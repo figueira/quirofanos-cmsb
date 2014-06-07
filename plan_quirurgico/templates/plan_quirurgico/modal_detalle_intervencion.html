@@ -91,7 +91,7 @@
                             <div class="col-lg-offset-10">
                                 <button class="btn btn-default"
                                 id="ver-quirofano-{{ reservacion.objeto.pk }}" type="button" onclick="mostrarInfoQuirofano({{ reservacion.objeto.pk }})">{{ QUIROFANO }}
-                                <span class="glyphicon glyphicon-chevron-right"></span>
+                                <span class="glyphicon glyphicon-chevron-right"></span></button>
                             </div>
                         </div>
                     </div>
@@ -129,6 +129,14 @@
                             </label>
                             <div class="col-lg-2">
                                 <input class="form-control" type="text" value="{{ reservacion.hora_fin_legible }}" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">
+                                {{ LABEL_MEDICO_SOLICITANTE }}
+                            </label>
+                            <div class="col-lg-10">
+                                <input class="form-control" type="text" value="{{ reservacion.objeto.medico }}" disabled>
                             </div>
                         </div>
                         <div class="form-group">
@@ -286,12 +294,17 @@
             <div class="modal-footer">
                 <form action="{% url 'cancelar_solicitud' reservacion.objeto.pk %}" method="POST">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-danger pull-left">
+                    <button type="submit" class="btn btn-danger pull-left btn-loading" data-loading-text="{{ CANCELANDO }}">
                         <span class="glyphicon glyphicon-trash">
                         </span>
-                        Cancelar Solicitud
+                        {{ CANCELAR_SOLICITUD }}
                     </button>
                 </form>
+            </div>
+            {% endif %}
+            {% if vista_plan_dia and es_coordinador %}
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-cambiar-horario-intervencion pull-left" value="{{ reservacion.objeto.intervencion_quirurgica.pk }}">{{ CAMBIAR_HORARIO_INTERVENCION_QUIRURGICA }}</button>
             </div>
             {% endif %}
         </div>

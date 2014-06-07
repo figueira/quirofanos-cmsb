@@ -16,11 +16,16 @@ def constantes_texto(request):
     datos['VOLVER'] = TextoMostrable.VOLVER
     datos['BUSCAR'] = TextoMostrable.BUSCAR
     datos['ENVIAR'] = TextoMostrable.ENVIAR
+    datos['ENVIANDO'] = TextoMostrable.ENVIANDO
     datos['ACEPTAR'] = TextoMostrable.ACEPTAR
     datos['CANCELAR'] = TextoMostrable.CANCELAR
+    datos['CANCELANDO'] = TextoMostrable.CANCELANDO
+    datos['CANCELAR_SOLICITUD'] = TextoMostrable.CANCELAR_SOLICITUD
+    datos['ELIMINAR'] = TextoMostrable.ELIMINAR
     datos['LABEL_NOMBRE'] = TextoMostrable.LABEL_NOMBRE
     datos['LABEL_APELLIDO'] = TextoMostrable.LABEL_APELLIDO
     datos['LABEL_CEDULA'] = TextoMostrable.LABEL_CEDULA
+    datos['LABEL_BUSCAR_CEDULA'] = TextoMostrable.LABEL_BUSCAR_CEDULA
     datos['LABEL_GENERO'] = TextoMostrable.LABEL_GENERO
     datos['LABEL_TELEFONO'] = TextoMostrable.LABEL_TELEFONO
     datos['LABEL_EMAIL'] = TextoMostrable.LABEL_EMAIL
@@ -28,11 +33,14 @@ def constantes_texto(request):
     datos['LABEL_ESPECIALIZACION'] = TextoMostrable.LABEL_ESPECIALIZACION
     datos['LABEL_ESPECIALIZACION_ABREVIADO'] = TextoMostrable.LABEL_ESPECIALIZACION_ABREVIADO
     datos['LABEL_DEPARTAMENTO'] = TextoMostrable.LABEL_DEPARTAMENTO
+    datos['LABEL_BUSCAR_DEPARTAMENTO'] = TextoMostrable.LABEL_BUSCAR_DEPARTAMENTO
     datos['LABEL_DEPARTAMENTO_ABREVIADO'] = TextoMostrable.LABEL_DEPARTAMENTO_ABREVIADO
     datos['LABEL_FECHA_SOLICITUD'] = TextoMostrable.LABEL_FECHA_SOLICITUD
     datos['LABEL_TIPO_USUARIO'] = TextoMostrable.LABEL_TIPO_USUARIO
     datos['RECHAZAR_SOLICITUD'] = TextoMostrable.RECHAZAR_SOLICITUD
+    datos['RECHAZANDO'] = TextoMostrable.RECHAZANDO
     datos['APROBAR_SOLICITUD'] = TextoMostrable.APROBAR_SOLICITUD
+    datos['APROBANDO'] = TextoMostrable.APROBANDO
     datos['LABEL_INTERVENCION_PLURAL'] = TextoMostrable.LABEL_INTERVENCION_PLURAL
     datos['LABEL_INTERVENCION_ABREVIADO'] = TextoMostrable.LABEL_INTERVENCION_ABREVIADO
     datos['LABEL_QUIRURGICA_PLURAL'] = TextoMostrable.LABEL_QUIRURGICA_PLURAL
@@ -48,6 +56,8 @@ def constantes_texto(request):
     datos['HORAS'] = TextoMostrable.HORAS
     datos['MINUTOS'] = TextoMostrable.MINUTOS
     datos['MENSAJE_SELECCIONAR_TURNO_INTERVENCION'] = TextoMostrable.MENSAJE_SELECCIONAR_TURNO_INTERVENCION
+    datos['MENSAJE_SELECCIONAR_TURNO_INTERVENCION_CAMBIO_HORARIO'] = TextoMostrable.MENSAJE_SELECCIONAR_TURNO_INTERVENCION_CAMBIO_HORARIO
+    datos['CAMBIAR_HORARIO_INTERVENCION_QUIRURGICA'] = TextoMostrable.CAMBIAR_HORARIO_INTERVENCION_QUIRURGICA
     datos['LABEL_DURACION_INTERVENCION'] = TextoMostrable.LABEL_DURACION_INTERVENCION
     datos['SELECCIONAR_TURNO'] = TextoMostrable.SELECCIONAR_TURNO
     datos['LABEL_AREA'] = TextoMostrable.LABEL_AREA
@@ -94,6 +104,22 @@ def constantes_texto(request):
     datos['MENSAJE_NO_HAY_PROCEDIMIENTOS_QUIRURGICOS'] = TextoMostrable.MENSAJE_NO_HAY_PROCEDIMIENTOS_QUIRURGICOS
     datos['LABEL_OTROS'] = TextoMostrable.LABEL_OTROS
     datos['LABEL_MEDICO_SOLICITANTE'] = TextoMostrable.LABEL_MEDICO_SOLICITANTE
+    datos['INICIAR_SESION'] = TextoMostrable.INICIAR_SESION
+    datos['INICIANDO_SESION'] = TextoMostrable.INICIANDO_SESION
+    datos['OLVIDO_CONTRASENA'] = TextoMostrable.OLVIDO_CONTRASENA
+    datos['BUSCANDO'] = TextoMostrable.BUSCANDO
+    datos['LABEL_CONTRASENA_ACTUAL'] = TextoMostrable.LABEL_CONTRASENA_ACTUAL
+    datos['LABEL_CONTRASENA_NUEVA'] = TextoMostrable.LABEL_CONTRASENA_NUEVA
+    datos['LABEL_CONTRASENA_NUEVA_REPETIDA'] = TextoMostrable.LABEL_CONTRASENA_NUEVA_REPETIDA
+    datos['ACTUALIZAR'] = TextoMostrable.ACTUALIZAR
+    datos['ACTUALIZANDO'] = TextoMostrable.ACTUALIZANDO
+    datos['ESPERE'] = TextoMostrable.ESPERE
+    datos['AGREGAR'] = TextoMostrable.AGREGAR
+    datos['AGREGANDO'] = TextoMostrable.AGREGANDO
+    datos['RECUPERAR'] = TextoMostrable.RECUPERAR
+    datos['RECUPERANDO'] = TextoMostrable.RECUPERANDO
+    datos['ELIMINANDO'] = TextoMostrable.ELIMINANDO
+
     return datos
 
 

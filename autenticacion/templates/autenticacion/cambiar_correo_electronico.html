@@ -37,7 +37,7 @@
                 {% csrf_token %}
                 <div class="panel-body">
                     <div class="form-group" id="correo-electronico-form-group">
-                        <label class="col-lg-4 control-label" for="correo-electronico">Correo Electrónico:</label>
+                        <label class="col-lg-4 control-label" for="correo-electronico">{{ LABEL_EMAIL }}</label>
                         <div class="col-lg-6">
                             {% render_field formulario_actualizacion_email.correo_electronico class="form-control" id="correo-electronico" %}
                             <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="correo-electronico-error-feedback-icon"></span>
@@ -56,12 +56,12 @@
                     </div>
                 </div>
                 <div class="panel-footer">
-                   <!-- Submit -->
+                    <!-- Submit -->
                     <div class="col-lg-offset-10">
-                        <button type="submit" class="btn btn-primary btn-lg">
-                            Actualizar
+                        <button type="submit" class="btn btn-primary btn-lg btn-loading" data-loading-text="{{ ACTUALIZANDO }}">
+                            {{ ACTUALIZAR }}
                         </button>
-                    </div>
+                    </div><!-- Submit -->
                 </div>
             </form>
         </div>
