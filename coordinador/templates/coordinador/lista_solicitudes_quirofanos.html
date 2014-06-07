@@ -1,0 +1,73 @@
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+{% if lista_solicitudes_quirofano|length > 0 %}
+<ul class="list-group">
+    {% for solicitud in lista_solicitudes_quirofano %}
+    <a href="#" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud-{{ solicitud.id }}">
+        <span class="label label-default">Médico: {{ solicitud.medico }}</span>
+        <span class="label label-info">Fecha Intervención: {{ solicitud.intervencion_quirurgica.fecha_intervencion }}</span>
+        <span class="pull-right">
+            <small>
+                <strong>
+                    {{ LABEL_FECHA_SOLICITUD }} {{ solicitud.fecha_reservacion }}
+                </strong>
+            </small>
+        </span>
+    </a>
+    <div class="modal fade" id="detalles-solicitud-{{ solicitud.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Detalles de Solicitud
+                    </h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <!--{% if tipo == 'pendiente' %}
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <form class="form-horizontal" role="form" id="formulario-gestionar-solicitud" action="{% url 'rechazar_solicitud_usuario' %}" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-danger">
+                                        <span class="glyphicon glyphicon-remove">
+                                        </span>
+                                        {{ RECHAZAR_SOLICITUD }}
+                                    </button>
+                                    {% render_field formulario_solicitud_usuario.id_cuenta value=solicitud.id %}
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-4">
+                            <form class="form-horizontal" role="form" id="formulario-gestionar-solicitud"  action="{% url 'aceptar_solicitud_usuario' %}" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-success">
+                                        <span class="glyphicon glyphicon-ok">
+                                        </span>
+                                        {{ APROBAR_SOLICITUD }}
+                                    </button>
+                                    {% render_field formulario_solicitud_usuario.id_cuenta value=solicitud.id %}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}-->
+            </div>
+        </div>
+    </div><!-- Modal de Detalles de Solicitud de Quirofano -->
+    {% endfor %}
+</ul>
+{% else %}
+<ul class="list-group-item  ">
+    <strong>No existen solicitudes de quirófanos {{ tipo }}s.</strong>
+</ul>
+{% endif %}

@@ -1,0 +1,122 @@
+{% extends request.session.template_base %}
+
+{% load staticfiles  %}
+
+{% block title %}{{ block.super }} | Solicitudes de Quirófanos{% endblock title %}
+
+{% block scripts %}
+<script type="text/javascript" src="{% static 'coordinador/js/solicitudes_quirofano.js' %}"></script>
+{% endblock scripts %}
+
+{% block numero-mensajes %}
+1
+{% endblock numero-mensajes %}
+
+{% block flash-messages %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} fade in">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	<strong>{{ message }}</strong>
+</div>
+{% endfor %}
+{% endif %}
+{% endblock flash-messages %}
+
+
+{% block content %}
+<div class="page-header">
+	<h1>Solicitudes de Quirófanos</h1>
+</div>
+<div class="row">
+	<div class="col-lg-offset-1 col-lg-9">
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs">
+			<li id="tab-pendientes"><a href="{% url 'solicitudes_quirofanos' 'pendientes' %}">
+				{{ PENDIENTES }}
+				<span class="badge">
+					{{ numero_solicitudes_pendientes }}
+				</span>
+			</a></li>
+			<li id="tab-aprobadas"><a href="{% url 'solicitudes_quirofanos' 'aprobadas' %}">
+				{{ APROBADAS }}
+				<span class="glyphicon glyphicon-ok">
+				</span>
+			</a></li>
+			<li id="tab-rechazadas"><a href="{% url 'solicitudes_quirofanos' 'rechazadas' %}">
+				{{ RECHAZADAS }}
+				<span class="glyphicon glyphicon-ban-circle">
+				</span>
+			</a></li>
+		</ul>
+	</div>
+	<div class="col-lg-1">
+		<button type="button" class="btn btn-primary dropdown-toggle pull-right" data-toggle="dropdown">
+			{{ tipo_busqueda }}
+			<span class="caret">
+			</span>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			{% if tipo_busqueda != ULTIMA_SEMANA %}
+			<li>
+				<a href="{% url 'solicitudes_quirofanos' estado_solicitud %}">
+					{{ ULTIMA_SEMANA }}
+				</a>
+			</li>
+			{% endif %}
+			{% if tipo_busqueda != ULTIMO_MES %}
+			<li>
+				<a href="{% url 'solicitudes_quirofanos' estado_solicitud 2 %}">
+					{{ ULTIMO_MES }}
+				</a>
+			</li>
+			{% endif %}
+			{% if tipo_busqueda != ULTIMOS_TRES_MESES %}
+			<li>
+				<a href="{% url 'solicitudes_quirofanos' estado_solicitud 3 %}">
+					{{ ULTIMOS_TRES_MESES }}
+				</a>
+			</li>
+			{% endif %}
+		</ul>
+	</div>
+</div><!-- Pestañas y Filtro -->
+
+<div class="row">
+	<div class="col-lg-offset-1 col-lg-10">
+		<!-- Tab panes -->
+		<div class="tab-content">
+			<div class="hidden" id="contenido-pendientes">
+				{% include "coordinador/lista_solicitudes_quirofanos.html" with lista_solicitudes_quirofano=lista_solicitudes_quirofano_pendientes tipo="pendiente" %}
+			</div><!-- Lista de Solicitudes Pendientes -->
+			<div class="hidden" id="contenido-aprobadas">
+				{% include "coordinador/lista_solicitudes_quirofanos.html" with lista_solicitudes_quirofano=lista_solicitudes_quirofano_aprobadas tipo="aprobada" %}
+			</div><!-- Lista de Solicitudes Aprobadas -->
+			<div class="hidden" id="contenido-rechazadas">
+				{% include "coordinador/lista_solicitudes_quirofanos.html" with lista_solicitudes_quirofano=lista_solicitudes_quirofano_rechazadas tipo="rechazada" %}
+			</div><!-- Lista de Solicitudes Rechazadas -->
+		</div>
+	</div>
+</div>
+
+
+<!-- Paginacion de Solicitudes -->
+<div class="row">
+	<div class="col-lg-6 col-lg-offset-1">
+		<div id="paginacion-pendientes"></div>
+		<div id="paginacion-aprobadas"></div>
+		<div id="paginacion-rechazadas"></div>
+	</div>
+</div>
+<script type="text/javascript">
+	{% if estado_solicitud == 'pendientes' %}
+		inicializarPaginacion({{ lista_solicitudes_quirofano_pendientes.number }}, {{ lista_solicitudes_quirofano_pendientes.paginator.num_pages }}, 'pendientes' )
+	{% elif estado_solicitud == 'aprobadas' %}
+		inicializarPaginacion({{ lista_solicitudes_quirofano_aprobadas.number }}, {{ lista_solicitudes_quirofano_aprobadas.paginator.num_pages }}, 'aprobadas' );
+	{% elif estado_solicitud == 'rechazadas' %}
+		inicializarPaginacion({{ lista_solicitudes_quirofano_rechazadas.number }}, {{ lista_solicitudes_quirofano_rechazadas.paginator.num_pages }}, 'rechazadas' );
+	{% endif %}
+	seleccionarPestana("{{ estado_solicitud }}");
+</script>
+
+{% endblock content %}

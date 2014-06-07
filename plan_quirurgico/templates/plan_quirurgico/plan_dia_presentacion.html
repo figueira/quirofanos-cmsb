@@ -39,7 +39,7 @@
                     <li><a href="{% url 'plan_dia' area_actual ano mes dia %}">
                         Horarios Disponibles</a></li>
                         {% endif %}
-                        <li><a href="{% url 'plan_dia_obs' area_actual ano mes dia %}">Listado Intervenciones</a></li>
+                        <li><a href="{% url 'plan_dia_obs' area_actual ano mes dia %}">Listado Intervenciones</a></li>s
                         <li><a href="{% url 'plan_dia_pdf' area_actual ano mes dia %}">Generar PDF</a></li>
                     </ul>
                 </div>
@@ -86,7 +86,8 @@
                                     <td>
                                         {% for proc in intervencion.procedimientos %}
                                         <h3><span class="label label-info">
-                                            {{ proc.nombre_procedimiento }}
+                                            {{ proc.tipo_procedimiento_quirurgico.nombre }} -
+                                            {{ proc.organo_corporal.nombre }}
                                         </h3>
                                         {% endfor %}
                                     </td>
