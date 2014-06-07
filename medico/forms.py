@@ -26,7 +26,7 @@ class SolicitudQuirofanoForm(BaseForm):
     nacionalidad_paciente = forms.ChoiceField(widget=forms.HiddenInput, choices=NACIONALIDAD, initial='V-')
     cedula_paciente = forms.CharField(max_length=12, validators=[
                               RegexValidator(ExpresionRegular.CEDULA, MensajeError.CEDULA_INVALIDA, CodigoError.CEDULA_INVALIDA)])
-    fecha_nacimiento_paciente = forms.DateField(input_formats=['%d/%m/%Y', '%m/%d/%Y', '%Y-%m-%d'])
+    fecha_nacimiento_paciente = forms.DateField(input_formats=['%d/%m/%Y', '%m/%d/%Y', '%Y-%m-%d'], required=False)
     codigo_telefono_paciente = forms.CharField(validators=[RegexValidator(ExpresionRegular.CODIGO_TELEFONO, MensajeError.CODIGO_TELEFONO_INVALIDO, CodigoError.CODIGO_TELEFONO_INVALIDO)])
     numero_telefono_paciente = forms.CharField(validators=[RegexValidator(ExpresionRegular.NUMERO_TELEFONO, MensajeError.NUMERO_TELEFONO_INVALIDO, CodigoError.NUMERO_TELEFONO_INVALIDO)])
     genero_paciente = forms.ChoiceField(choices=GENERO, widget=forms.RadioSelect)

@@ -1,4 +1,7 @@
 {% load widget_tweaks %}
+{% load staticfiles %}
+
+<script type="text/javascript" src="{% static 'plan_quirurgico/js/modal_detalle_intervencion.js' %}"></script>
 
 <!-- Modal de Detalles de Intervencion -->
 <div class="modal fade" id="modal-reservacion-{{ reservacion.objeto.pk }}" tabindex="-1" role="dialog" aria-labelledby="titulo-detalles-solicitud-{{ reservacion.objeto.pk }}" aria-hidden="true">
