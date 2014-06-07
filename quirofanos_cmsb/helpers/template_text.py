@@ -117,3 +117,4 @@ class TextoMostrable():
     MENSAJE_NO_HAY_PROCEDIMIENTOS_QUIRURGICOS = _(u'No se ha agregado ningún procedimiento quirúrgico.')
     LABEL_OTROS = _(u'Otro(s):')
     LABEL_MEDICO_SOLICITANTE = _(u'Medico Solicitante:')
+    LABEL_FECHA_INTERVENCION = _(u'Fecha de la Intervención:')

@@ -5,8 +5,8 @@
 <ul class="list-group">
     {% for solicitud in lista_solicitudes_quirofano %}
     <a href="#" class="list-group-item" data-toggle="modal" data-target="#detalles-solicitud-{{ solicitud.id }}">
-        <span class="label label-default">Médico: {{ solicitud.medico }}</span>
-        <span class="label label-info">Fecha Intervención: {{ solicitud.intervencion_quirurgica.fecha_intervencion }}</span>
+        <span class="label label-default">{{ LABEL_MEDICO_SOLICITANTE }} {{ solicitud.medico }}</span>
+        <span class="label label-info">{{ LABEL_FECHA_INTERVENCION }} {{ solicitud.intervencionquirurgica.fecha_intervencion }}</span>
         <span class="pull-right">
             <small>
                 <strong>
@@ -29,11 +29,11 @@
                 <div class="modal-body">
 
                 </div>
-                <!--{% if tipo == 'pendiente' %}
+                <{% if tipo == 'pendiente' %}
                 <div class="modal-footer">
                     <div class="row">
                         <div class="col-lg-8">
-                            <form class="form-horizontal" role="form" id="formulario-gestionar-solicitud" action="{% url 'rechazar_solicitud_usuario' %}" method="POST">
+                            <form class="form-horizontal" role="form" id="formulario-gestionar-solicitud" action="{% url 'rechazar_solicitud_quirofano' %}" method="POST">
                                 {% csrf_token %}
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-danger">
@@ -41,12 +41,12 @@
                                         </span>
                                         {{ RECHAZAR_SOLICITUD }}
                                     </button>
-                                    {% render_field formulario_solicitud_usuario.id_cuenta value=solicitud.id %}
+                                    {% render_field formulario_solicitud_quirofano.id_reservacion value=solicitud.id %}
                                 </div>
                             </form>
                         </div>
                         <div class="col-lg-4">
-                            <form class="form-horizontal" role="form" id="formulario-gestionar-solicitud"  action="{% url 'aceptar_solicitud_usuario' %}" method="POST">
+                            <form class="form-horizontal" role="form" id="formulario-gestionar-solicitud"  action="{% url 'aceptar_solicitud_quirofano' %}" method="POST">
                                 {% csrf_token %}
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-success">
@@ -54,13 +54,13 @@
                                         </span>
                                         {{ APROBAR_SOLICITUD }}
                                     </button>
-                                    {% render_field formulario_solicitud_usuario.id_cuenta value=solicitud.id %}
+                                    {% render_field formulario_solicitud_quirofano.id_reservacion value=solicitud.id %}
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
-                {% endif %}-->
+                {% endif %}
             </div>
         </div>
     </div><!-- Modal de Detalles de Solicitud de Quirofano -->
