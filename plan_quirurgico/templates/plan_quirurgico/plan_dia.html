@@ -210,7 +210,8 @@ $(function(){
 					{% with quirofano.intervenciones.values|ocurrencias:intervencion as duracion %}
 					{% if intervencion.obtener_hora_inicio_horas == media_hora %}
 					<td class="unavailable position-relative" data-togle="tooltip" data-placement="right" title="{{ quirofano.nombre }}" rowspan="{{ duracion }}">
-						<a href="#" class="pull-right" data-toggle="modal" data-target="#modal-reservacion-{{ intervencion.reservacion.pk }}">
+						<p class="label label-info">{{ LABEL_DR }} {{ intervencion.reservacion.medico.apellido }}</p>
+						<a href="#" class="cell-centered" data-toggle="modal" data-target="#modal-reservacion-{{ intervencion.reservacion.pk }}">
 							<span class="glyphicon glyphicon-fullscreen"></span>
 						</a>
 						{% if es_coordinador %}

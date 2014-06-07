@@ -20,6 +20,7 @@ class TextoMostrable():
     CANCELAR_SOLICITUD = _(u'Cancelar Solicitud')
     ELIMINAR = _(u'Eliminar')
     ELIMINANDO = _(u'Eliminando...')
+    LABEL_DR = _(u'Dr(a).')
     LABEL_NOMBRE = _(u'Nombre:')
     LABEL_APELLIDO = _(u'Apellido:')
     LABEL_CEDULA = _(u'Cédula:')
@@ -142,4 +143,4 @@ class TextoMostrable():
     AGREGANDO = _(u'Agregando...')
     RECUPERAR = _(u'Recuperar')
     RECUPERANDO = _(u'Recuperando...')
-
+    LABEL_EQUIPO_QUIRURGICO = _(u'Equipo Quirúrgico:')

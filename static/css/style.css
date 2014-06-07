@@ -361,6 +361,13 @@ a:hover
 	vertical-align:bottom
 }
 
+/* alineamiento vertical en el centro */
+.cell-centered {
+	position: absolute;
+	left:50%;
+	bottom: 50%
+}
+
 /* posicion relativa */
 .position-relative
 {

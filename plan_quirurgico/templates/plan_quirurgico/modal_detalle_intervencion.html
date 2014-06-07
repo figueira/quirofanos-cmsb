@@ -249,13 +249,12 @@
                         {% endif %}
                         <div class="form-group">
                             <label class="col-lg-2 control-label">{{ LABEL_PROCEDIMIENTOS_QUIRURGICOS }}</label>
-                        </div>
-                        <div class="form-group">
-                            {% for procedimiento_quirurgico in reservacion.objeto.intervencion_quirurgica.procedimientoquirurgico_set.all %}
-                            {% if forloop.first %}
-                            <div class="col-lg-offset-2 col-lg-8 row">
-                                {% endif %}
-                                <div class="col-lg-3 well well-sm well-info">
+                            <div class="col-lg-10">
+                                {% for procedimiento_quirurgico in reservacion.objeto.intervencion_quirurgica.procedimientoquirurgico_set.all %}
+                                {% if forloop.first %}
+                                <div class="row">
+                                    {% endif %}
+                                    <div class="col-lg-3 well well-sm well-info">
                                     <!--<p>
                                         <strong>{{ LABEL_SISTEMA_CORPORAL }}</strong>
                                         {{ procedimiento_quirurgico.organo_corporal.sistema_corporal }}
@@ -265,48 +264,58 @@
                                         {{ procedimiento_quirurgico.organo_corporal }}
                                     </p>-->
                                     <p>
-                                        <strong>{{ LABEL_PROCEDIMIENTO }}</strong>
-                                        {{ procedimiento_quirurgico.nombre_procedimiento }}
+                                        <strong>{{ procedimiento_quirurgico.nombre_procedimiento }}</strong>
                                     </p>
+                                    <a href="javascript:void(0);" class="pull-right" onclick="toggleDetallesProcedimiento(this)">
+                                        <span class="glyphicon glyphicon-plus-sign"></span>
+                                    </a>
+                                    <div class="procedimiento-quirurgico-detalle hidden">
+                                        <hr>
+                                        <strong>{{ LABEL_EQUIPO_QUIRURGICO }}</strong>
+                                        {% for medico in procedimiento_quirurgico.medicos_participantes.all %}
+                                        <p class="label label-info">{{ LABEL_DR }} {{ medico.apellido }}</p>
+                                        {% endfor %}
+                                    </div>
                                 </div>
                                 {% if forloop.last %}
                             </div>
                             {% endif %}
                             {% empty %}
-                            <div class=" col-lg-offset-2 col-lg-8 well well-sm well-warning">
+                            <div class="col-lg-10 well well-sm well-warning">
                                 <p class="text-muted texto-centrado">{{ MENSAJE_NO_HAY_PROCEDIMIENTOS_QUIRURGICOS }}</p>
                             </div>
                             {% endfor %}
                         </div>
-                        <hr>
-                        <div class="form-group">
-                            <div class="col-lg-2">
-                                <button class="btn btn-default" id="ver-info-paciente-{{ reservacion.objeto.pk }}" type="button" onclick="mostrarInfoPaciente({{ reservacion.objeto.pk }})">
-                                    <span class="glyphicon glyphicon-chevron-left"></span>
-                                    {{ PACIENTE }}
-                                </button>
-                            </div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <div class="col-lg-2">
+                            <button class="btn btn-default" id="ver-info-paciente-{{ reservacion.objeto.pk }}" type="button" onclick="mostrarInfoPaciente({{ reservacion.objeto.pk }})">
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                                {{ PACIENTE }}
+                            </button>
                         </div>
                     </div>
-                </form>
-            </div>
-            {% if agregar_boton_cancelar_solicitud %}
-            <div class="modal-footer">
-                <form action="{% url 'cancelar_solicitud' reservacion.objeto.pk %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger pull-left btn-loading" data-loading-text="{{ CANCELANDO }}">
-                        <span class="glyphicon glyphicon-trash">
-                        </span>
-                        {{ CANCELAR_SOLICITUD }}
-                    </button>
-                </form>
-            </div>
-            {% endif %}
-            {% if vista_plan_dia and es_coordinador %}
-            <div class="modal-footer">
-                <button class="btn btn-primary btn-cambiar-horario-intervencion pull-left" value="{{ reservacion.objeto.intervencion_quirurgica.pk }}">{{ CAMBIAR_HORARIO_INTERVENCION_QUIRURGICA }}</button>
-            </div>
-            {% endif %}
+                </div>
+            </form>
         </div>
+        {% if agregar_boton_cancelar_solicitud %}
+        <div class="modal-footer">
+            <form action="{% url 'cancelar_solicitud' reservacion.objeto.pk %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger pull-left btn-loading" data-loading-text="{{ CANCELANDO }}">
+                    <span class="glyphicon glyphicon-trash">
+                    </span>
+                    {{ CANCELAR_SOLICITUD }}
+                </button>
+            </form>
+        </div>
+        {% endif %}
+        {% if vista_plan_dia and es_coordinador %}
+        <div class="modal-footer">
+            <button class="btn btn-primary btn-cambiar-horario-intervencion pull-left" value="{{ reservacion.objeto.intervencion_quirurgica.pk }}">{{ CAMBIAR_HORARIO_INTERVENCION_QUIRURGICA }}</button>
+        </div>
+        {% endif %}
     </div>
+</div>
 </div><!-- Modal de Detalles de Intervencion -->

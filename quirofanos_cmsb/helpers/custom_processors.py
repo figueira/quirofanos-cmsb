@@ -22,6 +22,7 @@ def constantes_texto(request):
     datos['CANCELANDO'] = TextoMostrable.CANCELANDO
     datos['CANCELAR_SOLICITUD'] = TextoMostrable.CANCELAR_SOLICITUD
     datos['ELIMINAR'] = TextoMostrable.ELIMINAR
+    datos['LABEL_DR'] = TextoMostrable.LABEL_DR
     datos['LABEL_NOMBRE'] = TextoMostrable.LABEL_NOMBRE
     datos['LABEL_APELLIDO'] = TextoMostrable.LABEL_APELLIDO
     datos['LABEL_CEDULA'] = TextoMostrable.LABEL_CEDULA
@@ -119,6 +120,7 @@ def constantes_texto(request):
     datos['RECUPERAR'] = TextoMostrable.RECUPERAR
     datos['RECUPERANDO'] = TextoMostrable.RECUPERANDO
     datos['ELIMINANDO'] = TextoMostrable.ELIMINANDO
+    datos['LABEL_EQUIPO_QUIRURGICO'] = TextoMostrable.LABEL_EQUIPO_QUIRURGICO
 
     return datos
 
