@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'quirofanos_cmsb',
     'south',
     'widget_tweaks',
+    'dajaxice',
     )
 
 MIDDLEWARE_CLASSES = (
@@ -97,9 +98,23 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
     )
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'dajaxice.finders.DajaxiceFinder',
+)
+
 # Templates
 
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
+
+# Template Loaders
+
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+    'django.template.loaders.eggs.Loader',
+)
 
 # Flash Message Tags - Compatibilidad con Bootstrap
 

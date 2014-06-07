@@ -256,7 +256,7 @@ $(function(){
 					{% if media_hora in quirofano.turnos_disponibles %}
 					<td class="available available-select" data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}" rowspan="{{ cantidad_medias_horas_intervencion }}">
 						{% if not seleccionar_turno_cambio_horario %}
-						<a class="btn btn-primary" href="{% url 'solicitud_quirofano' ano mes dia quirofano.clave_primaria media_hora cantidad_medias_horas_intervencion %}">
+						<a class="btn btn-primary btn-loading" href="{% url 'solicitud_quirofano' ano mes dia quirofano.clave_primaria media_hora cantidad_medias_horas_intervencion %}" data-loading-text="{{ ESPERE }}">
 							{{ SELECCIONAR_TURNO }}
 						</a>
 						{% else %}
