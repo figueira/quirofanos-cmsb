@@ -91,7 +91,7 @@
                             <div class="col-lg-offset-10">
                                 <button class="btn btn-default"
                                 id="ver-quirofano-{{ reservacion.objeto.pk }}" type="button" onclick="mostrarInfoQuirofano({{ reservacion.objeto.pk }})">{{ QUIROFANO }}
-                                <span class="glyphicon glyphicon-chevron-right"></span>
+                                <span class="glyphicon glyphicon-chevron-right"></span></button>
                             </div>
                         </div>
                     </div>
@@ -300,6 +300,11 @@
                         {{ CANCELAR_SOLICITUD }}
                     </button>
                 </form>
+            </div>
+            {% endif %}
+            {% if vista_plan_dia and es_coordinador %}
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-cambiar-horario-intervencion pull-left" value="{{ reservacion.objeto.intervencion_quirurgica.pk }}">{{ CAMBIAR_HORARIO_INTERVENCION_QUIRURGICA }}</button>
             </div>
             {% endif %}
         </div>

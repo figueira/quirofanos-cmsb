@@ -81,6 +81,8 @@ class TextoMostrable():
     HORAS = _(u'hrs')
     MINUTOS = _(u'mins')
     MENSAJE_SELECCIONAR_TURNO_INTERVENCION = _(u'Por favor seleccione el turno de su preferencia.')
+    MENSAJE_SELECCIONAR_TURNO_INTERVENCION_CAMBIO_HORARIO = _(u'Por favor seleccione un nuevo turno para la intervención.')
+    CAMBIAR_HORARIO_INTERVENCION_QUIRURGICA = _(u'Cambiar Horario')
     LABEL_DURACION_INTERVENCION = _(u'Duración de la intervención:')
     SELECCIONAR_TURNO = _(u'Seleccionar Turno')
     LABEL_AREA = _(u'Área:')

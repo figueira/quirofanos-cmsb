@@ -13,6 +13,7 @@ class MensajeTemporalExito():
     ACTUALIZACION_EMAIL_EXITOSO = _(u'Su correo electrónico ha sido actualizado exitosamente.')
     SOLICITUD_QUIROFANO_ENVIADA = _(u'Su solicitud de quirofano ha sido enviada. Se le notificará cuando ésta haya sido aprobada o, en su defecto, rechazada.')
     INTERVENCION_QUIRURGICA_AGREGADA = _(u'Intervención quirúrgica agregada exitosamente.')
+    INTERVENCION_QUIRURGICA_HORARIO_CAMBIADO = _(u'Se ha cambiado exitosamente el turno de la intervención quirúrgica.')
 
 class MensajeTemporalError():
     ''' Clase que contiene constantes para ser utilizadas como mensajes temporales (flash messages) de errores '''

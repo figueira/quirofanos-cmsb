@@ -204,6 +204,8 @@ def plan_dia(request, area, ano, mes, dia):
 		es_coordinador = True
 
 	seleccionar_turno = False
+	seleccionar_turno_cambio_horario = False
+	id_intervencion_cambiar_horario = None
 	horas_intervencion = 0
 	minutos_intervencion = 0
 	cantidad_medias_horas_intervencion = 0
@@ -211,6 +213,9 @@ def plan_dia(request, area, ano, mes, dia):
 	if request.POST:
 		formulario_duracion_intervencion_quirurgica = DuracionIntervencionQuirurgicaForm(request.POST)
 		if formulario_duracion_intervencion_quirurgica.is_valid():
+			id_intervencion_cambiar_horario = formulario_duracion_intervencion_quirurgica.cleaned_data.get("id_intervencion", None)
+			if id_intervencion_cambiar_horario:
+				seleccionar_turno_cambio_horario = True
 			seleccionar_turno = True
 			horas_intervencion = formulario_duracion_intervencion_quirurgica.cleaned_data['horas']
 			minutos_intervencion = formulario_duracion_intervencion_quirurgica.cleaned_data['minutos']
@@ -310,6 +315,8 @@ def plan_dia(request, area, ano, mes, dia):
 	datos['medias_horas_legibles'] = [utils.obtener_representacion_media_hora(x) for x in medias_horas]
 	datos['formulario_duracion_intervencion_quirurgica'] = formulario_duracion_intervencion_quirurgica
 	datos['seleccionar_turno'] = seleccionar_turno
+	datos['seleccionar_turno_cambio_horario'] = seleccionar_turno_cambio_horario
+	datos['id_intervencion_cambiar_horario'] = id_intervencion_cambiar_horario
 	datos['horas_intervencion'] = horas_intervencion
 	datos['minutos_intervencion'] = minutos_intervencion
 	datos['cantidad_medias_horas_intervencion'] = cantidad_medias_horas_intervencion

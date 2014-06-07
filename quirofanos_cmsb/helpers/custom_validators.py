@@ -20,7 +20,7 @@ class MensajeError():
     NOMBRE_GENERAL_INVALIDO = _(u'Nombre inválido, puede contener sólo letras y espacios.')
     CONTRASENAS_NO_COINCIDEN = _(u'Las contraseñas ingresadas no coinciden.')
     CEDULA_BD_INVALIDA = _(u'Cédula inválida, debe ser de la forma: V-XXX... ó E-XXX...')
-    CEDULA_BD_NO_EXISTE = _(u'El número de cédula ingresado no corresponde a ningún médico.')
+    CEDULA_BD_NO_EXISTE = _(u'El número de cédula ingresado no corresponde a un médico.')
     TELEFONO_BD_INVALIDO = _(u'Teléfono inválido, debe ser de la forma: XXXX-XXXXXXX.')
     RIESGO_MALO_SIN_RAZON_BD = _(u'La razón del riesgo no puede ser nula si el riesgo es malo.')
     RIESGO_NO_MALO_CON_RAZON_BD = _(u'La razón del riesgo debe ser nula si el riesgo es distinto de malo.')

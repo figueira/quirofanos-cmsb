@@ -59,7 +59,11 @@
 			{{ LABEL_DURACION_INTERVENCION }} {{ horas_intervencion }} {{ HORAS }} {{ minutos_intervencion }} {{ MINUTOS }}
 		</strong>
 		<p class="text-muted">
+			{% if not seleccionar_turno_cambio_horario %}
 			<strong>{{ MENSAJE_SELECCIONAR_TURNO_INTERVENCION }}</strong>
+			{% else %}
+			<strong>{{ MENSAJE_SELECCIONAR_TURNO_INTERVENCION_CAMBIO_HORARIO }}</strong>
+			{% endif %}
 		</p>
 		<a href="{% url 'plan_dia' area_actual ano mes dia %}" class="btn btn-default pull-right btn-loading" data-loading-text="{{ ESPERE }}">{{ CANCELAR }}</a>
 	</div>
@@ -91,14 +95,14 @@ $(function(){
 {% endif %}
 
 <!-- Modal de la Duracion de la Operacion -->
-<div class="modal fade" id="solicitar-quirofano" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="solicitar-quirofano" tabindex="-1" role="dialog" aria-labelledby="solicitar-quirofano-modal-title" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 					&times;
 				</button>
-				<h4 class="modal-title" id="myModalLabel">
+				<h4 class="modal-title" id="solicitar-quirofano-modal-title">
 					Duración de la Intervención Quirúrgica
 				</h4>
 			</div>
@@ -112,6 +116,7 @@ $(function(){
 					});
 					</script>
 					{% endif %}
+					{% render_field formulario_duracion_intervencion_quirurgica.id_intervencion id="id-intervencion-cambiar-horario" %}
 					<div class="form-group" id="duracion-form-group">
 						<label class="col-lg-2 control-label" for="duracion-horas">
 							<span class="glyphicon glyphicon-time">
@@ -163,7 +168,7 @@ $(function(){
 </div><!-- Modal de la Duracion de la Operacion -->
 
 {% for reservacion in reservaciones %}
-{% include "plan_quirurgico/modal_detalle_intervencion.html" with reservacion=reservacion %}
+{% include "plan_quirurgico/modal_detalle_intervencion.html" with reservacion=reservacion vista_plan_dia=True es_coordinador=es_coordinador %}
 {% endfor %}
 
 <!-- Plan Quirurgico por Dia -->
@@ -225,9 +230,16 @@ $(function(){
 					{% if seleccionar_turno %}
 					{% if media_hora in quirofano.turnos_disponibles %}
 					<td class="available available-select" data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}" rowspan="{{ cantidad_medias_horas_intervencion }}">
+						{% if not seleccionar_turno_cambio_horario %}
 						<a class="btn btn-primary btn-loading" href="{% url 'solicitud_quirofano' ano mes dia quirofano.clave_primaria media_hora cantidad_medias_horas_intervencion %}" data-loading-text="{{ ESPERE }}">
 							{{ SELECCIONAR_TURNO }}
 						</a>
+						{% else %}
+						<form role="form" action="{% url 'cambiar_horario_intervencion_quirurgica' id_intervencion_cambiar_horario area_actual ano mes dia quirofano.clave_primaria media_hora cantidad_medias_horas_intervencion %}" method="POST">
+							{% csrf_token %}
+							<button class="btn btn-primary btn-loading" type="submit" data-loading-text="{{ ESPERE }}">{{ SELECCIONAR_TURNO }}</button>
+						</form>
+						{% endif %}
 					</td>
 					{% elif media_hora in quirofano.medias_horas_disponibles_atravesadas %}
 					<td class="unavailable-striped" data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}">
@@ -242,9 +254,16 @@ $(function(){
 					{% if seleccionar_turno %}
 					{% if media_hora in quirofano.turnos_disponibles %}
 					<td class="available available-select" data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}" rowspan="{{ cantidad_medias_horas_intervencion }}">
+						{% if not seleccionar_turno_cambio_horario %}
 						<a class="btn btn-primary" href="{% url 'solicitud_quirofano' ano mes dia quirofano.clave_primaria media_hora cantidad_medias_horas_intervencion %}">
 							{{ SELECCIONAR_TURNO }}
 						</a>
+						{% else %}
+						<form role="form" action="{% url 'cambiar_horario_intervencion_quirurgica' id_intervencion_cambiar_horario area_actual ano mes dia quirofano.clave_primaria media_hora cantidad_medias_horas_intervencion %}" method="POST">
+							{% csrf_token %}
+							<button class="btn btn-primary btn-loading" type="submit" data-loading-text="{{ ESPERE }}">{{ SELECCIONAR_TURNO }}</button>
+						</form>
+						{% endif %}
 					</td>
 					{% elif media_hora in quirofano.medias_horas_disponibles_atravesadas %}
 					<td class="unavailable-striped" data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}">

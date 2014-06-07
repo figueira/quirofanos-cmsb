@@ -34,11 +34,11 @@ class BusquedaMedicoForm(BaseForm):
 			if not medico:
 				self._errors["cedula_medico"] = self.error_class([MensajeError.CEDULA_BD_NO_EXISTE])
 				del cleaned_data["cedula_medico"]
-
-			medico = medico[0]
-			if medico.cuenta:
-				self._errors["cedula_medico"] = self.error_class([MensajeError.EXISTE_CUENTA])
-				del cleaned_data["cedula_medico"]
+			else:
+				medico = medico[0]
+				if medico.cuenta:
+					self._errors["cedula_medico"] = self.error_class([MensajeError.EXISTE_CUENTA])
+					del cleaned_data["cedula_medico"]
 
 		return cleaned_data
 
