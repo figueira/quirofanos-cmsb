@@ -48,7 +48,7 @@ def solicitudes_usuarios(request, estado="pendientes", periodo=1):
 
     lista_solicitudes_usuario_pendientes = Cuenta.objects.filter(estado='P', usuario__date_joined__gte=fecha_valor).order_by('-usuario__date_joined').exclude(privilegio='0').exclude(privilegio='1')
     lista_solicitudes_usuario_aprobadas = Cuenta.objects.filter(estado='A', usuario__date_joined__gte=fecha_valor).order_by('-usuario__date_joined').exclude(privilegio='0').exclude(privilegio='1')
-    lista_solicitudes_usuario_rechazadas = Cuenta.objects.filter(estado='R', usuario__date_joined__gte=fecha_valor).order_by('-usuario__date_joined').exclude(privilegio='0').exclude(privilegio='1')
+    lista_solicitudes_usuario_rechazadas = Cuenta.objects.filter(estado='R', fecha_solicitud__gte=fecha_valor).order_by('-fecha_solicitud').exclude(privilegio='0').exclude(privilegio='1')
     numero_solicitudes_pendientes = Cuenta.objects.filter(estado='P').count()
 
     paginator_pendientes = Paginator(lista_solicitudes_usuario_pendientes, 10)
@@ -150,8 +150,10 @@ def rechazar_solicitud_usuario(request):
         except ObjectDoesNotExist:
             messages.add_message(request, messages.ERROR, MensajeTemporalError. RECHAZO_USUARIO_FALLIDO)
 
-        cuenta_usuario.estado = 'R'
-        cuenta_usuario.save()
+        with transaction.atomic():
+            cuenta_usuario.estado = 'R'
+            cuenta_usuario.save()
+            cuenta_usuario.usuario.delete()
 
         messages.add_message(request, messages.WARNING, MensajeTemporalAviso.SOLICITUD_USUARIO_RECHAZADA)
     else:

@@ -14,9 +14,15 @@
         {% endif %}
         <span class="pull-right">
             <small>
+                {% if tipo != 'rechazada' %}
                 <strong>
                     {{ LABEL_FECHA_SOLICITUD }} {{ solicitud.usuario.date_joined }}
                 </strong>
+                {% else %}
+                <strong>
+                    {{ LABEL_FECHA_SOLICITUD }} {{ solicitud.fecha_solicitud }}
+                </strong>
+                {% endif %}
             </small>
         </span>
     </a>
@@ -55,6 +61,7 @@
                         </div><!-- Apellido -->
 
                         <!-- Nombre de Usuario -->
+                        {% if tipo != 'rechazada' %}
                         <div class="form-group">
                             <label class="col-lg-2 control-label" for="nombre-usuario">
                                 {{ LABEL_NOMBRE_USUARIO }}
@@ -63,6 +70,7 @@
                                 <input type="text" class="form-control" name="nombre-usuario" disabled="disabled" value="{{ solicitud.usuario.username }}">
                             </div>
                         </div><!-- Nombre Usuario -->
+                        {% endif %}
 
                         <!-- Especializacion -->
                         <div class="form-group">
@@ -144,6 +152,7 @@
                         </div><!-- Nombre -->
 
                         <!-- Nombre de Usuario -->
+                        {% if tipo != 'rechazada' %}
                         <div class="form-group">
                             <label class="col-lg-2 control-label" for="nombre-usuario">
                                 {{ LABEL_NOMBRE_USUARIO }}
@@ -152,6 +161,7 @@
                                 <input type="text" class="form-control" name="nombre-usuario" disabled="disabled" value="{{ solicitud.usuario.username }}">
                             </div>
                         </div><!-- Nombre Usuario -->
+                        {% endif %}
 
                         <!-- Telefono -->
                         <div class="form-group">
