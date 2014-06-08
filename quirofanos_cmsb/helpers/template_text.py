@@ -146,4 +146,5 @@ class TextoMostrable():
     AGREGANDO = _(u'Agregando...')
     RECUPERAR = _(u'Recuperar')
     RECUPERANDO = _(u'Recuperando...')
+    LABEL_FECHA_INTERVENCION = _(u'Fecha de la Intervención:')
     LABEL_EQUIPO_QUIRURGICO = _(u'Equipo Quirúrgico:')

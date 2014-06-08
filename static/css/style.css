@@ -427,6 +427,15 @@ a:hover
 	padding:20px
 }
 
+/* Estilo de los paneles */
+.panel-title{
+	font-weight: bold;
+}
+
+/* Tamano de los modal lg */
+.modal-lg{
+	width:1000px !important;
+
 /* personalización de carousel */
 .carousel-control {
 	opacity: 1!important;

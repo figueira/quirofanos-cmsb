@@ -12,7 +12,7 @@
                     &times;
                 </button>
                 <h4 class="modal-title" id="titulo-detalles-solicitud-{{ reservacion.objeto.pk }}">
-                    Detalles de Solicitud - Resumen
+                    <strong>Detalles de Solicitud - Resumen</strong>
                 </h4>
             </div>
             <div class="modal-body">
@@ -20,22 +20,24 @@
                     {% csrf_token %}
                     <div id="resumen-intervencion-{{ reservacion.objeto.pk }}">
                         <div class="form-group">
-                            <div class="col-lg-4 well well-sm well-primary">
-                                <strong>{{ LABEL_PACIENTE }}</strong>
-                                <p>{{ reservacion.objeto.intervencion_quirurgica.paciente }}</p>
-                            </div>
-                            <div class="col-lg-4 well well-sm well-primary">
-                                <strong>{{ LABEL_MEDICO_SOLICITANTE }}</strong>
-                                <p>{{ reservacion.objeto.medico }}</p>
-                            </div>
-                            <div class="col-lg-4 well well-sm well-primary">
-                                <strong>{{ LABEL_QUIROFANO }}</strong>
-                                <p>{{ reservacion.objeto.intervencion_quirurgica.quirofano.get_area_display }} {% if reservacion.objeto.intervencion_quirurgica.quirofano.numero == 0 %}{{ SALA_RECUPERACION }}{% else %}{{ reservacion.objeto.intervencion_quirurgica.quirofano.numero }}{% endif %}</p>
-                            </div>
+                            <div class="col-lg-10 col-lg-offset-1">
+                                <div class="col-lg-4 well well-sm well-primary">
+                                    <strong>{{ LABEL_PACIENTE }}</strong>
+                                    <p>{{ reservacion.objeto.intervencion_quirurgica.paciente }}</p>
+                                </div>
+                                <div class="col-lg-4 well well-sm well-primary">
+                                    <strong>{{ LABEL_MEDICO_SOLICITANTE }}</strong>
+                                    <p>{{ reservacion.objeto.medico }}</p>
+                                </div>
+                                <div class="col-lg-4 well well-sm well-primary">
+                                    <strong>{{ LABEL_QUIROFANO }}</strong>
+                                    <p>{{ reservacion.objeto.intervencion_quirurgica.quirofano.get_area_display }} {% if reservacion.objeto.intervencion_quirurgica.quirofano.numero == 0 %}{{ SALA_RECUPERACION }}{% else %}{{ reservacion.objeto.intervencion_quirurgica.quirofano.numero }}{% endif %}</p>
+                                </div>
+                        </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">{{ LABEL_PROCEDIMIENTOS_QUIRURGICOS }}</label>
-                            <div class="col-lg-10">
+                            <label class="col-lg-2 col-lg-offset-1 control-label">{{ LABEL_PROCEDIMIENTOS_QUIRURGICOS }}</label>
+                            <div class="col-lg-9">
                                 {% for procedimiento_quirurgico in reservacion.objeto.intervencion_quirurgica.procedimientoquirurgico_set.all %}
                                 {% if forloop.first %}
                                 <div class="row">
@@ -400,6 +402,38 @@
                     {{ CANCELAR_INTERVENCION_QUIRURGICA }}
                 </button>
             </form>
+        </div>
+        {% endif %}
+        {% if tipo_solicitud == "pendiente" %}
+        <div class="modal-footer hidden" id="opciones-gestion-solicitud">
+            <div class="row">
+                <div class="col-lg-10">
+                    <form class="form-horizontal" role="form" id="formulario-gestionar-solicitud" action="{% url 'rechazar_solicitud_quirofano' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-danger btn-loading" data-loading-text="{{ RECHAZANDO }}">
+                                <span class="glyphicon glyphicon-remove">
+                                </span>
+                                {{ RECHAZAR_SOLICITUD }}
+                            </button>
+                            {% render_field formulario_solicitud_quirofano.id_reservacion value=reservacion.objeto.pk %}
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-2">
+                    <form class="form-horizontal" role="form" id="formulario-gestionar-solicitud"  action="{% url 'aceptar_solicitud_quirofano' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success btn-loading" data-loading-text="{{ APROBANDO }}">
+                                <span class="glyphicon glyphicon-ok">
+                                </span>
+                                {{ APROBAR_SOLICITUD }}
+                            </button>
+                            {% render_field formulario_solicitud_quirofano.id_reservacion value=reservacion.objeto.pk %}
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
         {% endif %}
     </div>
