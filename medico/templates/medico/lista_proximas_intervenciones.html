@@ -1,0 +1,30 @@
+{% load staticfiles %}
+
+{% if lista_participaciones|length > 0 %}
+<ul class="list-group">
+    {% for participacion in lista_participaciones %}
+    <a href="#" class="list-group-item" data-toggle="modal" data-target="#modal-reservacion-{{ participacion.objeto.procedimiento_quirurgico.intervencion_quirurgica.reservacion.id }}">
+        <span class="label label-info">Procedimiento: {{ participacion.objeto.procedimiento_quirurgico.nombre_procedimiento }}</span>
+        <span class="label label-info">Rol: {{ participacion.objeto.get_rol_display }}</span>
+        <span class="pull-right">
+            <small>
+                <strong>
+                    {{ LABEL_FECHA_INTERVENCION }} {{ participacion.objeto.procedimiento_quirurgico.intervencion_quirurgica.fecha_intervencion }}
+                </strong>
+            </small>
+        </span>
+    </a>
+
+    {% if request.user.cuenta.medico.pk = participacion.reservacion.objeto.medico.pk %}
+    {% include "plan_quirurgico/modal_detalle_intervencion.html" with reservacion=participacion.reservacion agregar_boton_cancelar_intervencion=True %}
+    {% else %}
+    {% include "plan_quirurgico/modal_detalle_intervencion.html" with reservacion=participacion.reservacion %}
+    {% endif %}
+
+    {% endfor %}
+</ul>
+{% else %}
+<ul class="list-group-item">
+    <strong>No existen intervenciones quirúrgicas programadas para este período.</strong>
+</ul>
+{% endif %}

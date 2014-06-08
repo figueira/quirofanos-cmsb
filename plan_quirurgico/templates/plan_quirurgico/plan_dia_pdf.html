@@ -36,7 +36,7 @@
 		<p>Paciente: {{ intervencion.objeto.paciente }}.</p>
 		<p>Cirujano Dr(a): {{ intervencion.objeto.reservacion.medico }}.</p>
 		<p>Anestesiólogo: {{ intervencion.anestesiologo }}.</p>
-		<p>Tipo de Anestesia: {{ intervencion.objeto.preferencia_anestesica }}.</p>
+		<p>Tipo de Anestesia: {{ intervencion.objeto.get_preferencia_anestesica_display }}.</p>
 		<p>Procedimientos Quirúrgicos: {% for proc in intervencion.procedimientos %}{{ proc.nombre_procedimiento }}{% if not forloop.last %}, {% endif %}{% endfor %}.</p>
 		<p>Observaciones: {% if intervencion.objeto.observaciones %}{{ intervencion.objeto.observaciones }}{% else %}Sin observaciones.{% endif %}</p>
 	</div>

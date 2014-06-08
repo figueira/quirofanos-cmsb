@@ -390,6 +390,18 @@
             <button class="btn btn-primary btn-cambiar-horario-intervencion pull-left" value="{{ reservacion.objeto.intervencion_quirurgica.pk }}">{{ CAMBIAR_HORARIO_INTERVENCION_QUIRURGICA }}</button>
         </div>
         {% endif %}
+        {% if agregar_boton_cancelar_intervencion %}
+        <div class="modal-footer">
+            <form action="{% url 'cancelar_intervencion' reservacion.objeto.pk %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger pull-left btn-loading" data-loading-text="{{ CANCELANDO }}">
+                    <span class="glyphicon glyphicon-trash">
+                    </span>
+                    {{ CANCELAR_INTERVENCION_QUIRURGICA }}
+                </button>
+            </form>
+        </div>
+        {% endif %}
     </div>
 </div>
 </div><!-- Modal de Detalles de Intervencion -->

@@ -21,6 +21,7 @@ def constantes_texto(request):
     datos['CANCELAR'] = TextoMostrable.CANCELAR
     datos['CANCELANDO'] = TextoMostrable.CANCELANDO
     datos['CANCELAR_SOLICITUD'] = TextoMostrable.CANCELAR_SOLICITUD
+    datos['CANCELAR_INTERVENCION_QUIRURGICA'] = TextoMostrable.CANCELAR_INTERVENCION_QUIRURGICA
     datos['ELIMINAR'] = TextoMostrable.ELIMINAR
     datos['LABEL_DR'] = TextoMostrable.LABEL_DR
     datos['LABEL_NOMBRE'] = TextoMostrable.LABEL_NOMBRE
@@ -37,6 +38,7 @@ def constantes_texto(request):
     datos['LABEL_BUSCAR_DEPARTAMENTO'] = TextoMostrable.LABEL_BUSCAR_DEPARTAMENTO
     datos['LABEL_DEPARTAMENTO_ABREVIADO'] = TextoMostrable.LABEL_DEPARTAMENTO_ABREVIADO
     datos['LABEL_FECHA_SOLICITUD'] = TextoMostrable.LABEL_FECHA_SOLICITUD
+    datos['LABEL_FECHA_INTERVENCION'] = TextoMostrable.LABEL_FECHA_INTERVENCION
     datos['LABEL_TIPO_USUARIO'] = TextoMostrable.LABEL_TIPO_USUARIO
     datos['RECHAZAR_SOLICITUD'] = TextoMostrable.RECHAZAR_SOLICITUD
     datos['RECHAZANDO'] = TextoMostrable.RECHAZANDO
