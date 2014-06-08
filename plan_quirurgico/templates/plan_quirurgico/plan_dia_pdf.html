@@ -7,6 +7,12 @@
 	<title>
 		Plan Quirúrgico
 	</title>
+	<style>
+	@page {
+		size: letter landscape;
+		margin: 0.5cm;
+	}
+	</style>
 </head>
 <body>
 	<div>
@@ -31,17 +37,19 @@
 			{% endif %}
 		</strong>
 		<hr>
-		<p>Desde: {{ intervencion.hora_inicio }}</p>
-		<p>Hasta: {{ intervencion.hora_fin }}</p>
-		<p>Paciente: {{ intervencion.objeto.paciente }}.</p>
-		<p>Cirujano Dr(a): {{ intervencion.objeto.reservacion.medico }}.</p>
-		<p>Anestesiólogo: {{ intervencion.anestesiologo }}.</p>
-		<p>Tipo de Anestesia: {{ intervencion.objeto.get_preferencia_anestesica_display }}.</p>
-		<p>Procedimientos Quirúrgicos: {% for proc in intervencion.procedimientos %}{{ proc.nombre_procedimiento }}{% if not forloop.last %}, {% endif %}{% endfor %}.</p>
-		<p>Observaciones: {% if intervencion.objeto.observaciones %}{{ intervencion.objeto.observaciones }}{% else %}Sin observaciones.{% endif %}</p>
-		<p>Días de Hospitalización: {{ intervencion.objeto.reservacion.dias_hospitalizacion }}</p>
+		<p><b>Desde:</b> {{ intervencion.hora_inicio }}
+			<span><b>Hasta:</b> {{ intervencion.hora_fin }}</span>
+			<span><b>Paciente:</b> {{ intervencion.objeto.paciente }}.</span>
+			<span><b>Cirujano Dr(a):</b> {{ intervencion.objeto.reservacion.medico }}.</span>
+			<span><b>Anestesiólogo:</b> {{ intervencion.anestesiologo }}.</span>
+			<span><b>Tipo de Anestesia:</b> {{ intervencion.objeto.get_preferencia_anestesica_display }}.</span>
+		</p>
+		<p><b>Procedimientos Quirúrgicos:</b> {% for proc in intervencion.procedimientos %}{{ proc.nombre_procedimiento }}{% if not forloop.last %}, {% endif %}{% endfor %}.
+			<span><b>Observaciones:</b> {% if intervencion.objeto.observaciones %}{{ intervencion.objeto.observaciones }}{% else %}Sin observaciones.{% endif %}</span>
+			<span><b>Días de Hospitalización:</b> {{ intervencion.objeto.reservacion.dias_hospitalizacion }}</span>
+		</p>
 	</div>
-	<br/><br/>
+	<br>
 	{% empty %}
 	<strong>No existen intervenciones quirúrgicas programadas para este día.</strong>
 	{% endfor %}
