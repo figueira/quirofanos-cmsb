@@ -1,6 +1,6 @@
-from django.utils import simplejson
 from dajaxice.decorators import dajaxice_register
 
+import json
 from datetime import datetime
 
 @dajaxice_register
@@ -10,4 +10,4 @@ def obtener_hora_actual(request):
     Parametros:
     request -> Solicitud HTTP '''
     hora_actual = datetime.now().time().strftime("%H:%M:%S")
-    return simplejson.dumps({'hora_actual': hora_actual})
+    return json.dumps({'hora_actual': hora_actual})

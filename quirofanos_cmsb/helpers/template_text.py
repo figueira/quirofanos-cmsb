@@ -103,6 +103,7 @@ class TextoMostrable():
     LABEL_HABITACION = _(u'Habitación:')
     LABEL_PACIENTE_HOSPITALIZADO = _(u'Paciente Hospitalizado')
     PACIENTE = _(u'Paciente')
+    RESUMEN = _(u'Resumen')
     LABEL_CODIGO_TELEFONO = _(u'Código...')
     LABEL_NUMERO_TELEFONO = _(u'Número...')
     LABEL_RAZON_RIESGO = _(u'Razón del Riesgo...')

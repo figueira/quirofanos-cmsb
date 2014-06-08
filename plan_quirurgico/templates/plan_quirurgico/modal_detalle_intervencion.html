@@ -12,244 +12,27 @@
                     &times;
                 </button>
                 <h4 class="modal-title" id="titulo-detalles-solicitud-{{ reservacion.objeto.pk }}">
-                    Detalles de Solicitud - Paciente
+                    Detalles de Solicitud - Resumen
                 </h4>
             </div>
             <div class="modal-body">
                 <form role="form" class="form-horizontal">
                     {% csrf_token %}
-                    <div id="datos-paciente-{{ reservacion.objeto.pk }}">
+                    <div id="resumen-intervencion-{{ reservacion.objeto.pk }}">
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">
-                                {{ LABEL_NOMBRE }}
-                            </label>
-                            <div class="col-lg-4">
-                                {% render_field reservacion.formulario.nombre_paciente class="form-control" disabled="disabled" %}
+                            <div class="col-lg-4 well well-sm well-primary">
+                                <strong>{{ LABEL_PACIENTE }}</strong>
+                                <p>{{ reservacion.objeto.intervencion_quirurgica.paciente }}</p>
                             </div>
-                            <label class="col-lg-2 control-label" for="apellido-paciente">
-                                {{ LABEL_APELLIDO }}
-                            </label>
-                            <div class="col-lg-4">
-                                {% render_field reservacion.formulario.apellido_paciente class="form-control" disabled="disabled" %}
+                            <div class="col-lg-4 well well-sm well-primary">
+                                <strong>{{ LABEL_MEDICO_SOLICITANTE }}</strong>
+                                <p>{{ reservacion.objeto.medico }}</p>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">
-                                {{ LABEL_CEDULA }}
-                            </label>
-                            <div class="col-lg-4">
-                                <input class="form-control" type="text" value="{{ reservacion.objeto.intervencion_quirurgica.paciente.cedula }}" disabled>
-                            </div>
-                            <label class="col-lg-2 control-label">
-                                {{ LABEL_GENERO }}
-                            </label>
-                            <div class="col-lg-4">
-                                {% for radio in reservacion.formulario.genero_paciente %}
-                                <label class="radio-inline">
-                                    {% render_field radio %}
-                                </label>
-                                {% endfor %}
+                            <div class="col-lg-4 well well-sm well-primary">
+                                <strong>{{ LABEL_QUIROFANO }}</strong>
+                                <p>{{ reservacion.objeto.intervencion_quirurgica.quirofano.get_area_display }} {% if reservacion.objeto.intervencion_quirurgica.quirofano.numero == 0 %}{{ SALA_RECUPERACION }}{% else %}{{ reservacion.objeto.intervencion_quirurgica.quirofano.numero }}{% endif %}</p>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">
-                                {{ LABEL_FECHA_NACIMIENTO }}
-                            </label>
-                            <div class="col-lg-3">
-                                <input class="form-control" type="text" value="{{ reservacion.formulario.fecha_nacimiento_paciente.value }}" disabled>
-                            </div>
-                            <label class="col-lg-2 control-label">
-                                {{ LABEL_TELEFONO }}
-                            </label>
-                            <div class="col-lg-2">
-                                {% render_field reservacion.formulario.codigo_telefono_paciente class="form-control"  placeholder=LABEL_CODIGO_TELEFONO disabled="disabled" %}
-                            </div>
-                            <div class="col-lg-3">
-                                {% render_field reservacion.formulario.numero_telefono_paciente class="form-control" placeholder=LABEL_NUMERO_TELEFONO disabled="disabled" %}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">
-                                {% render_field reservacion.formulario.paciente_hospitalizado disabled="disabled" %}
-                                {{ LABEL_PACIENTE_HOSPITALIZADO }}
-                            </label>
-                            <div class="hidden" id="habitacion-{{ reservacion.objeto.pk }}">
-                                <label class="col-lg-2 control-label">
-                                    {{ LABEL_HABITACION }}
-                                </label>
-                                <div class="col-lg-2">
-                                    {% render_field reservacion.formulario.numero_habitacion_paciente class="form-control" disabled="disabled" %}
-                                </div>
-                            </div>
-                            {% if reservacion.formulario.paciente_hospitalizado.value %}
-                            <script type="text/javascript">
-                            $(function() {
-                                mostrarNumeroHabitacionPaciente({{ reservacion.objeto.pk }});
-                            });
-                            </script>
-                            {% endif %}
-                        </div>
-                        <hr>
-                        <div class="form-group">
-                            <div class="col-lg-offset-10">
-                                <button class="btn btn-default"
-                                id="ver-quirofano-{{ reservacion.objeto.pk }}" type="button" onclick="mostrarInfoQuirofano({{ reservacion.objeto.pk }})">{{ QUIROFANO }}
-                                <span class="glyphicon glyphicon-chevron-right"></span></button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="hidden" id="datos-quirofano-{{ reservacion.objeto.pk }}">
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">
-                                {{ LABEL_AREA }}
-                            </label>
-                            <div class="col-lg-2">
-                                <input class="form-control" type="text" value="{{ reservacion.area_legible }}" disabled>
-                            </div>
-                            <label class="col-lg-2 control-label">
-                                {{ LABEL_QUIROFANO }}
-                            </label>
-                            <div class="col-lg-2">
-                                <input class="form-control" type="text" value="{{ reservacion.quirofano_legible }}" disabled>
-                            </div>
-                            <label class="col-lg-1 control-label">
-                                {{ LABEL_FECHA }}
-                            </label>
-                            <div class="col-lg-2">
-                                <input class="form-control" type="text" value="{{ reservacion.objeto.intervencion_quirurgica.fecha_intervencion }}" disabled>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">
-                                {{ LABEL_HORA_INICIO }}
-                            </label>
-                            <div class="col-lg-2">
-                                <input class="form-control" type="text" value="{{ reservacion.hora_inicio_legible }}" disabled>
-                            </div>
-                            <label class="col-lg-2 control-label">
-                                {{ LABEL_HORA_FIN }}
-                            </label>
-                            <div class="col-lg-2">
-                                <input class="form-control" type="text" value="{{ reservacion.hora_fin_legible }}" disabled>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">
-                                {{ LABEL_MEDICO_SOLICITANTE }}
-                            </label>
-                            <div class="col-lg-10">
-                                <input class="form-control" type="text" value="{{ reservacion.objeto.medico }}" disabled>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">
-                                {{ LABEL_ANESTESIA }}
-                            </label>
-                            <div class="col-lg-10">
-                                {% for radio in reservacion.formulario.preferencia_anestesica %}
-                                <label class="radio-inline">
-                                    {% render_field radio %}
-                                </label>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">
-                                {{ LABEL_OBSERVACIONES }}
-                            </label>
-                            <div class="col-lg-10">
-                                {% render_field reservacion.formulario.observaciones class="form-control" disabled="disabled" %}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">
-                                {{ LABEL_NIVEL_RIESGO }}
-                            </label>
-                            <div class="col-lg-10">
-                                {% for radio in reservacion.formulario.riesgo %}
-                                <label class="radio-inline">
-                                    {% render_field radio %}
-                                </label>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <div class="form-group hidden" id="razon-riesgo-{{ reservacion.objeto.pk }}">
-                            <div class="col-lg-offset-2 col-lg-10">
-                                {% render_field reservacion.formulario.razon_riesgo class="form-control" placeholder=LABEL_RAZON_RIESGO disabled="disabled" %}
-                            </div>
-                        </div>
-                        {% if reservacion.formulario.riesgo.value == "M" %}
-                        <script type="text/javascript">
-                        $(function() {
-                            mostrarRazonRiesgo({{ reservacion.objeto.pk }});
-                        });
-                        </script>
-                        {% endif %}
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">
-                                {{ LABEL_DIAS_HOSPITALIZACION }}
-                            </label>
-                            <div class="col-lg-2">
-                                {% render_field reservacion.formulario.dias_hospitalizacion class="form-control" disabled="disabled" %}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">
-                                {{ LABEL_EQUIPOS_ESPECIALES }}
-                            </label>
-                            <div class="col-lg-10">
-                                <div class="row">
-                                    {% for checkbox in reservacion.formulario.equipos_especiales_requeridos %}
-                                    {% if forloop.first %}
-                                    <div class="col-lg-2">
-                                        {% endif %}
-                                        <div class="checkbox">
-                                            {% render_field checkbox %}
-                                        </div>
-                                        {% if forloop.counter|divisibleby:5 and not forloop.last %}
-                                    </div>
-                                    <div class="col-lg-2">
-                                        {% elif forloop.last %}
-                                    </div>
-                                    {% endif %}
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group" >
-                            <label class="col-lg-2 control-label">
-                                {{ LABEL_MATERIAL_QUIRURGICO }}
-                            </label>
-                            <div class="col-lg-10">
-                                <div class="row">
-                                    {% for checkbox in reservacion.formulario.materiales_quirurgicos_requeridos %}
-                                    {% if forloop.first %}
-                                    <div class="col-lg-2">
-                                        {% endif %}
-                                        <div class="checkbox">
-                                            {% render_field checkbox %}
-                                        </div>
-                                        {% if forloop.counter|divisibleby:1 and not forloop.last %}
-                                    </div>
-                                    <div class="col-lg-2">
-                                        {% elif forloop.last %}
-                                    </div>
-                                    {% endif %}
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                        {% if reservacion.formulario.otros_materiales_quirurgicos %}
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">
-                                {{ LABEL_OTROS }}
-                            </label>
-                            <div class="col-lg-10">
-                                {% render_field reservacion.formulario.otros_materiales_quirurgicos class="form-control" disabled="disabled" %}
-                            </div>
-                        </div>
-                        {% endif %}
                         <div class="form-group">
                             <label class="col-lg-2 control-label">{{ LABEL_PROCEDIMIENTOS_QUIRURGICOS }}</label>
                             <div class="col-lg-10">
@@ -292,8 +75,296 @@
                     </div>
                     <hr>
                     <div class="form-group">
+                        <div class="col-lg-offset-10">
+                            <button class="btn btn-default"
+                            class="ver-info-paciente-{{ reservacion.objeto.pk }}" type="button" onclick="mostrarInfoPaciente({{ reservacion.objeto.pk }})">{{ PACIENTE }}
+                            <span class="glyphicon glyphicon-chevron-right"></span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hidden" id="datos-paciente-{{ reservacion.objeto.pk }}">
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">
+                            {{ LABEL_NOMBRE }}
+                        </label>
+                        <div class="col-lg-4">
+                            {% render_field reservacion.formulario.nombre_paciente class="form-control" disabled="disabled" %}
+                        </div>
+                        <label class="col-lg-2 control-label" for="apellido-paciente">
+                            {{ LABEL_APELLIDO }}
+                        </label>
+                        <div class="col-lg-4">
+                            {% render_field reservacion.formulario.apellido_paciente class="form-control" disabled="disabled" %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">
+                            {{ LABEL_CEDULA }}
+                        </label>
+                        <div class="col-lg-4">
+                            <input class="form-control" type="text" value="{{ reservacion.objeto.intervencion_quirurgica.paciente.cedula }}" disabled>
+                        </div>
+                        <label class="col-lg-2 control-label">
+                            {{ LABEL_GENERO }}
+                        </label>
+                        <div class="col-lg-4">
+                            {% for radio in reservacion.formulario.genero_paciente %}
+                            <label class="radio-inline">
+                                {% render_field radio %}
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">
+                            {{ LABEL_FECHA_NACIMIENTO }}
+                        </label>
+                        <div class="col-lg-3">
+                            <input class="form-control" type="text" value="{{ reservacion.formulario.fecha_nacimiento_paciente.value }}" disabled>
+                        </div>
+                        <label class="col-lg-2 control-label">
+                            {{ LABEL_TELEFONO }}
+                        </label>
                         <div class="col-lg-2">
-                            <button class="btn btn-default" id="ver-info-paciente-{{ reservacion.objeto.pk }}" type="button" onclick="mostrarInfoPaciente({{ reservacion.objeto.pk }})">
+                            {% render_field reservacion.formulario.codigo_telefono_paciente class="form-control"  placeholder=LABEL_CODIGO_TELEFONO disabled="disabled" %}
+                        </div>
+                        <div class="col-lg-3">
+                            {% render_field reservacion.formulario.numero_telefono_paciente class="form-control" placeholder=LABEL_NUMERO_TELEFONO disabled="disabled" %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">
+                            {% render_field reservacion.formulario.paciente_hospitalizado disabled="disabled" %}
+                            {{ LABEL_PACIENTE_HOSPITALIZADO }}
+                        </label>
+                        <div class="hidden" id="habitacion-{{ reservacion.objeto.pk }}">
+                            <label class="col-lg-2 control-label">
+                                {{ LABEL_HABITACION }}
+                            </label>
+                            <div class="col-lg-2">
+                                {% render_field reservacion.formulario.numero_habitacion_paciente class="form-control" disabled="disabled" %}
+                            </div>
+                        </div>
+                        {% if reservacion.formulario.paciente_hospitalizado.value %}
+                        <script type="text/javascript">
+                        $(function() {
+                            mostrarNumeroHabitacionPaciente({{ reservacion.objeto.pk }});
+                        });
+                        </script>
+                        {% endif %}
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <div class="col-lg-2">
+                            <button class="btn btn-default" id="ver-resumen-intervencion-{{ reservacion.objeto.pk }}" type="button" onclick="mostrarResumenIntervencion({{ reservacion.objeto.pk }})">
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                                {{ RESUMEN }}
+                            </button>
+                        </div>
+                        <div class="col-lg-offset-10">
+                            <button class="btn btn-default"
+                            id="ver-quirofano-{{ reservacion.objeto.pk }}" type="button" onclick="mostrarInfoQuirofano({{ reservacion.objeto.pk }})">{{ QUIROFANO }}
+                            <span class="glyphicon glyphicon-chevron-right"></span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hidden" id="datos-quirofano-{{ reservacion.objeto.pk }}">
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">
+                            {{ LABEL_AREA }}
+                        </label>
+                        <div class="col-lg-2">
+                            <input class="form-control" type="text" value="{{ reservacion.area_legible }}" disabled>
+                        </div>
+                        <label class="col-lg-2 control-label">
+                            {{ LABEL_QUIROFANO }}
+                        </label>
+                        <div class="col-lg-2">
+                            <input class="form-control" type="text" value="{{ reservacion.quirofano_legible }}" disabled>
+                        </div>
+                        <label class="col-lg-1 control-label">
+                            {{ LABEL_FECHA }}
+                        </label>
+                        <div class="col-lg-2">
+                            <input class="form-control" type="text" value="{{ reservacion.objeto.intervencion_quirurgica.fecha_intervencion }}" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">
+                            {{ LABEL_HORA_INICIO }}
+                        </label>
+                        <div class="col-lg-2">
+                            <input class="form-control" type="text" value="{{ reservacion.hora_inicio_legible }}" disabled>
+                        </div>
+                        <label class="col-lg-2 control-label">
+                            {{ LABEL_HORA_FIN }}
+                        </label>
+                        <div class="col-lg-2">
+                            <input class="form-control" type="text" value="{{ reservacion.hora_fin_legible }}" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">
+                            {{ LABEL_MEDICO_SOLICITANTE }}
+                        </label>
+                        <div class="col-lg-10">
+                            <input class="form-control" type="text" value="{{ reservacion.objeto.medico }}" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">
+                            {{ LABEL_ANESTESIA }}
+                        </label>
+                        <div class="col-lg-10">
+                            {% for radio in reservacion.formulario.preferencia_anestesica %}
+                            <label class="radio-inline">
+                                {% render_field radio %}
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">
+                            {{ LABEL_OBSERVACIONES }}
+                        </label>
+                        <div class="col-lg-10">
+                            {% render_field reservacion.formulario.observaciones class="form-control" disabled="disabled" %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">
+                            {{ LABEL_NIVEL_RIESGO }}
+                        </label>
+                        <div class="col-lg-10">
+                            {% for radio in reservacion.formulario.riesgo %}
+                            <label class="radio-inline">
+                                {% render_field radio %}
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group hidden" id="razon-riesgo-{{ reservacion.objeto.pk }}">
+                        <div class="col-lg-offset-2 col-lg-10">
+                            {% render_field reservacion.formulario.razon_riesgo class="form-control" placeholder=LABEL_RAZON_RIESGO disabled="disabled" %}
+                        </div>
+                    </div>
+                    {% if reservacion.formulario.riesgo.value == "M" %}
+                    <script type="text/javascript">
+                    $(function() {
+                        mostrarRazonRiesgo({{ reservacion.objeto.pk }});
+                    });
+                    </script>
+                    {% endif %}
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">
+                            {{ LABEL_DIAS_HOSPITALIZACION }}
+                        </label>
+                        <div class="col-lg-2">
+                            {% render_field reservacion.formulario.dias_hospitalizacion class="form-control" disabled="disabled" %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">
+                            {{ LABEL_EQUIPOS_ESPECIALES }}
+                        </label>
+                        <div class="col-lg-10">
+                            <div class="row">
+                                {% for checkbox in reservacion.formulario.equipos_especiales_requeridos %}
+                                {% if forloop.first %}
+                                <div class="col-lg-2">
+                                    {% endif %}
+                                    <div class="checkbox">
+                                        {% render_field checkbox %}
+                                    </div>
+                                    {% if forloop.counter|divisibleby:5 and not forloop.last %}
+                                </div>
+                                <div class="col-lg-2">
+                                    {% elif forloop.last %}
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-lg-2 control-label">
+                            {{ LABEL_MATERIAL_QUIRURGICO }}
+                        </label>
+                        <div class="col-lg-10">
+                            <div class="row">
+                                {% for checkbox in reservacion.formulario.materiales_quirurgicos_requeridos %}
+                                {% if forloop.first %}
+                                <div class="col-lg-2">
+                                    {% endif %}
+                                    <div class="checkbox">
+                                        {% render_field checkbox %}
+                                    </div>
+                                    {% if forloop.counter|divisibleby:1 and not forloop.last %}
+                                </div>
+                                <div class="col-lg-2">
+                                    {% elif forloop.last %}
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% if reservacion.formulario.otros_materiales_quirurgicos %}
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">
+                            {{ LABEL_OTROS }}
+                        </label>
+                        <div class="col-lg-10">
+                            {% render_field reservacion.formulario.otros_materiales_quirurgicos class="form-control" disabled="disabled" %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">{{ LABEL_PROCEDIMIENTOS_QUIRURGICOS }}</label>
+                        <div class="col-lg-10">
+                            {% for procedimiento_quirurgico in reservacion.objeto.intervencion_quirurgica.procedimientoquirurgico_set.all %}
+                            {% if forloop.first %}
+                            <div class="row">
+                                {% endif %}
+                                <div class="col-lg-3 well well-sm well-info">
+                                    <!--<p>
+                                        <strong>{{ LABEL_SISTEMA_CORPORAL }}</strong>
+                                        {{ procedimiento_quirurgico.organo_corporal.sistema_corporal }}
+                                    </p>
+                                    <p>
+                                        <strong>{{ LABEL_ORGANO_CORPORAL }}</strong>
+                                        {{ procedimiento_quirurgico.organo_corporal }}
+                                    </p>-->
+                                    <p>
+                                        <strong>{{ procedimiento_quirurgico.nombre_procedimiento }}</strong>
+                                    </p>
+                                    <a href="javascript:void(0);" class="pull-right" onclick="toggleDetallesProcedimiento(this)">
+                                        <span class="glyphicon glyphicon-plus-sign"></span>
+                                    </a>
+                                    <div class="procedimiento-quirurgico-detalle hidden">
+                                        <hr>
+                                        <strong>{{ LABEL_EQUIPO_QUIRURGICO }}</strong>
+                                        {% for medico in procedimiento_quirurgico.medicos_participantes.all %}
+                                        <p class="label label-info">{{ LABEL_DR }} {{ medico.apellido }}</p>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                {% if forloop.last %}
+                            </div>
+                            {% endif %}
+                            {% empty %}
+                            <div class="col-lg-10 well well-sm well-warning">
+                                <p class="text-muted texto-centrado">{{ MENSAJE_NO_HAY_PROCEDIMIENTOS_QUIRURGICOS }}</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <div class="col-lg-2">
+                            <button class="btn btn-default" class="ver-info-paciente-{{ reservacion.objeto.pk }}" type="button" onclick="mostrarInfoPaciente({{ reservacion.objeto.pk }})">
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                                 {{ PACIENTE }}
                             </button>

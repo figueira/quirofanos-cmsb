@@ -329,6 +329,11 @@ a:hover
 	background-image:linear-gradient(to bottom,#FDF6A4 0,#FCFCB6 100%)!important
 }
 
+/* estilo de well primario */
+.well-primary {
+	background-image:linear-gradient(to bottom,rgba(235, 199, 199, 1) 0,rgba(235, 199, 199, 1) 100%)!important;
+}
+
 /* estilo de well informacion */
 .well-info
 {

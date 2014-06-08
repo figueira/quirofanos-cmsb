@@ -78,6 +78,7 @@ def constantes_texto(request):
     datos['LABEL_HABITACION'] = TextoMostrable.LABEL_HABITACION
     datos['LABEL_PACIENTE_HOSPITALIZADO'] = TextoMostrable.LABEL_PACIENTE_HOSPITALIZADO
     datos['PACIENTE'] = TextoMostrable.PACIENTE
+    datos['RESUMEN'] = TextoMostrable.RESUMEN
     datos['LABEL_CODIGO_TELEFONO'] = TextoMostrable.LABEL_CODIGO_TELEFONO
     datos['LABEL_NUMERO_TELEFONO'] = TextoMostrable.LABEL_NUMERO_TELEFONO
     datos['QUIROFANO'] = TextoMostrable.QUIROFANO
