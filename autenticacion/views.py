@@ -99,8 +99,9 @@ def registro_medico(request):
 
 	medico = medico[0]
 	if medico.cuenta:
-		messages.add_message(request, messages.ERROR, MensajeTemporalError.REGISTRO_MEDICO_CUENTA_EXISTE)
-		return redirect('inicio')
+		if medico.cuenta.estado in ('A', 'P'):
+			messages.add_message(request, messages.ERROR, MensajeTemporalError.REGISTRO_MEDICO_CUENTA_EXISTE)
+			return redirect('inicio')
 
 	if formulario_valido:
 		with transaction.atomic():
@@ -109,7 +110,11 @@ def registro_medico(request):
 			usuario = User.objects.create_user(username=nombre_usuario_medico, email=medico.email)
 			usuario.is_active = False
 
-			cuenta_medico = Cuenta()
+			if medico.cuenta:
+				cuenta_medico = medico.cuenta
+			else:
+				cuenta_medico = Cuenta()
+
 			cuenta_medico.usuario = usuario
 			cuenta_medico.estado = 'P'
 			cuenta_medico.privilegio = '4'
@@ -149,8 +154,9 @@ def registro_departamento(request):
 
 	departamento = departamento[0]
 	if departamento.cuenta:
-		messages.add_message(request, messages.ERROR, MensajeTemporalError.REGISTRO_DEPARTAMENTO_CUENTA_EXISTE)
-		return redirect('inicio')
+		if departamento.cuenta.estado in ('A', 'P'):
+			messages.add_message(request, messages.ERROR, MensajeTemporalError.REGISTRO_DEPARTAMENTO_CUENTA_EXISTE)
+			return redirect('inicio')
 
 	if formulario_valido:
 		with transaction.atomic():
@@ -159,7 +165,11 @@ def registro_departamento(request):
 			usuario = User.objects.create_user(username=nombre_usuario_departamento, email=departamento.email)
 			usuario.is_active = False
 
-			cuenta_departamento = Cuenta()
+			if departamento.cuenta:
+				cuenta_departamento = departamento.cuenta
+			else:
+				cuenta_departamento = Cuenta()
+
 			cuenta_departamento.usuario = usuario
 			cuenta_departamento.estado = 'P'
 			if nombre_departamento == u'Enfermeras Recuperación':

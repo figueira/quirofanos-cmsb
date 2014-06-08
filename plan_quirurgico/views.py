@@ -432,6 +432,7 @@ def plan_dia_pdf(request, area, ano, mes, dia):
 
 	if not pdf.err:
 		response = HttpResponse(result.getvalue(), mimetype='application/pdf')
+		response['Content-Disposition'] = 'attachment; filename="plan_quirurgico.pdf"'
 		return response
 
 	messages.add_message(request, messages.ERROR, MensajeTemporalError.PROBLEMA_GENERANDO_PDF)

@@ -37,17 +37,18 @@ class BusquedaMedicoForm(BaseForm):
 			else:
 				medico = medico[0]
 				if medico.cuenta:
-					self._errors["cedula_medico"] = self.error_class([MensajeError.EXISTE_CUENTA])
-					del cleaned_data["cedula_medico"]
+					if medico.cuenta.estado in ('A', 'P'):
+						self._errors["cedula_medico"] = self.error_class([MensajeError.EXISTE_CUENTA])
+						del cleaned_data["cedula_medico"]
 
 		return cleaned_data
 
 class BusquedaDepartamentoForm(BaseForm):
 	''' Formulario de busqueda de Departamento por nombre '''
 	c = Departamento.objects.all().count()
-	d = Departamento.objects.exclude(cuenta=None).count()
+	d = Departamento.objects.exclude(cuenta=None).exclude(cuenta__estado='R').count()
 	if c != d:
-		nombre_departamento = forms.ModelChoiceField(queryset=Departamento.objects.filter(cuenta=None))
+		nombre_departamento = forms.ModelChoiceField(queryset=Departamento.objects.exclude(cuenta__estado='A').exclude(cuenta__estado='P'))
 	else:
 		nombre_departamento = None
 

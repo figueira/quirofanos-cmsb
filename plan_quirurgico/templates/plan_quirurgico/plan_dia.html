@@ -11,8 +11,6 @@
 </script>
 <script type="text/javascript" src="{% static 'plan_quirurgico/js/drag-on.js' %}">
 </script>
-<script type="text/javascript" src="{% static 'medico/js/detalles_operacion.js' %}">
-</script>
 {% endblock scripts %}
 
 {% block flash-messages %}
@@ -210,7 +208,8 @@ $(function(){
 					{% with quirofano.intervenciones.values|ocurrencias:intervencion as duracion %}
 					{% if intervencion.obtener_hora_inicio_horas == media_hora %}
 					<td class="unavailable position-relative" data-togle="tooltip" data-placement="right" title="{{ quirofano.nombre }}" rowspan="{{ duracion }}">
-						<a href="#" class="pull-right" data-toggle="modal" data-target="#modal-reservacion-{{ intervencion.reservacion.pk }}">
+						<p class="label label-info">{{ LABEL_DR }} {{ intervencion.reservacion.medico.apellido }}</p>
+						<a href="#" class="cell-centered" data-toggle="modal" data-target="#modal-reservacion-{{ intervencion.reservacion.pk }}">
 							<span class="glyphicon glyphicon-fullscreen"></span>
 						</a>
 						{% if es_coordinador %}
@@ -255,7 +254,7 @@ $(function(){
 					{% if media_hora in quirofano.turnos_disponibles %}
 					<td class="available available-select" data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}" rowspan="{{ cantidad_medias_horas_intervencion }}">
 						{% if not seleccionar_turno_cambio_horario %}
-						<a class="btn btn-primary" href="{% url 'solicitud_quirofano' ano mes dia quirofano.clave_primaria media_hora cantidad_medias_horas_intervencion %}">
+						<a class="btn btn-primary btn-loading" href="{% url 'solicitud_quirofano' ano mes dia quirofano.clave_primaria media_hora cantidad_medias_horas_intervencion %}" data-loading-text="{{ ESPERE }}">
 							{{ SELECCIONAR_TURNO }}
 						</a>
 						{% else %}

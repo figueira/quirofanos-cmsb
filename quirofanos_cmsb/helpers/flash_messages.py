@@ -29,6 +29,7 @@ class MensajeTemporalError():
     REGISTRO_DEPARTAMENTO_CUENTA_EXISTE = _(u'Se intentó solicitar una cuenta para un departamento que ya ha solicitado su cuenta.')
     APROBACION_USUARIO_FALLIDA = _(u'Se intentó aprobar una cuenta de usuario no existente.')
     CANCELACION_SOLICITUD_FALLIDA = _(u'Se intentó cancelar una solicitud que no existe.')
+    CANCELACION_INTERVENCION_FALLIDA = _(u'Se intentó cancelar una intervención quirúrgica que no existe.')
     RECHAZO_USUARIO_FALLIDO = _(u'Se intentó rechazar una cuenta de usuario no existente.')
     TIPO_PROCEDIMIENTO_QUIRURGICO_INVALIDO = _(u'Se intentó agregar un procedimiento quirúrgico inválido.')
     NO_SE_AGREGO_PROCEDIMIENTO_QUIRURGICO = _(u'Debe agregar al menos un (1) procedimiento quirúrgico.')
@@ -45,3 +46,4 @@ class MensajeTemporalAviso():
     INTERVENCION_QUIRURGICA_ELIMINADA = _(u'La intervención quirúrgica ha sido eliminada.')
     SOLICITUD_USUARIO_RECHAZADA = _(u'La solicitud de registro de usuario ha sido rechazada.')
     SOLICITUD_QUIROFANO_RECHAZADA = _(u'La solicitud de quirófano ha sido rechazada.')
+    INTERVENCION_CANCELADA = _(u'La intervención quirúrgica ha sido cancelada.')

@@ -102,7 +102,8 @@ AREA_INGRESO = (
 
 class Cuenta (models.Model):
     ''' Clase que representa una Cuenta de Usuario '''
-    usuario = models.OneToOneField(User)
+    usuario = models.OneToOneField(User, blank=True, null=True, on_delete=models.SET_NULL)
+    fecha_solicitud = models.DateField(auto_now=True, auto_now_add=True)
     estado = models.CharField(max_length=1, choices=ESTADO_CUENTA)
     privilegio = models.CharField(max_length=1, choices=PRIVILEGIO)
     clave_inicial = models.CharField(max_length=10, validators=[MinLengthValidator(5)], blank=True, null=True)
@@ -427,7 +428,7 @@ class Paciente(models.Model):
                                 RegexValidator(ExpresionRegular.NOMBRE_GENERAL, MensajeError.NOMBRE_GENERAL_INVALIDO, CodigoError.NOMBRE_GENERAL_INVALIDO)])
     cedula = models.CharField(max_length=12, unique=True, validators=[
                               RegexValidator(ExpresionRegular.CEDULA_BD, MensajeError.CEDULA_BD_INVALIDA, CodigoError.CEDULA_BD_INVALIDA)])
-    fecha_nacimiento = models.DateField(auto_now=False, auto_now_add=False)
+    fecha_nacimiento = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
     telefono = models.CharField(max_length=12, validators=[
                                 RegexValidator(ExpresionRegular.TELEFONO_BD, MensajeError.TELEFONO_BD_INVALIDO, CodigoError.TELEFONO_BD_INVALIDO)])
     genero = models.CharField(max_length=1, choices=GENERO)

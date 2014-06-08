@@ -329,6 +329,11 @@ a:hover
 	background-image:linear-gradient(to bottom,#FDF6A4 0,#FCFCB6 100%)!important
 }
 
+/* estilo de well primario */
+.well-primary {
+	background-image:linear-gradient(to bottom,rgba(235, 199, 199, 1) 0,rgba(235, 199, 199, 1) 100%)!important;
+}
+
 /* estilo de well informacion */
 .well-info
 {
@@ -359,6 +364,13 @@ a:hover
 	text-align:left;
 	z-index:10;
 	vertical-align:bottom
+}
+
+/* alineamiento vertical en el centro */
+.cell-centered {
+	position: absolute;
+	left:50%;
+	bottom: 50%
 }
 
 /* posicion relativa */
@@ -415,10 +427,25 @@ a:hover
 	padding:20px
 }
 
+/* Estilo de los paneles */
 .panel-title{
 	font-weight: bold;
 }
 
+/* Tamano de los modal lg */
 .modal-lg{
 	width:1000px !important;
+
+/* personalización de carousel */
+.carousel-control {
+	opacity: 1!important;
+	color: rgba(182,79,79,0.5)
+}
+
+.carousel-control:hover {
+	color: rgba(97, 34, 34, 1)
+}
+
+.carousel-control.right, .carousel-control.left {
+	background-image: none!important
 }

@@ -10,4 +10,4 @@
 */migrations/
 
 # Ignore collectstatic
-*/collectstatic/
+static/collecstatic/

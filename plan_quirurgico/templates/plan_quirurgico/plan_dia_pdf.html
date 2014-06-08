@@ -7,75 +7,51 @@
 	<title>
 		Plan Quirúrgico
 	</title>
+	<style>
+	@page {
+		size: letter landscape;
+		margin: 0.5cm;
+	}
+	</style>
 </head>
 <body>
-	<div class="page-header">
-		<h1>Centro Médico de Caracas</h1>
+	<div>
+		<img src="{% static 'img/logo_centro_medico.jpeg' %}" height="24" width="24"/>
+		<h1>C.A. Centro Médico de Caracas RIF J-00006326-5</h1>
 		<h2>
 			<center>
 				<p>Plan Quirúrgico</p>
 				<p>{{ area_nombre }} - {{ dia }}/{{ mes }}/{{ ano }}</p>
 			</center>
 		</h2>
-	</div><br>
-
-	<div>
-		{% if intervenciones %}
-		<table class="table table-bordered">
-			<tr>
-				<th>Quirófano</th>
-				<th>Hora</th>
-				<th>Paciente</th>
-				<th>Procedimientos Quirúrgicos</th>
-				<th>Médico</th>
-				<th>Anestesiólogo</th>
-				<th>Observaciones</th>
-			</tr>
-		</table>
-		<table>
-			{% for intervencion in intervenciones %}
-			<tr>
-				<th>
-					<h3>
-						{% if intervencion.objeto.quirofano.numero == 0 %}
-						<abbr title='Sala de Recuperación'>SR</abbr>
-						{% else %}
-						{{ intervencion.objeto.quirofano.numero }}
-						{% endif %}
-					</h3>
-				</th>
-				<th>
-					<h4>{{ intervencion.hora_inicio }} - {{ intervencion.hora_fin }}</h4>
-				</th>
-				<th>
-					<h4>{{ intervencion.objeto.paciente.nombre }} {{ intervencion.objeto.paciente.apellido }}</h4>
-				</th>
-				<th>
-					{% for proc in intervencion.procedimientos %}
-					<h3>
-						{{ proc.nombre_procedimiento }}
-					</h3>
-					{% endfor %}
-				</th>
-				<th>
-					<h4>{{ intervencion.objeto.reservacion.medico }}</h4>
-				</th>
-				<th>
-					<h4>{{ intervencion.anestesiologo }}</h4>
-				</th>
-				<th>
-					{% if intervencion.objeto.observaciones %}
-					<h4>{{ intervencion.objeto.observaciones}}</h4>
-					{% else %}
-					<h4>Sin observaciones</h4>
-					{% endif %}
-				</th>
-			</tr>
-			{% endfor %}
-		</table>
-		{% else %}
-		<strong>No existen Intervenciones Quirúrgicas programadas para este día.</strong>
-		{% endif %}
 	</div>
+
+	<br/>
+	{% for intervencion in intervenciones %}
+	<div>
+		<strong>Quirófano:
+			{% if intervencion.objeto.quirofano.numero == 0 %}
+			SR
+			{% else %}
+			{{ intervencion.objeto.quirofano.numero }}
+			{% endif %}
+		</strong>
+		<hr>
+		<p><b>Desde:</b> {{ intervencion.hora_inicio }}
+			<span><b>Hasta:</b> {{ intervencion.hora_fin }}</span>
+			<span><b>Paciente:</b> {{ intervencion.objeto.paciente }}.</span>
+			<span><b>Cirujano Dr(a):</b> {{ intervencion.objeto.reservacion.medico }}.</span>
+			<span><b>Anestesiólogo:</b> {{ intervencion.anestesiologo }}.</span>
+			<span><b>Tipo de Anestesia:</b> {{ intervencion.objeto.get_preferencia_anestesica_display }}.</span>
+		</p>
+		<p><b>Procedimientos Quirúrgicos:</b> {% for proc in intervencion.procedimientos %}{{ proc.nombre_procedimiento }}{% if not forloop.last %}, {% endif %}{% endfor %}.
+			<span><b>Observaciones:</b> {% if intervencion.objeto.observaciones %}{{ intervencion.objeto.observaciones }}{% else %}Sin observaciones.{% endif %}</span>
+			<span><b>Días de Hospitalización:</b> {{ intervencion.objeto.reservacion.dias_hospitalizacion }}</span>
+		</p>
+	</div>
+	<br>
+	{% empty %}
+	<strong>No existen intervenciones quirúrgicas programadas para este día.</strong>
+	{% endfor %}
 </body>
 </html>

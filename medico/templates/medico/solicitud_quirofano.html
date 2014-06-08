@@ -512,12 +512,11 @@
 						</div>
 						<div class="form-group">
 							<label class="col-lg-2 control-label">{{ LABEL_PROCEDIMIENTOS_QUIRURGICOS }}</label>
-						</div>
-						<div class="form-group">
 							{% render_field formulario_eliminar_procedimiento_quirurgico.id_procedimiento_quirurgico id="id-procedimiento-quirurgico" %}
+							<div class="col-lg-10">
 							{% for procedimiento_quirurgico in procedimientos_quirurgicos %}
 							{% if forloop.first %}
-							<div class="col-lg-offset-2 col-lg-8 row">
+							<div class="row">
 								{% endif %}
 								<div class="col-lg-3 well well-sm well-info">
 									<input type="hidden" value="{{ procedimiento_quirurgico.id }}">
@@ -531,18 +530,28 @@
 										{{ procedimiento_quirurgico.organo_corporal }}
 									</p>-->
 									<p>
-										<strong>{{ LABEL_PROCEDIMIENTO }}</strong>
-										{{ procedimiento_quirurgico.nombre_procedimiento }}
-									</p>
+                                        <strong>{{ procedimiento_quirurgico.nombre_procedimiento }}</strong>
+                                    </p>
+                                    <a href="javascript:void(0);" class="pull-right" onclick="toggleDetallesProcedimiento(this)">
+                                        <span class="glyphicon glyphicon-plus-sign"></span>
+                                    </a>
+                                    <div class="procedimiento-quirurgico-detalle hidden">
+                                        <hr>
+                                        <strong>{{ LABEL_EQUIPO_QUIRURGICO }}</strong>
+                                        {% for medico in procedimiento_quirurgico.medicos_participantes.all %}
+                                        <p class="label label-info">{{ LABEL_DR }} {{ medico.apellido }}</p>
+                                        {% endfor %}
+                                    </div>
 								</div>
 								{% if forloop.last %}
 							</div>
 							{% endif %}
 							{% empty %}
-							<div class=" col-lg-offset-2 col-lg-8 well well-sm well-warning">
+							<div class="col-lg-10 well well-sm well-warning">
 								<p class="text-muted texto-centrado">{{ MENSAJE_NO_HAY_PROCEDIMIENTOS_QUIRURGICOS }}</p>
 							</div>
 							{% endfor %}
+						</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-offset-2 col-lg-2">

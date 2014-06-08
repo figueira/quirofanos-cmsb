@@ -21,7 +21,9 @@ def constantes_texto(request):
     datos['CANCELAR'] = TextoMostrable.CANCELAR
     datos['CANCELANDO'] = TextoMostrable.CANCELANDO
     datos['CANCELAR_SOLICITUD'] = TextoMostrable.CANCELAR_SOLICITUD
+    datos['CANCELAR_INTERVENCION_QUIRURGICA'] = TextoMostrable.CANCELAR_INTERVENCION_QUIRURGICA
     datos['ELIMINAR'] = TextoMostrable.ELIMINAR
+    datos['LABEL_DR'] = TextoMostrable.LABEL_DR
     datos['LABEL_NOMBRE'] = TextoMostrable.LABEL_NOMBRE
     datos['LABEL_APELLIDO'] = TextoMostrable.LABEL_APELLIDO
     datos['LABEL_CEDULA'] = TextoMostrable.LABEL_CEDULA
@@ -36,6 +38,7 @@ def constantes_texto(request):
     datos['LABEL_BUSCAR_DEPARTAMENTO'] = TextoMostrable.LABEL_BUSCAR_DEPARTAMENTO
     datos['LABEL_DEPARTAMENTO_ABREVIADO'] = TextoMostrable.LABEL_DEPARTAMENTO_ABREVIADO
     datos['LABEL_FECHA_SOLICITUD'] = TextoMostrable.LABEL_FECHA_SOLICITUD
+    datos['LABEL_FECHA_INTERVENCION'] = TextoMostrable.LABEL_FECHA_INTERVENCION
     datos['LABEL_TIPO_USUARIO'] = TextoMostrable.LABEL_TIPO_USUARIO
     datos['RECHAZAR_SOLICITUD'] = TextoMostrable.RECHAZAR_SOLICITUD
     datos['RECHAZANDO'] = TextoMostrable.RECHAZANDO
@@ -77,6 +80,7 @@ def constantes_texto(request):
     datos['LABEL_HABITACION'] = TextoMostrable.LABEL_HABITACION
     datos['LABEL_PACIENTE_HOSPITALIZADO'] = TextoMostrable.LABEL_PACIENTE_HOSPITALIZADO
     datos['PACIENTE'] = TextoMostrable.PACIENTE
+    datos['RESUMEN'] = TextoMostrable.RESUMEN
     datos['LABEL_CODIGO_TELEFONO'] = TextoMostrable.LABEL_CODIGO_TELEFONO
     datos['LABEL_NUMERO_TELEFONO'] = TextoMostrable.LABEL_NUMERO_TELEFONO
     datos['QUIROFANO'] = TextoMostrable.QUIROFANO
@@ -120,6 +124,7 @@ def constantes_texto(request):
     datos['RECUPERANDO'] = TextoMostrable.RECUPERANDO
     datos['ELIMINANDO'] = TextoMostrable.ELIMINANDO
     datos['LABEL_FECHA_INTERVENCION'] = TextoMostrable.LABEL_FECHA_INTERVENCION
+    datos['LABEL_EQUIPO_QUIRURGICO'] = TextoMostrable.LABEL_EQUIPO_QUIRURGICO
 
     return datos
 

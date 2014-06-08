@@ -92,13 +92,13 @@
 		<!-- Tab panes -->
 		<div class="tab-content">
 			<div class="hidden" id="contenido-pendientes">
-				{% include "coordinador/lista_solicitudes_quirofanos.html" with reservaciones=reservaciones_pendientes_diccionarios opciones_gestion=True tipo="pendiente" %}
+				{% include "coordinador/lista_solicitudes_quirofanos.html" with reservaciones=reservaciones_pendientes_diccionarios tipo="pendiente" %}
 			</div><!-- Lista de Solicitudes Pendientes -->
 			<div class="hidden" id="contenido-aprobadas">
-				{% include "coordinador/lista_solicitudes_quirofanos.html" with reservaciones=reservaciones_aprobadas_diccionarios opciones_gestion=False tipo="aprobada" %}
+				{% include "coordinador/lista_solicitudes_quirofanos.html" with reservaciones=reservaciones_aprobadas_diccionarios tipo="aprobada" %}
 			</div><!-- Lista de Solicitudes Aprobadas -->
 			<div class="hidden" id="contenido-rechazadas">
-				{% include "coordinador/lista_solicitudes_quirofanos.html" with reservaciones=reservaciones_rechazadas_diccionarios opciones_gestion=False tipo="rechazada" %}
+				{% include "coordinador/lista_solicitudes_quirofanos.html" with reservaciones=reservaciones_rechazadas_diccionarios tipo="rechazada" %}
 			</div><!-- Lista de Solicitudes Rechazadas -->
 		</div>
 	</div>
