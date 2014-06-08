@@ -1,6 +1,7 @@
 {% extends request.session.template_base %}
 
 {% load staticfiles  %}
+{% load widget_tweaks %}
 
 {% block title %}{{ block.super }} | Solicitudes de Quirófanos{% endblock title %}
 
@@ -11,6 +12,10 @@
 {% block numero-mensajes %}
 1
 {% endblock numero-mensajes %}
+
+{% block nombre-usuario %}
+{{ request.session.nombre }}
+{% endblock nombre-usuario %}
 
 {% block flash-messages %}
 {% if messages %}
@@ -87,13 +92,13 @@
 		<!-- Tab panes -->
 		<div class="tab-content">
 			<div class="hidden" id="contenido-pendientes">
-				{% include "coordinador/lista_solicitudes_quirofanos.html" with lista_solicitudes_quirofano=lista_solicitudes_quirofano_pendientes tipo="pendiente" %}
+				{% include "coordinador/lista_solicitudes_quirofanos.html" with reservaciones=reservaciones_pendientes_diccionarios opciones_gestion=True tipo="pendiente" %}
 			</div><!-- Lista de Solicitudes Pendientes -->
 			<div class="hidden" id="contenido-aprobadas">
-				{% include "coordinador/lista_solicitudes_quirofanos.html" with lista_solicitudes_quirofano=lista_solicitudes_quirofano_aprobadas tipo="aprobada" %}
+				{% include "coordinador/lista_solicitudes_quirofanos.html" with reservaciones=reservaciones_aprobadas_diccionarios opciones_gestion=False tipo="aprobada" %}
 			</div><!-- Lista de Solicitudes Aprobadas -->
 			<div class="hidden" id="contenido-rechazadas">
-				{% include "coordinador/lista_solicitudes_quirofanos.html" with lista_solicitudes_quirofano=lista_solicitudes_quirofano_rechazadas tipo="rechazada" %}
+				{% include "coordinador/lista_solicitudes_quirofanos.html" with reservaciones=reservaciones_rechazadas_diccionarios opciones_gestion=False tipo="rechazada" %}
 			</div><!-- Lista de Solicitudes Rechazadas -->
 		</div>
 	</div>
@@ -110,11 +115,11 @@
 </div>
 <script type="text/javascript">
 	{% if estado_solicitud == 'pendientes' %}
-		inicializarPaginacion({{ lista_solicitudes_quirofano_pendientes.number }}, {{ lista_solicitudes_quirofano_pendientes.paginator.num_pages }}, 'pendientes' )
+		inicializarPaginacion({{ reservaciones_pendientes_diccionarios.number }}, {{ reservaciones_pendientes_diccionarios.paginator.num_pages }}, 'pendientes' )
 	{% elif estado_solicitud == 'aprobadas' %}
-		inicializarPaginacion({{ lista_solicitudes_quirofano_aprobadas.number }}, {{ lista_solicitudes_quirofano_aprobadas.paginator.num_pages }}, 'aprobadas' );
+		inicializarPaginacion({{ reservaciones_aprobadas_diccionarios.number }}, {{ reservaciones_aprobadas_diccionarios.paginator.num_pages }}, 'aprobadas' );
 	{% elif estado_solicitud == 'rechazadas' %}
-		inicializarPaginacion({{ lista_solicitudes_quirofano_rechazadas.number }}, {{ lista_solicitudes_quirofano_rechazadas.paginator.num_pages }}, 'rechazadas' );
+		inicializarPaginacion({{ reservaciones_rechazadas_diccionarios.number }}, {{ reservaciones_rechazadas_diccionarios.paginator.num_pages }}, 'rechazadas' );
 	{% endif %}
 	seleccionarPestana("{{ estado_solicitud }}");
 </script>

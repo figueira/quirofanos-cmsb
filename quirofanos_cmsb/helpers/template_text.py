@@ -127,7 +127,6 @@ class TextoMostrable():
     MENSAJE_PROCEDIMIENTO_QUIRURGICO_ELIMINADO = _(u'Procedimiento quirúrgico eliminado.')
     MENSAJE_NO_HAY_PROCEDIMIENTOS_QUIRURGICOS = _(u'No se ha agregado ningún procedimiento quirúrgico.')
     LABEL_OTROS = _(u'Otro(s):')
-    LABEL_FECHA_INTERVENCION = _(u'Fecha de la Intervención:')
     LABEL_MEDICO_SOLICITANTE = _(u'Médico Solicitante:')
     INICIAR_SESION = _(u'Iniciar Sesión')
     INICIANDO_SESION = _(u'Iniciando Sesión...')
@@ -143,3 +142,4 @@ class TextoMostrable():
     AGREGANDO = _(u'Agregando...')
     RECUPERAR = _(u'Recuperar')
     RECUPERANDO = _(u'Recuperando...')
+    LABEL_FECHA_INTERVENCION = _(u'Fecha de la Intervención:')

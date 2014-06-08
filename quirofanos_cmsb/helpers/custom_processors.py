@@ -119,6 +119,7 @@ def constantes_texto(request):
     datos['RECUPERAR'] = TextoMostrable.RECUPERAR
     datos['RECUPERANDO'] = TextoMostrable.RECUPERANDO
     datos['ELIMINANDO'] = TextoMostrable.ELIMINANDO
+    datos['LABEL_FECHA_INTERVENCION'] = TextoMostrable.LABEL_FECHA_INTERVENCION
 
     return datos
 

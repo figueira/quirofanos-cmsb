@@ -12,6 +12,10 @@
 1
 {% endblock numero-mensajes %}
 
+{% block nombre-usuario %}
+{{ request.session.nombre }}
+{% endblock nombre-usuario %}
+
 {% block flash-messages %}
 {% if messages %}
 {% for message in messages %}

@@ -330,7 +330,7 @@ def mis_solicitudes(request, estado="pendientes", periodo= None):
 
 	# periodo = 0 -> Ultima Semana
 	# periodo = 1 -> Ultimo Mes
-	# periodo = 2 -> Ultimos 3 Meses	
+	# periodo = 2 -> Ultimos 3 Meses
 
 	if estado not in ("pendientes", "aprobadas", "rechazadas"):
 	 	raise Http404
@@ -549,7 +549,7 @@ def mis_solicitudes(request, estado="pendientes", periodo= None):
 	except PageNotAnInteger:
 	    reservaciones_rechazadas_diccionarios = paginator_rechazadas.page(1)
 	except EmptyPage:
-	    reservaciones_rechazadas_diccionarios = paginator_rechazadas.page(paginator_rechazadas.num_pages)		
+	    reservaciones_rechazadas_diccionarios = paginator_rechazadas.page(paginator_rechazadas.num_pages)
 
 	datos = {}
 	datos['reservaciones_aprobadas'] = reservaciones_aprobadas_diccionarios

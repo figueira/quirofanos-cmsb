@@ -78,3 +78,5 @@ $(document).ready(function() {
     $("#seccion-solicitudes-quirofanos").addClass("active");
 
 });
+
+

@@ -49,14 +49,14 @@ var mostrarRazonRiesgo = function(id_reservacion) {
 var mostrarInfoQuirofano = function(id_reservacion) {
   $("#datos-quirofano-" + id_reservacion).removeClass("hidden");
   $("#datos-paciente-" + id_reservacion).addClass("hidden");
-  $("#titulo-detalles-solicitud-" + id_reservacion).html("Detalles de Solicitud - Quirófano");
+  $("#titulo-detalles-solicitud-" + id_reservacion).html("<strong>Detalles de Solicitud - Quirófano</strong>");
 };
 
 // Mostrar datos de paciente en formulario
 var mostrarInfoPaciente = function(id_reservacion) {
   $("#datos-paciente-" + id_reservacion).removeClass("hidden");
   $("#datos-quirofano-" + id_reservacion).addClass("hidden");
-  $("#titulo-detalles-solicitud-" + id_reservacion).html("Detalles de Solicitud - Paciente");
+  $("#titulo-detalles-solicitud-" + id_reservacion).html("<strong>Detalles de Solicitud - Paciente</strong>");
 };
 
 $(document).ready(function() {
