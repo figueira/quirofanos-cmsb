@@ -433,8 +433,9 @@ a:hover
 }
 
 /* Tamano de los modal lg */
-.modal-lg{
+.modal-lg {
 	width:1000px !important;
+}
 
 /* personalización de carousel */
 .carousel-control {

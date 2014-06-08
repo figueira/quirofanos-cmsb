@@ -75,7 +75,7 @@ var seleccionarPestana = function(estado){
 $(document).ready(function() {
     // Seleccionar seccion en menu de navegacion
     $(".navegacion").removeClass("active");
-    $("#seccion-solicitudes-quirofanos").addClass("active");
+    $("#seccion-solicitudes-quirofano").addClass("active");
 
 });
 
