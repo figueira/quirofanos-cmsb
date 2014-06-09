@@ -11,8 +11,6 @@
 </script>
 <script type="text/javascript" src="{% static 'plan_quirurgico/js/drag-on.js' %}">
 </script>
-<script type="text/javascript" src="{% static 'medico/js/detalles_operacion.js' %}">
-</script>
 {% endblock scripts %}
 
 {% block flash-messages %}
@@ -37,15 +35,15 @@
 {% block content %}
 
 <div class="page-header">
-	<h1>
-		<a href="{% url 'calendario' area_actual ano mes %}">
+	<h1 class="row">
+		<a class="col-lg-3" href="{% url 'calendario' area_actual ano mes %}">
 			<span class="glyphicon glyphicon-chevron-left">
 			</span>
 			Plan Quirúrgico
 		</a>
-		<small> - {{ area_nombre }} - {{ dia }}/{{ mes }}/{{ ano }}</small>
-		<small class="pull-right">
-			<button class="btn btn-primary" id="btn-solicitar-quirofano" data-toggle="modal" data-target="#solicitar-quirofano">
+		<small class="col-lg-3">{{ area_nombre }} - {{ dia }}/{{ mes }}/{{ ano }}</small>
+		<small class="col-lg-6">
+			<button class="btn btn-primary pull-right" id="btn-solicitar-quirofano" data-toggle="modal" data-target="#solicitar-quirofano">
 				{{ SOLICITAR_QUIROFANO }}
 			</button>
 		</small>
@@ -103,7 +101,7 @@ $(function(){
 					&times;
 				</button>
 				<h4 class="modal-title" id="solicitar-quirofano-modal-title">
-					Duración de la Intervención Quirúrgica
+					<strong>Duración de la Intervención Quirúrgica</strong>
 				</h4>
 			</div>
 			<form role="form" class="form-horizontal col-lg-offset-1" action="{% url 'plan_dia' area_actual ano mes dia %}" method="POST" novalidate>
@@ -256,7 +254,7 @@ $(function(){
 					{% if media_hora in quirofano.turnos_disponibles %}
 					<td class="available available-select" data-toogle="tooltip" data-placement="right" title="{{ quirofano.nombre }}" rowspan="{{ cantidad_medias_horas_intervencion }}">
 						{% if not seleccionar_turno_cambio_horario %}
-						<a class="btn btn-primary" href="{% url 'solicitud_quirofano' ano mes dia quirofano.clave_primaria media_hora cantidad_medias_horas_intervencion %}">
+						<a class="btn btn-primary btn-loading" href="{% url 'solicitud_quirofano' ano mes dia quirofano.clave_primaria media_hora cantidad_medias_horas_intervencion %}" data-loading-text="{{ ESPERE }}">
 							{{ SELECCIONAR_TURNO }}
 						</a>
 						{% else %}

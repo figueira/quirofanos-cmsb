@@ -8,7 +8,7 @@
     },
     {
         "fields": {
-            "nombre": "Anatom\u00eda Patol\u00f3gica"
+            "nombre": "Anatom\u00eda Patol\u00f3gica (Per-Operatoria)"
         },
         "model": "quirofanos_cmsb.serviciooperatorio",
         "pk": 2
