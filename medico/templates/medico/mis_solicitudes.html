@@ -38,21 +38,21 @@
 <div class="row">
 	<div class="col-lg-offset-1 col-lg-9">
 		<ul class="nav nav-tabs">
-			<li id="li-aprobadas">
+			<li class="active" id="li-aprobadas">
 				<a href="{% url 'mis_solicitudes' 'aprobadas' %}">
 					Aprobadas
 					<span class="glyphicon glyphicon-ok">
 					</span>
 				</a>
 			</li>
-			<li id="li-en-espera">
+			<li class="active" id="li-en-espera">
 				<a href="{% url 'mis_solicitudes' 'pendientes' %}">
 					En espera
 					<span class="glyphicon glyphicon-question-sign">
 					</span>
 				</a>
 			</li>
-			<li id="li-rechazadas">
+			<li class="active" id="li-rechazadas">
 				<a href="{% url 'mis_solicitudes' 'rechazadas' %}">
 					Rechazadas
 					<span class="glyphicon glyphicon-ban-circle">
@@ -69,17 +69,17 @@
 		</button>
 		<ul class="dropdown-menu" role="menu">
 			<li>
-				<a href="{% url 'mis_solicitudes' 'pendientes' 0 %}">
+				<a href="{% url 'mis_solicitudes' estado_solicitud 0 %}">
 					Última semana
 				</a>
 			</li>
 			<li>
-				<a href="{% url 'mis_solicitudes' 'pendientes' 1 %}">
+				<a href="{% url 'mis_solicitudes' estado_solicitud 1 %}">
 					Último mes
 				</a>
 			</li>
 			<li>
-				<a href="{% url 'mis_solicitudes' 'pendientes' 2 %}">
+				<a href="{% url 'mis_solicitudes' estado_solicitud 2 %}">
 					Últimos 3 meses
 				</a>
 			</li>
@@ -124,7 +124,8 @@
 				</h4>
 			</div>
 			<div class="modal-body">
-				<form role="form" class="form-horizontal">
+				<form role="form" class="form-horizontal" action="{% url 'mis_solicitudes' estado_solicitud 3 %}" method="POST" novalidate>
+					{% csrf_token %}
 					<div class="form-group">
 						<label class="col-lg-2 control-label" for="desde">
 							Desde:
@@ -141,13 +142,13 @@
 							<input type="date" class="form-control" name="hasta">
 						</div>
 					</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary" >
+							Aceptar
+						</button>
+					</div>
 				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" data-dismiss="modal">
-					Aceptar
-				</button>
-			</div>
 		</div>
 	</div>
 </div><!-- Modal de Seleccion de Periodo a Mostrar -->
@@ -162,13 +163,22 @@
 	</div>
 </div>
 <script type="text/javascript">
-	{% if estado_solicitud == 'pendientes' %}
-		inicializarPaginacion({{ reservaciones_pendientes.number }}, {{ reservaciones_pendientes.paginator.num_pages }}, 'pendientes' )
-	{% elif estado_solicitud == 'aprobadas' %}
-		inicializarPaginacion({{ reservaciones_aprobadas.number }}, {{ reservaciones_aprobadas.paginator.num_pages }}, 'aprobadas' );
-	{% elif estado_solicitud == 'rechazadas' %}
-		inicializarPaginacion({{ reservaciones_rechazadas.number }}, {{ reservaciones_rechazadas.paginator.num_pages }}, 'rechazadas' );
-	{% endif %}
-	seleccionarPestana("{{ estado_solicitud }}");
+{% if estado_solicitud == 'pendientes' %}
+inicializarPaginacion({{ reservaciones_pendientes.number }}, {{ reservaciones_pendientes.paginator.num_pages }}, 'pendientes' )
+$('#li-en-espera').addClass('active');
+$('#li-aprobadas').removeClass('active');
+$('#li-rechazadas').removeClass('active');
+{% elif estado_solicitud == 'aprobadas' %}
+inicializarPaginacion({{ reservaciones_aprobadas.number }}, {{ reservaciones_aprobadas.paginator.num_pages }}, 'aprobadas' );
+$('#li-aprobadas').addClass('active');
+$('#li-en-espera').removeClass('active');
+$('#li-rechazadas').removeClass('active');
+{% elif estado_solicitud == 'rechazadas' %}
+inicializarPaginacion({{ reservaciones_rechazadas.number }}, {{ reservaciones_rechazadas.paginator.num_pages }}, 'rechazadas' );
+$('#li-rechazadas').addClass('active');
+$('#li-en-espera').removeClass('active');
+$('#li-aprobadas').removeClass('active');
+{% endif %}
+seleccionarPestana("{{ estado_solicitud }}");
 </script>
 {% endblock content %}

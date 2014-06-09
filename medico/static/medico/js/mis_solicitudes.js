@@ -269,29 +269,30 @@ var mostrarErroresHonorariosTercerAyudante = function() {
   $("#honorarios-tercer-ayudante-error-help").removeClass("hidden");
 };
 
-var seleccionarPestana = function(estado){
+
+var seleccionarPestana = function(estado){  
   if (estado == 'pendientes'){
-    $('#li-en-espera').addClass('active');
-    $('#li-aprobadas').removeClass('active');
-    $('#li-rechazadas').removeClass('active');
+    // $('#li-en-espera').addClass('active');
+    // $('#li-aprobadas').removeClass('active');
+    // $('#li-rechazadas').removeClass('active');
     $("#contenido-pendientes").removeClass('hidden');
     $("#contenido-aprobadas").addClass('hidden');
     $("#contenido-rechazadas").addClass('hidden');
   } else if (estado == 'aprobadas'){
-    $('#li-aprobadas').addClass('active');
-    $('#li-en-espera').removeClass('active');
-    $('#li-rechazadas').removeClass('active');
+    // $('#li-aprobadas').addClass('active');
+    // $('#li-en-espera').removeClass('active');
+    // $('#li-rechazadas').removeClass('active');
     $("#contenido-aprobadas").removeClass('hidden');
     $("#contenido-pendientes").addClass('hidden');
     $("#contenido-rechazadas").addClass('hidden');
   } else if (estado == 'rechazadas'){
-    $('#li-rechazadas').addClass('active');
-    $('#li-en-espera').removeClass('active');
-    $('#li-aprobadas').removeClass('active');
+    // $('#li-rechazadas').addClass('active');
+    // $('#li-en-espera').removeClass('active');
+    // $('#li-aprobadas').removeClass('active');
     $("#contenido-rechazadas").removeClass('hidden');
     $("#contenido-aprobadas").addClass('hidden');
     $("#contenido-pendientes").addClass('hidden');
-  };
+  };  
 };
 
 
@@ -301,35 +302,35 @@ $(document).ready(function() {
   $("#seccion-mis-solicitudes").addClass("active");
 
   // Desplegar Solicitudes En Espera
-  $("#li-aprobadas").click(function() {
-    $("#en-espera").addClass("hidden");
-    $("#rechazadas").addClass("hidden");
-    $("#aprobadas").removeClass("hidden");
+  // $("#li-aprobadas").click(function() {
+  //   $("#en-espera").addClass("hidden");
+  //   $("#rechazadas").addClass("hidden");
+  //   $("#aprobadas").removeClass("hidden");
 
-    $("#li-aprobadas").addClass("active");
-    $("#li-en-espera").removeClass("active");
-    $("#li-rechazadas").removeClass("active");
-  });
+  //   $("#li-aprobadas").addClass("active");
+  //   $("#li-en-espera").removeClass("active");
+  //   $("#li-rechazadas").removeClass("active");
+  // });
 
-  $("#li-en-espera").click(function() {
-    $("#aprobadas").addClass("hidden");
-    $("#rechazadas").addClass("hidden");
-    $("#en-espera").removeClass("hidden");
+  // $("#li-en-espera").click(function() {
+  //   $("#aprobadas").addClass("hidden");
+  //   $("#rechazadas").addClass("hidden");
+  //   $("#en-espera").removeClass("hidden");
 
-    $("#li-en-espera").addClass("active");
-    $("#li-aprobadas").removeClass("active");
-    $("#li-rechazadas").removeClass("active");
-  });
+  //   $("#li-en-espera").addClass("active");
+  //   $("#li-aprobadas").removeClass("active");
+  //   $("#li-rechazadas").removeClass("active");
+  // });
 
-  $("#li-rechazadas").click(function() {
-    $("#aprobadas").addClass("hidden");
-    $("#en-espera").addClass("hidden");
-    $("#rechazadas").removeClass("hidden");
+  // $("#li-rechazadas").click(function() {
+  //   $("#aprobadas").addClass("hidden");
+  //   $("#en-espera").addClass("hidden");
+  //   $("#rechazadas").removeClass("hidden");
 
-    $("#li-rechazadas").addClass("active");
-    $("#li-aprobadas").removeClass("active");
-    $("#li-en-espera").removeClass("active");
-  });
+  //   $("#li-rechazadas").addClass("active");
+  //   $("#li-aprobadas").removeClass("active");
+  //   $("#li-en-espera").removeClass("active");
+  // });
 
   // Mostrar o no mostrar razon de riesgo
   var nivel = $("input[name=solicitud_quirofano-riesgo]");

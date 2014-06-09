@@ -91,6 +91,12 @@ class EliminarProcedimientoQuirurgicoForm(BaseForm):
     ''' Formulario para eliminar un procedimiento quirurgico durante el proceso de solicitud de quirofano '''
     id_procedimiento_quirurgico = forms.IntegerField(min_value=1, widget=forms.HiddenInput, required=False)
 
+class IntervaloFechasMisSolicitudesForm(BaseForm):
+    ''' Formulario para realizar el filtrado en Mis Solicitudes
+        entre dos fechas '''
+    fecha_inicio = forms.DateField(required=False)
+    fecha_fin= forms.DateField(required=False)
+
 
 
 

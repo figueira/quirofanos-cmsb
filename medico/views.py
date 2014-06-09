@@ -19,7 +19,7 @@ from quirofanos_cmsb.helpers import utils
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
 from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito, MensajeTemporalAviso
 from quirofanos_cmsb.models import User, Cuenta, Quirofano, SistemaCorporal, OrganoCorporal, TipoProcedimientoQuirurgico, Participacion, ProcedimientoQuirurgico, Reservacion, IntervencionQuirurgica, Paciente
-from medico.forms import SolicitudQuirofanoForm, ProcedimientoQuirurgicoForm, EliminarProcedimientoQuirurgicoForm
+from medico.forms import SolicitudQuirofanoForm, ProcedimientoQuirurgicoForm, EliminarProcedimientoQuirurgicoForm, IntervaloFechasMisSolicitudesForm
 
 @require_http_methods(["GET", "POST"])
 @login_required
@@ -331,21 +331,29 @@ def mis_solicitudes(request, estado="pendientes", periodo= None):
 	# periodo = 0 -> Ultima Semana
 	# periodo = 1 -> Ultimo Mes
 	# periodo = 2 -> Ultimos 3 Meses	
+	# periodo = 3 -> Entre fecha inicio y fin	
 
 	if estado not in ("pendientes", "aprobadas", "rechazadas"):
 	 	raise Http404
 
 	if periodo:
 		periodo = int(periodo)
-		if periodo not in (0, 1, 2):
+		if periodo not in (0, 1, 2, 3):
 	 		raise Http404
 
+	 	# formularioIntervalo=IntervaloFechasMisSolicitudesForm(request.POST)
+	 	# fecha_inicio = formulario_intervalo.cleaned_data['fecha_inicio']
+	 	# fecha_fin = formulario_intervalo.cleaned_data['fecha_fin']
+	 	
 	 	if periodo == 0:
 	 		delay = timedelta(days=7)
 	 	elif periodo == 1:
 	 		delay = timedelta(days=31)
-	 	else:
+	 	elif periodo == 2:
 	 		delay = timedelta(days=31*6)
+	 	elif periodo == 3:
+	 		delay = timedelta(days=31*6)
+	 		pass
 	else:
 		delay = timedelta(days=7)
 
@@ -555,6 +563,7 @@ def mis_solicitudes(request, estado="pendientes", periodo= None):
 	datos['reservaciones_aprobadas'] = reservaciones_aprobadas_diccionarios
 	datos['reservaciones_pendientes'] = reservaciones_pendientes_diccionarios
 	datos['reservaciones_rechazadas'] = reservaciones_rechazadas_diccionarios
+	# datos['formulario_intervalo'] = IntervaloFechasMisSolicitudesForm()
 	datos['estado_solicitud'] = estado
 
 	return render_to_response('medico/mis_solicitudes.html', datos, context_instance=RequestContext(request))
