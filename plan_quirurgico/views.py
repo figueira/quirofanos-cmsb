@@ -105,6 +105,7 @@ def calendario(request, area_actual='QG', ano=date.today().year, mes=date.today(
 	datos['area_actual'] = area_actual
 	datos['areas'] = areas
 	datos['semanas'] = semanas_diccionarios
+	
 
 	tipo_usuario = obtener_tipo_usuario(request.user.cuenta)
 	posee_email = False

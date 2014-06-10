@@ -12,7 +12,7 @@ from django.contrib import messages
 
 import calendar
 import json
-from datetime import date, time, timedelta
+from datetime import date, time, timedelta, datetime
 
 from quirofanos_cmsb.helpers.user_tests import es_medico, es_medico_o_coordinador
 from quirofanos_cmsb.helpers import utils
@@ -317,7 +317,7 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 
 	return render_to_response('medico/solicitud_quirofano.html', datos,  context_instance=RequestContext(request))
 
-@require_GET
+
 @login_required
 @user_passes_test(es_medico)
 def mis_solicitudes(request, estado="pendientes", periodo= None):
@@ -336,14 +336,12 @@ def mis_solicitudes(request, estado="pendientes", periodo= None):
 	if estado not in ("pendientes", "aprobadas", "rechazadas"):
 	 	raise Http404
 
+	delay = timedelta(days=7)
+
 	if periodo:
 		periodo = int(periodo)
 		if periodo not in (0, 1, 2, 3):
 	 		raise Http404
-
-	 	# formularioIntervalo=IntervaloFechasMisSolicitudesForm(request.POST)
-	 	# fecha_inicio = formulario_intervalo.cleaned_data['fecha_inicio']
-	 	# fecha_fin = formulario_intervalo.cleaned_data['fecha_fin']
 	 	
 	 	if periodo == 0:
 	 		delay = timedelta(days=7)
@@ -353,16 +351,32 @@ def mis_solicitudes(request, estado="pendientes", periodo= None):
 	 		delay = timedelta(days=31*6)
 	 	elif periodo == 3:
 	 		delay = timedelta(days=31*6)
-	 		pass
 	else:
-		delay = timedelta(days=7)
-
-	filter_date = date.today() - delay
-
+		periodo = 0
+	 				
+	formularioIntervalo = IntervaloFechasMisSolicitudesForm(data=request.POST)
 	cuenta = Cuenta.objects.get(usuario = request.user)
-	reservaciones_aprobadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='A', fecha_reservacion__gte = filter_date)
-	reservaciones_pendientes = Reservacion.objects.filter(medico = cuenta.medico, estado ='P', fecha_reservacion__gte = filter_date)
-	reservaciones_rechazadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='R', fecha_reservacion__gte = filter_date)
+	if periodo in (0, 1, 2):		
+		filter_date = date.today() - delay
+		reservaciones_aprobadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='A', fecha_reservacion__gte = filter_date)
+		reservaciones_pendientes = Reservacion.objects.filter(medico = cuenta.medico, estado ='P', fecha_reservacion__gte = filter_date)
+		reservaciones_rechazadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='R', fecha_reservacion__gte = filter_date)
+
+	else:		
+		if formularioIntervalo.is_valid():
+		 	fecha_inicio = formularioIntervalo.cleaned_data['fecha_inicio']
+		 	fecha_fin = formularioIntervalo.cleaned_data['fecha_fin']	
+		 	
+		 	if fecha_inicio == None or fecha_fin == None:
+	 			delay = timedelta(days=31*6)
+				filter_date = date.today() - delay
+				reservaciones_aprobadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='A', fecha_reservacion__gte = filter_date)
+				reservaciones_pendientes = Reservacion.objects.filter(medico = cuenta.medico, estado ='P', fecha_reservacion__gte = filter_date)
+				reservaciones_rechazadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='R', fecha_reservacion__gte = filter_date)
+			else:
+				reservaciones_aprobadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='A', fecha_reservacion__gte = fecha_inicio, fecha_reservacion__lte = fecha_fin)
+				reservaciones_pendientes = Reservacion.objects.filter(medico = cuenta.medico, estado ='P', fecha_reservacion__gte = fecha_inicio, fecha_reservacion__lte = fecha_fin)
+				reservaciones_rechazadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='R', fecha_reservacion__gte = fecha_inicio, fecha_reservacion__lte = fecha_fin)
 
 	reservaciones_aprobadas_diccionarios = []
 	for reservacion in reservaciones_aprobadas:
@@ -563,7 +577,7 @@ def mis_solicitudes(request, estado="pendientes", periodo= None):
 	datos['reservaciones_aprobadas'] = reservaciones_aprobadas_diccionarios
 	datos['reservaciones_pendientes'] = reservaciones_pendientes_diccionarios
 	datos['reservaciones_rechazadas'] = reservaciones_rechazadas_diccionarios
-	# datos['formulario_intervalo'] = IntervaloFechasMisSolicitudesForm()
+	datos['formulario_intervalo'] = formularioIntervalo
 	datos['estado_solicitud'] = estado
 
 	return render_to_response('medico/mis_solicitudes.html', datos, context_instance=RequestContext(request))
