@@ -18,7 +18,7 @@ from quirofanos_cmsb.helpers.user_tests import es_medico, es_medico_o_coordinado
 from quirofanos_cmsb.helpers import utils
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
 from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito, MensajeTemporalAviso
-from quirofanos_cmsb.models import User, Cuenta, Quirofano, SistemaCorporal, OrganoCorporal, TipoProcedimientoQuirurgico, Participacion, ProcedimientoQuirurgico, Reservacion, IntervencionQuirurgica, Paciente
+from quirofanos_cmsb.models import User, Cuenta, Quirofano, SistemaCorporal, OrganoCorporal, TipoProcedimientoQuirurgico, Participacion, ProcedimientoQuirurgico, Reservacion, IntervencionQuirurgica, Paciente, Mensaje
 from medico.forms import SolicitudQuirofanoForm, ProcedimientoQuirurgicoForm, EliminarProcedimientoQuirurgicoForm, IntervaloFechasMisSolicitudesForm
 
 @require_http_methods(["GET", "POST"])
@@ -315,6 +315,11 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 	datos["es_coordinador"] = es_coordinador
 	#datos["id_sistema_corporal_actual"] = id_sistema_corporal_actual
 
+	cuenta = request.user.cuenta
+	mensajes_pendientes = Mensaje.objects.filter(cuenta=cuenta, estado='NL')
+	datos['numero_mensajes_pendientes'] = mensajes_pendientes.count()
+	datos['cuenta_id'] = cuenta.id
+
 	return render_to_response('medico/solicitud_quirofano.html', datos,  context_instance=RequestContext(request))
 
 
@@ -579,6 +584,10 @@ def mis_solicitudes(request, estado="pendientes", periodo= None):
 	datos['reservaciones_rechazadas'] = reservaciones_rechazadas_diccionarios
 	datos['formulario_intervalo'] = formularioIntervalo
 	datos['estado_solicitud'] = estado
+	cuenta = request.user.cuenta
+	mensajes_pendientes = Mensaje.objects.filter(cuenta=cuenta, estado='NL')
+	datos['numero_mensajes_pendientes'] = mensajes_pendientes.count()
+	datos['cuenta_id'] = cuenta.id
 
 	return render_to_response('medico/mis_solicitudes.html', datos, context_instance=RequestContext(request))
 
@@ -881,5 +890,10 @@ def proximas_intervenciones(request, periodo="semana_actual"):
 	datos["lista_participaciones_mes_actual"] = lista_participaciones_mes_actual_diccionarios
 	datos["lista_participaciones_ano_actual"] = lista_participaciones_ano_actual_diccionarios
 	datos["periodo"] = periodo
+
+	cuenta = request.user.cuenta
+	mensajes_pendientes = Mensaje.objects.filter(cuenta=cuenta, estado='NL')
+	datos['numero_mensajes_pendientes'] = mensajes_pendientes.count()
+	datos['cuenta_id'] = cuenta.id
 
 	return render_to_response('medico/proximas_intervenciones_quirurgicas.html', datos, context_instance=RequestContext(request))

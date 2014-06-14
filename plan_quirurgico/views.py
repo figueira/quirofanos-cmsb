@@ -18,7 +18,7 @@ import os
 import StringIO
 
 from quirofanos_cmsb.helpers import utils
-from quirofanos_cmsb.models import Quirofano, IntervencionQuirurgica, Reservacion, Participacion, Medico
+from quirofanos_cmsb.models import Quirofano, IntervencionQuirurgica, Reservacion, Participacion, Medico, Mensaje
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
 from plan_quirurgico.forms import DuracionIntervencionQuirurgicaForm, CambiarEstadoIntervencionQuirurgicaForm
 from autenticacion.forms import CambiarContrasenaForm, ActualizarEmailForm
@@ -166,6 +166,11 @@ def calendario(request, area_actual='QG', ano=date.today().year, mes=date.today(
 		datos["formulario_cambio_contrasena"] = formulario_cambio_contrasena
 	else:
 		datos['es_primer_ingreso'] = False
+
+	cuenta = request.user.cuenta
+	mensajes_pendientes = Mensaje.objects.filter(cuenta=cuenta, estado='NL')
+	datos['numero_mensajes_pendientes'] = mensajes_pendientes.count()
+	datos['cuenta_id'] = cuenta.id
 
 	return render_to_response('plan_quirurgico/calendario.html', datos, context_instance=RequestContext(request))
 
@@ -324,6 +329,11 @@ def plan_dia(request, area, ano, mes, dia):
 	datos["reservaciones"] = reservaciones_aprobadas_diccionarios
 	datos["es_coordinador"] = es_coordinador
 
+	cuenta = request.user.cuenta
+	mensajes_pendientes = Mensaje.objects.filter(cuenta=cuenta, estado='NL')
+	datos['numero_mensajes_pendientes'] = mensajes_pendientes.count()
+	datos['cuenta_id'] = cuenta.id
+
 	return render_to_response('plan_quirurgico/plan_dia.html', datos, context_instance=RequestContext(request))
 
 @require_GET
@@ -381,6 +391,11 @@ def plan_dia_obs(request, area, ano, mes, dia):
 	datos['intervenciones'] = intervenciones
 	datos['formulario_cambio_estado_intervencion'] = CambiarEstadoIntervencionQuirurgicaForm()
 	datos['dia_permitido'] = dia_permitido
+
+	cuenta = request.user.cuenta
+	mensajes_pendientes = Mensaje.objects.filter(cuenta=cuenta, estado='NL')
+	datos['numero_mensajes_pendientes'] = mensajes_pendientes.count()
+	datos['cuenta_id'] = cuenta.id
 
 	return render_to_response('plan_quirurgico/plan_dia_obs.html', datos, context_instance=RequestContext(request))
 
@@ -525,5 +540,10 @@ def plan_dia_presentacion(request, area, ano, mes, dia):
 	datos['area_actual'] = area
 	datos['quirofanos_area'] = quirofanos_info
 	datos['dia_permitido'] = dia_permitido
+
+	cuenta = request.user.cuenta
+	mensajes_pendientes = Mensaje.objects.filter(cuenta=cuenta, estado='NL')
+	datos['numero_mensajes_pendientes'] = mensajes_pendientes.count()
+	datos['cuenta_id'] = cuenta.id
 
 	return render_to_response('plan_quirurgico/plan_dia_presentacion.html', datos, context_instance=RequestContext(request))

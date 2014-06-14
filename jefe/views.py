@@ -13,7 +13,7 @@ from datetime import date, timedelta
 from hashids import Hashids
 import uuid
 
-from quirofanos_cmsb.models import Cuenta
+from quirofanos_cmsb.models import Cuenta, Mensaje
 from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito, MensajeTemporalAviso, construir_mensaje
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
 from quirofanos_cmsb.helpers.email import enviar_email
@@ -84,6 +84,11 @@ def solicitudes_usuarios(request, estado="pendientes", periodo=1):
     datos['numero_solicitudes_pendientes'] = numero_solicitudes_pendientes
     datos['estado_solicitud'] = estado
     datos['formulario_solicitud_usuario'] = GestionarSolicitudUsuarioForm()
+
+    cuenta = request.user.cuenta
+    mensajes_pendientes = Mensaje.objects.filter(cuenta=cuenta, estado='NL')
+    datos['numero_mensajes_pendientes'] = mensajes_pendientes.count()
+    datos['cuenta_id'] = cuenta.id
 
     return render_to_response('jefe/solicitudes_usuarios.html', datos, context_instance=RequestContext(request))
 
