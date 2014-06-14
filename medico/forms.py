@@ -97,8 +97,17 @@ class IntervaloFechasMisSolicitudesForm(BaseForm):
     fecha_inicio = forms.DateField(required=False)
     fecha_fin= forms.DateField(required=False)
 
+    # def clean(self):
+    #     ''' Sobreescribe el clean(), asegurandose de que el intervalo entre 
+    #         las fechas sea uno valido  '''
+    #     cleaned_data = super(IntervaloFechasMisSolicitudesForm, self).clean()
+ 
+    #     fecha_inicio = cleaned_data.get("fecha_inicio")
+    #     fecha_fin   = cleaned_data.get("fecha_fin")
+    #     if fecha_inicio > fecha_fin:
+    #         self._errors["fecha_fin"] = self.error_class([MensajeError.INTERVALO_INVALIDO])
+    #         del cleaned_data["fecha_fin"]
 
-
-
+    #     return cleaned_data    
 
 

@@ -129,7 +129,7 @@
 							Desde:
 						</label>
 						<div class="col-lg-offset-2 col-lg-8">
-							{% render_field formulario_intervalo.fecha_inicio class="form-control" id="fecha-inicio" type="date" %}
+							{% render_field formulario_intervalo.fecha_inicio class="form-control" id="fecha-inicio" type="date" %}							
 						</div>
 					</div>
 					<div class="form-group">
@@ -138,6 +138,7 @@
 						</label>
 						<div class="col-lg-offset-2 col-lg-8">
 							{% render_field formulario_intervalo.fecha_fin class="form-control" id="fecha-fin" type="date" %}
+							<span class="help-block hidden" id="fecha-fin-error-help">{{ formulario_intervalo.intervalo_invalido.errors }}</span>
 						</div>
 					</div>
 					</div>
