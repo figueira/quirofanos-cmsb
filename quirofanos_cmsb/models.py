@@ -100,6 +100,16 @@ AREA_INGRESO = (
     ('AX', u'Registro de Red Modificado'),
     )
 
+ESTADO_MENSAJE = (
+    ('NL', u'No leido'),
+    ('L', u'Leido'),
+    )
+
+TITULO_MENSAJE = (
+    ('SA', u'Solicitud Aprobada'),
+    ('SR', u'Solicitud Rechazada'),
+    )
+
 class Cuenta (models.Model):
     ''' Clase que representa una Cuenta de Usuario '''
     usuario = models.OneToOneField(User, blank=True, null=True, on_delete=models.SET_NULL)
@@ -617,3 +627,14 @@ class Reservacion (models.Model):
     def __unicode__(self):
         ''' Representacion unicode '''
         return self.intervencion_quirurgica.__unicode__() + ', ' + self.get_tipo_solicitud_display() + ', ' + self.get_estado_display() + ', ' + str(self.fecha_reservacion)
+
+class Mensaje(models.Model):
+    ''' Calse que representa un Mensaje del sistema a los usuarios '''
+    cuenta = models.ForeignKey(Cuenta)
+    estado = models.CharField(max_length=2, choices=ESTADO_MENSAJE)
+    titulo = models.CharField(max_length=60,choices=TITULO_MENSAJE)
+    texto  = models.CharField(max_length=360)
+    fecha_mensaje = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return self.cuenta.usuario.username + ', ' + self.titulo

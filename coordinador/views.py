@@ -17,9 +17,10 @@ from quirofanos_cmsb.helpers import utils
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
 from quirofanos_cmsb.helpers.email import enviar_email
 from quirofanos_cmsb.helpers.user_tests import es_coordinador
-from quirofanos_cmsb.models import Reservacion, IntervencionQuirurgica, Participacion, Quirofano
+from quirofanos_cmsb.models import Reservacion, IntervencionQuirurgica, Participacion, Quirofano, Mensaje, Cuenta
 from coordinador.forms import GestionarSolicitudQuirofanoForm
 from medico.forms import SolicitudQuirofanoForm
+
 
 @require_GET
 @login_required
@@ -277,8 +278,16 @@ def aceptar_solicitud_quirofano(request):
             reservacion_quirofano.estado = 'A'
             reservacion_quirofano.save()
 
-        ''' Enviar Email al usuario '''
         medico = reservacion_quirofano.medico
+        intervencion = reservacion_quirofano.intervencion_quirurgica
+        fecha_intervencion = intervencion.fecha_intervencion.strftime("%Y-%m-%d")
+
+        ''' Mensaje del Sistema '''
+        texto_aprobado = 'Su solicitud del Quirofano '+str(intervencion.quirofano.numero)+' en el area de '+intervencion.quirofano.area+' para operar al paciente '+intervencion.paciente.nombre+' '+intervencion.paciente.apellido+', el dia '+fecha_intervencion+', has sido Aprobada'
+        mensaje = Mensaje(cuenta=medico.cuenta,estado='NL', titulo='SA', texto=texto_aprobado)
+        mensaje.save()
+
+        ''' Enviar Email al usuario '''
         if medico.email:
             enviar_email(asunto='Su solicitud de Quirófano ha sido aprobada.', contenido_texto='La Reservación de Quirófano ha sido aprobada..'
                 # Falta agregar informacion de la reservacion
@@ -312,6 +321,14 @@ def rechazar_solicitud_quirofano(request):
         reservacion_quirofano.save()
         print(reservacion_quirofano)
 
+        medico = reservacion_quirofano.medico
+        intervencion = reservacion_quirofano.intervencion_quirurgica
+        fecha_intervencion = intervencion.fecha_intervencion.strftime("%Y-%m-%d")
+
+        ''' Mensaje del Sistema '''
+        texto_rechazado = 'Su solicitud del Quirofano '+str(intervencion.quirofano.numero)+' en el area de '+intervencion.quirofano.area+' para operar al paciente '+intervencion.paciente.nombre+' '+intervencion.paciente.apellido+', el dia '+fecha_intervencion+', has sido Rechazada'
+        mensaje = Mensaje(cuenta=medico.cuenta,estado='NL', titulo='SR', texto=texto_rechazado)
+        mensaje.save()
 
         messages.add_message(request, messages.WARNING, MensajeTemporalAviso.SOLICITUD_QUIROFANO_RECHAZADA)
     else:
