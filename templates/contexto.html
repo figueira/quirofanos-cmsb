@@ -20,7 +20,7 @@
 		{% endblock nombre-usuario %}
 	</p>
 	<li class="navegacion" id="seccion-mensajes">
-		<a href="#">
+		<a href="{% url 'mis_mensajes' cuenta_id %}">
 			Mensajes
 			<span class="badge">
 				{% block numero-mensajes %}

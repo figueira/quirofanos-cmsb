@@ -1,0 +1,120 @@
+{% extends "medico/contexto.html" %}
+
+{% load staticfiles  %}
+{% load widget_tweaks %}
+
+{% block title %}{{ block.super }} | Mis Solicitudes{% endblock title %}
+
+{% block scripts %}
+<script type="text/javascript" src="{% static 'mensaje/js/mis_mensajes.js' %}">
+</script>
+{% endblock scripts %}
+
+{% block flash-messages %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} fade in">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	<strong>{{ message }}</strong>
+</div>
+{% endfor %}
+{% endif %}
+{% endblock flash-messages %}
+
+{% block nombre-usuario %}
+{{ request.session.nombre }}
+{% endblock nombre-usuario %}
+
+
+
+{% block content %}
+<div class="page-header">
+	<h1>Mis Mensajes</h1>
+</div>
+<div class="row">
+	<div class="col-lg-offset-1 col-lg-9">
+		<ul class="nav nav-tabs">
+			<li class="active" id="li-en-espera">
+				<a href="#">
+					Pendientes
+					<span class="glyphicon glyphicon-ok">
+					</span>
+				</a>
+			</li>
+			<li  id="li-aprobadas">
+				<a href="#">
+					Leidos
+					<span class="glyphicon glyphicon-question-sign">
+					</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+	<div class="col-lg-1">
+		<button type="button" class="btn btn-primary dropdown-toggle pull-right" data-toggle="dropdown">
+			Ver
+			<span class="caret">
+			</span>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li>
+				<a href="#">
+					Última semana
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					Último mes
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					Últimos 3 meses
+				</a>
+			</li>
+			<li class="divider">
+			</li>
+			<li>
+				<a href="#" data-toggle="modal" data-target="#seleccionar-periodo">
+					Seleccionar período
+				</a>
+			</li>
+		</ul>
+	</div>
+</div><!-- Pestañas y Filtro -->
+
+<div class="row">
+	<div class="col-lg-offset-1 col-lg-10">
+		<!-- Tab panes -->
+		<div class="tab-content">
+			<div  id="contenido-pendientes">
+				{% include "mensaje/lista_mis_mensajes.html" with lista_mensajes=mensajes_pendientes tipo="Por Leer" %}
+			</div><!-- Lista de Solicitudes Pendientes -->
+			<div class="hidden" id="contenido-aprobadas">
+				{% include "mensaje/lista_mis_mensajes.html" with lista_mensajes=mensajes_leidos tipo="Leidos" %}
+			</div><!-- Lista de Solicitudes Rechazadas -->
+		</div><!-- Tab panes -->
+	</div>
+</div>
+
+<!-- Paginacion de Solicitudes -->
+<div class="row">
+	<div class="col-lg-6 col-lg-offset-1">
+		<div id="paginacion-pendientes"></div>
+		<div id="paginacion-aprobadas"></div>
+		<div id="paginacion-rechazadas"></div>
+	</div>
+</div>
+<script type="text/javascript">
+
+// inicializarPaginacion({{ reservaciones_pendientes.number }}, {{ reservaciones_pendientes.paginator.num_pages }}, 'pendientes' )
+// $('#li-aprobadas').addClass('active');
+// $('#li-en-espera').removeClass('active');
+// {% if estado_solicitud == 'aprobadas' %}
+// inicializarPaginacion({{ reservaciones_aprobadas.number }}, {{ reservaciones_aprobadas.paginator.num_pages }}, 'aprobadas' );
+// $('#li-en-espera').addClass('active');
+// $('#li-aprobadas').removeClass('active');
+// {% endif %}
+// seleccionarPestana("pendientes");
+</script>
+{% endblock content %}

@@ -288,7 +288,7 @@ def aceptar_solicitud_quirofano(request):
         fecha_intervencion = intervencion.fecha_intervencion.strftime("%Y-%m-%d")
 
         ''' Mensaje del Sistema '''
-        texto_aprobado = 'Su solicitud del Quirofano '+str(intervencion.quirofano.numero)+' en el area de '+intervencion.quirofano.area+' para operar al paciente '+intervencion.paciente.nombre+' '+intervencion.paciente.apellido+', el dia '+fecha_intervencion+', has sido Aprobada'
+        texto_aprobado = 'Su solicitud del Quirofano '+str(intervencion.quirofano.numero)+' en el area de '+intervencion.quirofano.get_area_display()+' para operar al paciente '+intervencion.paciente.nombre+' '+intervencion.paciente.apellido+u', el día '+fecha_intervencion+', ha sido Aprobada'
         mensaje = Mensaje(cuenta=medico.cuenta,estado='NL', titulo='SA', texto=texto_aprobado)
         mensaje.save()
 
@@ -331,7 +331,7 @@ def rechazar_solicitud_quirofano(request):
         fecha_intervencion = intervencion.fecha_intervencion.strftime("%Y-%m-%d")
 
         ''' Mensaje del Sistema '''
-        texto_rechazado = 'Su solicitud del Quirofano '+str(intervencion.quirofano.numero)+' en el area de '+intervencion.quirofano.area+' para operar al paciente '+intervencion.paciente.nombre+' '+intervencion.paciente.apellido+', el dia '+fecha_intervencion+', has sido Rechazada'
+        texto_rechazado = 'Su solicitud del Quirofano '+str(intervencion.quirofano.numero)+' en el area de '+intervencion.quirofano.get_area_display()+' para operar al paciente '+intervencion.paciente.nombre+' '+intervencion.paciente.apellido+u', el día '+fecha_intervencion+', has sido Rechazada'
         mensaje = Mensaje(cuenta=medico.cuenta,estado='NL', titulo='SR', texto=texto_rechazado)
         mensaje.save()
 
