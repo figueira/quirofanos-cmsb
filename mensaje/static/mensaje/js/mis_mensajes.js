@@ -54,13 +54,10 @@ var inicializarPaginacion = function(pagActual, pagTotales, estado){
     options.currentPage = pagActual;
     options.totalPages = pagTotales;
     if ( estado == 'pendientes'){
-        $('#paginacion-pendientes').bootstrapPaginator(options);
+        $('#paginacion-pendientes').bootstrapPaginator(options);        
     } else if ( estado == 'aprobadas' ){
         $('#paginacion-aprobadas').bootstrapPaginator(options);
-    } else if ( estado == 'rechazadas' ){
-        $('#paginacion-rechazadas').bootstrapPaginator(options);
     }
-
 };
 
 
@@ -73,6 +70,7 @@ $(document).ready(function() {
     $('#li-en-espera').addClass('active');
     $('#li-aprobadas').removeClass('active');
     $("#paginacion-pendientes").removeClass('hidden');
+    $("#paginacion-pendientes").addClass('active');
     $("#paginacion-aprobadas").addClass('hidden');
     $("#contenido-pendientes").removeClass('hidden');
     $("#contenido-aprobadas").addClass('hidden');

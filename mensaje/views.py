@@ -54,6 +54,24 @@ def mis_mensajes(request, pk):
 		mensaje_diccionario['formulario'] = MensajeForm(datos_formulario)
 		mensajes_leidos_diccionario.append(mensaje_diccionario)
 
+	paginator_pendientes = Paginator(mensajes_pendientes_diccionario, 2)
+	page = request.GET.get('page')
+	try:
+	    mensajes_pendientes_diccionario = paginator_pendientes.page(page)
+	except PageNotAnInteger:
+	    mensajes_pendientes_diccionario = paginator_pendientes.page(1)
+	except EmptyPage:
+	    mensajes_pendientes_diccionario = paginator_pendientes.page(paginator_pendientes.num_pages)
+
+	paginator_aprobadas = Paginator(mensajes_leidos_diccionario, 2)
+	page = request.GET.get('page')
+	try:
+	    mensajes_leidos_diccionario = paginator_aprobadas.page(page)
+	except PageNotAnInteger:
+	    mensajes_leidos_diccionario = paginator_aprobadas.page(1)
+	except EmptyPage:
+	    mensajes_leidos_diccionario = paginator_aprobadas.page(paginator_aprobadas.num_pages)
+
 
 	datos = {}
 	datos['mensajes_pendientes'] = mensajes_pendientes_diccionario	

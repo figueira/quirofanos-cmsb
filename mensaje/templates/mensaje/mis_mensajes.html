@@ -100,21 +100,30 @@
 <!-- Paginacion de Solicitudes -->
 <div class="row">
 	<div class="col-lg-6 col-lg-offset-1">
-		<div id="paginacion-pendientes"></div>
-		<div id="paginacion-aprobadas"></div>
-		<div id="paginacion-rechazadas"></div>
+		<div class="hidden" id="paginacion-pendientes"></div>
+		<div class="hidden" id="paginacion-aprobadas"></div>
 	</div>
 </div>
 <script type="text/javascript">
-
-// inicializarPaginacion({{ reservaciones_pendientes.number }}, {{ reservaciones_pendientes.paginator.num_pages }}, 'pendientes' )
-// $('#li-aprobadas').addClass('active');
-// $('#li-en-espera').removeClass('active');
-// {% if estado_solicitud == 'aprobadas' %}
-// inicializarPaginacion({{ reservaciones_aprobadas.number }}, {{ reservaciones_aprobadas.paginator.num_pages }}, 'aprobadas' );
+{% if 0 == 0 %}
+if ($('#paginacion-pendientes').hasClass("active")) {
+inicializarPaginacion({{ mensajes_pendientes.number }}, {{ mensajes_pendientes.paginator.num_pages }}, 'pendientes' );
+}
+// } else if ($('#paginacion-aprobadas').hasClass("active")) {
 // $('#li-en-espera').addClass('active');
 // $('#li-aprobadas').removeClass('active');
-// {% endif %}
-// seleccionarPestana("pendientes");
+// $('#li-rechazadas').removeClass('active');
+// {% elif estado_solicitud == 'aprobadas' %}
+// inicializarPaginacion({{ mensajes_leidos.number }}, {{ mensajes_leidos.paginator.num_pages }}, 'aprobadas' );
+// };
+// $('#li-aprobadas').addClass('active');
+// $('#li-en-espera').removeClass('active');
+// $('#li-rechazadas').removeClass('active');
+// {% elif estado_solicitud == 'rechazadas' %}
+// inicializarPaginacion({{ reservaciones_rechazadas.number }}, {{ reservaciones_rechazadas.paginator.num_pages }}, 'rechazadas' );
+// $('#li-rechazadas').addClass('active');
+// $('#li-en-espera').removeClass('active');
+// $('#li-aprobadas').removeClass('active');
+{% endif %}
 </script>
 {% endblock content %}
