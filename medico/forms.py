@@ -90,24 +90,3 @@ class ProcedimientoQuirurgicoForm(BaseForm):
 class EliminarProcedimientoQuirurgicoForm(BaseForm):
     ''' Formulario para eliminar un procedimiento quirurgico durante el proceso de solicitud de quirofano '''
     id_procedimiento_quirurgico = forms.IntegerField(min_value=1, widget=forms.HiddenInput, required=False)
-
-class IntervaloFechasMisSolicitudesForm(BaseForm):
-    ''' Formulario para realizar el filtrado en Mis Solicitudes
-        entre dos fechas '''
-    fecha_inicio = forms.DateField(required=False)
-    fecha_fin= forms.DateField(required=False)
-
-    # def clean(self):
-    #     ''' Sobreescribe el clean(), asegurandose de que el intervalo entre 
-    #         las fechas sea uno valido  '''
-    #     cleaned_data = super(IntervaloFechasMisSolicitudesForm, self).clean()
- 
-    #     fecha_inicio = cleaned_data.get("fecha_inicio")
-    #     fecha_fin   = cleaned_data.get("fecha_fin")
-    #     if fecha_inicio > fecha_fin:
-    #         self._errors["fecha_fin"] = self.error_class([MensajeError.INTERVALO_INVALIDO])
-    #         del cleaned_data["fecha_fin"]
-
-    #     return cleaned_data    
-
-

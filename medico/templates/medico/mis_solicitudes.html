@@ -79,13 +79,6 @@
 					Últimos 3 meses
 				</a>
 			</li>
-			<li class="divider">
-			</li>
-			<li>
-				<a href="#" data-toggle="modal" data-target="#seleccionar-periodo">
-					Seleccionar período
-				</a>
-			</li>
 		</ul>
 	</div>
 </div><!-- Pestañas y Filtro -->
@@ -106,50 +99,6 @@
 		</div><!-- Tab panes -->
 	</div>
 </div>
-
-<!-- Modal de Seleccion de Periodo a Mostrar -->
-<div class="modal fade" id="seleccionar-periodo" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-sm">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-					&times;
-				</button>
-				<h4 class="modal-title" id="myModalLabel">
-					Seleccione Período
-				</h4>
-			</div>
-			<div class="modal-body">
-				<form role="form" class="form-horizontal" action="{% url 'mis_solicitudes' estado_solicitud 3 %}" method="POST" novalidate>
-					{% csrf_token %}
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="desde">
-							Desde:
-						</label>
-						<div class="col-lg-offset-2 col-lg-8">
-							{% render_field formulario_intervalo.fecha_inicio class="form-control" id="fecha-inicio" type="date" %}							
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="hasta">
-							Hasta:
-						</label>
-						<div class="col-lg-offset-2 col-lg-8">
-							{% render_field formulario_intervalo.fecha_fin class="form-control" id="fecha-fin" type="date" %}
-							<span class="help-block hidden" id="fecha-fin-error-help">{{ formulario_intervalo.intervalo_invalido.errors }}</span>
-						</div>
-					</div>
-					</div>
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-primary" >
-							Aceptar
-						</button>
-					</div>
-				</form>
-		</div>
-	</div>
-</div><!-- Modal de Seleccion de Periodo a Mostrar -->
-
 
 <!-- Paginacion de Solicitudes -->
 <div class="row">

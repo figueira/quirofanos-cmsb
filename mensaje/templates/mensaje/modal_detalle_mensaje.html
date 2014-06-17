@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 <div class="modal fade" id="modal-mensaje-{{ mensaje.objeto.pk }}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-sm">
+	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -15,13 +15,13 @@
 			<div class="modal-body">
 				<form role="form" class="form-horizontal" action="{% url 'marcar_mensaje' mensaje.objeto.pk%}" method="POST" novalidate>
 					{% csrf_token %}
-					<div class="form-group">						
+					<div class="form-group">
 						<div class="col-lg-offset-2 col-lg-8">
-							{% render_field mensaje.formulario.titulo class="form-control" id="titulo" disabled="disabled" %}	
+							{% render_field mensaje.formulario.titulo class="form-control" id="titulo" disabled="disabled" %}
 						</div>
 					</div>
 					<div class="form-group">
-						
+
 						<div class="col-lg-offset-2 col-lg-8">
 							{% render_field mensaje.formulario.texto class="form-control" id="texto" disabled="disabled" %}
 						</div>
@@ -29,7 +29,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-primary" >
-							Aceptar
+							{{ ACEPTAR }}
 						</button>
 					</div>
 				</form>
