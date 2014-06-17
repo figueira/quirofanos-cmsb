@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'autenticacion',
     'plan_quirurgico',
     'medico',
+    'mensaje',
     'coordinador',
     'jefe',
     'quirofanos_cmsb',

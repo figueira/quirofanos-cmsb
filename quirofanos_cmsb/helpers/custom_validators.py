@@ -37,6 +37,7 @@ class MensajeError():
     DURACION_MENOR_QUE_UNA_HORA = _(u'La duración de una intervención quirúrgica debe ser mínimo una hora.')
     PACIENTE_CON_EXPEDIENTE_SIN_ESPECIFICACION = _(u'Se indicó que el paciente posee expediente. Debe especificarse area de ingreso y número de expediente.')
     PACIENTE_HOSPITALIZADO_SIN_HABITACION = (u'Se indicó que el paciente está hospitalizado. Debe indicarse el número de habitación.')
+    INTERVALO_INVALIDO = (u'El intervalo para el filtrado es invalido. La fecha Hasta debe ser mayor.')
 
 class CodigoError():
     ''' Constantes que contienen codigos de error a ser utilizados en validaciones de modelos y formularios '''
@@ -61,3 +62,4 @@ class CodigoError():
     DURACION_MENOR_QUE_UNA_HORA = "duracion_menor_que_una_hora"
     PACIENTE_CON_EXPEDIENTE_SIN_ESPECIFICACION = "paciente_con_expediente_sin_especificacion"
     PACIENTE_HOSPITALIZADO_SIN_HABITACION = "paciente_hospitalizado_sin_habitacion"
+    INTERVALO_INVALIDO = "intervalo_invalido"

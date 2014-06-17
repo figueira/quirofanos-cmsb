@@ -12,7 +12,7 @@ from django.db import transaction
 from hashids import Hashids
 import uuid
 
-from quirofanos_cmsb.models import Cuenta, Departamento, Medico
+from quirofanos_cmsb.models import Cuenta, Departamento, Medico, Mensaje
 from autenticacion.forms import InicioSesionForm, CambiarContrasenaForm, BusquedaMedicoForm, RegistroMedicoForm, RegistroDepartamentoForm, RecuperarContrasenaForm, BusquedaDepartamentoForm, ActualizarEmailForm
 from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito
 from quirofanos_cmsb.helpers.email import enviar_email
@@ -305,6 +305,12 @@ def cambiar_contrasena(request):
 				return redirect('cambiar_contrasena')
 
 	datos["formulario_cambio_contrasena"] = formulario_cambio_contrasena
+
+	cuenta = request.user.cuenta
+	mensajes_pendientes = Mensaje.objects.filter(cuenta=cuenta, estado='NL')
+	datos['numero_mensajes_pendientes'] = mensajes_pendientes.count()
+	datos['cuenta_id'] = cuenta.id
+
 	return render_to_response('autenticacion/cambiar_contrasena.html', datos, context_instance=RequestContext(request))
 
 @require_http_methods(["GET","POST"])
@@ -393,5 +399,10 @@ def cambiar_correo_electronico(request):
 				return redirect('calendario')
 
 	datos["formulario_actualizacion_email"] = formulario_actualizacion_email
+
+	cuenta = request.user.cuenta
+	mensajes_pendientes = Mensaje.objects.filter(cuenta=cuenta, estado='NL')
+	datos['numero_mensajes_pendientes'] = mensajes_pendientes.count()
+	datos['cuenta_id'] = cuenta.id
 
 	return render_to_response('autenticacion/cambiar_correo_electronico.html', datos, context_instance=RequestContext(request))

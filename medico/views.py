@@ -12,13 +12,13 @@ from django.contrib import messages
 
 import calendar
 import json
-from datetime import date, time, timedelta
+from datetime import date, time, timedelta, datetime
 
 from quirofanos_cmsb.helpers.user_tests import es_medico, es_medico_o_coordinador
 from quirofanos_cmsb.helpers import utils
 from quirofanos_cmsb.helpers.template_text import TextoMostrable
 from quirofanos_cmsb.helpers.flash_messages import MensajeTemporalError, MensajeTemporalExito, MensajeTemporalAviso
-from quirofanos_cmsb.models import User, Cuenta, Quirofano, SistemaCorporal, OrganoCorporal, TipoProcedimientoQuirurgico, Participacion, ProcedimientoQuirurgico, Reservacion, IntervencionQuirurgica, Paciente
+from quirofanos_cmsb.models import User, Cuenta, Quirofano, SistemaCorporal, OrganoCorporal, TipoProcedimientoQuirurgico, Participacion, ProcedimientoQuirurgico, Reservacion, IntervencionQuirurgica, Paciente, Mensaje
 from medico.forms import SolicitudQuirofanoForm, ProcedimientoQuirurgicoForm, EliminarProcedimientoQuirurgicoForm
 
 @require_http_methods(["GET", "POST"])
@@ -315,9 +315,14 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 	datos["es_coordinador"] = es_coordinador
 	#datos["id_sistema_corporal_actual"] = id_sistema_corporal_actual
 
+	cuenta = request.user.cuenta
+	mensajes_pendientes = Mensaje.objects.filter(cuenta=cuenta, estado='NL')
+	datos['numero_mensajes_pendientes'] = mensajes_pendientes.count()
+	datos['cuenta_id'] = cuenta.id
+
 	return render_to_response('medico/solicitud_quirofano.html', datos,  context_instance=RequestContext(request))
 
-@require_GET
+
 @login_required
 @user_passes_test(es_medico)
 def mis_solicitudes(request, estado="pendientes", periodo= None):
@@ -335,6 +340,8 @@ def mis_solicitudes(request, estado="pendientes", periodo= None):
 	if estado not in ("pendientes", "aprobadas", "rechazadas"):
 	 	raise Http404
 
+	delay = timedelta(days=7)
+
 	if periodo:
 		periodo = int(periodo)
 		if periodo not in (0, 1, 2):
@@ -344,14 +351,14 @@ def mis_solicitudes(request, estado="pendientes", periodo= None):
 	 		delay = timedelta(days=7)
 	 	elif periodo == 1:
 	 		delay = timedelta(days=31)
-	 	else:
+	 	elif periodo == 2:
 	 		delay = timedelta(days=31*6)
 	else:
-		delay = timedelta(days=7)
-
-	filter_date = date.today() - delay
+		periodo = 0
 
 	cuenta = Cuenta.objects.get(usuario = request.user)
+	filter_date = date.today() - delay
+
 	reservaciones_aprobadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='A', fecha_reservacion__gte = filter_date)
 	reservaciones_pendientes = Reservacion.objects.filter(medico = cuenta.medico, estado ='P', fecha_reservacion__gte = filter_date)
 	reservaciones_rechazadas = Reservacion.objects.filter(medico = cuenta.medico, estado ='R', fecha_reservacion__gte = filter_date)
@@ -556,6 +563,10 @@ def mis_solicitudes(request, estado="pendientes", periodo= None):
 	datos['reservaciones_pendientes'] = reservaciones_pendientes_diccionarios
 	datos['reservaciones_rechazadas'] = reservaciones_rechazadas_diccionarios
 	datos['estado_solicitud'] = estado
+	cuenta = request.user.cuenta
+	mensajes_pendientes = Mensaje.objects.filter(cuenta=cuenta, estado='NL')
+	datos['numero_mensajes_pendientes'] = mensajes_pendientes.count()
+	datos['cuenta_id'] = cuenta.id
 
 	return render_to_response('medico/mis_solicitudes.html', datos, context_instance=RequestContext(request))
 
@@ -858,5 +869,10 @@ def proximas_intervenciones(request, periodo="semana_actual"):
 	datos["lista_participaciones_mes_actual"] = lista_participaciones_mes_actual_diccionarios
 	datos["lista_participaciones_ano_actual"] = lista_participaciones_ano_actual_diccionarios
 	datos["periodo"] = periodo
+
+	cuenta = request.user.cuenta
+	mensajes_pendientes = Mensaje.objects.filter(cuenta=cuenta, estado='NL')
+	datos['numero_mensajes_pendientes'] = mensajes_pendientes.count()
+	datos['cuenta_id'] = cuenta.id
 
 	return render_to_response('medico/proximas_intervenciones_quirurgicas.html', datos, context_instance=RequestContext(request))

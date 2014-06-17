@@ -25,9 +25,7 @@
 {{ request.session.nombre }}
 {% endblock nombre-usuario %}
 
-{% block numero-mensajes %}
-7
-{% endblock numero-mensajes %}
+
 
 {% block content %}
 <div class="page-header">
@@ -36,21 +34,21 @@
 <div class="row">
 	<div class="col-lg-offset-1 col-lg-9">
 		<ul class="nav nav-tabs">
-			<li id="li-aprobadas">
+			<li class="active" id="li-aprobadas">
 				<a href="{% url 'mis_solicitudes' 'aprobadas' %}">
 					Aprobadas
 					<span class="glyphicon glyphicon-ok">
 					</span>
 				</a>
 			</li>
-			<li id="li-en-espera">
+			<li class="active" id="li-en-espera">
 				<a href="{% url 'mis_solicitudes' 'pendientes' %}">
 					En espera
 					<span class="glyphicon glyphicon-question-sign">
 					</span>
 				</a>
 			</li>
-			<li id="li-rechazadas">
+			<li class="active" id="li-rechazadas">
 				<a href="{% url 'mis_solicitudes' 'rechazadas' %}">
 					Rechazadas
 					<span class="glyphicon glyphicon-ban-circle">
@@ -67,25 +65,18 @@
 		</button>
 		<ul class="dropdown-menu" role="menu">
 			<li>
-				<a href="{% url 'mis_solicitudes' 'pendientes' 0 %}">
+				<a href="{% url 'mis_solicitudes' estado_solicitud 0 %}">
 					Última semana
 				</a>
 			</li>
 			<li>
-				<a href="{% url 'mis_solicitudes' 'pendientes' 1 %}">
+				<a href="{% url 'mis_solicitudes' estado_solicitud 1 %}">
 					Último mes
 				</a>
 			</li>
 			<li>
-				<a href="{% url 'mis_solicitudes' 'pendientes' 2 %}">
+				<a href="{% url 'mis_solicitudes' estado_solicitud 2 %}">
 					Últimos 3 meses
-				</a>
-			</li>
-			<li class="divider">
-			</li>
-			<li>
-				<a href="#" data-toggle="modal" data-target="#seleccionar-periodo">
-					Seleccionar período
 				</a>
 			</li>
 		</ul>
@@ -109,48 +100,6 @@
 	</div>
 </div>
 
-<!-- Modal de Seleccion de Periodo a Mostrar -->
-<div class="modal fade" id="seleccionar-periodo" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-sm">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-					&times;
-				</button>
-				<h4 class="modal-title" id="myModalLabel">
-					Seleccione Período
-				</h4>
-			</div>
-			<div class="modal-body">
-				<form role="form" class="form-horizontal">
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="desde">
-							Desde:
-						</label>
-						<div class="col-lg-offset-2 col-lg-8">
-							<input type="date" class="form-control" name="desde">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="hasta">
-							Hasta:
-						</label>
-						<div class="col-lg-offset-2 col-lg-8">
-							<input type="date" class="form-control" name="hasta">
-						</div>
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" data-dismiss="modal">
-					Aceptar
-				</button>
-			</div>
-		</div>
-	</div>
-</div><!-- Modal de Seleccion de Periodo a Mostrar -->
-
-
 <!-- Paginacion de Solicitudes -->
 <div class="row">
 	<div class="col-lg-6 col-lg-offset-1">
@@ -160,13 +109,22 @@
 	</div>
 </div>
 <script type="text/javascript">
-	{% if estado_solicitud == 'pendientes' %}
-		inicializarPaginacion({{ reservaciones_pendientes.number }}, {{ reservaciones_pendientes.paginator.num_pages }}, 'pendientes' )
-	{% elif estado_solicitud == 'aprobadas' %}
-		inicializarPaginacion({{ reservaciones_aprobadas.number }}, {{ reservaciones_aprobadas.paginator.num_pages }}, 'aprobadas' );
-	{% elif estado_solicitud == 'rechazadas' %}
-		inicializarPaginacion({{ reservaciones_rechazadas.number }}, {{ reservaciones_rechazadas.paginator.num_pages }}, 'rechazadas' );
-	{% endif %}
-	seleccionarPestana("{{ estado_solicitud }}");
+{% if estado_solicitud == 'pendientes' %}
+inicializarPaginacion({{ reservaciones_pendientes.number }}, {{ reservaciones_pendientes.paginator.num_pages }}, 'pendientes' )
+$('#li-en-espera').addClass('active');
+$('#li-aprobadas').removeClass('active');
+$('#li-rechazadas').removeClass('active');
+{% elif estado_solicitud == 'aprobadas' %}
+inicializarPaginacion({{ reservaciones_aprobadas.number }}, {{ reservaciones_aprobadas.paginator.num_pages }}, 'aprobadas' );
+$('#li-aprobadas').addClass('active');
+$('#li-en-espera').removeClass('active');
+$('#li-rechazadas').removeClass('active');
+{% elif estado_solicitud == 'rechazadas' %}
+inicializarPaginacion({{ reservaciones_rechazadas.number }}, {{ reservaciones_rechazadas.paginator.num_pages }}, 'rechazadas' );
+$('#li-rechazadas').addClass('active');
+$('#li-en-espera').removeClass('active');
+$('#li-aprobadas').removeClass('active');
+{% endif %}
+seleccionarPestana("{{ estado_solicitud }}");
 </script>
 {% endblock content %}

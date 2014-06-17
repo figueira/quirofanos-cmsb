@@ -90,9 +90,3 @@ class ProcedimientoQuirurgicoForm(BaseForm):
 class EliminarProcedimientoQuirurgicoForm(BaseForm):
     ''' Formulario para eliminar un procedimiento quirurgico durante el proceso de solicitud de quirofano '''
     id_procedimiento_quirurgico = forms.IntegerField(min_value=1, widget=forms.HiddenInput, required=False)
-
-
-
-
-
-

@@ -11,3 +11,4 @@
 
 # Ignore collectstatic
 static/collecstatic/
+build/

@@ -1,0 +1,27 @@
+{% load widget_tweaks %}
+
+{% if lista_mensajes|length > 0 %}
+<ul class="list-group">
+	{% for mensaje in lista_mensajes  %}
+	<a href="#" class="list-group-item" data-toggle="modal" data-target="#modal-mensaje-{{ mensaje.objeto.pk }}">
+		<span class="label label-info">
+			Mensaje:
+			{{ mensaje.titulo_legible }}
+		</span>
+		<span class="pull-right">
+			<small>
+				<strong>
+					{{mensaje.objeto.fecha_mensaje}}
+				</strong>
+			</small>
+		</span>
+	</a>
+	{% include "mensaje/modal_detalle_mensaje.html" with mensaje_detalle=mensaje %}
+	{% endfor %}
+
+</ul>
+{% else %}
+<ul class="list-group-item">
+	<strong>No posee mensajes {{ tipo }}.</strong>
+</ul>
+{% endif %}
