@@ -239,6 +239,14 @@ def solicitud_quirofano(request, ano, mes, dia, id_quirofano, hora_inicio, durac
 
 						reservacion.save()
 
+						''' Mensaje del Sistema '''					    
+
+						texto_quirofano = reservacion.medico.nombre + reservacion.medico.apellido+ ' ha realizado una solcitud para reservar el '+ quirofano_legible+' en el area de '+area_legible+ u', para el día ' + str(reservacion.fecha_reservacion)+'.'
+						cuentas_coordinador = Cuenta.objects.filter(privilegio=1)
+						for cuenta in cuentas_coordinador:        	
+							mensaje = Mensaje(cuenta=cuenta,estado='NL', titulo='SQ', texto=texto_quirofano)
+							mensaje.save()
+
 						for procedimiento_quirurgico in procedimientos_quirurgicos:
 							procedimiento_quirurgico.intervencion_quirurgica = intervencion_quirurgica
 							procedimiento_quirurgico.save()

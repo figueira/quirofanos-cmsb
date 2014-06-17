@@ -106,8 +106,11 @@ ESTADO_MENSAJE = (
     )
 
 TITULO_MENSAJE = (
-    ('SA', u'Solicitud Aprobada'),
-    ('SR', u'Solicitud Rechazada'),
+    ('SA', u'Solicitud de Quirofano Aprobada'),
+    ('SR', u'Solicitud de Quirofano Rechazada'),
+    ('SU', u'Nueva Solicitud de Usuario'),
+    ('SD', u'Nueva Solicitud de Departamento'),
+    ('SQ', u'Nueva Solicitud de Quirofano'),
     )
 
 class Cuenta (models.Model):

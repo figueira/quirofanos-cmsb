@@ -124,6 +124,14 @@ def registro_medico(request):
 			medico.cuenta = cuenta_medico
 			medico.save()
 
+			''' Mensaje del Sistema '''
+	        texto_usuario = medico.nombre +' '+ medico.apellido +', con CI:'+medico.cedula+', ha solicitado una cuenta de acceso al sistema'
+
+	        cuentas_jefes = Cuenta.objects.filter(privilegio=0)
+	        for cuenta in cuentas_jefes:        	
+	        	mensaje = Mensaje(cuenta=cuenta,estado='NL', titulo='SU', texto=texto_usuario)
+	        	mensaje.save()
+
 			messages.add_message(request, messages.SUCCESS, MensajeTemporalExito.SOLICITUD_REGISTRO_EXITOSO)
 			return redirect('inicio')
 
@@ -184,6 +192,14 @@ def registro_departamento(request):
 			cuenta_departamento.save()
 			departamento.cuenta = cuenta_departamento
 			departamento.save()
+
+			''' Mensaje del Sistema '''
+	        texto_departamento = 'El Departamento de '+departamento.nombre+' ha solicitado una cuenta de acceso al sistema'
+
+	        cuentas_jefes = Cuenta.objects.filter(privilegio=0)
+	        for cuenta in cuentas_jefes:        	
+	        	mensaje = Mensaje(cuenta=cuenta,estado='NL', titulo='SD', texto=texto_departamento)
+	        	mensaje.save()
 
 			messages.add_message(request, messages.SUCCESS, MensajeTemporalExito.SOLICITUD_REGISTRO_EXITOSO)
 			return redirect('inicio')
