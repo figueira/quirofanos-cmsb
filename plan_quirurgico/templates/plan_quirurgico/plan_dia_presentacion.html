@@ -73,6 +73,7 @@
                                     {% else %}
                                     <h4>Sin observaciones</h4>
                                     {% endif %}
+                                    <h5>Días de Hospitalización: {{ intervencion.objeto.reservacion.dias_hospitalizacion }}</h5>
                                 </td>
                                 <td>
                                     {% if intervencion.objeto.estado == '0' %}

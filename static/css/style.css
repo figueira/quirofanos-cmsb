@@ -219,12 +219,6 @@ a:hover
 	overflow:auto
 }
 
-/* estilo de las casillas no disponibles en la tabla del plan diario */
-.table-bordered>thead>tr>th.unavailable,.table-bordered>tbody>tr>th,.table-bordered>tfoot>tr>th.unavailable,.table-bordered>thead>tr>td.unavailable,.table-bordered>tbody>tr>td.unavailable,.table-bordered>tfoot>tr>td.unavailable
-{
-	border:none!important
-}
-
 .table-plan>thead>tr>td.unavailable,.table-plan>tbody>tr>td.unavailable,.table-plan>tfoot>tr>td.unavailable,.table-plan>thead>tr>th.unavailable,.table-plan>tbody>tr>th.unavailable,.table-plan>tfoot>tr>th.unavailable,.table-plan>thead>tr.unavailable>td,.table-plan>tbody>tr.unavailable>td,.table-plan>tfoot>tr.unavailable>td,.table-plan>thead>tr.unavailable>th,.table-plan>tbody>tr.unavailable>th,.table-plan>tfoot>tr.unavailable>th
 {
 	outline:solid rgba(172,66,66,1) thin
