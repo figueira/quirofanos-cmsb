@@ -218,13 +218,13 @@
           <!-- Nombre y Apellido -->
           <div class="form-group" id="nombre-apellido-medico-form-group">
             <label class="col-lg-2 control-label" for="nombre-medico">
-              {{ LABEL_NOMBRE }}
+              <span class="campo-obligatorio">* </span>{{ LABEL_NOMBRE }}
             </label>
             <div class="col-lg-4">
               <input class="form-control" id="nombre-medico" type="text" value="{{ medico.nombre }}" disabled>
             </div>
             <label class="col-lg-2 control-label" for="apellido-medico">
-              {{ LABEL_APELLIDO }}
+              <span class="campo-obligatorio">* </span>{{ LABEL_APELLIDO }}
             </label>
             <div class="col-lg-4">
               <input class="form-control" id="apellido-medico" type="text" value="{{ medico.apellido }}" disabled>
@@ -234,14 +234,14 @@
           <!-- Cedula y Genero -->
           <div class="form-group" id="cedula-genero-medico-form-group">
             <label class="col-lg-2 control-label" for="cedula-medico">
-              {{ LABEL_CEDULA }}
+              <span class="campo-obligatorio">* </span>{{ LABEL_CEDULA }}
             </label>
             <div class="col-lg-4">
               <input class="form-control" id="cedula-medico" type="text" value="{{ medico.cedula }}" disabled>
               {% render_field formulario_registro_medico.cedula_medico id="cedula-medico-input" %}
             </div>
             <label class="col-lg-2 control-label" for="genero-medico">
-              {{ LABEL_GENERO }}
+              <span class="campo-obligatorio">* </span>{{ LABEL_GENERO }}
             </label>
             <div class="col-lg-4">
               <input class="form-control" id="genero-medico" type="text" value="{{ medico.genero }}" disabled>
@@ -252,14 +252,14 @@
           <div class="form-group" id="especializacion-telefono-medico-form-group">
             <label class="col-lg-2 control-label" for="especializacion-medico">
               <abbr title="{{ LABEL_ESPECIALIZACION }}">
-                {{ LABEL_ESPECIALIZACION_ABREVIADO }}
+                <span class="campo-obligatorio">* </span>{{ LABEL_ESPECIALIZACION_ABREVIADO }}
               </abbr>
             </label>
             <div class="col-lg-4">
               <input class="form-control" id="especializacion-medico" type="text" value="{{ medico.especializacion }}" disabled>
             </div>
             <label class="col-lg-2 control-label" for="telefono-medico">
-              {{ LABEL_TELEFONO }}
+              <span class="campo-obligatorio">* </span>{{ LABEL_TELEFONO }}
             </label>
             <div class="col-lg-4">
               <input class="form-control" id="telefono-medico" type="text" value="{% if medico.telefono %}{{ medico.telefono }}{% else %}{{ NO_POSEE }}{% endif %}" disabled>
@@ -269,13 +269,13 @@
           <!-- Email y Nombre de Usuario -->
           <div class="form-group" id="email-nombre-usuario-medico-form-group">
             <label class="col-lg-2 control-label" for="email-medico">
-              {{ LABEL_EMAIL }}
+              <span class="campo-obligatorio">* </span>{{ LABEL_EMAIL }}
             </label>
             <div class="col-lg-4">
               <input class="form-control" id="email-medico" type="text" value="{% if medico.email %}{{ medico.email }}{% else %}{{ NO_POSEE }}{% endif %}" disabled>
             </div>
             <label class="col-lg-2 control-label" for="nombre-usuario-medico">
-              {{ LABEL_NOMBRE_USUARIO }}
+              <span class="campo-obligatorio">* </span>{{ LABEL_NOMBRE_USUARIO }}
             </label>
             <div class="col-lg-4">
               {% render_field formulario_registro_medico.nombre_usuario_medico class="form-control" id="nombre-usuario-medico" %}
@@ -325,7 +325,7 @@
           <div class="form-group" id="nombre-telefono-departamento-form-group">
             <label class="col-lg-2 control-label" for="nombre-departamento">
               <abbr title="{{ LABEL_DEPARTAMENTO }}">
-                {{ LABEL_DEPARTAMENTO_ABREVIADO }}
+                <span class="campo-obligatorio">* </span>{{ LABEL_DEPARTAMENTO_ABREVIADO }}
               </abbr>
             </label>
             <div class="col-lg-4">
@@ -333,7 +333,7 @@
               {% render_field formulario_registro_departamento.nombre_departamento id="nombre-departamento-input" %}
             </div>
             <label class="col-lg-2 control-label" for="telefono-departamento">
-              {{ LABEL_TELEFONO }}
+              <span class="campo-obligatorio">* </span>{{ LABEL_TELEFONO }}
             </label>
             <div class="col-lg-4">
               <input class="form-control" id="telefono-departamento" type="text" value="{% if departamento.telefono %}{{ departamento.telefono }}{% else %}{{ NO_POSEE }}{% endif %}" disabled>
@@ -343,13 +343,13 @@
           <!-- Email y Nombre de Usuario -->
           <div class="form-group" id="email-nombre-usuario-departamento-form-group">
             <label class="col-lg-2 control-label" for="email-departamento">
-              {{ LABEL_EMAIL }}
+              <span class="campo-obligatorio">* </span>{{ LABEL_EMAIL }}
             </label>
             <div class="col-lg-4">
               <input class="form-control" id="email-departamento" type="text" value="{% if departamento.email %}{{ departamento.email }}{% else %}{{ NO_POSEE }}{% endif %}" disabled>
             </div>
             <label class="col-lg-2 control-label" for="nombre-usuario-departamento">
-              {{ LABEL_NOMBRE_USUARIO }}
+              <span class="campo-obligatorio">* </span>{{ LABEL_NOMBRE_USUARIO }}
             </label>
             <div class="col-lg-4">
               {% render_field formulario_registro_departamento.nombre_usuario_departamento class="form-control" id="nombre-usuario-departamento" %}

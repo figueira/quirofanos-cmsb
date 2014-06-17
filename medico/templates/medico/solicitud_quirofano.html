@@ -60,6 +60,7 @@
 					<div class="panel-body">
 						<div class="form-group" id="nombre-apellido-paciente-form-group">
 							<label class="col-lg-2 control-label" for="nombre-paciente">
+								<span class="campo-obligatorio">* </span>
 								{{ LABEL_NOMBRE }}
 							</label>
 							<div class="col-lg-4">
@@ -75,6 +76,7 @@
 							</script>
 							{% endif %}
 							<label class="col-lg-2 control-label" for="apellido-paciente">
+								<span class="campo-obligatorio">* </span>
 								{{ LABEL_APELLIDO }}
 							</label>
 							<div class="col-lg-4">
@@ -92,6 +94,7 @@
 						</div>
 						<div class="form-group" id="cedula-genero-paciente-form-group">
 							<label class="col-lg-2 control-label" for="cedula-paciente">
+								<span class="campo-obligatorio">* </span>
 								{{ LABEL_CEDULA }}
 							</label>
 							<div class="col-lg-4">
@@ -132,6 +135,7 @@
 							</script>
 							{% endif %}
 							<label class="col-lg-2 control-label">
+								<span class="campo-obligatorio">* </span>
 								{{ LABEL_GENERO }}
 							</label>
 							<div class="col-lg-4" id="radios-genero-paciente">
@@ -167,6 +171,7 @@
 							</script>
 							{% endif %}
 							<label class="col-lg-2 control-label" for="codigo-telefono-paciente">
+								<span class="campo-obligatorio">* </span>
 								{{ LABEL_TELEFONO }}
 							</label>
 							<div class="col-lg-2">
@@ -201,6 +206,7 @@
 							</label>
 							<div class="hidden" id="habitacion">
 								<label class="col-lg-2 control-label" for="numero-habitacion-paciente">
+									<span class="campo-obligatorio">* </span>
 									{{ LABEL_HABITACION }}
 								</label>
 								<div class="col-lg-2">
@@ -318,6 +324,7 @@
 						{% if es_coordinador %}
 						<div class="form-group" id="medico-solicitante-form-group">
 							<label class="col-lg-2 control-label" for="medico-solicitante">
+								<span class="campo-obligatorio">* </span>
 								{{ LABEL_MEDICO_SOLICITANTE }}
 							</label>
 							<div class="col-lg-10">
@@ -335,6 +342,7 @@
 						{% endif %}
 						<div class="form-group" id="preferencia-anestesica-form-group">
 							<label class="col-lg-2 control-label" for="preferencia-anestesica">
+								<span class="campo-obligatorio">* </span>
 								{{ LABEL_ANESTESIA }}
 							</label>
 							<div class="col-lg-10" id="radios-preferencia-anestesica">
@@ -373,6 +381,7 @@
 						</div>
 						<div class="form-group" id="riesgo-form-group">
 							<label class="col-lg-2 control-label" for="riesgo">
+								<span class="campo-obligatorio">* </span>
 								{{ LABEL_NIVEL_RIESGO }}
 							</label>
 							<div class="col-lg-10" id="radios-riesgo">
@@ -415,6 +424,7 @@
 						{% endif %}
 						<div class="form-group" id="dias-hospitalizacion-form-group">
 							<label class="col-lg-2 control-label" for="dias-hospitalizacion">
+								<span class="campo-obligatorio">* </span>
 								{{ LABEL_DIAS_HOSPITALIZACION }}
 							</label>
 							<div class="col-lg-2">
@@ -511,7 +521,10 @@
 							{% endif %}
 						</div>
 						<div class="form-group">
-							<label class="col-lg-2 control-label">{{ LABEL_PROCEDIMIENTOS_QUIRURGICOS }}</label>
+							<label class="col-lg-2 control-label">
+								<span class="campo-obligatorio">* </span>
+								{{ LABEL_PROCEDIMIENTOS_QUIRURGICOS }}
+							</label>
 							{% render_field formulario_eliminar_procedimiento_quirurgico.id_procedimiento_quirurgico id="id-procedimiento-quirurgico" %}
 							<div class="col-lg-10">
 							{% for procedimiento_quirurgico in procedimientos_quirurgicos %}
@@ -644,6 +657,7 @@
 								{% endif %} -->
 								<div class="form-group" id="nombre-procedimiento-form-group">
 									<label class="col-lg-2 control-label">
+										<span class="campo-obligatorio">* </span>
 										<abbr title="{{ LABEL_PROCEDIMIENTO }}">{{ LABEL_PROCEDIMIENTO_ABREVIADO }}</abbr>
 									</label>
 									<div class="col-lg-10">
@@ -661,6 +675,7 @@
 								</div>
 								<div class="form-group" id="cirujano-principal-form-group">
 									<label class="col-lg-2 control-label" for="nombre-cirujano-principal">
+										<span class="campo-obligatorio">* </span>
 										{{ LABEL_CIRUJANO_PRINCIPAL }}
 									</label>
 									<div class="col-lg-6">
@@ -677,6 +692,7 @@
 								</div>
 								<div class="form-group">
 									<label class="col-lg-2 control-label" for="anestesiologo">
+										<span class="campo-obligatorio">* </span>
 										<abbr title="{{ LABEL_ANESTESIOLOGO }}">{{ LABEL_ANESTESIOLOGO_ABREVIADO }}</abbr>
 									</label>
 									<div class="col-lg-6">
@@ -741,6 +757,7 @@
 								</div>
 								<div class="form-group" id="diagnostico-ingreso-paciente-form-group">
 									<label class="col-lg-2 control-label" for="diagnostico-ingreso-paciente">
+										<span class="campo-obligatorio">* </span>
 										{{ LABEL_DIAGNOSTICO }}
 									</label>
 									<div class="col-lg-10">

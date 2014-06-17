@@ -435,6 +435,7 @@ a:hover
 /* Tamano de los modal lg */
 .modal-lg{
 	width:1000px !important;
+}
 
 /* personalización de carousel */
 .carousel-control {
@@ -449,3 +450,17 @@ a:hover
 .carousel-control.right, .carousel-control.left {
 	background-image: none!important
 }
+
+/* color campos obligatorios */
+.campo-obligatorio {
+	color: #E71C1C
+}
+
+/* estilo pestanas */
+.nav-tabs>li.active>a,.nav-tabs>li.active>a:hover,.nav-tabs>li.active>a:focus{color:#555;
+	background-color:#CCCCCC;
+	border:2px solid #C2BABA;
+	border-bottom-color:transparent;
+	cursor:default
+}
+
