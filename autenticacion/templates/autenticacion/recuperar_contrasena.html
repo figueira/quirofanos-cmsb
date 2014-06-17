@@ -29,7 +29,7 @@
                 {% csrf_token %}
                 <div class="panel-body">
                     <div class="form-group" id="nombre-usuario-form-group">
-                        <label class="col-lg-4 control-label" for="nombre-usuario">{{ LABEL_NOMBRE_USUARIO }}</label>
+                        <label class="col-lg-4 control-label" for="nombre-usuario"><span class="campo-obligatorio">* </span>{{ LABEL_NOMBRE_USUARIO }}</label>
                         <div class="col-lg-6">
                             {% render_field formulario_recuperar_contrasena.nombre_usuario class="form-control" id="nombre-usuario" %}
                             <span class="glyphicon glyphicon-remove form-control-feedback hidden" id="nombre-usuario-error-feedback-icon"></span>

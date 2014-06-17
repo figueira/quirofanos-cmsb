@@ -31,7 +31,7 @@
 	</li>
 	<li class="dropdown">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-			Opciones
+			Ajustes
 			<b class="caret">
 			</b>
 		</a>
@@ -46,14 +46,12 @@
 					Cambiar Correo Electrónico
 				</a>
 			</li>
-			<li class="divider">
-			</li>
-			<li>
-				<a href="{% url 'cerrar_sesion' %}">
-					Cerrar Sesión
-				</a>
-			</li>
 		</ul>
+	</li>
+	<li>
+		<a href="{% url 'cerrar_sesion' %}">
+			Cerrar Sesión
+		</a>
 	</li>
 </ul>
 {% endblock navbar-nav-extra %}

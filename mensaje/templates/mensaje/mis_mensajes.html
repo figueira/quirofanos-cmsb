@@ -1,4 +1,4 @@
-{% extends "medico/contexto.html" %}
+{% extends request.session.template_base %}
 
 {% load staticfiles  %}
 {% load widget_tweaks %}
@@ -31,67 +31,37 @@
 <div class="page-header">
 	<h1>Mis Mensajes</h1>
 </div>
+<!-- Pestañas -->
 <div class="row">
 	<div class="col-lg-offset-1 col-lg-9">
 		<ul class="nav nav-tabs">
 			<li class="active" id="li-en-espera">
 				<a href="#">
 					Pendientes
-					<span class="glyphicon glyphicon-ok">
+					<span class="glyphicon glyphicon-folder-close">
 					</span>
 				</a>
 			</li>
 			<li  id="li-aprobadas">
 				<a href="#">
-					Leidos
-					<span class="glyphicon glyphicon-question-sign">
+					Leídos
+					<span class="glyphicon glyphicon-folder-open">
 					</span>
 				</a>
 			</li>
 		</ul>
 	</div>
-	<div class="col-lg-1">
-		<button type="button" class="btn btn-primary dropdown-toggle pull-right" data-toggle="dropdown">
-			Ver
-			<span class="caret">
-			</span>
-		</button>
-		<ul class="dropdown-menu" role="menu">
-			<li>
-				<a href="#">
-					Última semana
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					Último mes
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					Últimos 3 meses
-				</a>
-			</li>
-			<li class="divider">
-			</li>
-			<li>
-				<a href="#" data-toggle="modal" data-target="#seleccionar-periodo">
-					Seleccionar período
-				</a>
-			</li>
-		</ul>
-	</div>
-</div><!-- Pestañas y Filtro -->
+</div><!-- Pestañas -->
 
 <div class="row">
 	<div class="col-lg-offset-1 col-lg-10">
 		<!-- Tab panes -->
 		<div class="tab-content">
 			<div  id="contenido-pendientes">
-				{% include "mensaje/lista_mis_mensajes.html" with lista_mensajes=mensajes_pendientes tipo="Por Leer" %}
+				{% include "mensaje/lista_mis_mensajes.html" with lista_mensajes=mensajes_pendientes tipo="por leer" %}
 			</div><!-- Lista de Solicitudes Pendientes -->
 			<div class="hidden" id="contenido-aprobadas">
-				{% include "mensaje/lista_mis_mensajes.html" with lista_mensajes=mensajes_leidos tipo="Leidos" %}
+				{% include "mensaje/lista_mis_mensajes.html" with lista_mensajes=mensajes_leidos tipo="leídos" %}
 			</div><!-- Lista de Solicitudes Rechazadas -->
 		</div><!-- Tab panes -->
 	</div>
