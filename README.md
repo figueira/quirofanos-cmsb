@@ -23,3 +23,5 @@ Estructura del Repositorio
 - __static__ carpeta que contiene archivos estáticos utilizados por cada uno de los componenetes de la aplicación. Tales como archivos __CSS__, __Javascript__ e __Imágenes__.
 
 - __templates__ carpeta que contiene plantillas __HTML__ que definen la estructura general de la interfaz de usuario de la aplicación.
+
+- __docs__ carpeta que contiene la documentación de la aplicación.
